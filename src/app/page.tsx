@@ -1,103 +1,141 @@
-import Image from "next/image";
+import { AnimatedText, GradientText } from "@/components/animations/animated-text"
+import { Button } from "@/components/ui/button"
+import { LoadingScreen } from "@/components/ui/loading-screen"
+import { PageWrapper } from "@/components/layout/page-transition"
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+    <PageWrapper>
+      {/* Hero Section */}
+      <section className="flex-1 flex items-center justify-center px-6 py-20 min-h-screen">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          
+          {/* Main Heading */}
+          <div className="space-y-4">
+            <AnimatedText
+              text="Tyler Schmidt"
+              as="h1"
+              variant="fade"
+              className="text-6xl md:text-8xl font-bold tracking-tight"
+              delay={0.2}
+              stagger={0.05}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            
+            <AnimatedText
+              text="UX/UI Designer & Engineer"
+              as="h2"
+              variant="slide"
+              className="text-xl md:text-2xl text-muted-foreground font-medium"
+              delay={0.8}
+            />
+          </div>
+
+          {/* Description */}
+          <div className="max-w-2xl mx-auto">
+            <AnimatedText
+              text="Crafting award-winning digital experiences that push the boundaries of design and technology."
+              as="p"
+              variant="fade"
+              className="text-lg text-muted-foreground leading-relaxed"
+              delay={1.2}
+            />
+          </div>
+
+          {/* Gradient Text Showcase */}
+          <div className="space-y-4">
+            <GradientText
+              text="Modern Design"
+              gradient="primary"
+              className="text-2xl font-semibold block"
+            />
+            <GradientText
+              text="Sophisticated Animations"
+              gradient="rainbow"
+              className="text-2xl font-semibold block"
+              animated
+            />
+            <GradientText
+              text="Cutting-Edge Technology"
+              gradient="sunset"
+              className="text-2xl font-semibold block"
+            />
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
+            <Button size="lg" variant="magnetic">
+              View My Work
+            </Button>
+            <Button size="lg" variant="outline">
+              Get In Touch
+            </Button>
+          </div>
+
+          {/* Component Showcase */}
+          <div className="pt-16 space-y-8">
+            <h3 className="text-2xl font-semibold">Component Showcase</h3>
+            
+            {/* Button Variants */}
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Button variant="default">Default</Button>
+              <Button variant="secondary">Secondary</Button>
+              <Button variant="outline">Outline</Button>
+              <Button variant="ghost">Ghost</Button>
+              <Button variant="link">Link</Button>
+              <Button variant="magnetic">Magnetic</Button>
+            </div>
+
+            {/* Text Animation Variants */}
+            <div className="space-y-6">
+              <div className="grid gap-4">
+                <AnimatedText
+                  text="Fade Animation"
+                  variant="fade"
+                  className="text-lg font-medium"
+                />
+                <AnimatedText
+                  text="Slide Animation"
+                  variant="slide"
+                  className="text-lg font-medium"
+                />
+                <AnimatedText
+                  text="Wave Animation"
+                  variant="wave"
+                  className="text-lg font-medium"
+                />
+                <AnimatedText
+                  text="Typewriter Effect"
+                  variant="typewriter"
+                  className="text-lg font-medium font-mono"
+                />
+                <AnimatedText
+                  text="Reveal Animation"
+                  variant="reveal"
+                  className="text-lg font-medium"
+                />
+              </div>
+            </div>
+          </div>
+
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-border py-8 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm text-muted-foreground">
+            Portfolio v3.0 — Built with Next.js, TypeScript, Tailwind CSS, and Framer Motion
+          </p>
+        </div>
       </footer>
-    </div>
-  );
+
+      {/* Loading Screen Demo - Hidden by default */}
+      <LoadingScreen 
+        show={false} 
+        progress={65} 
+        message="Building something amazing..." 
+        variant="detailed" 
+      />
+    </PageWrapper>
+  )
 }
