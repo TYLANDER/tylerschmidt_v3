@@ -1,161 +1,114 @@
-# Tyler Schmidt Portfolio v3.0
+# Tyler Schmidt Portfolio v3
 
-An award-winning portfolio website showcasing cutting-edge UX/UI design and engineering work. Built with modern web technologies and sophisticated animations to create an exceptional user experience.
+A modern, high-performance portfolio website built with Next.js 15, featuring interactive WebGL demos and strategic content design.
 
-## 🚀 Features
+## 🎯 Features
 
-### Design & User Experience
-- **Apple-inspired Design Language**: Clean, sophisticated, and modern aesthetic
-- **Sophisticated Animations**: Framer Motion with custom easing and staggered animations
-- **WebGL Integration**: Three.js powered interactive 3D elements
-- **Smooth Scrolling**: Lenis for buttery-smooth scroll experiences
-- **Magnetic Interactions**: Hover effects that follow cursor movement
-- **Page Transitions**: Seamless navigation with animated overlays
+- **Strategic Content**: Compelling about and work sections with persuasive communication style
+- **Interactive WebGL Lab**: 8 cutting-edge demos including particle systems, fluid dynamics, and audio-reactive visualizations
+- **Modern Tech Stack**: Next.js 15, React 19, TypeScript, Tailwind CSS, Three.js
+- **Performance Optimized**: 60fps WebGL rendering, static generation, optimized bundles
+- **Responsive Design**: Mobile-first approach with smooth animations
 
-### Technical Excellence
-- **Next.js 14+**: Latest App Router with server-side rendering
-- **TypeScript**: Fully typed for better development experience
-- **Tailwind CSS v4**: Utility-first styling with custom design tokens
-- **Responsive Design**: Mobile-first approach with perfect scaling
-- **Performance Optimized**: Core Web Vitals optimized for 90+ Lighthouse scores
-- **Accessibility**: WCAG AA compliant with screen reader support
+## 🚀 WebGL Demos
 
-### Content Management
-- **Sanity CMS**: Headless CMS for easy content management
-- **Structured Content**: Schemas for projects, about, contact, and site settings
-- **Media Management**: Optimized image and video handling
-- **SEO Optimized**: Dynamic meta tags and Open Graph images
+1. **Particle Galaxy** - 5,000 particle spiral formation
+2. **Liquid Metal** - Chrome PBR materials with real-time distortion
+3. **Neural Network** - Interactive AI visualization
+4. **Fluid Dynamics** - Real-time fluid simulation with dye mixing
+5. **Audio Reactive Crystals** - Microphone-responsive geometric animations
+6. **Particle Fire** - Realistic fire simulation with heat effects
+7. **Morphing Wave Field** - Organic geometry with particle swarms
+8. **Animated Hero** - Original morphing sphere demo
 
-## 🛠️ Tech Stack
+## 🛠 Development
 
-- **Framework**: Next.js 14+ with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS v4 with custom design system
-- **Animations**: Framer Motion + GSAP
-- **3D Graphics**: Three.js with React Three Fiber
-- **CMS**: Sanity.io
-- **UI Components**: Radix UI primitives
-- **Deployment**: Vercel
-- **Version Control**: Git with Husky hooks
+### Quick Start
 
-## 📦 Installation
-
-1. **Clone the repository**
 ```bash
-git clone https://github.com/tylerschmidt/portfolio-v3.git
-cd portfolio-v3
-```
-
-2. **Install dependencies**
-```bash
+# Install dependencies
 npm install
-```
 
-3. **Set up environment variables**
-```bash
-cp .env.local.example .env.local
-```
-
-4. **Configure Sanity (required for CMS)**
-- Create a new Sanity project at [sanity.io](https://sanity.io)
-- Update `.env.local` with your project details:
-```env
-NEXT_PUBLIC_SANITY_PROJECT_ID="your_project_id"
-NEXT_PUBLIC_SANITY_DATASET="production"
-SANITY_API_TOKEN="your_api_token"
-```
-
-5. **Start development server**
-```bash
+# Run development server
 npm run dev
+
+# Run with type checking and linting
+npm run dev:check
 ```
 
-## 🎨 Design System
+### Testing & Verification
 
-The portfolio includes a comprehensive design system with:
-
-### Colors
-- **Primary**: Black/White for maximum contrast
-- **Accent**: Warm amber for highlights and interactions
-- **Semantic**: Success, warning, error, and info colors
-- **Dark Mode**: Automatic system preference detection
-
-### Typography
-- **Sans**: Inter font family for body text
-- **Mono**: JetBrains Mono for code and technical content
-- **Scale**: 9-step typography scale from 12px to 128px
-- **Features**: OpenType features for professional typography
-
-### Animations
-- **Easing**: Custom Apple-inspired easing curves
-- **Durations**: Consistent timing scale from 75ms to 1000ms
-- **Variants**: Fade, slide, wave, typewriter, and reveal animations
-- **Performance**: Hardware-accelerated animations with reduced motion support
-
-## 📱 Components
-
-### Layout Components
-- `Navigation`: Responsive navbar with hide-on-scroll
-- `SmoothScrollWrapper`: Lenis integration for smooth scrolling
-- `PageTransition`: Route change animations
-- `PageWrapper`: Page-level animation wrapper
-
-### UI Components
-- `Button`: Multiple variants with magnetic hover effects
-- `ContactForm`: Advanced form with validation and microinteractions
-- `LoadingScreen`: Three loading variants with progress indication
-
-### Animation Components
-- `AnimatedText`: Five text animation variants
-- `GradientText`: Animated gradient text effects
-- `AnimatedHero`: WebGL Three.js interactive hero
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-1. Connect your GitHub repository to Vercel
-2. Configure environment variables in Vercel dashboard
-3. Deploy automatically on every push to main
-
-### Manual Deployment
 ```bash
-npm run build
-npm start
+# Run comprehensive verification (recommended before deployment)
+npm run verify
+
+# Individual checks
+npm run type-check    # TypeScript validation
+npm run lint          # ESLint checks
+npm run build         # Production build test
 ```
+
+### Deployment Verification
+
+The project includes a comprehensive verification system that catches common deployment issues:
+
+- **Unescaped entities** in JSX content
+- **Explicit `any` types** in TypeScript
+- **Unused imports** and variables
+- **Build failures** in production mode
+- **Vercel-style strict linting**
+
+### Scripts
+
+- `npm run dev` - Development server with Turbopack
+- `npm run build` - Production build
+- `npm run verify` - Run all verification tests
+- `npm run check-all` - Complete quality check
+- `npm run format` - Format code with Prettier
+
+## 🔧 Tech Stack
+
+- **Framework**: Next.js 15.4.3 with App Router
+- **React**: 19.1.0
+- **TypeScript**: Full type safety
+- **Styling**: Tailwind CSS with custom design system
+- **3D Graphics**: Three.js, React Three Fiber, React Three Drei
+- **Animation**: Framer Motion, GSAP
+- **Fonts**: Aeonik variable font family
+- **Deployment**: Vercel
+- **CI/CD**: GitHub Actions
+
+## 📦 Build & Deploy
+
+The project is optimized for Vercel deployment with:
+
+- Static page generation
+- Optimized bundle splitting
+- WebGL performance optimization
+- Comprehensive error catching
+
+### Environment Variables
+
+Create `.env.local`:
+
+```env
+# Add any required environment variables
+```
+
+## 🧪 Quality Assurance
+
+- **Automated Testing**: GitHub Actions CI with Node 18.x and 20.x
+- **Code Quality**: ESLint, TypeScript strict mode, Prettier
+- **Performance**: Bundle analysis, build optimization
+- **Deployment**: Pre-deployment verification with Vercel simulation
 
 ## 📊 Performance
 
-This portfolio is optimized for exceptional performance:
-
-- **Core Web Vitals**: Optimized for LCP, FID, and CLS
-- **Lighthouse Score**: 90+ across all metrics
-- **Bundle Size**: Optimized with code splitting and tree shaking
-- **Image Optimization**: Next.js Image component with lazy loading
-- **Font Loading**: Optimized web font loading with font-display: swap
-
-## 🤝 Contributing
-
-While this is a personal portfolio, contributions for improvements are welcome:
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit changes: `git commit -m 'Add amazing feature'`
-4. Push to branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Design Inspiration**: Apple, Linear, and Awwwards featured sites
-- **Technologies**: The amazing open-source community
-- **Fonts**: Google Fonts for Inter and JetBrains Mono
-- **Icons**: Lucide React for beautiful icons
+- **Build Size**: Optimized chunks with Next.js code splitting
+- **WebGL**: 60fps animations with adaptive quality
+- **Loading**: Static generation for instant page loads
+- **SEO**: Comprehensive meta tags and structured data
 
 ---
 
-**Built with ❤️ by Tyler Schmidt**
-
-For questions or collaboration inquiries, reach out at [your-email@example.com](mailto:your-email@example.com).
+Built with ❤️ and cutting-edge web technologies.
