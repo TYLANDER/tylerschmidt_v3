@@ -8,8 +8,6 @@ import { cn } from "@/lib/utils"
 
 interface AnimatedHeroProps {
   className?: string
-  interactive?: boolean
-  autoRotate?: boolean
 }
 
 function AnimatedSphere() {
@@ -55,18 +53,17 @@ function Scene() {
   )
 }
 
-function Loader() {
-  return (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="w-16 h-16 border-4 border-accent border-t-transparent rounded-full animate-spin" />
-    </div>
-  )
-}
+// TODO: Use this loader component for Three.js Suspense fallback
+// function Loader() {
+//   return (
+//     <div className="w-full h-full flex items-center justify-center">
+//       <div className="w-16 h-16 border-4 border-accent border-t-transparent rounded-full animate-spin" />
+//     </div>
+//   )
+// }
 
 export function AnimatedHero({ 
-  className, 
-  interactive = true, 
-  autoRotate = true 
+  className
 }: AnimatedHeroProps) {
   return (
     <div className={cn("w-full h-full min-h-[400px]", className)}>

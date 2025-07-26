@@ -1,21 +1,8 @@
 import type { Metadata } from "next"
-import { Inter, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
 import { Navigation } from "@/components/layout/navigation"
 import { SmoothScrollWrapper } from "@/components/layout/smooth-scroll-wrapper"
 import { PageTransition } from "@/components/layout/page-transition"
-
-const inter = Inter({ 
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-})
 
 export const metadata: Metadata = {
   title: {
@@ -84,7 +71,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
+      <body className="font-sans antialiased">
         <SmoothScrollWrapper>
           <div className="relative min-h-screen bg-background">
             <Navigation />
