@@ -15,14 +15,14 @@ export default function ContactPage() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center space-y-8 mb-16">
             <AnimatedText
-              text="Let's Work Together"
+              text="Let&apos;s Work Together"
               as="h1"
               variant="fade"
               className="text-4xl md:text-6xl font-bold"
             />
             
             <AnimatedText
-              text="Ready to bring your vision to life? I'd love to hear about your project."
+              text="Ready to bring your vision to life? I&apos;d love to hear about your project."
               as="p"
               variant="fade"
               delay={0.3}

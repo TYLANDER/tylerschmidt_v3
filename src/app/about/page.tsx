@@ -46,7 +46,7 @@ export default function AboutPage() {
               
               <div className="text-muted-foreground leading-relaxed space-y-4">
                 <AnimatedText
-                  text="I don't just design interfaces—I architect the future of how humans interact with technology."
+                  text="I don&apos;t just design interfaces—I architect the future of how humans interact with technology."
                   as="p"
                   variant="fade"
                   delay={0.7}
@@ -80,7 +80,7 @@ export default function AboutPage() {
               />
               
               <AnimatedText
-                text="The best designs are invisible. They don't announce themselves—they simply work. They anticipate needs before users know they have them. They turn complex processes into elegant experiences."
+                text="The best designs are invisible. They don&apos;t announce themselves—they simply work. They anticipate needs before users know they have them. They turn complex processes into elegant experiences."
                 as="p"
                 variant="fade"
                 delay={1.5}
@@ -114,7 +114,7 @@ export default function AboutPage() {
               />
               
               <AnimatedText
-                text="My expertise spans the entire digital product lifecycle, but I'm particularly passionate about the intersection of emerging technologies and human-centered design."
+                text="My expertise spans the entire digital product lifecycle, but I&apos;m particularly passionate about the intersection of emerging technologies and human-centered design."
                 as="p"
                 variant="fade"
                 delay={1.9}
