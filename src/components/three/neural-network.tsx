@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useMemo, useState, useCallback } from "react"
-import { Canvas, useFrame, extend } from "@react-three/fiber"
+import { Canvas, useFrame } from "@react-three/fiber"
 import { Line, Text, Html } from "@react-three/drei"
 import * as THREE from "three"
 import { cn } from "@/lib/utils"
@@ -46,8 +46,8 @@ function NetworkNode({ node, onClick }: { node: Node; onClick: (id: number) => v
       ref={meshRef}
       position={node.position}
       onClick={() => onClick(node.id)}
-      onPointerOver={(e) => (document.body.style.cursor = 'pointer')}
-      onPointerOut={(e) => (document.body.style.cursor = 'auto')}
+      onPointerOver={() => (document.body.style.cursor = 'pointer')}
+      onPointerOut={() => (document.body.style.cursor = 'auto')}
     >
       <sphereGeometry args={[0.3, 16, 16]} />
       <meshBasicMaterial
@@ -77,9 +77,11 @@ function NetworkConnection({ connection, nodes }: { connection: Connection; node
   useFrame((state) => {
     if (lineRef.current && fromNode && toNode) {
       // Animated pulse along connection
-      const line = lineRef.current as any
+      const line = lineRef.current as THREE.Line & {
+        material?: THREE.Material & { opacity?: number }
+      }
       if (line.material) {
-        const material = line.material as any
+        const material = line.material as THREE.Material & { opacity?: number }
         const opacity = 0.3 + Math.sin(state.clock.elapsedTime * 3 + connection.pulse) * 0.2
         material.opacity = Math.max(0.1, opacity * connection.weight)
       }
@@ -109,7 +111,7 @@ function NetworkConnection({ connection, nodes }: { connection: Connection; node
 function NeuralNetwork() {
   const [nodes, setNodes] = useState<Node[]>([])
   const [connections, setConnections] = useState<Connection[]>([])
-  const [pulseTime, setPulseTime] = useState(0)
+  const [, setPulseTime] = useState(0)
 
   // Generate network structure
   useMemo(() => {

@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import { AnimatedText } from "@/components/animations/animated-text"
 import { PageWrapper } from "@/components/layout/page-transition"
-import Image from "next/image"
 
 export const metadata: Metadata = {
   title: "Work",

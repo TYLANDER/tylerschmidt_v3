@@ -7,6 +7,7 @@ import { NeuralNetworkViz } from "@/components/three/neural-network"
 import { FluidDynamics } from "@/components/three/fluid-dynamics"
 import { AudioCrystals } from "@/components/three/audio-crystals"
 import { ParticleFire } from "@/components/three/particle-fire"
+import { WaveField } from "@/components/three/wave-field"
 import { PageWrapper } from "@/components/layout/page-transition"
 
 export const metadata: Metadata = {
@@ -123,6 +124,15 @@ export default function LabPage() {
               tech={["Particle Physics", "Heat Simulation", "Custom Shaders", "Real-time Distortion"]}
             >
               <ParticleFire />
+            </DemoCard>
+
+            {/* Morphing Wave Field */}
+            <DemoCard
+              title="🌊 Morphing Wave Field"
+              description="An organic wave field that responds to your mouse with flowing geometric patterns. Watch as particles swarm around your cursor while the surface ripples with color."
+              tech={["Custom GLSL Shaders", "Procedural Noise", "Interactive Geometry", "Dynamic Particle Systems"]}
+            >
+              <WaveField />
             </DemoCard>
 
             {/* Original Animated Hero */}

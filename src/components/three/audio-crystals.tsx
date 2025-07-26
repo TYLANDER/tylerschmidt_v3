@@ -102,7 +102,7 @@ function CrystalField({ audioData }: { audioData: Float32Array }) {
 }
 
 function AudioVisualization() {
-  const [audioContext, setAudioContext] = useState<AudioContext | null>(null)
+  const [, setAudioContext] = useState<AudioContext | null>(null)
   const [analyser, setAnalyser] = useState<AnalyserNode | null>(null)
   const [audioData, setAudioData] = useState<Float32Array>(new Float32Array(256))
   const [isListening, setIsListening] = useState(false)

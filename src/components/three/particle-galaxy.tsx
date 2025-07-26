@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useMemo, useCallback } from "react"
+import { useRef, useMemo } from "react"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { Points, PointMaterial } from "@react-three/drei"
 import * as THREE from "three"
@@ -12,7 +12,7 @@ interface ParticleGalaxyProps {
 
 function Galaxy() {
   const ref = useRef<THREE.Points>(null)
-  const { viewport, camera } = useThree()
+  useThree() // Access three context
   
   // Generate galaxy particles
   const [positions, colors] = useMemo(() => {

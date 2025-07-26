@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { Canvas, useFrame, useThree } from "@react-three/fiber"
+import { Canvas, useFrame } from "@react-three/fiber"
 import { MeshDistortMaterial, Environment, Float } from "@react-three/drei"
 import * as THREE from "three"
 import { cn } from "@/lib/utils"
@@ -18,7 +18,10 @@ function MetalBlob() {
   useFrame((state) => {
     if (meshRef.current && materialRef.current) {
       // Continuous morphing
-      const material = materialRef.current as any
+      const material = materialRef.current as THREE.ShaderMaterial & { 
+        distort?: number
+        speed?: number 
+      }
       material.distort = 0.3 + Math.sin(state.clock.elapsedTime * 0.5) * 0.2
       material.speed = 0.5
       
