@@ -7,7 +7,7 @@ interface AnimatedTextProps {
   text: string
   className?: string
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span"
-  variant?: "fade" | "slide" | "wave" | "typewriter" | "reveal"
+  variant?: "fade" | "slide" | "wave" | "typewriter" | "reveal" | "glitch" | "corruption"
   delay?: number
   duration?: number
   stagger?: number
@@ -35,6 +35,34 @@ const textVariants = {
   reveal: {
     hidden: { opacity: 0, scale: 0.8 },
     visible: { opacity: 1, scale: 1 },
+  },
+  glitch: {
+    hidden: { 
+      opacity: 0, 
+      x: [0, -5, 5, -5, 5, 0],
+      y: [0, -2, 2, -2, 2, 0],
+      scale: 0.98
+    },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      y: 0,
+      scale: 1
+    },
+  },
+  corruption: {
+    hidden: { 
+      opacity: 0,
+      rotateX: 90,
+      scaleY: 0.1,
+      filter: "brightness(0) contrast(200%)"
+    },
+    visible: { 
+      opacity: 1,
+      rotateX: 0,
+      scaleY: 1,
+      filter: "brightness(1) contrast(100%)"
+    },
   },
 }
 
@@ -112,6 +140,50 @@ export function AnimatedText({
               className="inline-block"
             >
               {letter === " " ? "\u00A0" : letter}
+            </motion.span>
+          ))}
+        </motion.span>
+      </Component>
+    )
+  }
+
+  if (variant === "glitch" || variant === "corruption") {
+    return (
+      <Component 
+        className={cn(
+          className,
+          variant === "glitch" && "glitch-text",
+          variant === "corruption" && "data-viz"
+        )}
+        data-text={text}
+      >
+        <motion.span
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          onAnimationComplete={onComplete}
+          className="inline-block"
+        >
+          {words.map((word, index) => (
+            <motion.span
+              key={index}
+              variants={itemVariants}
+              transition={{
+                duration: variant === "glitch" ? duration * 0.3 : duration,
+                delay: delay + index * stagger,
+                ease: variant === "glitch" ? "easeInOut" : "easeOut",
+                repeat: repeat ? Infinity : 0,
+                repeatType: variant === "glitch" ? "loop" : "reverse",
+                repeatDelay: variant === "glitch" ? 3 : 2,
+              }}
+              className={cn(
+                "inline-block mr-2",
+                variant === "glitch" && "glitch-hover",
+                variant === "corruption" && "corruption-grid"
+              )}
+              data-text={word}
+            >
+              {word}
             </motion.span>
           ))}
         </motion.span>
