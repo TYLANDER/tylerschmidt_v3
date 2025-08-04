@@ -128,4 +128,4 @@ export default defineType({
       subtitle: "description",
     },
   },
-}) 
+})

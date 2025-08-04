@@ -14,21 +14,24 @@ function WaveGeometry() {
   const meshRef = useRef<THREE.Mesh>(null)
   const materialRef = useRef<THREE.ShaderMaterial>(null)
   const { pointer, viewport } = useThree()
-  
+
   // Create a plane geometry with enough segments for smooth morphing
   const geometry = useMemo(() => {
     return new THREE.PlaneGeometry(8, 8, 128, 128)
   }, [])
 
-  const uniforms = useMemo(() => ({
-    time: { value: 0 },
-    mouse: { value: new THREE.Vector2(0, 0) },
-    resolution: { value: new THREE.Vector2(1024, 1024) },
-    amplitude: { value: 1.5 },
-    frequency: { value: 2.0 },
-    speed: { value: 1.0 },
-    mouseInfluence: { value: 2.0 }
-  }), [])
+  const uniforms = useMemo(
+    () => ({
+      time: { value: 0 },
+      mouse: { value: new THREE.Vector2(0, 0) },
+      resolution: { value: new THREE.Vector2(1024, 1024) },
+      amplitude: { value: 1.5 },
+      frequency: { value: 2.0 },
+      speed: { value: 1.0 },
+      mouseInfluence: { value: 2.0 },
+    }),
+    []
+  )
 
   const vertexShader = `
     uniform float time;
@@ -130,8 +133,8 @@ function WaveGeometry() {
     if (materialRef.current) {
       materialRef.current.uniforms.time.value = state.clock.elapsedTime
       materialRef.current.uniforms.mouse.value.set(
-        pointer.x * viewport.width / 2,
-        pointer.y * viewport.height / 2
+        (pointer.x * viewport.width) / 2,
+        (pointer.y * viewport.height) / 2
       )
     }
   })
@@ -154,52 +157,53 @@ function WaveGeometry() {
 function ParticleSwarm() {
   const pointsRef = useRef<THREE.Points>(null)
   const { pointer } = useThree()
-  
+
   const [positions, colors] = useMemo(() => {
     const particleCount = 200
     const pos = new Float32Array(particleCount * 3)
     const col = new Float32Array(particleCount * 3)
-    
+
     for (let i = 0; i < particleCount; i++) {
       // Spread particles around the wave field
       pos[i * 3] = (Math.random() - 0.5) * 12
       pos[i * 3 + 1] = (Math.random() - 0.5) * 12
       pos[i * 3 + 2] = (Math.random() - 0.5) * 4
-      
+
       // Random colors
       const hue = Math.random()
       col[i * 3] = hue
       col[i * 3 + 1] = 0.8
       col[i * 3 + 2] = 0.9
     }
-    
+
     return [pos, col]
   }, [])
 
   useFrame((state) => {
     if (pointsRef.current) {
-      const positions = pointsRef.current.geometry.attributes.position.array as Float32Array
+      const positions = pointsRef.current.geometry.attributes.position
+        .array as Float32Array
       const time = state.clock.elapsedTime
-      
+
       for (let i = 0; i < positions.length; i += 3) {
         const x = positions[i]
         const y = positions[i + 1]
-        
+
         // Orbital motion around mouse
         const mouseX = pointer.x * 6
         const mouseY = pointer.y * 6
         const distToMouse = Math.sqrt((x - mouseX) ** 2 + (y - mouseY) ** 2)
-        
+
         if (distToMouse < 3) {
           const angle = Math.atan2(y - mouseY, x - mouseX)
           positions[i] += Math.cos(angle + time * 2) * 0.02
           positions[i + 1] += Math.sin(angle + time * 2) * 0.02
         }
-        
+
         // Floating motion
         positions[i + 2] = Math.sin(time + x * 0.5 + y * 0.3) * 2
       }
-      
+
       pointsRef.current.geometry.attributes.position.needsUpdate = true
     }
   })
@@ -241,10 +245,10 @@ function Scene() {
       <ambientLight intensity={0.3} />
       <directionalLight position={[10, 10, 5]} intensity={0.8} />
       <pointLight position={[0, 0, 5]} intensity={0.5} color="#ff6b6b" />
-      
+
       {/* Main wave field */}
       <WaveGeometry />
-      
+
       {/* Particle swarm */}
       <ParticleSwarm />
     </>
@@ -253,9 +257,9 @@ function Scene() {
 
 export function WaveField({ className }: WaveFieldProps) {
   const [isInteracting, setIsInteracting] = useState(false)
-  
+
   return (
-    <div className={cn("relative w-full h-full bg-black", className)}>
+    <div className={cn("relative h-full w-full bg-black", className)}>
       <Canvas
         camera={{ position: [0, 5, 8], fov: 60 }}
         onPointerEnter={() => setIsInteracting(true)}
@@ -263,12 +267,12 @@ export function WaveField({ className }: WaveFieldProps) {
       >
         <Scene />
       </Canvas>
-      
+
       {/* Info overlay */}
-      <div className="absolute top-4 left-4 text-white/80 z-10">
-        <h3 className="font-medium mb-2">Morphing Wave Field</h3>
-        <p className="text-sm text-white/60 max-w-xs">
-          Move your mouse to influence the wave patterns and particle swarm. 
+      <div className="absolute top-4 left-4 z-10 text-white/80">
+        <h3 className="mb-2 font-medium">Morphing Wave Field</h3>
+        <p className="max-w-xs text-sm text-white/60">
+          Move your mouse to influence the wave patterns and particle swarm.
           Watch as the geometry flows and morphs in real-time.
         </p>
         {isInteracting && (
@@ -277,11 +281,11 @@ export function WaveField({ className }: WaveFieldProps) {
           </div>
         )}
       </div>
-      
+
       {/* Controls hint */}
-      <div className="absolute bottom-4 right-4 text-white/60 text-xs">
+      <div className="absolute right-4 bottom-4 text-xs text-white/60">
         Move mouse to interact • Scroll to zoom
       </div>
     </div>
   )
-} 
+}

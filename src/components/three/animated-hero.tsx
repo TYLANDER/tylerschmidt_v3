@@ -40,9 +40,9 @@ function Scene() {
       <ambientLight intensity={0.4} />
       <directionalLight position={[10, 10, 5]} intensity={1} />
       <pointLight position={[-10, -10, -10]} intensity={0.5} />
-      
+
       <AnimatedSphere />
-      
+
       <OrbitControls
         enableZoom={false}
         enablePan={false}
@@ -62,11 +62,9 @@ function Scene() {
 //   )
 // }
 
-export function AnimatedHero({ 
-  className
-}: AnimatedHeroProps) {
+export function AnimatedHero({ className }: AnimatedHeroProps) {
   return (
-    <div className={cn("w-full h-full min-h-[400px]", className)}>
+    <div className={cn("h-full min-h-[400px] w-full", className)}>
       <Canvas
         camera={{ position: [0, 0, 3], fov: 60 }}
         dpr={[1, 2]}
@@ -80,4 +78,4 @@ export function AnimatedHero({
   )
 }
 
-export default AnimatedHero 
+export default AnimatedHero

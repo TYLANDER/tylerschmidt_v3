@@ -20,8 +20,14 @@ interface ScrollProgress {
 
 export function useScroll() {
   const [position, setPosition] = useState<ScrollPosition>({ x: 0, y: 0 })
-  const [direction, setDirection] = useState<ScrollDirection>({ x: null, y: null })
-  const [progress, setProgress] = useState<ScrollProgress>({ vertical: 0, horizontal: 0 })
+  const [direction, setDirection] = useState<ScrollDirection>({
+    x: null,
+    y: null,
+  })
+  const [progress, setProgress] = useState<ScrollProgress>({
+    vertical: 0,
+    horizontal: 0,
+  })
   const [isScrolling, setIsScrolling] = useState(false)
 
   useEffect(() => {
@@ -36,18 +42,30 @@ export function useScroll() {
 
       // Update direction
       const newDirection: ScrollDirection = {
-        x: currentPosition.x > previousPosition.x ? "right" 
-           : currentPosition.x < previousPosition.x ? "left" : null,
-        y: currentPosition.y > previousPosition.y ? "down" 
-           : currentPosition.y < previousPosition.y ? "up" : null,
+        x:
+          currentPosition.x > previousPosition.x
+            ? "right"
+            : currentPosition.x < previousPosition.x
+              ? "left"
+              : null,
+        y:
+          currentPosition.y > previousPosition.y
+            ? "down"
+            : currentPosition.y < previousPosition.y
+              ? "up"
+              : null,
       }
 
       // Calculate progress
-      const maxScrollY = document.documentElement.scrollHeight - window.innerHeight
-      const maxScrollX = document.documentElement.scrollWidth - window.innerWidth
-      
-      const verticalProgress = maxScrollY > 0 ? currentPosition.y / maxScrollY : 0
-      const horizontalProgress = maxScrollX > 0 ? currentPosition.x / maxScrollX : 0
+      const maxScrollY =
+        document.documentElement.scrollHeight - window.innerHeight
+      const maxScrollX =
+        document.documentElement.scrollWidth - window.innerWidth
+
+      const verticalProgress =
+        maxScrollY > 0 ? currentPosition.y / maxScrollY : 0
+      const horizontalProgress =
+        maxScrollX > 0 ? currentPosition.x / maxScrollX : 0
 
       setPosition(currentPosition)
       setDirection(newDirection)
@@ -110,4 +128,4 @@ export function useScrollIntoView() {
   }
 
   return scrollIntoView
-} 
+}

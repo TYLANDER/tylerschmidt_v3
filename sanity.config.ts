@@ -28,22 +28,16 @@ export default defineConfig({
             S.divider(),
             S.listItem()
               .title("About")
-              .child(
-                S.document()
-                  .schemaType("about")
-                  .documentId("about")
-              ),
+              .child(S.document().schemaType("about").documentId("about")),
             S.listItem()
               .title("Contact")
-              .child(
-                S.document()
-                  .schemaType("contact")
-                  .documentId("contact")
-              ),
+              .child(S.document().schemaType("contact").documentId("contact")),
             S.divider(),
             ...S.documentTypeListItems().filter(
-              (listItem) => 
-                !["siteSettings", "about", "contact"].includes(listItem.getId() || "")
+              (listItem) =>
+                !["siteSettings", "about", "contact"].includes(
+                  listItem.getId() || ""
+                )
             ),
           ]),
     }),
@@ -52,4 +46,4 @@ export default defineConfig({
   schema: {
     types: schemas,
   },
-}) 
+})

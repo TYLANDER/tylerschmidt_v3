@@ -30,19 +30,15 @@ class FireParticle {
 
   reset() {
     // Start at base of fire
-    this.position.set(
-      (Math.random() - 0.5) * 2,
-      -2,
-      (Math.random() - 0.5) * 2
-    )
-    
+    this.position.set((Math.random() - 0.5) * 2, -2, (Math.random() - 0.5) * 2)
+
     // Upward velocity with some randomness
     this.velocity.set(
       (Math.random() - 0.5) * 2,
       Math.random() * 8 + 2,
       (Math.random() - 0.5) * 2
     )
-    
+
     this.life = 0
     this.maxLife = Math.random() * 2 + 1
     this.size = Math.random() * 0.5 + 0.5
@@ -52,21 +48,21 @@ class FireParticle {
   update(deltaTime: number, mouseInfluence: THREE.Vector3) {
     // Age the particle
     this.life += deltaTime
-    
+
     if (this.life >= this.maxLife) {
       this.reset()
       return
     }
-    
+
     // Apply physics
     this.velocity.y -= deltaTime * 2 // Gravity effect
     this.velocity.multiplyScalar(0.99) // Drag
-    
+
     // Add turbulence
     const time = this.life * 2
     this.velocity.x += Math.sin(time + this.position.y * 0.1) * deltaTime
     this.velocity.z += Math.cos(time + this.position.y * 0.1) * deltaTime
-    
+
     // Mouse influence
     if (mouseInfluence.length() > 0) {
       const distance = this.position.distanceTo(mouseInfluence)
@@ -76,10 +72,10 @@ class FireParticle {
         this.velocity.add(force)
       }
     }
-    
+
     // Update position
     this.position.add(this.velocity.clone().multiplyScalar(deltaTime))
-    
+
     // Cool down over time
     this.temperature = Math.max(0, this.temperature - deltaTime * 0.5)
   }
@@ -93,7 +89,10 @@ function FireSystem({ mousePosition }: { mousePosition: THREE.Vector3 }) {
   // Initialize particles
   useMemo(() => {
     const particleCount = 1000
-    const newParticles = Array.from({ length: particleCount }, () => new FireParticle())
+    const newParticles = Array.from(
+      { length: particleCount },
+      () => new FireParticle()
+    )
     particlesRef.current = newParticles
   }, [])
 
@@ -101,31 +100,31 @@ function FireSystem({ mousePosition }: { mousePosition: THREE.Vector3 }) {
     const particleCount = 1000
     return [
       new Float32Array(particleCount * 3),
-      new Float32Array(particleCount * 3)
+      new Float32Array(particleCount * 3),
     ]
   }, [])
 
   useFrame((state) => {
     const deltaTime = state.clock.getDelta()
     timeRef.current += deltaTime
-    
+
     if (!pointsRef.current) return
-    
+
     const particles = particlesRef.current
-    
+
     // Update particles
     particles.forEach((particle, i) => {
       particle.update(deltaTime, mousePosition)
-      
+
       // Update position buffer
       positions[i * 3] = particle.position.x
       positions[i * 3 + 1] = particle.position.y
       positions[i * 3 + 2] = particle.position.z
-      
+
       // Update color buffer based on temperature and life
-      const lifeRatio = 1 - (particle.life / particle.maxLife)
+      const lifeRatio = 1 - particle.life / particle.maxLife
       const temp = particle.temperature * lifeRatio
-      
+
       if (temp > 0.8) {
         // White/yellow (hottest)
         colors[i * 3] = 1
@@ -148,7 +147,7 @@ function FireSystem({ mousePosition }: { mousePosition: THREE.Vector3 }) {
         colors[i * 3 + 2] = 0
       }
     })
-    
+
     // Update buffers
     if (pointsRef.current.geometry.attributes.position) {
       pointsRef.current.geometry.attributes.position.needsUpdate = true
@@ -192,11 +191,14 @@ function FireSystem({ mousePosition }: { mousePosition: THREE.Vector3 }) {
 // Heat distortion effect using custom shader
 function HeatDistortion() {
   const meshRef = useRef<THREE.Mesh>(null)
-  
-  const uniforms = useMemo(() => ({
-    time: { value: 0 },
-    intensity: { value: 0.02 }
-  }), [])
+
+  const uniforms = useMemo(
+    () => ({
+      time: { value: 0 },
+      intensity: { value: 0.02 },
+    }),
+    []
+  )
 
   const vertexShader = `
     varying vec2 vUv;
@@ -256,9 +258,9 @@ function InteractiveFireScene() {
   const handlePointerMove = () => {
     // Convert mouse position to world coordinates
     raycaster.setFromCamera(pointer, camera)
-    const intersectPoint = raycaster.ray.origin.clone().add(
-      raycaster.ray.direction.clone().multiplyScalar(10)
-    )
+    const intersectPoint = raycaster.ray.origin
+      .clone()
+      .add(raycaster.ray.direction.clone().multiplyScalar(10))
     setMousePosition(intersectPoint)
   }
 
@@ -266,7 +268,7 @@ function InteractiveFireScene() {
     <group onPointerMove={handlePointerMove}>
       <FireSystem mousePosition={mousePosition} />
       <HeatDistortion />
-      
+
       {/* Ground plane */}
       <mesh position={[0, -2.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[20, 20]} />
@@ -278,30 +280,35 @@ function InteractiveFireScene() {
 
 export function ParticleFire({ className }: ParticleFireProps) {
   return (
-    <div className={cn("w-full h-full min-h-[500px] bg-black", className)}>
+    <div className={cn("h-full min-h-[500px] w-full bg-black", className)}>
       <Canvas
         camera={{ position: [0, 2, 8], fov: 60 }}
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]}
       >
         <color attach="background" args={["#000"]} />
-        
+
         {/* Lighting */}
         <ambientLight intensity={0.1} />
-        <pointLight position={[0, 5, 0]} intensity={2} color="#ff4400" distance={15} />
-        
+        <pointLight
+          position={[0, 5, 0]}
+          intensity={2}
+          color="#ff4400"
+          distance={15}
+        />
+
         <InteractiveFireScene />
-        
+
         {/* Instructions */}
         <Html position={[0, 4, 0]} center>
-          <div className="text-white text-sm bg-black/50 p-2 rounded backdrop-blur pointer-events-none">
+          <div className="pointer-events-none rounded bg-black/50 p-2 text-sm text-white backdrop-blur">
             Move mouse to influence the flames
           </div>
         </Html>
-        
+
         {/* Fog for atmosphere */}
         <fog attach="fog" args={["#000", 8, 25]} />
       </Canvas>
     </div>
   )
-} 
+}

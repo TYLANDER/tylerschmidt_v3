@@ -13,15 +13,18 @@ interface FluidDynamicsProps {
 // Custom shader material for fluid simulation
 function FluidMaterial() {
   const materialRef = useRef<THREE.ShaderMaterial>(null)
-  
-  const uniforms = useMemo(() => ({
-    time: { value: 0 },
-    mouse: { value: new THREE.Vector2(0.5, 0.5) },
-    resolution: { value: new THREE.Vector2(1024, 1024) },
-    viscosity: { value: 0.8 },
-    force: { value: 0.0 },
-    dye: { value: new THREE.Vector3(0.2, 0.8, 1.0) }
-  }), [])
+
+  const uniforms = useMemo(
+    () => ({
+      time: { value: 0 },
+      mouse: { value: new THREE.Vector2(0.5, 0.5) },
+      resolution: { value: new THREE.Vector2(1024, 1024) },
+      viscosity: { value: 0.8 },
+      force: { value: 0.0 },
+      dye: { value: new THREE.Vector3(0.2, 0.8, 1.0) },
+    }),
+    []
+  )
 
   const vertexShader = `
     varying vec2 vUv;
@@ -141,7 +144,7 @@ function FluidMaterial() {
 function FluidPlane() {
   const meshRef = useRef<THREE.Mesh>(null)
   const { viewport, pointer } = useThree()
-  
+
   useFrame(() => {
     if (meshRef.current) {
       const material = meshRef.current.material as THREE.ShaderMaterial
@@ -150,7 +153,7 @@ function FluidPlane() {
         const x = (pointer.x + 1) / 2
         const y = (pointer.y + 1) / 2
         material.uniforms.mouse.value.set(x, y)
-        
+
         // Gradually reduce force when not interacting
         material.uniforms.force.value *= 0.98
       }
@@ -180,7 +183,7 @@ function FluidPlane() {
 
 export function FluidDynamics({ className }: FluidDynamicsProps) {
   return (
-    <div className={cn("w-full h-full min-h-[500px] bg-black", className)}>
+    <div className={cn("h-full min-h-[500px] w-full bg-black", className)}>
       <Canvas
         camera={{ position: [0, 0, 1], fov: 75 }}
         gl={{ antialias: true, alpha: true }}
@@ -188,14 +191,14 @@ export function FluidDynamics({ className }: FluidDynamicsProps) {
       >
         <color attach="background" args={["#000008"]} />
         <FluidPlane />
-        
+
         {/* Instructions */}
         <Html position={[0, 0, 0]} center>
-          <div className="absolute top-4 left-4 text-white text-sm bg-black/50 p-2 rounded backdrop-blur pointer-events-none">
+          <div className="pointer-events-none absolute top-4 left-4 rounded bg-black/50 p-2 text-sm text-white backdrop-blur">
             Move mouse to create fluid turbulence
           </div>
         </Html>
       </Canvas>
     </div>
   )
-} 
+}

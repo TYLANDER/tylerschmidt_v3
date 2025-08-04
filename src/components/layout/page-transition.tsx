@@ -14,16 +14,16 @@ interface PageWrapperProps {
 const pageVariants = {
   initial: {
     opacity: 0,
-    y: 20
+    y: 20,
   },
   in: {
     opacity: 1,
-    y: 0
+    y: 0,
   },
   out: {
     opacity: 0,
-    y: -20
-  }
+    y: -20,
+  },
 }
 
 const pageTransition = {
@@ -64,4 +64,4 @@ export function PageWrapper({ children }: PageWrapperProps) {
       {children}
     </motion.main>
   )
-} 
+}

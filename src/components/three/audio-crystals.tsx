@@ -19,23 +19,23 @@ interface CrystalProps {
 function Crystal({ position, frequency, audioData }: CrystalProps) {
   const meshRef = useRef<THREE.Mesh>(null)
   const materialRef = useRef<THREE.MeshStandardMaterial>(null)
-  
+
   useFrame((state) => {
     if (meshRef.current && materialRef.current) {
       // Scale based on audio amplitude
       const baseScale = 0.5
       const audioScale = baseScale + audioData * 2
       meshRef.current.scale.setScalar(audioScale)
-      
+
       // Rotation based on frequency
       meshRef.current.rotation.y += (frequency / 1000) * (1 + audioData)
       meshRef.current.rotation.x += (frequency / 2000) * (1 + audioData)
-      
+
       // Color intensity based on audio
       const intensity = 0.3 + audioData * 0.7
-      const hue = (frequency / 255) + state.clock.elapsedTime * 0.1
+      const hue = frequency / 255 + state.clock.elapsedTime * 0.1
       materialRef.current.color.setHSL(hue % 1, 0.8, intensity)
-      
+
       // Emission for glow effect
       materialRef.current.emissive.setHSL(hue % 1, 0.6, audioData * 0.5)
     }
@@ -104,7 +104,9 @@ function CrystalField({ audioData }: { audioData: Float32Array }) {
 function AudioVisualization() {
   const [, setAudioContext] = useState<AudioContext | null>(null)
   const [analyser, setAnalyser] = useState<AnalyserNode | null>(null)
-  const [audioData, setAudioData] = useState<Float32Array>(new Float32Array(256))
+  const [audioData, setAudioData] = useState<Float32Array>(
+    new Float32Array(256)
+  )
   const [isListening, setIsListening] = useState(false)
   const [error, setError] = useState<string>("")
 
@@ -114,12 +116,12 @@ function AudioVisualization() {
       const context = new AudioContext()
       const source = context.createMediaStreamSource(stream)
       const analyserNode = context.createAnalyser()
-      
+
       analyserNode.fftSize = 512
       analyserNode.smoothingTimeConstant = 0.8
-      
+
       source.connect(analyserNode)
-      
+
       setAudioContext(context)
       setAnalyser(analyserNode)
       setIsListening(true)
@@ -136,23 +138,21 @@ function AudioVisualization() {
     if (analyser) {
       const dataArray = new Float32Array(analyser.frequencyBinCount)
       analyser.getFloatFrequencyData(dataArray)
-      
+
       // Normalize the data (from dB to 0-1 range)
-      const normalizedData = dataArray.map(value => 
-        Math.max(0, (value + 100) / 100) // Convert from dB (-100 to 0) to 0-1
+      const normalizedData = dataArray.map(
+        (value) => Math.max(0, (value + 100) / 100) // Convert from dB (-100 to 0) to 0-1
       )
-      
+
       setAudioData(new Float32Array(normalizedData))
     } else if (isListening && error) {
       // Demo mode - generate fake audio data
       const fakeData = new Float32Array(256)
       const time = Date.now() * 0.001
-      
+
       for (let i = 0; i < 256; i++) {
         fakeData[i] = Math.abs(
-          Math.sin(time * 2 + i * 0.1) * 
-          Math.sin(time * 0.5 + i * 0.02) * 
-          0.5
+          Math.sin(time * 2 + i * 0.1) * Math.sin(time * 0.5 + i * 0.02) * 0.5
         )
       }
       setAudioData(fakeData)
@@ -162,26 +162,27 @@ function AudioVisualization() {
   return (
     <>
       <CrystalField audioData={audioData} />
-      
+
       {!isListening && (
         <Html position={[0, 0, 0]} center>
-          <div className="text-center space-y-4">
+          <div className="space-y-4 text-center">
             <button
               onClick={startAudio}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="rounded-lg bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700"
             >
               🎵 Enable Microphone
             </button>
-            <p className="text-white text-sm max-w-xs">
-              Allow microphone access to see crystals react to your voice or music
+            <p className="max-w-xs text-sm text-white">
+              Allow microphone access to see crystals react to your voice or
+              music
             </p>
           </div>
         </Html>
       )}
-      
+
       {error && (
         <Html position={[0, -8, 0]} center>
-          <div className="text-orange-400 text-sm bg-black/50 p-2 rounded backdrop-blur">
+          <div className="rounded bg-black/50 p-2 text-sm text-orange-400 backdrop-blur">
             {error}
           </div>
         </Html>
@@ -192,25 +193,29 @@ function AudioVisualization() {
 
 export function AudioCrystals({ className }: AudioCrystalsProps) {
   return (
-    <div className={cn("w-full h-full min-h-[500px] bg-gray-900", className)}>
+    <div className={cn("h-full min-h-[500px] w-full bg-gray-900", className)}>
       <Canvas
         camera={{ position: [0, 5, 15], fov: 60 }}
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]}
       >
         <color attach="background" args={["#0a0a1a"]} />
-        
+
         {/* Lighting */}
         <ambientLight intensity={0.2} />
         <pointLight position={[10, 10, 10]} intensity={1} color="#66aaff" />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} color="#ff6666" />
+        <pointLight
+          position={[-10, -10, -10]}
+          intensity={0.5}
+          color="#ff6666"
+        />
         <pointLight position={[0, 20, 0]} intensity={0.8} color="#88ff88" />
-        
+
         <AudioVisualization />
-        
+
         {/* Fog for atmosphere */}
         <fog attach="fog" args={["#0a0a1a", 10, 50]} />
       </Canvas>
     </div>
   )
-} 
+}

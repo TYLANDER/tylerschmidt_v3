@@ -53,7 +53,7 @@ export function ContactForm({ className }: ContactFormProps) {
     timeline: "",
     projectType: "",
   })
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [errors, setErrors] = useState<Partial<FormData>>({})
@@ -75,22 +75,22 @@ export function ContactForm({ className }: ContactFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!validateForm()) return
 
     setIsSubmitting(true)
-    
+
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+
     setIsSubmitting(false)
     setIsSubmitted(true)
   }
 
   const handleInputChange = (field: keyof FormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
+    setFormData((prev) => ({ ...prev, [field]: value }))
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: undefined }))
+      setErrors((prev) => ({ ...prev, [field]: undefined }))
     }
   }
 
@@ -100,28 +100,38 @@ export function ContactForm({ className }: ContactFormProps) {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className={cn("text-center space-y-6", className)}
+        className={cn("space-y-6 text-center", className)}
       >
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", bounce: 0.5 }}
-          className="w-16 h-16 mx-auto bg-success rounded-full flex items-center justify-center"
+          className="bg-success mx-auto flex h-16 w-16 items-center justify-center rounded-full"
         >
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          <svg
+            className="h-8 w-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
           </svg>
         </motion.div>
-        
+
         <AnimatedText
           text="Thank you for reaching out!"
           as="h3"
           variant="fade"
           className="text-2xl font-semibold"
         />
-        
+
         <AnimatedText
-                          text="I&apos;ll get back to you within 24 hours. Looking forward to discussing your project!"
+          text="I'll get back to you within 24 hours. Looking forward to discussing your project!"
           as="p"
           variant="fade"
           delay={0.2}
@@ -140,7 +150,7 @@ export function ContactForm({ className }: ContactFormProps) {
       transition={{ duration: 0.6 }}
     >
       {/* Basic Info */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <FormField
           label="Name"
           value={formData.name}
@@ -148,7 +158,7 @@ export function ContactForm({ className }: ContactFormProps) {
           error={errors.name}
           required
         />
-        
+
         <FormField
           label="Email"
           type="email"
@@ -167,21 +177,21 @@ export function ContactForm({ className }: ContactFormProps) {
       />
 
       {/* Project Details */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         <SelectField
           label="Project Type"
           value={formData.projectType}
           onChange={(value) => handleInputChange("projectType", value)}
           options={projectTypeOptions}
         />
-        
+
         <SelectField
           label="Budget Range"
           value={formData.budget}
           onChange={(value) => handleInputChange("budget", value)}
           options={budgetOptions}
         />
-        
+
         <SelectField
           label="Timeline"
           value={formData.timeline}
@@ -201,10 +211,7 @@ export function ContactForm({ className }: ContactFormProps) {
         rows={6}
       />
 
-      <motion.div
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-      >
+      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
         <Button
           type="submit"
           size="lg"
@@ -244,10 +251,10 @@ function FormField({
 
   return (
     <div className="space-y-2">
-      <label htmlFor={id} className="text-sm font-medium text-foreground">
+      <label htmlFor={id} className="text-foreground text-sm font-medium">
         {label} {required && <span className="text-destructive">*</span>}
       </label>
-      
+
       <div className="relative">
         {type === "textarea" ? (
           <textarea
@@ -257,10 +264,11 @@ function FormField({
             placeholder={placeholder}
             rows={rows}
             className={cn(
-              "w-full px-4 py-3 rounded-lg border border-border bg-background",
-              "focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none",
-              "transition-colors duration-200 resize-none",
-              error && "border-destructive focus:border-destructive focus:ring-destructive"
+              "border-border bg-background w-full rounded-lg border px-4 py-3",
+              "focus:border-accent focus:ring-accent focus:ring-1 focus:outline-none",
+              "resize-none transition-colors duration-200",
+              error &&
+                "border-destructive focus:border-destructive focus:ring-destructive"
             )}
           />
         ) : (
@@ -271,15 +279,16 @@ function FormField({
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
             className={cn(
-              "w-full px-4 py-3 rounded-lg border border-border bg-background",
-              "focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none",
+              "border-border bg-background w-full rounded-lg border px-4 py-3",
+              "focus:border-accent focus:ring-accent focus:ring-1 focus:outline-none",
               "transition-colors duration-200",
-              error && "border-destructive focus:border-destructive focus:ring-destructive"
+              error &&
+                "border-destructive focus:border-destructive focus:ring-destructive"
             )}
           />
         )}
       </div>
-      
+
       <AnimatePresence>
         {error && (
           <motion.p
@@ -287,7 +296,7 @@ function FormField({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="text-sm text-destructive"
+            className="text-destructive text-sm"
           >
             {error}
           </motion.p>
@@ -309,17 +318,17 @@ function SelectField({ label, value, onChange, options }: SelectFieldProps) {
 
   return (
     <div className="space-y-2">
-      <label htmlFor={id} className="text-sm font-medium text-foreground">
+      <label htmlFor={id} className="text-foreground text-sm font-medium">
         {label}
       </label>
-      
+
       <select
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className={cn(
-          "w-full px-4 py-3 rounded-lg border border-border bg-background",
-          "focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none",
+          "border-border bg-background w-full rounded-lg border px-4 py-3",
+          "focus:border-accent focus:ring-accent focus:ring-1 focus:outline-none",
           "transition-colors duration-200"
         )}
       >
@@ -332,4 +341,4 @@ function SelectField({ label, value, onChange, options }: SelectFieldProps) {
       </select>
     </div>
   )
-} 
+}

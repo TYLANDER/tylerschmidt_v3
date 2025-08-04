@@ -2,16 +2,18 @@
 
 /* Variable Fonts - Most Efficient Approach */
 @font-face {
-  font-family: 'Aeonik';
-  src: url('/fonts/Aeonik-Full-Family-Web/Aeonik Variable/Aeonik-Roman-VF.woff2') format('woff2-variations');
+  font-family: "Aeonik";
+  src: url("/fonts/Aeonik-Full-Family-Web/Aeonik Variable/Aeonik-Roman-VF.woff2")
+    format("woff2-variations");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Aeonik';
-  src: url('/fonts/Aeonik-Full-Family-Web/Aeonik Variable/Aeonik-Italic-VF.woff2') format('woff2-variations');
+  font-family: "Aeonik";
+  src: url("/fonts/Aeonik-Full-Family-Web/Aeonik Variable/Aeonik-Italic-VF.woff2")
+    format("woff2-variations");
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;
@@ -36,13 +38,13 @@
   --destructive: #ff0000;
   --destructive-foreground: #ffffff;
   --ring: #00ffff;
-  
+
   /* Semantic Colors */
   --success: #00ff00;
   --warning: #ffff00;
   --error: #ff0000;
   --info: #00ffff;
-  
+
   /* Felipe Pantone RGB Colors */
   --rgb-red: #ff0000;
   --rgb-green: #00ff00;
@@ -50,16 +52,18 @@
   --rgb-cyan: #00ffff;
   --rgb-magenta: #ff00ff;
   --rgb-yellow: #ffff00;
-  
+
   /* Chrome/Metallic Colors */
   --chrome-light: #e8e8e8;
   --chrome-mid: #c0c0c0;
   --chrome-dark: #808080;
   --chrome-shadow: #404040;
-  
+
   /* Typography */
-  --font-sans: 'Aeonik', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  --font-sans:
+    "Aeonik", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
 }
 
 @theme inline {
@@ -85,10 +89,10 @@
   --color-warning: var(--warning);
   --color-error: var(--error);
   --color-info: var(--info);
-  
+
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
-  
+
   --radius: 0.25rem;
   --radius-sm: 0.125rem;
   --radius-lg: 0.5rem;
@@ -132,7 +136,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  font-feature-settings: "rlig" 1, "calt" 1;
+  font-feature-settings:
+    "rlig" 1,
+    "calt" 1;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -143,16 +149,28 @@ body {
 
 /* Digital Dazzle Background */
 body:before {
-  content: '';
+  content: "";
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(255, 0, 128, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(255, 255, 0, 0.05) 0%, transparent 50%);
+  background:
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(255, 0, 128, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(0, 255, 255, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(255, 255, 0, 0.05) 0%,
+      transparent 50%
+    );
   z-index: -1;
   pointer-events: none;
   animation: rgb-shift 8s ease infinite;
@@ -209,14 +227,30 @@ body:before {
 }
 
 /* Font Weight Utilities for Aeonik */
-.font-air { font-weight: 100; }
-.font-thin { font-weight: 200; }
-.font-light { font-weight: 300; }
-.font-normal { font-weight: 400; }
-.font-medium { font-weight: 500; }
-.font-semibold { font-weight: 600; }
-.font-bold { font-weight: 700; }
-.font-black { font-weight: 900; }
+.font-air {
+  font-weight: 100;
+}
+.font-thin {
+  font-weight: 200;
+}
+.font-light {
+  font-weight: 300;
+}
+.font-normal {
+  font-weight: 400;
+}
+.font-medium {
+  font-weight: 500;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
+}
+.font-black {
+  font-weight: 900;
+}
 
 /* Line Clamp Utilities */
 .line-clamp-2 {
@@ -231,23 +265,45 @@ body:before {
 
 /* RGB Gradient Animations */
 @keyframes rgb-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes glitch {
-  0% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-  100% { transform: translate(0); }
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
 }
 
 @keyframes dazzle-shift {
-  0% { background-position: 0px 0px; }
-  100% { background-position: 60px 30px; }
+  0% {
+    background-position: 0px 0px;
+  }
+  100% {
+    background-position: 60px 30px;
+  }
 }
 
 .rgb-gradient {
@@ -323,13 +379,17 @@ body:before {
 
 /* Dazzle Camouflage Pattern */
 .dazzle-pattern {
-  background-image: 
+  background-image:
     linear-gradient(45deg, transparent 25%, rgba(255, 255, 255, 0.1) 25%),
     linear-gradient(-45deg, transparent 25%, rgba(255, 255, 255, 0.05) 25%),
     linear-gradient(45deg, rgba(255, 255, 255, 0.05) 75%, transparent 75%),
     linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 75%, transparent 75%);
   background-size: 30px 30px;
-  background-position: 0 0, 0 15px, 15px -15px, -15px 0px;
+  background-position:
+    0 0,
+    0 15px,
+    15px -15px,
+    -15px 0px;
   animation: dazzle-shift 8s linear infinite;
 }
 
@@ -345,10 +405,10 @@ body:before {
   border: 1px solid var(--chrome-mid);
   color: var(--background);
   font-weight: 600;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.3);
-  box-shadow: 
-    inset 0 1px 0 rgba(255,255,255,0.3),
-    0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.3);
   transition: all 0.2s ease;
 }
 
@@ -360,30 +420,33 @@ body:before {
     var(--chrome-mid) 75%,
     var(--chrome-dark) 100%
   );
-  box-shadow: 
-    inset 0 1px 0 rgba(255,255,255,0.4),
-    0 4px 8px rgba(0,0,0,0.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 4px 8px rgba(0, 0, 0, 0.4);
   transform: translateY(-1px);
 }
 
 /* Subtle Glow Effects - Reduced intensity */
 .neon-glow {
-  box-shadow: 
+  box-shadow:
     0 0 2px var(--accent),
     0 0 4px var(--accent);
 }
 
 .neon-text {
   color: var(--accent);
-  text-shadow: 
+  text-shadow:
     0 0 2px var(--accent),
     0 0 4px var(--accent);
 }
 
 /* Digital Corruption Grid */
 .corruption-grid {
-  background-image: 
-    radial-gradient(circle at 1px 1px, var(--accent) 1px, transparent 0);
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    var(--accent) 1px,
+    transparent 0
+  );
   background-size: 20px 20px;
   opacity: 0.1;
 }
@@ -395,7 +458,7 @@ body:before {
 
 .kinetic-hover:hover {
   transform: translateY(-4px) rotate(1deg);
-  box-shadow: 
+  box-shadow:
     0 8px 25px rgba(255, 0, 128, 0.3),
     0 0 20px rgba(0, 255, 255, 0.2);
 }
@@ -407,7 +470,7 @@ body:before {
 }
 
 .data-viz:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -423,8 +486,12 @@ body:before {
 }
 
 @keyframes scan {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 /* Disruptive Pattern Overlay */
@@ -433,13 +500,13 @@ body:before {
 }
 
 .disruptive-overlay:after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
+  background:
     repeating-linear-gradient(
       45deg,
       transparent,

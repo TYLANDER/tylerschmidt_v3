@@ -90,7 +90,15 @@ export function AnimatedText({
   }
 
   if (variant === "decrypt") {
-    return <DecryptText text={text} className={className} Component={Component} delay={delay} onComplete={onComplete} />
+    return (
+      <DecryptText
+        text={text}
+        className={className}
+        Component={Component}
+        delay={delay}
+        onComplete={onComplete}
+      />
+    )
   }
 
   return (
@@ -114,7 +122,7 @@ export function AnimatedText({
               repeatType: "reverse",
               repeatDelay: 2,
             }}
-            className="inline-block mr-2"
+            className="mr-2 inline-block"
           >
             {word}
           </motion.span>
@@ -133,7 +141,7 @@ interface GradientTextProps {
 
 const gradients = {
   primary: "from-primary to-accent",
-  accent: "from-accent to-warning", 
+  accent: "from-accent to-warning",
   rainbow: "from-purple-400 via-pink-500 to-red-500",
   sunset: "from-orange-400 via-pink-500 to-purple-600",
   ocean: "from-blue-400 via-cyan-500 to-teal-600",
@@ -160,11 +168,11 @@ export function GradientText({
 }
 
 // Classified text component - randomly encrypts words like a redacted document
-export function ClassifiedText({ 
-  text, 
-  className, 
+export function ClassifiedText({
+  text,
+  className,
   redactionRate = 0.15,
-  delay = 0 
+  delay = 0,
 }: {
   text: string
   className?: string
@@ -173,31 +181,34 @@ export function ClassifiedText({
 }) {
   const [mounted, setMounted] = useState(false)
   const [redactedIndices, setRedactedIndices] = useState<number[]>([])
-  
+
   // Prevent hydration mismatch by only showing encrypted version client-side
   useEffect(() => {
     setMounted(true)
-    const words = text.split(' ')
-    
+    const words = text.split(" ")
+
     // Use deterministic selection based on text hash for consistent results
     let seed = 0
     for (let i = 0; i < text.length; i++) {
       seed = ((seed << 5) - seed + text.charCodeAt(i)) & 0xffffffff
     }
-    
+
     // Simple deterministic random using the seed
     const random = (index: number) => {
       const x = Math.sin(seed + index * 1000) * 10000
       return x - Math.floor(x)
     }
-    
+
     const indices: number[] = []
     for (let i = 0; i < words.length; i++) {
-      if (random(i) < redactionRate && indices.length < Math.floor(words.length * redactionRate * 1.5)) {
+      if (
+        random(i) < redactionRate &&
+        indices.length < Math.floor(words.length * redactionRate * 1.5)
+      ) {
         indices.push(i)
       }
     }
-    
+
     setRedactedIndices(indices)
   }, [text, redactionRate])
 
@@ -206,33 +217,33 @@ export function ClassifiedText({
     return <p className={className}>{text}</p>
   }
 
-  const words = text.split(' ')
-  
+  const words = text.split(" ")
+
   return (
     <p className={className}>
       {words.map((word, index) => {
         const isRedacted = redactedIndices.includes(index)
         const redactedIndex = redactedIndices.indexOf(index)
         const wordDelay = delay + (redactedIndex >= 0 ? redactedIndex * 0.1 : 0)
-        
+
         if (isRedacted) {
           return (
             <React.Fragment key={index}>
-              <DecryptText 
-                text={word} 
-                Component="span" 
+              <DecryptText
+                text={word}
+                Component="span"
                 delay={wordDelay}
                 className="inline"
               />
-              {index < words.length - 1 ? ' ' : ''}
+              {index < words.length - 1 ? " " : ""}
             </React.Fragment>
           )
         }
-        
+
         return (
           <React.Fragment key={index}>
             {word}
-            {index < words.length - 1 ? ' ' : ''}
+            {index < words.length - 1 ? " " : ""}
           </React.Fragment>
         )
       })}
@@ -241,13 +252,13 @@ export function ClassifiedText({
 }
 
 // Decrypt animation component inspired by Reform Collective
-function DecryptText({ 
-  text, 
-  className, 
-  Component, 
-  delay = 0, 
+function DecryptText({
+  text,
+  className,
+  Component,
+  delay = 0,
 
-  onComplete 
+  onComplete,
 }: {
   text: string
   className?: string
@@ -256,40 +267,51 @@ function DecryptText({
   onComplete?: () => void
 }) {
   const [displayText, setDisplayText] = useState("")
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*"
-  
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*"
+
   useEffect(() => {
     // Initialize with random characters
-    setDisplayText(text.split('').map(char => 
-      char === ' ' ? ' ' : characters[Math.floor(Math.random() * characters.length)]
-    ).join(''))
+    setDisplayText(
+      text
+        .split("")
+        .map((char) =>
+          char === " "
+            ? " "
+            : characters[Math.floor(Math.random() * characters.length)]
+        )
+        .join("")
+    )
   }, [text, characters])
 
   useEffect(() => {
     const timer = setTimeout(() => {
       let iteration = 0
       const interval = setInterval(() => {
-        setDisplayText(() => 
-          text.split('').map((char, index) => {
-            if (char === ' ') return ' '
-            if (index < iteration) return text[index]
-            return characters[Math.floor(Math.random() * characters.length)]
-          }).join('')
+        setDisplayText(() =>
+          text
+            .split("")
+            .map((char, index) => {
+              if (char === " ") return " "
+              if (index < iteration) return text[index]
+              return characters[Math.floor(Math.random() * characters.length)]
+            })
+            .join("")
         )
-        
+
         if (iteration >= text.length) {
           clearInterval(interval)
           onComplete?.()
         }
-        
+
         iteration += 1.5
       }, 15)
-      
+
       return () => clearInterval(interval)
     }, delay * 1000)
-    
+
     return () => clearTimeout(timer)
   }, [text, delay, onComplete, characters])
 
   return React.createElement(Component, { className }, displayText)
-} 
+}

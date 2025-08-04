@@ -15,10 +15,16 @@ interface LoadingScreenProps {
 const loadingVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
-  exit: { opacity: 0, scale: 0.95 }
+  exit: { opacity: 0, scale: 0.95 },
 }
 
-function MinimalLoader({ progress, message }: { progress?: number; message?: string }) {
+function MinimalLoader({
+  progress,
+  message,
+}: {
+  progress?: number
+  message?: string
+}) {
   return (
     <div className="flex flex-col items-center justify-center space-y-8">
       {/* Logo or brand mark */}
@@ -30,30 +36,30 @@ function MinimalLoader({ progress, message }: { progress?: number; message?: str
         transition={{
           duration: 2,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: "easeInOut",
         }}
-        className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl"
+        className="from-primary to-accent h-16 w-16 rounded-2xl bg-gradient-to-br"
       />
-      
+
       {/* Progress bar */}
       {typeof progress === "number" && (
-        <div className="w-64 h-1 bg-muted rounded-full overflow-hidden">
+        <div className="bg-muted h-1 w-64 overflow-hidden rounded-full">
           <motion.div
-            className="h-full bg-gradient-to-r from-primary to-accent"
+            className="from-primary to-accent h-full bg-gradient-to-r"
             initial={{ width: "0%" }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           />
         </div>
       )}
-      
+
       {/* Loading text */}
       {message && (
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-sm text-muted-foreground"
+          className="text-muted-foreground text-sm"
         >
           {message}
         </motion.p>
@@ -62,7 +68,13 @@ function MinimalLoader({ progress, message }: { progress?: number; message?: str
   )
 }
 
-function DetailedLoader({ progress, message }: { progress?: number; message?: string }) {
+function DetailedLoader({
+  progress,
+  message,
+}: {
+  progress?: number
+  message?: string
+}) {
   return (
     <div className="flex flex-col items-center justify-center space-y-12">
       {/* Animated logo */}
@@ -72,17 +84,17 @@ function DetailedLoader({ progress, message }: { progress?: number; message?: st
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="relative"
       >
-        <div className="w-20 h-20 bg-gradient-to-br from-primary via-accent to-warning rounded-3xl" />
+        <div className="from-primary via-accent to-warning h-20 w-20 rounded-3xl bg-gradient-to-br" />
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-primary via-accent to-warning rounded-3xl opacity-20"
+          className="from-primary via-accent to-warning absolute inset-0 rounded-3xl bg-gradient-to-br opacity-20"
           animate={{
             scale: [1, 1.2, 1],
-            opacity: [0.2, 0.4, 0.2]
+            opacity: [0.2, 0.4, 0.2],
           }}
           transition={{
             duration: 2,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         />
       </motion.div>
@@ -91,9 +103,9 @@ function DetailedLoader({ progress, message }: { progress?: number; message?: st
       <div className="w-80 space-y-4">
         {/* Progress bar */}
         <div className="relative">
-          <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+          <div className="bg-muted h-2 w-full overflow-hidden rounded-full">
             <motion.div
-              className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
+              className="from-primary to-accent h-full rounded-full bg-gradient-to-r"
               initial={{ width: "0%" }}
               animate={{ width: `${progress || 0}%` }}
               transition={{ duration: 0.3, ease: "easeOut" }}
@@ -103,7 +115,7 @@ function DetailedLoader({ progress, message }: { progress?: number; message?: st
             <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="absolute -top-6 right-0 text-xs text-muted-foreground"
+              className="text-muted-foreground absolute -top-6 right-0 text-xs"
             >
               {Math.round(progress)}%
             </motion.span>
@@ -115,7 +127,7 @@ function DetailedLoader({ progress, message }: { progress?: number; message?: st
           <AnimatedText
             text={message}
             variant="fade"
-            className="text-center text-muted-foreground"
+            className="text-muted-foreground text-center"
           />
         )}
       </div>
@@ -125,13 +137,13 @@ function DetailedLoader({ progress, message }: { progress?: number; message?: st
         {[0, 1, 2].map((index) => (
           <motion.div
             key={index}
-            className="w-2 h-2 bg-accent rounded-full"
+            className="bg-accent h-2 w-2 rounded-full"
             animate={{ scale: [1, 1.2, 1] }}
             transition={{
               duration: 0.6,
               repeat: Infinity,
               ease: "easeInOut",
-              delay: index * 0.2
+              delay: index * 0.2,
             }}
           />
         ))}
@@ -140,28 +152,34 @@ function DetailedLoader({ progress, message }: { progress?: number; message?: st
   )
 }
 
-function ArtisticLoader({ progress, message }: { progress?: number; message?: string }) {
+function ArtisticLoader({
+  progress,
+  message,
+}: {
+  progress?: number
+  message?: string
+}) {
   return (
     <div className="flex flex-col items-center justify-center space-y-16">
       {/* Artistic geometric animation */}
-      <div className="relative w-32 h-32">
+      <div className="relative h-32 w-32">
         {/* Outer ring */}
         <motion.div
-          className="absolute inset-0 border-2 border-primary/20 rounded-full"
+          className="border-primary/20 absolute inset-0 rounded-full border-2"
           animate={{ rotate: 360 }}
           transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
         />
-        
+
         {/* Middle ring */}
         <motion.div
-          className="absolute inset-2 border-2 border-accent/40 rounded-full"
+          className="border-accent/40 absolute inset-2 rounded-full border-2"
           animate={{ rotate: -360 }}
           transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
         />
-        
+
         {/* Inner circle */}
         <motion.div
-          className="absolute inset-6 bg-gradient-to-br from-primary to-accent rounded-full"
+          className="from-primary to-accent absolute inset-6 rounded-full bg-gradient-to-br"
           animate={{
             scale: [1, 1.05, 1],
             opacity: [0.7, 1, 0.7],
@@ -169,14 +187,14 @@ function ArtisticLoader({ progress, message }: { progress?: number; message?: st
           transition={{
             duration: 2,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         />
-        
+
         {/* Progress indicator */}
         {typeof progress === "number" && (
           <motion.div
-            className="absolute inset-0 border-4 border-transparent border-t-primary rounded-full"
+            className="border-t-primary absolute inset-0 rounded-full border-4 border-transparent"
             style={{ transform: `rotate(${(progress / 100) * 360}deg)` }}
             transition={{ duration: 0.5, ease: "easeOut" }}
           />
@@ -184,11 +202,11 @@ function ArtisticLoader({ progress, message }: { progress?: number; message?: st
       </div>
 
       {/* Floating elements */}
-      <div className="relative w-full h-8">
+      <div className="relative h-8 w-full">
         {[...Array(5)].map((_, index) => (
           <motion.div
             key={index}
-            className="absolute w-1 h-1 bg-accent rounded-full"
+            className="bg-accent absolute h-1 w-1 rounded-full"
             style={{
               left: `${20 + index * 15}%`,
               top: "50%",
@@ -259,4 +277,4 @@ export function LoadingScreen({
       )}
     </AnimatePresence>
   )
-} 
+}

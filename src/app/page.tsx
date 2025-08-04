@@ -1,4 +1,7 @@
-import { AnimatedText, GradientText } from "@/components/animations/animated-text"
+import {
+  AnimatedText,
+  GradientText,
+} from "@/components/animations/animated-text"
 import { Button } from "@/components/ui/button"
 import { LoadingScreen } from "@/components/ui/loading-screen"
 import { PageWrapper } from "@/components/layout/page-transition"
@@ -7,36 +10,35 @@ export default function HomePage() {
   return (
     <PageWrapper>
       {/* Hero Section */}
-      <section className="flex-1 flex items-center justify-center px-6 py-20 min-h-screen">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          
+      <section className="flex min-h-screen flex-1 items-center justify-center px-6 py-20">
+        <div className="mx-auto max-w-4xl space-y-8 text-center">
           {/* Main Heading */}
           <div className="space-y-4">
             <AnimatedText
               text="Tyler Schmidt"
               as="h1"
               variant="fade"
-              className="text-6xl md:text-8xl font-bold tracking-tight"
+              className="text-6xl font-bold tracking-tight md:text-8xl"
               delay={0.2}
               stagger={0.05}
             />
-            
+
             <AnimatedText
               text="UX/UI Designer & Engineer"
               as="h2"
               variant="slide"
-              className="text-xl md:text-2xl text-muted-foreground font-medium"
+              className="text-muted-foreground text-xl font-medium md:text-2xl"
               delay={0.8}
             />
           </div>
 
           {/* Description */}
-          <div className="max-w-2xl mx-auto">
+          <div className="mx-auto max-w-2xl">
             <AnimatedText
               text="Crafting award-winning digital experiences that push the boundaries of design and technology."
               as="p"
               variant="fade"
-              className="text-lg text-muted-foreground leading-relaxed"
+              className="text-muted-foreground text-lg leading-relaxed"
               delay={1.2}
             />
           </div>
@@ -46,23 +48,23 @@ export default function HomePage() {
             <GradientText
               text="Modern Design"
               gradient="primary"
-              className="text-2xl font-semibold block"
+              className="block text-2xl font-semibold"
             />
             <GradientText
               text="Sophisticated Animations"
               gradient="rainbow"
-              className="text-2xl font-semibold block"
+              className="block text-2xl font-semibold"
               animated
             />
             <GradientText
               text="Cutting-Edge Technology"
               gradient="sunset"
-              className="text-2xl font-semibold block"
+              className="block text-2xl font-semibold"
             />
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
+          <div className="flex flex-col items-center justify-center gap-4 pt-8 sm:flex-row">
             <Button size="lg" variant="magnetic">
               View My Work
             </Button>
@@ -72,11 +74,11 @@ export default function HomePage() {
           </div>
 
           {/* Component Showcase */}
-          <div className="pt-16 space-y-8">
+          <div className="space-y-8 pt-16">
             <h3 className="text-2xl font-semibold">Component Showcase</h3>
-            
+
             {/* Button Variants */}
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-wrap justify-center gap-4">
               <Button variant="default">Default</Button>
               <Button variant="secondary">Secondary</Button>
               <Button variant="outline">Outline</Button>
@@ -106,7 +108,7 @@ export default function HomePage() {
                 <AnimatedText
                   text="Typewriter Effect"
                   variant="typewriter"
-                  className="text-lg font-medium font-mono"
+                  className="font-mono text-lg font-medium"
                 />
                 <AnimatedText
                   text="Reveal Animation"
@@ -116,25 +118,25 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border py-8 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm text-muted-foreground">
-            Portfolio v3.0 — Built with Next.js, TypeScript, Tailwind CSS, and Framer Motion
+      <footer className="border-border border-t px-6 py-8">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="text-muted-foreground text-sm">
+            Portfolio v3.0 — Built with Next.js, TypeScript, Tailwind CSS, and
+            Framer Motion
           </p>
         </div>
       </footer>
 
       {/* Loading Screen Demo - Hidden by default */}
-      <LoadingScreen 
-        show={false} 
-        progress={65} 
-        message="Building something amazing..." 
-        variant="detailed" 
+      <LoadingScreen
+        show={false}
+        progress={65}
+        message="Building something amazing..."
+        variant="detailed"
       />
     </PageWrapper>
   )

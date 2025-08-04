@@ -32,7 +32,15 @@ export type ProjectStatus = "completed" | "in-progress" | "concept" | "archived"
 export interface ProjectLink {
   title: string
   url: string
-  type: "website" | "github" | "app-store" | "play-store" | "figma" | "behance" | "dribbble" | "other"
+  type:
+    | "website"
+    | "github"
+    | "app-store"
+    | "play-store"
+    | "figma"
+    | "behance"
+    | "dribbble"
+    | "other"
 }
 
 export interface ImageAsset {
@@ -80,12 +88,12 @@ export interface Skill {
   years?: number
 }
 
-export type SkillCategory = 
-  | "design" 
-  | "frontend" 
-  | "backend" 
-  | "mobile" 
-  | "tools" 
+export type SkillCategory =
+  | "design"
+  | "frontend"
+  | "backend"
+  | "mobile"
+  | "tools"
   | "other"
 
 export type SkillLevel = "beginner" | "intermediate" | "advanced" | "expert"
@@ -121,10 +129,7 @@ export interface ContactInfo {
   socialLinks: SocialLink[]
 }
 
-export type AvailabilityStatus = 
-  | "available" 
-  | "busy" 
-  | "unavailable"
+export type AvailabilityStatus = "available" | "busy" | "unavailable"
 
 export type ContactMethod = "email" | "phone" | "social"
 
@@ -134,9 +139,9 @@ export interface SocialLink {
   username: string
 }
 
-export type SocialPlatform = 
+export type SocialPlatform =
   | "twitter"
-  | "linkedin" 
+  | "linkedin"
   | "github"
   | "dribbble"
   | "behance"
@@ -202,9 +207,9 @@ export interface CursorProps {
   hideNativeCursor?: boolean
 }
 
-export type CursorVariant = 
+export type CursorVariant =
   | "default"
-  | "pointer" 
+  | "pointer"
   | "text"
   | "grab"
   | "grabbing"
@@ -264,4 +269,4 @@ export interface FilterProps {
   technologies?: string[]
   selectedTech?: string[]
   onTechChange?: (tech: string[]) => void
-} 
+}

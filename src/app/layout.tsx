@@ -9,7 +9,8 @@ export const metadata: Metadata = {
     default: "Tyler Schmidt - UX/UI Designer & Engineer",
     template: "%s | Tyler Schmidt",
   },
-  description: "Award-winning portfolio showcasing cutting-edge UX/UI design and engineering work. Specializing in modern web applications, mobile experiences, and interactive design.",
+  description:
+    "Award-winning portfolio showcasing cutting-edge UX/UI design and engineering work. Specializing in modern web applications, mobile experiences, and interactive design.",
   keywords: [
     "UX Designer",
     "UI Designer",
@@ -30,13 +31,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://tylerschmidt.dev",
     title: "Tyler Schmidt - UX/UI Designer & Engineer",
-    description: "Award-winning portfolio showcasing cutting-edge UX/UI design and engineering work.",
+    description:
+      "Award-winning portfolio showcasing cutting-edge UX/UI design and engineering work.",
     siteName: "Tyler Schmidt Portfolio",
   },
   twitter: {
     card: "summary_large_image",
     title: "Tyler Schmidt - UX/UI Designer & Engineer",
-    description: "Award-winning portfolio showcasing cutting-edge UX/UI design and engineering work.",
+    description:
+      "Award-winning portfolio showcasing cutting-edge UX/UI design and engineering work.",
     creator: "@tylerschmidt",
   },
   robots: {
@@ -64,20 +67,32 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className="font-sans antialiased">
         <SmoothScrollWrapper>
-          <div className="relative min-h-screen bg-background">
+          <div className="bg-background relative min-h-screen">
             <Navigation />
-            <PageTransition>
-              {children}
-            </PageTransition>
+            <PageTransition>{children}</PageTransition>
           </div>
         </SmoothScrollWrapper>
       </body>

@@ -5,36 +5,37 @@ import { PageWrapper } from "@/components/layout/page-transition"
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch to discuss your next project. I'm always excited to work on new challenges.",
+  description:
+    "Get in touch to discuss your next project. I'm always excited to work on new challenges.",
 }
 
 export default function ContactPage() {
   return (
     <PageWrapper>
       <div className="container mx-auto px-6 py-16">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center space-y-8 mb-16">
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-16 space-y-8 text-center">
             <AnimatedText
-              text="Let&apos;s Work Together"
+              text="Let's Work Together"
               as="h1"
               variant="fade"
-              className="text-4xl md:text-6xl font-bold"
+              className="text-4xl font-bold md:text-6xl"
             />
-            
+
             <AnimatedText
-              text="Ready to bring your vision to life? I&apos;d love to hear about your project."
+              text="Ready to bring your vision to life? I'd love to hear about your project."
               as="p"
               variant="fade"
               delay={0.3}
-              className="text-lg text-muted-foreground max-w-2xl mx-auto"
+              className="text-muted-foreground mx-auto max-w-2xl text-lg"
             />
           </div>
 
-          <div className="max-w-2xl mx-auto">
+          <div className="mx-auto max-w-2xl">
             <ContactForm />
           </div>
         </div>
       </div>
     </PageWrapper>
   )
-} 
+}

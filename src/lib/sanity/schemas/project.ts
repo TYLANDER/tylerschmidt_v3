@@ -95,7 +95,10 @@ export default defineType({
       name: "year",
       title: "Year",
       type: "number",
-      validation: (Rule) => Rule.required().min(2000).max(new Date().getFullYear() + 1),
+      validation: (Rule) =>
+        Rule.required()
+          .min(2000)
+          .max(new Date().getFullYear() + 1),
     }),
     defineField({
       name: "status",
@@ -251,4 +254,4 @@ export default defineType({
       by: [{ field: "title", direction: "asc" }],
     },
   ],
-}) 
+})

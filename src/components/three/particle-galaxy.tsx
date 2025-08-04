@@ -13,32 +13,32 @@ interface ParticleGalaxyProps {
 function Galaxy() {
   const ref = useRef<THREE.Points>(null)
   useThree() // Access three context
-  
+
   // Generate galaxy particles
   const [positions, colors] = useMemo(() => {
     const positions = new Float32Array(5000 * 3)
     const colors = new Float32Array(5000 * 3)
-    
+
     for (let i = 0; i < 5000; i++) {
       // Spiral galaxy shape
       const radius = Math.random() * 25
       const angle = Math.random() * Math.PI * 2
       const height = (Math.random() - 0.5) * 2
-      
+
       // Spiral arms
       const spiralAngle = angle + radius * 0.3
-      
+
       positions[i * 3] = Math.cos(spiralAngle) * radius
       positions[i * 3 + 1] = height
       positions[i * 3 + 2] = Math.sin(spiralAngle) * radius
-      
+
       // Color based on distance from center
       const distanceFromCenter = radius / 25
       colors[i * 3] = 1 - distanceFromCenter * 0.5 // Red
-      colors[i * 3 + 1] = 0.5 + distanceFromCenter * 0.5 // Green  
+      colors[i * 3 + 1] = 0.5 + distanceFromCenter * 0.5 // Green
       colors[i * 3 + 2] = 1 // Blue
     }
-    
+
     return [positions, colors]
   }, [])
 
@@ -72,7 +72,7 @@ function Galaxy() {
 
 function StarField() {
   const ref = useRef<THREE.Points>(null)
-  
+
   const positions = useMemo(() => {
     const positions = new Float32Array(1000 * 3)
     for (let i = 0; i < 1000; i++) {
@@ -98,7 +98,7 @@ function StarField() {
 
 export function ParticleGalaxy({ className }: ParticleGalaxyProps) {
   return (
-    <div className={cn("w-full h-full min-h-[500px] bg-black", className)}>
+    <div className={cn("h-full min-h-[500px] w-full bg-black", className)}>
       <Canvas
         camera={{ position: [0, 5, 30], fov: 60 }}
         gl={{ antialias: true, alpha: false }}
@@ -111,4 +111,4 @@ export function ParticleGalaxy({ className }: ParticleGalaxyProps) {
       </Canvas>
     </div>
   )
-} 
+}

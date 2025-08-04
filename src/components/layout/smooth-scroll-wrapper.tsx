@@ -24,4 +24,4 @@ export function SmoothScrollWrapper({ children }: SmoothScrollWrapperProps) {
   }, [])
 
   return <>{children}</>
-} 
+}

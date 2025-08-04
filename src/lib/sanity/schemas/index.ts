@@ -4,10 +4,4 @@ import about from "./about"
 import contact from "./contact"
 import siteSettings from "./site-settings"
 
-export const schemas = [
-  project,
-  projectCategory,
-  about,
-  contact,
-  siteSettings,
-] 
+export const schemas = [project, projectCategory, about, contact, siteSettings]

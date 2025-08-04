@@ -111,14 +111,14 @@ export function copyToClipboard(text: string): Promise<void> {
   if (navigator.clipboard) {
     return navigator.clipboard.writeText(text)
   }
-  
+
   // Fallback for older browsers
   const textArea = document.createElement("textarea")
   textArea.value = text
   document.body.appendChild(textArea)
   textArea.focus()
   textArea.select()
-  
+
   try {
     document.execCommand("copy")
     return Promise.resolve()
@@ -145,4 +145,4 @@ export function getBaseUrl() {
 
 export function absoluteUrl(path: string) {
   return `${getBaseUrl()}${path}`
-} 
+}

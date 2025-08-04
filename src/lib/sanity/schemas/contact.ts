@@ -104,4 +104,4 @@ export default defineType({
       subtitle: "location",
     },
   },
-}) 
+})

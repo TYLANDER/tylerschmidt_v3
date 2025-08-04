@@ -16,9 +16,13 @@ interface MouseVelocity {
 
 export function useMouse() {
   const [position, setPosition] = useState<MousePosition>({ x: 0, y: 0 })
-  const [velocity, setVelocity] = useState<MouseVelocity>({ x: 0, y: 0, magnitude: 0 })
+  const [velocity, setVelocity] = useState<MouseVelocity>({
+    x: 0,
+    y: 0,
+    magnitude: 0,
+  })
   const [isMoving, setIsMoving] = useState(false)
-  
+
   const previousPosition = useRef<MousePosition>({ x: 0, y: 0 })
   const previousTime = useRef<number>(Date.now())
 
@@ -29,7 +33,7 @@ export function useMouse() {
       const mouseEvent = event as MouseEvent
       const currentTime = Date.now()
       const deltaTime = currentTime - previousTime.current
-      
+
       const currentPosition = {
         x: mouseEvent.clientX,
         y: mouseEvent.clientY,
@@ -38,7 +42,7 @@ export function useMouse() {
       // Calculate velocity
       const deltaX = currentPosition.x - previousPosition.current.x
       const deltaY = currentPosition.y - previousPosition.current.y
-      
+
       const velocityX = deltaTime > 0 ? deltaX / deltaTime : 0
       const velocityY = deltaTime > 0 ? deltaY / deltaTime : 0
       const magnitude = Math.sqrt(velocityX * velocityX + velocityY * velocityY)
@@ -113,4 +117,4 @@ export function useClickOutside<T extends HTMLElement = HTMLElement>(
   }, [callback])
 
   return ref
-} 
+}
