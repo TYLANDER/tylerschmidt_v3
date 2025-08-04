@@ -1,5 +1,5 @@
 import { AnimatedText } from "@/components/animations/animated-text"
-import { MetallicText } from "@/components/ui/metallic-text"
+import { T1000Text } from "@/components/ui/t1000-text"
 import { Button } from "@/components/ui/button"
 import { PageWrapper } from "@/components/layout/page-transition"
 import { MetallicHero } from "@/components/three/metallic-hero"
@@ -67,9 +67,9 @@ export default function HomePage() {
 
         {/* Hero Content - Overlaid */}
         <div className="relative z-10 mx-auto max-w-4xl space-y-8 text-center">
-          {/* Main Heading - Live Metallic Style */}
+          {/* Main Heading - T1000 Liquid Metal Style */}
           <div className="space-y-4">
-            <MetallicText
+            <T1000Text
               text="Tyler Schmidt"
               as="h1"
               className="text-6xl md:text-8xl animate-fade-in [animation-delay:0.2s] [animation-fill-mode:both]"
