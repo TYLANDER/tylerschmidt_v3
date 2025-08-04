@@ -22,77 +22,61 @@ export function WebGLMeshGradient() {
   const programRef = useRef<WebGLProgram | null>(null)
   const timeRef = useRef(0)
 
-  // Felipe Pantone inspired colors (RGB normalized)
+  // Subtle gradient colors (much more toned down)
   const colors = [
-    [1.0, 0.0, 0.5],   // Hot Pink
-    [0.0, 0.5, 1.0],   // Electric Blue  
-    [0.5, 1.0, 0.0],   // Neon Green
-    [1.0, 0.5, 0.0],   // Orange
-    [0.5, 0.0, 1.0],   // Purple
-    [0.0, 1.0, 0.5],   // Cyan Green
-    [1.0, 0.0, 0.25],  // Red Pink
-    [0.25, 0.0, 1.0],  // Deep Purple
-    [0.0, 1.0, 1.0],   // Cyan
+    [0.2, 0.0, 0.15],   // Dark Pink
+    [0.0, 0.15, 0.3],   // Dark Blue  
+    [0.1, 0.2, 0.0],    // Dark Green
+    [0.25, 0.1, 0.0],   // Dark Orange
+    [0.15, 0.0, 0.25],  // Dark Purple
+    [0.0, 0.2, 0.15],   // Dark Teal
   ]
 
-  // Vertex shader
+  // Vertex shader for triangulated mesh
   const vertexShaderSource = `
     precision mediump float;
     attribute vec2 a_position;
     attribute vec3 a_color;
     varying vec3 v_color;
     uniform float u_time;
-    uniform vec2 u_resolution;
     uniform vec2 u_mouse;
     
     void main() {
       vec2 position = a_position;
       
-      // Add wave distortion based on time and mouse
+      // Subtle mouse influence
       float mouseDistance = distance(a_position, u_mouse);
-      float influence = 1.0 - smoothstep(0.0, 0.5, mouseDistance);
+      float influence = 1.0 - smoothstep(0.0, 0.3, mouseDistance);
       
-      // Create flowing wave effect
-      float wave = sin(a_position.x * 10.0 + u_time * 2.0) * 0.1;
-      wave += cos(a_position.y * 8.0 + u_time * 1.5) * 0.08;
+      // Very gentle wave motion
+      float wave = sin(a_position.x * 3.0 + u_time * 0.5) * 0.02;
+      wave += cos(a_position.y * 2.0 + u_time * 0.3) * 0.015;
       
-      // Mouse influence creates warping
-      vec2 mouseOffset = (u_mouse - a_position) * influence * 0.3;
+      // Gentle mouse warping
+      vec2 mouseOffset = (u_mouse - a_position) * influence * 0.05;
       position += mouseOffset;
-      position.x += wave * influence;
-      position.y += wave * influence * 0.7;
+      position.x += wave;
+      position.y += wave * 0.8;
       
       gl_Position = vec4(position * 2.0 - 1.0, 0.0, 1.0);
       v_color = a_color;
-      gl_PointSize = 120.0 + influence * 80.0;
     }
   `
 
-  // Fragment shader with blend modes
+  // Fragment shader for smooth interpolation
   const fragmentShaderSource = `
     precision mediump float;
     varying vec3 v_color;
     uniform float u_time;
-    uniform vec2 u_mouse;
     
     void main() {
-      vec2 center = gl_PointCoord - 0.5;
-      float distance = length(center);
-      
-      // Create smooth circular gradient
-      float alpha = 1.0 - smoothstep(0.3, 0.5, distance);
-      
-      // Add pulsing effect
-      float pulse = 0.8 + 0.2 * sin(u_time * 3.0);
-      alpha *= pulse;
-      
-      // Color shifting based on time
+      // Very subtle color variation
       vec3 color = v_color;
-      color.r += 0.1 * sin(u_time * 2.0);
-      color.g += 0.1 * cos(u_time * 1.5);
-      color.b += 0.1 * sin(u_time * 2.5);
       
-      gl_FragColor = vec4(color, alpha * 0.6);
+      // Minimal time-based variation
+      color += 0.02 * sin(u_time * 0.5);
+      
+      gl_FragColor = vec4(color, 0.8);
     }
   `
 
@@ -144,6 +128,8 @@ export function WebGLMeshGradient() {
         const baseX = j / (gridSize - 1)
         const baseY = i / (gridSize - 1)
         
+        // Create smoother color distribution
+        const colorIndex = ((j + i) * 2) % colors.length
         gridPoints.push({
           x: baseX,
           y: baseY,
@@ -151,7 +137,7 @@ export function WebGLMeshGradient() {
           targetY: baseY,
           baseX,
           baseY,
-          color: colors[Math.floor(Math.random() * colors.length)] as [number, number, number],
+          color: colors[colorIndex] as [number, number, number],
           velocity: { x: 0, y: 0 }
         })
       }
@@ -207,6 +193,24 @@ export function WebGLMeshGradient() {
     const timeLocation = (gl as WebGLRenderingContext).getUniformLocation(program, 'u_time')
     const resolutionLocation = (gl as WebGLRenderingContext).getUniformLocation(program, 'u_resolution')
     const mouseLocation = (gl as WebGLRenderingContext).getUniformLocation(program, 'u_mouse')
+
+    // Generate triangulated indices for the grid
+    const generateIndices = (gridWidth: number, gridHeight: number) => {
+      const indices: number[] = []
+      for (let y = 0; y < gridHeight - 1; y++) {
+        for (let x = 0; x < gridWidth - 1; x++) {
+          const topLeft = y * gridWidth + x
+          const topRight = topLeft + 1
+          const bottomLeft = (y + 1) * gridWidth + x
+          const bottomRight = bottomLeft + 1
+          
+          // Two triangles per quad
+          indices.push(topLeft, bottomLeft, topRight)
+          indices.push(topRight, bottomLeft, bottomRight)
+        }
+      }
+      return indices
+    }
 
     const animate = () => {
       timeRef.current += 0.016 // ~60fps
@@ -273,8 +277,16 @@ export function WebGLMeshGradient() {
       glContext.uniform2f(resolutionLocation, canvas.width, canvas.height)
       glContext.uniform2f(mouseLocation, mouseRef.current.x, mouseRef.current.y)
 
-      // Draw points
-      glContext.drawArrays(glContext.POINTS, 0, points.length)
+      // Generate and upload indices for triangulated mesh
+      const gridSize = Math.sqrt(points.length)
+      const indices = generateIndices(gridSize, gridSize)
+      
+      const indexBuffer = glContext.createBuffer()
+      glContext.bindBuffer(glContext.ELEMENT_ARRAY_BUFFER, indexBuffer)
+      glContext.bufferData(glContext.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), glContext.STATIC_DRAW)
+      
+      // Draw triangulated mesh
+      glContext.drawElements(glContext.TRIANGLES, indices.length, glContext.UNSIGNED_SHORT, 0)
 
       animationRef.current = requestAnimationFrame(animate)
     }
