@@ -1,7 +1,9 @@
 import { AnimatedText } from "@/components/animations/animated-text"
 import { Button } from "@/components/ui/button"
 import { PageWrapper } from "@/components/layout/page-transition"
-import { MeshGradient } from "@/components/ui/mesh-gradient"
+import { WebGLMeshGradient } from "@/components/ui/webgl-mesh-gradient"
+import { InteractiveProjectCard } from "@/components/ui/interactive-project-card"
+import { InteractiveStats } from "@/components/ui/interactive-stats"
 import Link from "next/link"
 
 interface ProjectCardProps {
@@ -13,67 +15,7 @@ interface ProjectCardProps {
   gradient: string
 }
 
-function RecentProjectCard({
-  title,
-  description,
-  role,
-  company,
-  year,
-  gradient,
-}: ProjectCardProps) {
-  return (
-    <Link href="/work" className="group block">
-      <div className="kinetic-hover disruptive-overlay relative cursor-pointer">
-        {/* Media Area */}
-        <div
-          className={`aspect-[4/3] rounded-lg bg-gradient-to-br ${gradient} border-border/50 dazzle-pattern relative overflow-hidden border transition-all duration-300 group-hover:scale-[1.02]`}
-        >
-          {/* Gradient overlay on hover */}
-          <div className="rgb-gradient absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-20" />
-
-          {/* Project initial placeholder */}
-          <div
-            className="glitch-text data-viz flex h-full w-full items-center justify-center"
-            data-text={title[0]}
-          >
-            <span className="text-foreground/80 text-6xl font-bold">
-              {title[0]}
-            </span>
-          </div>
-        </div>
-
-        {/* Content */}
-        <div className="space-y-3 pt-4">
-          <div className="space-y-1">
-            <h3
-              className="glitch-hover rgb-text group-hover:rgb-text text-xl font-bold transition-colors"
-              data-text={title}
-            >
-              {title}
-            </h3>
-            <div className="text-accent bg-accent/20 border-accent/30 inline-block rounded-full border px-2 py-1 text-xs font-medium">
-              {role} at {company}
-            </div>
-          </div>
-
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
-            {description}
-          </p>
-
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-muted-foreground">{year}</span>
-            <span
-              className="hover:text-accent kinetic-hover glitch-hover text-accent transition-colors"
-              data-text="View →"
-            >
-              View →
-            </span>
-          </div>
-        </div>
-      </div>
-    </Link>
-  )
-}
+// Removed - using InteractiveProjectCard instead
 
 export default function HomePage() {
   const recentProjects: ProjectCardProps[] = [
@@ -120,7 +62,7 @@ export default function HomePage() {
       {/* Hero Section with Interactive Mesh Gradient */}
       <section className="relative flex min-h-screen flex-1 items-center justify-center overflow-hidden px-6 py-20">
         {/* Interactive Mesh Gradient Background */}
-        <MeshGradient />
+                  <WebGLMeshGradient />
 
         {/* Hero Content */}
         <div className="relative z-10 mx-auto max-w-4xl space-y-8 text-center">
@@ -192,15 +134,14 @@ export default function HomePage() {
           </div>
 
           {/* Projects Grid */}
-          <div className="mb-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {recentProjects.map((project, index) => (
-              <div
-                key={project.title}
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <RecentProjectCard {...project} />
-              </div>
-            ))}
+                      <div className="mb-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+              {recentProjects.map((project, index) => (
+                <InteractiveProjectCard
+                  key={project.title}
+                  {...project}
+                  index={index}
+                />
+              ))}
           </div>
 
           {/* View All Work CTA */}
@@ -223,47 +164,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="border-border/50 from-accent/5 to-primary/5 border-t bg-gradient-to-r px-6 py-20">
-        <div className="container mx-auto">
-          <div className="mx-auto max-w-4xl">
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-              <div className="data-viz kinetic-hover text-center">
-                <div className="text-accent mb-2 text-3xl font-bold md:text-4xl">
-                  50M+
-                </div>
-                <div className="text-muted-foreground text-sm">
-                  Users Impacted
-                </div>
-              </div>
-              <div className="data-viz kinetic-hover text-center">
-                <div className="text-accent mb-2 text-3xl font-bold md:text-4xl">
-                  15%
-                </div>
-                <div className="text-muted-foreground text-sm">
-                  Avg Conversion Lift
-                </div>
-              </div>
-              <div className="data-viz kinetic-hover text-center">
-                <div className="text-accent mb-2 text-3xl font-bold md:text-4xl">
-                  6+
-                </div>
-                <div className="text-muted-foreground text-sm">
-                  Years Experience
-                </div>
-              </div>
-              <div className="data-viz kinetic-hover text-center">
-                <div className="text-accent mb-2 text-3xl font-bold md:text-4xl">
-                  200+
-                </div>
-                <div className="text-muted-foreground text-sm">
-                  Projects Delivered
-                </div>
-              </div>
+              {/* Stats Section */}
+        <section className="border-border/50 from-accent/5 to-primary/5 border-t bg-gradient-to-r px-6 py-20 relative overflow-hidden">
+          {/* Animated background elements */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="rotate-slow absolute top-10 left-10 w-32 h-32 border border-accent/30 rounded-full" />
+            <div className="rotate-slow absolute bottom-20 right-20 w-24 h-24 border border-primary/30 rounded-full" style={{ animationDirection: 'reverse', animationDuration: '30s' }} />
+            <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-accent rounded-full animate-ping" />
+          </div>
+          
+          <div className="container mx-auto relative z-10">
+            <div className="mx-auto max-w-4xl">
+              <InteractiveStats />
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Footer */}
       <footer className="border-border border-t px-6 py-8">
