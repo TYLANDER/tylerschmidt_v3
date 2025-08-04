@@ -22,13 +22,9 @@ export default function AboutPage() {
               className="text-4xl md:text-6xl font-bold rgb-text"
             />
             
-            <AnimatedText
-              text="Where strategy meets design, and innovation becomes inevitable."
-              as="p"
-              variant="decrypt"
-              delay={0.3}
-              className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
-            />
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Where strategy meets design, and innovation becomes inevitable.
+            </p>
           </div>
 
           {/* Main Content */}
@@ -45,27 +41,17 @@ export default function AboutPage() {
               />
               
               <div className="text-muted-foreground leading-relaxed space-y-4">
-                <AnimatedText
-                  text="I don&apos;t just design interfaces—I architect the future of how humans interact with technology."
-                  as="p"
-                  variant="decrypt"
-                  delay={0.7}
-                  className="text-lg font-medium text-foreground"
-                />
+                <p className="text-lg font-medium text-foreground">
+                  I don&apos;t just design interfaces—I architect the future of how humans interact with technology.
+                </p>
                 
-                <AnimatedText
-                  text="My journey began at Johns Hopkins University, where I learned to think systemically about complex problems. But the real education happened in the trenches of Silicon Valley—from Google&apos;s agency team as a summer intern to leading buy flow optimization at Adobe, each role taught me that great design isn&apos;t about making things pretty. It&apos;s about making the impossible feel inevitable."
-                  as="p"
-                  variant="fade"
-                  delay={0.9}
-                />
+                <p className="text-muted-foreground">
+                  My journey began at Johns Hopkins University, where I learned to think systemically about complex problems. But the real education happened in the trenches of Silicon Valley—from Google&apos;s agency team as a summer intern to leading buy flow optimization at Adobe, each role taught me that great design isn&apos;t about making things pretty. It&apos;s about making the impossible feel inevitable.
+                </p>
                 
-                <AnimatedText
-                  text="I&apos;ve had the privilege of working across the entire spectrum of digital transformation. At Adobe, I&apos;m currently focused on Commerce Growth, specifically buy flow optimization—the critical moment where browsing becomes buying. It&apos;s here that I&apos;ve learned that every pixel, every interaction, every micro-moment can be the difference between a lost opportunity and a converted customer."
-                  as="p"
-                  variant="fade"
-                  delay={1.1}
-                />
+                <p className="text-muted-foreground">
+                  I&apos;ve had the privilege of working across the entire spectrum of digital transformation. At Adobe, I&apos;m currently focused on Commerce Growth, specifically buy flow optimization—the critical moment where browsing becomes buying. It&apos;s here that I&apos;ve learned that every pixel, every interaction, every micro-moment can be the difference between a lost opportunity and a converted customer.
+                </p>
               </div>
             </div>
 
@@ -79,13 +65,9 @@ export default function AboutPage() {
                 className="text-2xl font-bold text-foreground"
               />
               
-              <AnimatedText
-                text="The best designs are invisible. They don&apos;t announce themselves—they simply work. They anticipate needs before users know they have them. They turn complex processes into elegant experiences."
-                as="p"
-                variant="fade"
-                delay={1.5}
-                className="text-muted-foreground italic"
-              />
+              <p className="text-muted-foreground italic">
+                The best designs are invisible. They don&apos;t announce themselves—they simply work. They anticipate needs before users know they have them. They turn complex processes into elegant experiences.
+              </p>
               
               <div className="grid md:grid-cols-3 gap-6 mt-8">
                 <div className="space-y-3">
@@ -113,13 +95,9 @@ export default function AboutPage() {
                 className="text-3xl font-bold text-foreground"
               />
               
-              <AnimatedText
-                text="My expertise spans the entire digital product lifecycle, but I&apos;m particularly passionate about the intersection of emerging technologies and human-centered design."
-                as="p"
-                variant="fade"
-                delay={1.9}
-                className="text-muted-foreground"
-              />
+              <p className="text-muted-foreground">
+                My expertise spans the entire digital product lifecycle, but I&apos;m particularly passionate about the intersection of emerging technologies and human-centered design.
+              </p>
 
               <div className="grid md:grid-cols-2 gap-8 mt-8">
                 <div className="space-y-4">
@@ -178,21 +156,13 @@ export default function AboutPage() {
                 className="text-3xl font-bold text-foreground"
               />
               
-              <AnimatedText
-                text="When I&apos;m not crafting digital experiences, you&apos;ll find me exploring the intersection of technology and culture. I&apos;m fascinated by how emerging technologies like AI and blockchain will reshape not just how we work, but how we connect, create, and collaborate."
-                as="p"
-                variant="fade"
-                delay={2.3}
-                className="text-muted-foreground"
-              />
+              <p className="text-muted-foreground">
+                When I&apos;m not crafting digital experiences, you&apos;ll find me exploring the intersection of technology and culture. I&apos;m fascinated by how emerging technologies like AI and blockchain will reshape not just how we work, but how we connect, create, and collaborate.
+              </p>
               
-              <AnimatedText
-                text="I&apos;m particularly drawn to projects that sit at the bleeding edge—whether that&apos;s designing for AI agents, creating seamless Web3 experiences, or rethinking how we approach digital commerce. The future isn&apos;t just arriving; it&apos;s being designed by people who understand that technology is only as powerful as the human experiences it enables."
-                as="p"
-                variant="fade"
-                delay={2.5}
-                className="text-muted-foreground"
-              />
+              <p className="text-muted-foreground">
+                I&apos;m particularly drawn to projects that sit at the bleeding edge—whether that&apos;s designing for AI agents, creating seamless Web3 experiences, or rethinking how we approach digital commerce. The future isn&apos;t just arriving; it&apos;s being designed by people who understand that technology is only as powerful as the human experiences it enables.
+              </p>
             </div>
 
             {/* CTA */}
@@ -204,13 +174,9 @@ export default function AboutPage() {
                 delay={2.7}
                 className="text-2xl font-bold text-foreground"
               />
-              <AnimatedText
-                text="Whether you're looking to transform your digital experience, explore emerging technologies, or solve complex user problems, I'd love to discuss how we can create something extraordinary together."
-                as="p"
-                variant="fade"
-                delay={2.9}
-                className="text-muted-foreground max-w-2xl mx-auto"
-              />
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Whether you're looking to transform your digital experience, explore emerging technologies, or solve complex user problems, I'd love to discuss how we can create something extraordinary together.
+              </p>
               <div className="pt-4">
                 <a
                   href="/contact"

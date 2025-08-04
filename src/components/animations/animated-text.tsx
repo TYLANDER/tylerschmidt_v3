@@ -201,8 +201,8 @@ function DecryptText({
           onComplete?.()
         }
         
-        iteration += 1 / 3
-      }, 30)
+        iteration += 1.5
+      }, 15)
       
       return () => clearInterval(interval)
     }, delay * 1000)
