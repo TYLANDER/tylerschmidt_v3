@@ -17,7 +17,7 @@ export function WebGLMeshGradient() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [points, setPoints] = useState<GradientPoint[]>([])
   const mouseRef = useRef({ x: 0.5, y: 0.5 })
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number>(0)
   const glRef = useRef<WebGLRenderingContext | null>(null)
   const programRef = useRef<WebGLProgram | null>(null)
   const timeRef = useRef(0)
@@ -158,7 +158,7 @@ export function WebGLMeshGradient() {
     }
     
     setPoints(gridPoints)
-  }, [])
+  }, [colors])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -171,13 +171,13 @@ export function WebGLMeshGradient() {
       return
     }
 
-    glRef.current = gl
+    glRef.current = gl as WebGLRenderingContext
 
     const handleResize = () => {
       const dpr = window.devicePixelRatio || 1
       canvas.width = canvas.offsetWidth * dpr
       canvas.height = canvas.offsetHeight * dpr
-      gl.viewport(0, 0, canvas.width, canvas.height)
+      ;(gl as WebGLRenderingContext).viewport(0, 0, canvas.width, canvas.height)
     }
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -189,24 +189,24 @@ export function WebGLMeshGradient() {
     }
 
     // Initialize WebGL
-    const program = createProgram(gl)
+    const program = createProgram(gl as WebGLRenderingContext)
     if (!program) return
     
     programRef.current = program
-    gl.useProgram(program)
+    ;(gl as WebGLRenderingContext).useProgram(program)
 
     // Create buffers
-    const positionBuffer = gl.createBuffer()
-    const colorBuffer = gl.createBuffer()
+    const positionBuffer = (gl as WebGLRenderingContext).createBuffer()
+    const colorBuffer = (gl as WebGLRenderingContext).createBuffer()
 
     // Get attribute locations
-    const positionLocation = gl.getAttribLocation(program, 'a_position')
-    const colorLocation = gl.getAttribLocation(program, 'a_color')
+    const positionLocation = (gl as WebGLRenderingContext).getAttribLocation(program, 'a_position')
+    const colorLocation = (gl as WebGLRenderingContext).getAttribLocation(program, 'a_color')
     
     // Get uniform locations
-    const timeLocation = gl.getUniformLocation(program, 'u_time')
-    const resolutionLocation = gl.getUniformLocation(program, 'u_resolution')
-    const mouseLocation = gl.getUniformLocation(program, 'u_mouse')
+    const timeLocation = (gl as WebGLRenderingContext).getUniformLocation(program, 'u_time')
+    const resolutionLocation = (gl as WebGLRenderingContext).getUniformLocation(program, 'u_resolution')
+    const mouseLocation = (gl as WebGLRenderingContext).getUniformLocation(program, 'u_mouse')
 
     const animate = () => {
       timeRef.current += 0.016 // ~60fps
@@ -250,30 +250,31 @@ export function WebGLMeshGradient() {
       })
 
       // Clear and set up WebGL state
-      gl.clearColor(0, 0, 0, 0)
-      gl.clear(gl.COLOR_BUFFER_BIT)
-      gl.enable(gl.BLEND)
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+      const glContext = gl as WebGLRenderingContext
+      glContext.clearColor(0, 0, 0, 0)
+      glContext.clear(glContext.COLOR_BUFFER_BIT)
+      glContext.enable(glContext.BLEND)
+      glContext.blendFunc(glContext.SRC_ALPHA, glContext.ONE_MINUS_SRC_ALPHA)
 
       // Upload position data
-      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.DYNAMIC_DRAW)
-      gl.enableVertexAttribArray(positionLocation)
-      gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0)
+      glContext.bindBuffer(glContext.ARRAY_BUFFER, positionBuffer)
+      glContext.bufferData(glContext.ARRAY_BUFFER, new Float32Array(positions), glContext.DYNAMIC_DRAW)
+      glContext.enableVertexAttribArray(positionLocation)
+      glContext.vertexAttribPointer(positionLocation, 2, glContext.FLOAT, false, 0, 0)
 
       // Upload color data
-      gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW)
-      gl.enableVertexAttribArray(colorLocation)
-      gl.vertexAttribPointer(colorLocation, 3, gl.FLOAT, false, 0, 0)
+      glContext.bindBuffer(glContext.ARRAY_BUFFER, colorBuffer)
+      glContext.bufferData(glContext.ARRAY_BUFFER, new Float32Array(colors), glContext.STATIC_DRAW)
+      glContext.enableVertexAttribArray(colorLocation)
+      glContext.vertexAttribPointer(colorLocation, 3, glContext.FLOAT, false, 0, 0)
 
       // Set uniforms
-      gl.uniform1f(timeLocation, timeRef.current)
-      gl.uniform2f(resolutionLocation, canvas.width, canvas.height)
-      gl.uniform2f(mouseLocation, mouseRef.current.x, mouseRef.current.y)
+      glContext.uniform1f(timeLocation, timeRef.current)
+      glContext.uniform2f(resolutionLocation, canvas.width, canvas.height)
+      glContext.uniform2f(mouseLocation, mouseRef.current.x, mouseRef.current.y)
 
       // Draw points
-      gl.drawArrays(gl.POINTS, 0, points.length)
+      glContext.drawArrays(glContext.POINTS, 0, points.length)
 
       animationRef.current = requestAnimationFrame(animate)
     }

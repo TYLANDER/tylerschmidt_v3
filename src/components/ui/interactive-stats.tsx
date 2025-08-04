@@ -13,7 +13,7 @@ function InteractiveStat({ value, label, index }: StatProps) {
   const [isVisible, setIsVisible] = useState(false)
   const statRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number>(0)
 
   // Extract numeric value for counting animation
   const numericValue = parseInt(value.replace(/\D/g, "")) || 0

@@ -14,7 +14,7 @@ export function MeshGradient() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [points, setPoints] = useState<GradientPoint[]>([])
   const mouseRef = useRef({ x: 0, y: 0 })
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number>(0)
 
   // Felipe Pantone inspired colors
   const colors = [
@@ -50,7 +50,7 @@ export function MeshGradient() {
     }
 
     setPoints(gridPoints)
-  }, [])
+  }, [colors])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -105,7 +105,7 @@ export function MeshGradient() {
       // Create mesh gradient
       if (updatedPoints.length >= 4) {
         // Draw gradient mesh using radial gradients
-        updatedPoints.forEach((point, i) => {
+        updatedPoints.forEach((point) => {
           const gradient = ctx.createRadialGradient(
             (point.x * canvas.offsetWidth) / 100,
             (point.y * canvas.offsetHeight) / 100,

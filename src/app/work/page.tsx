@@ -240,7 +240,7 @@ export default function WorkPage() {
               <div className="space-y-6">
                 <h2
                   className="rgb-text glitch-text text-4xl leading-tight font-bold md:text-5xl"
-                  data-text="Let's Build Something Great Together"
+                  data-text="Let&apos;s Build Something Great Together"
                 >
                   Let&apos;s Build Something Great Together
                 </h2>

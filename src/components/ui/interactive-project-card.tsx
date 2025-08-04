@@ -25,7 +25,7 @@ export function InteractiveProjectCard({
   const cardRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mouseRef = useRef({ x: 0, y: 0 })
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number>(0)
   const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {

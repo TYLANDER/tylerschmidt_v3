@@ -62,7 +62,7 @@ export default function LabPage() {
             />
 
             <AnimatedText
-              text="Experimental WebGL demos pushing the boundaries of what's possible in the browser. Click, hover, and interact with each simulation to explore cutting-edge web technologies."
+              text="Experimental WebGL demos pushing the boundaries of what&apos;s possible in the browser. Click, hover, and interact with each simulation to explore cutting-edge web technologies."
               as="p"
               variant="fade"
               delay={0.3}
