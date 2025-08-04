@@ -20,66 +20,47 @@ export function WebGLMeshGradient() {
   const animationRef = useRef<number>(0)
   const glRef = useRef<WebGLRenderingContext | null>(null)
   const programRef = useRef<WebGLProgram | null>(null)
-  const timeRef = useRef(0)
 
-  // Mesh gradient colors inspired by the reference
+
+  // Simple, elegant mesh gradient colors
   const colors = [
-    [1.0, 0.4, 0.1],    // Bright Orange
-    [1.0, 0.6, 0.2],    // Coral Orange  
-    [1.0, 0.8, 0.3],    // Yellow Orange
-    [1.0, 0.9, 0.5],    // Warm Yellow
-    [0.2, 0.7, 1.0],    // Bright Blue
-    [0.1, 0.9, 0.8],    // Cyan
-    [0.3, 0.6, 1.0],    // Sky Blue
-    [0.5, 0.8, 1.0],    // Light Blue
-    [0.8, 0.5, 0.9],    // Light Purple (transition color)
+    [0.1, 0.15, 0.3],   // Deep blue
+    [0.2, 0.1, 0.4],    // Deep purple  
+    [0.3, 0.05, 0.2],   // Deep magenta
+    [0.15, 0.2, 0.35],  // Deep teal
   ]
 
-  // Vertex shader for triangulated mesh
+  // Clean vertex shader for smooth mesh
   const vertexShaderSource = `
     precision mediump float;
     attribute vec2 a_position;
     attribute vec3 a_color;
     varying vec3 v_color;
-    uniform float u_time;
     uniform vec2 u_mouse;
     
     void main() {
       vec2 position = a_position;
       
-      // Subtle mouse influence
+      // Very gentle mouse influence only
       float mouseDistance = distance(a_position, u_mouse);
-      float influence = 1.0 - smoothstep(0.0, 0.3, mouseDistance);
+      float influence = 1.0 - smoothstep(0.0, 0.5, mouseDistance);
       
-      // Extremely gentle wave motion
-      float wave = sin(a_position.x * 1.0 + u_time * 0.1) * 0.005;
-      wave += cos(a_position.y * 0.8 + u_time * 0.08) * 0.003;
-      
-      // Very subtle mouse warping
-      vec2 mouseOffset = (u_mouse - a_position) * influence * 0.01;
+      // Minimal mouse warping
+      vec2 mouseOffset = (u_mouse - a_position) * influence * 0.02;
       position += mouseOffset;
-      position.x += wave;
-      position.y += wave * 0.8;
       
       gl_Position = vec4(position * 2.0 - 1.0, 0.0, 1.0);
       v_color = a_color;
     }
   `
 
-  // Fragment shader for smooth interpolation
+  // Clean fragment shader - no time-based changes
   const fragmentShaderSource = `
     precision mediump float;
     varying vec3 v_color;
-    uniform float u_time;
     
     void main() {
-      // Very subtle color variation
-      vec3 color = v_color;
-      
-      // Barely perceptible color breathing
-      color += 0.01 * sin(u_time * 0.1);
-      
-      gl_FragColor = vec4(color, 0.7);
+      gl_FragColor = vec4(v_color, 0.9);
     }
   `
 
@@ -122,34 +103,22 @@ export function WebGLMeshGradient() {
   }
 
   useEffect(() => {
-    // Initialize gradient points in a denser grid for smoother mesh
+    // Simple 4x4 grid for smooth gradient
     const gridPoints: GradientPoint[] = []
-    const gridSize = 12
+    const gridSize = 4
     
     for (let i = 0; i < gridSize; i++) {
       for (let j = 0; j < gridSize; j++) {
         const baseX = j / (gridSize - 1)
         const baseY = i / (gridSize - 1)
         
-        // Create mesh-like color distribution with zones
-        let colorIndex
-        const centerX = gridSize / 2
-        const centerY = gridSize / 2
-        const distanceFromCenter = Math.sqrt((j - centerX) * (j - centerX) + (i - centerY) * (i - centerY))
-        const maxDistance = Math.sqrt(centerX * centerX + centerY * centerY)
-        const normalizedDistance = distanceFromCenter / maxDistance
-        
-        // Warm colors in center/top, cool colors on edges/bottom
-        if (normalizedDistance < 0.3) {
-          // Center - warm oranges and yellows
-          colorIndex = Math.floor(Math.random() * 4) // First 4 colors (warm)
-        } else if (normalizedDistance < 0.7) {
-          // Mid range - mix of warm and cool
-          colorIndex = Math.floor(Math.random() * colors.length)
-        } else {
-          // Edges - cool blues and cyans
-          colorIndex = 4 + Math.floor(Math.random() * 4) // Last 4 colors (cool)
-        }
+        // Simple corner-based color assignment
+        let colorIndex = 0
+        if (i === 0 && j === 0) colorIndex = 0      // Top-left
+        else if (i === 0 && j === gridSize - 1) colorIndex = 1  // Top-right
+        else if (i === gridSize - 1 && j === 0) colorIndex = 2  // Bottom-left
+        else if (i === gridSize - 1 && j === gridSize - 1) colorIndex = 3  // Bottom-right
+        else colorIndex = Math.floor((i + j) / 2) % colors.length
         gridPoints.push({
           x: baseX,
           y: baseY,
@@ -209,8 +178,7 @@ export function WebGLMeshGradient() {
     const positionLocation = (gl as WebGLRenderingContext).getAttribLocation(program, 'a_position')
     const colorLocation = (gl as WebGLRenderingContext).getAttribLocation(program, 'a_color')
     
-    // Get uniform locations
-    const timeLocation = (gl as WebGLRenderingContext).getUniformLocation(program, 'u_time')
+    // Get uniform locations (no time uniform)
     const resolutionLocation = (gl as WebGLRenderingContext).getUniformLocation(program, 'u_resolution')
     const mouseLocation = (gl as WebGLRenderingContext).getUniformLocation(program, 'u_mouse')
 
@@ -233,37 +201,35 @@ export function WebGLMeshGradient() {
     }
 
     const animate = () => {
-      timeRef.current += 0.003 // Much slower animation
-      
-      // Prepare vertex data
+      // Prepare static vertex data - no time-based animation
       const positions: number[] = []
       const colors: number[] = []
       
       points.forEach((point) => {
-        // Ultra-smooth, slow movement towards mouse
-        const mouseInfluence = 0.005
-        const restoreForce = 0.003
+        // Very gentle mouse influence only
+        const mouseInfluence = 0.002
+        const restoreForce = 0.008
         
-        // Calculate target position (very subtle mouse influence)
+        // Calculate target position
         const dx = mouseRef.current.x - point.x
         const dy = mouseRef.current.y - point.y
         const distance = Math.sqrt(dx * dx + dy * dy)
-        const influence = Math.max(0, 1 - distance / 0.6)
+        const influence = Math.max(0, 1 - distance / 0.8)
         
-        point.targetX = point.baseX + dx * influence * 0.02
-        point.targetY = point.baseY + dy * influence * 0.02
+        point.targetX = point.baseX + dx * influence * 0.01
+        point.targetY = point.baseY + dy * influence * 0.01
         
-        // Apply very gentle movement
+        // Apply gentle movement
         point.velocity.x += (point.targetX - point.x) * mouseInfluence
         point.velocity.y += (point.targetY - point.y) * mouseInfluence
         
-        // Add gentle restore force to base position
+        // Strong restore force
         point.velocity.x += (point.baseX - point.x) * restoreForce
         point.velocity.y += (point.baseY - point.y) * restoreForce
         
-        // Apply strong friction for ultra-smooth motion
-        point.velocity.x *= 0.92
-        point.velocity.y *= 0.92
+        // Heavy damping
+        point.velocity.x *= 0.88
+        point.velocity.y *= 0.88
         
         // Update position
         point.x += point.velocity.x
@@ -292,8 +258,7 @@ export function WebGLMeshGradient() {
       glContext.enableVertexAttribArray(colorLocation)
       glContext.vertexAttribPointer(colorLocation, 3, glContext.FLOAT, false, 0, 0)
 
-      // Set uniforms
-      glContext.uniform1f(timeLocation, timeRef.current)
+      // Set uniforms (no time uniform needed)
       glContext.uniform2f(resolutionLocation, canvas.width, canvas.height)
       glContext.uniform2f(mouseLocation, mouseRef.current.x, mouseRef.current.y)
 
