@@ -18,14 +18,14 @@ export default function AboutPage() {
             <AnimatedText
               text="About"
               as="h1"
-              variant="glitch"
+              variant="decrypt"
               className="text-4xl md:text-6xl font-bold rgb-text"
             />
             
             <AnimatedText
               text="Where strategy meets design, and innovation becomes inevitable."
               as="p"
-              variant="corruption"
+              variant="decrypt"
               delay={0.3}
               className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
             />
@@ -39,7 +39,7 @@ export default function AboutPage() {
               <AnimatedText
                 text="The Intersection of Vision and Execution"
                 as="h2"
-                variant="glitch"
+                variant="decrypt"
                 delay={0.5}
                 className="text-3xl font-bold text-foreground mb-6"
               />
@@ -48,9 +48,9 @@ export default function AboutPage() {
                 <AnimatedText
                   text="I don&apos;t just design interfaces—I architect the future of how humans interact with technology."
                   as="p"
-                  variant="corruption"
+                  variant="decrypt"
                   delay={0.7}
-                  className="text-lg font-medium text-foreground data-viz"
+                  className="text-lg font-medium text-foreground"
                 />
                 
                 <AnimatedText
@@ -74,7 +74,7 @@ export default function AboutPage() {
               <AnimatedText
                 text="Design Philosophy: Beyond the Interface"
                 as="h2"
-                variant="glitch"
+                variant="decrypt"
                 delay={1.3}
                 className="text-2xl font-bold text-foreground"
               />
@@ -82,7 +82,7 @@ export default function AboutPage() {
               <AnimatedText
                 text="The best designs are invisible. They don&apos;t announce themselves—they simply work. They anticipate needs before users know they have them. They turn complex processes into elegant experiences."
                 as="p"
-                variant="corruption"
+                variant="fade"
                 delay={1.5}
                 className="text-muted-foreground italic"
               />
@@ -108,7 +108,7 @@ export default function AboutPage() {
               <AnimatedText
                 text="Where Innovation Meets Impact"
                 as="h2"
-                variant="glitch"
+                variant="decrypt"
                 delay={1.7}
                 className="text-3xl font-bold text-foreground"
               />
@@ -173,7 +173,7 @@ export default function AboutPage() {
               <AnimatedText
                 text="Beyond the Pixels"
                 as="h2"
-                variant="glitch"
+                variant="decrypt"
                 delay={2.1}
                 className="text-3xl font-bold text-foreground"
               />
@@ -181,7 +181,7 @@ export default function AboutPage() {
               <AnimatedText
                 text="When I&apos;m not crafting digital experiences, you&apos;ll find me exploring the intersection of technology and culture. I&apos;m fascinated by how emerging technologies like AI and blockchain will reshape not just how we work, but how we connect, create, and collaborate."
                 as="p"
-                variant="corruption"
+                variant="fade"
                 delay={2.3}
                 className="text-muted-foreground"
               />
@@ -189,32 +189,32 @@ export default function AboutPage() {
               <AnimatedText
                 text="I&apos;m particularly drawn to projects that sit at the bleeding edge—whether that&apos;s designing for AI agents, creating seamless Web3 experiences, or rethinking how we approach digital commerce. The future isn&apos;t just arriving; it&apos;s being designed by people who understand that technology is only as powerful as the human experiences it enables."
                 as="p"
-                variant="corruption"
+                variant="fade"
                 delay={2.5}
                 className="text-muted-foreground"
               />
             </div>
 
             {/* CTA */}
-            <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg p-8 text-center space-y-4 disruptive-overlay kinetic-hover">
+            <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg p-8 text-center space-y-4">
               <AnimatedText
                 text="Ready to Build the Future?"
                 as="h2"
-                variant="glitch"
+                variant="decrypt"
                 delay={2.7}
                 className="text-2xl font-bold text-foreground"
               />
               <AnimatedText
                 text="Whether you're looking to transform your digital experience, explore emerging technologies, or solve complex user problems, I'd love to discuss how we can create something extraordinary together."
                 as="p"
-                variant="corruption"
+                variant="fade"
                 delay={2.9}
                 className="text-muted-foreground max-w-2xl mx-auto"
               />
               <div className="pt-4">
                 <a
                   href="/contact"
-                  className="chrome-button inline-flex items-center justify-center px-8 py-3 font-medium rounded-md kinetic-hover"
+                  className="inline-flex items-center justify-center px-8 py-3 bg-primary text-primary-foreground font-medium rounded-md hover:bg-primary/90 transition-colors"
                 >
                   Let&apos;s Talk
                 </a>

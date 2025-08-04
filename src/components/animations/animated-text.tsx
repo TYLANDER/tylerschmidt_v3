@@ -1,13 +1,15 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useState, useEffect } from "react"
+import React from "react"
 import { cn } from "@/lib/utils"
 
 interface AnimatedTextProps {
   text: string
   className?: string
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span"
-  variant?: "fade" | "slide" | "wave" | "typewriter" | "reveal" | "glitch" | "corruption"
+  variant?: "fade" | "slide" | "typewriter" | "reveal" | "decrypt"
   delay?: number
   duration?: number
   stagger?: number
@@ -24,10 +26,6 @@ const textVariants = {
     hidden: { opacity: 0, x: -50 },
     visible: { opacity: 1, x: 0 },
   },
-  wave: {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0 },
-  },
   typewriter: {
     hidden: { width: 0 },
     visible: { width: "auto" },
@@ -36,33 +34,9 @@ const textVariants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: { opacity: 1, scale: 1 },
   },
-  glitch: {
-    hidden: { 
-      opacity: 0, 
-      x: [0, -5, 5, -5, 5, 0],
-      y: [0, -2, 2, -2, 2, 0],
-      scale: 0.98
-    },
-    visible: { 
-      opacity: 1, 
-      x: 0,
-      y: 0,
-      scale: 1
-    },
-  },
-  corruption: {
-    hidden: { 
-      opacity: 0,
-      rotateX: 90,
-      scaleY: 0.1,
-      filter: "brightness(0) contrast(200%)"
-    },
-    visible: { 
-      opacity: 1,
-      rotateX: 0,
-      scaleY: 1,
-      filter: "brightness(1) contrast(100%)"
-    },
+  decrypt: {
+    hidden: { opacity: 1 },
+    visible: { opacity: 1 },
   },
 }
 
@@ -78,13 +52,12 @@ export function AnimatedText({
   onComplete,
 }: AnimatedTextProps) {
   const words = text.split(" ")
-  const letters = text.split("")
 
   const containerVariants = {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: variant === "wave" ? stagger : 0,
+        staggerChildren: 0,
         delayChildren: delay,
       },
     },
@@ -116,79 +89,8 @@ export function AnimatedText({
     )
   }
 
-  if (variant === "wave") {
-    return (
-      <Component className={className}>
-        <motion.span
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-          onAnimationComplete={onComplete}
-          className="inline-block"
-        >
-          {letters.map((letter, index) => (
-            <motion.span
-              key={index}
-              variants={itemVariants}
-              transition={{
-                duration,
-                ease: "easeOut",
-                repeat: repeat ? Infinity : 0,
-                repeatType: "reverse",
-                repeatDelay: 1,
-              }}
-              className="inline-block"
-            >
-              {letter === " " ? "\u00A0" : letter}
-            </motion.span>
-          ))}
-        </motion.span>
-      </Component>
-    )
-  }
-
-  if (variant === "glitch" || variant === "corruption") {
-    return (
-      <Component 
-        className={cn(
-          className,
-          variant === "glitch" && "glitch-text",
-          variant === "corruption" && "data-viz"
-        )}
-        data-text={text}
-      >
-        <motion.span
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-          onAnimationComplete={onComplete}
-          className="inline-block"
-        >
-          {words.map((word, index) => (
-            <motion.span
-              key={index}
-              variants={itemVariants}
-              transition={{
-                duration: variant === "glitch" ? duration * 0.3 : duration,
-                delay: delay + index * stagger,
-                ease: variant === "glitch" ? "easeInOut" : "easeOut",
-                repeat: repeat ? Infinity : 0,
-                repeatType: variant === "glitch" ? "loop" : "reverse",
-                repeatDelay: variant === "glitch" ? 3 : 2,
-              }}
-              className={cn(
-                "inline-block mr-2",
-                variant === "glitch" && "glitch-hover",
-                variant === "corruption" && "corruption-grid"
-              )}
-              data-text={word}
-            >
-              {word}
-            </motion.span>
-          ))}
-        </motion.span>
-      </Component>
-    )
+  if (variant === "decrypt") {
+    return <DecryptText text={text} className={className} Component={Component} delay={delay} duration={duration} onComplete={onComplete} />
   }
 
   return (
@@ -254,5 +156,63 @@ export function GradientText({
     >
       {text}
     </span>
+  )
+}
+
+// Decrypt animation component inspired by Reform Collective
+function DecryptText({ 
+  text, 
+  className, 
+  Component, 
+  delay = 0, 
+
+  onComplete 
+}: {
+  text: string
+  className?: string
+  Component: React.ElementType
+  delay?: number
+  onComplete?: () => void
+}) {
+  const [displayText, setDisplayText] = useState("")
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*"
+  
+  useEffect(() => {
+    // Initialize with random characters
+    setDisplayText(text.split('').map(char => 
+      char === ' ' ? ' ' : characters[Math.floor(Math.random() * characters.length)]
+    ).join(''))
+  }, [text, characters])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      let iteration = 0
+      const interval = setInterval(() => {
+        setDisplayText(() => 
+          text.split('').map((char, index) => {
+            if (char === ' ') return ' '
+            if (index < iteration) return text[index]
+            return characters[Math.floor(Math.random() * characters.length)]
+          }).join('')
+        )
+        
+        if (iteration >= text.length) {
+          clearInterval(interval)
+          onComplete?.()
+        }
+        
+        iteration += 1 / 3
+      }, 30)
+      
+      return () => clearInterval(interval)
+    }, delay * 1000)
+    
+    return () => clearTimeout(timer)
+  }, [text, delay, onComplete, characters])
+
+  return (
+    <Component className={className}>
+      {displayText}
+    </Component>
   )
 } 
