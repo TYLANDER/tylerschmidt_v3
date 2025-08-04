@@ -65,12 +65,12 @@ export function Navigation({}: NavigationProps) {
       >
         <motion.button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="chrome-button flex items-center gap-3 px-4 py-3 rounded-full kinetic-hover neon-glow"
+          className="chrome-button flex items-center gap-3 px-4 py-3 rounded-full kinetic-hover"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           aria-label="Toggle menu"
         >
-          <span className="text-sm font-medium neon-text">MENU</span>
+          <span className="text-sm font-medium text-background">MENU</span>
           <div className="relative w-5 h-5 flex flex-col justify-center items-center">
             <motion.span
               animate={{
@@ -112,8 +112,13 @@ export function Navigation({}: NavigationProps) {
           >
             {/* Background Overlay */}
             <motion.div 
-              className="absolute inset-0 bg-background/95 backdrop-blur-lg dazzle-pattern corruption-grid" 
+              className="absolute inset-0 bg-background/98 backdrop-blur-xl" 
               onClick={() => setIsMenuOpen(false)}
+            />
+            
+            {/* Secondary Pattern Layer */}
+            <motion.div 
+              className="absolute inset-0 dazzle-pattern corruption-grid opacity-30 pointer-events-none"
             />
             
             {/* Menu Content */}
@@ -161,13 +166,13 @@ export function Navigation({}: NavigationProps) {
                   <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
                     <a 
                       href="mailto:hello@tylerschmidt.com"
-                      className="text-lg md:text-xl text-muted-foreground hover:neon-text transition-colors kinetic-hover"
+                      className="text-lg md:text-xl text-muted-foreground hover:text-accent transition-colors kinetic-hover"
                     >
                       hello@tylerschmidt.com
                     </a>
                     <a 
                       href="tel:+1234567890"
-                      className="text-lg md:text-xl text-muted-foreground hover:neon-text transition-colors kinetic-hover"
+                      className="text-lg md:text-xl text-muted-foreground hover:text-accent transition-colors kinetic-hover"
                     >
                       +1 (234) 567-890
                     </a>

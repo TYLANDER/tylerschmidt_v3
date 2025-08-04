@@ -366,22 +366,18 @@ body:before {
   transform: translateY(-1px);
 }
 
-/* Neon Glow Effects */
+/* Subtle Glow Effects - Reduced intensity */
 .neon-glow {
   box-shadow: 
-    0 0 5px var(--accent),
-    0 0 10px var(--accent),
-    0 0 15px var(--accent),
-    0 0 20px var(--accent);
+    0 0 2px var(--accent),
+    0 0 4px var(--accent);
 }
 
 .neon-text {
   color: var(--accent);
   text-shadow: 
-    0 0 5px var(--accent),
-    0 0 10px var(--accent),
-    0 0 15px var(--accent),
-    0 0 20px var(--accent);
+    0 0 2px var(--accent),
+    0 0 4px var(--accent);
 }
 
 /* Digital Corruption Grid */
