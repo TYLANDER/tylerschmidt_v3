@@ -22,14 +22,17 @@ export function WebGLMeshGradient() {
   const programRef = useRef<WebGLProgram | null>(null)
   const timeRef = useRef(0)
 
-  // Subtle gradient colors (much more toned down)
+  // Mesh gradient colors inspired by the reference
   const colors = [
-    [0.2, 0.0, 0.15],   // Dark Pink
-    [0.0, 0.15, 0.3],   // Dark Blue  
-    [0.1, 0.2, 0.0],    // Dark Green
-    [0.25, 0.1, 0.0],   // Dark Orange
-    [0.15, 0.0, 0.25],  // Dark Purple
-    [0.0, 0.2, 0.15],   // Dark Teal
+    [1.0, 0.4, 0.1],    // Bright Orange
+    [1.0, 0.6, 0.2],    // Coral Orange  
+    [1.0, 0.8, 0.3],    // Yellow Orange
+    [1.0, 0.9, 0.5],    // Warm Yellow
+    [0.2, 0.7, 1.0],    // Bright Blue
+    [0.1, 0.9, 0.8],    // Cyan
+    [0.3, 0.6, 1.0],    // Sky Blue
+    [0.5, 0.8, 1.0],    // Light Blue
+    [0.8, 0.5, 0.9],    // Light Purple (transition color)
   ]
 
   // Vertex shader for triangulated mesh
@@ -73,10 +76,10 @@ export function WebGLMeshGradient() {
       // Very subtle color variation
       vec3 color = v_color;
       
-      // Minimal time-based variation
-      color += 0.02 * sin(u_time * 0.5);
+      // Very subtle time-based color breathing
+      color += 0.05 * sin(u_time * 0.3);
       
-      gl_FragColor = vec4(color, 0.8);
+      gl_FragColor = vec4(color, 0.7);
     }
   `
 
@@ -119,17 +122,34 @@ export function WebGLMeshGradient() {
   }
 
   useEffect(() => {
-    // Initialize gradient points in a 5x5 grid for more detail
+    // Initialize gradient points in a denser grid for smoother mesh
     const gridPoints: GradientPoint[] = []
-    const gridSize = 5
+    const gridSize = 12
     
     for (let i = 0; i < gridSize; i++) {
       for (let j = 0; j < gridSize; j++) {
         const baseX = j / (gridSize - 1)
         const baseY = i / (gridSize - 1)
         
-        // Create smoother color distribution
-        const colorIndex = ((j + i) * 2) % colors.length
+        // Create mesh-like color distribution with zones
+        let colorIndex
+        const centerX = gridSize / 2
+        const centerY = gridSize / 2
+        const distanceFromCenter = Math.sqrt((j - centerX) * (j - centerX) + (i - centerY) * (i - centerY))
+        const maxDistance = Math.sqrt(centerX * centerX + centerY * centerY)
+        const normalizedDistance = distanceFromCenter / maxDistance
+        
+        // Warm colors in center/top, cool colors on edges/bottom
+        if (normalizedDistance < 0.3) {
+          // Center - warm oranges and yellows
+          colorIndex = Math.floor(Math.random() * 4) // First 4 colors (warm)
+        } else if (normalizedDistance < 0.7) {
+          // Mid range - mix of warm and cool
+          colorIndex = Math.floor(Math.random() * colors.length)
+        } else {
+          // Edges - cool blues and cyans
+          colorIndex = 4 + Math.floor(Math.random() * 4) // Last 4 colors (cool)
+        }
         gridPoints.push({
           x: baseX,
           y: baseY,
