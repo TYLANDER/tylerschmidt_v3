@@ -179,17 +179,24 @@ export function ClassifiedText({
     setMounted(true)
     const words = text.split(' ')
     
-    // Use deterministic selection based on text content to avoid hydration issues
-    const seed = text.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
-    const rng = () => {
-      const x = Math.sin(seed) * 10000
+    // Use deterministic selection based on text hash for consistent results
+    let seed = 0
+    for (let i = 0; i < text.length; i++) {
+      seed = ((seed << 5) - seed + text.charCodeAt(i)) & 0xffffffff
+    }
+    
+    // Simple deterministic random using the seed
+    const random = (index: number) => {
+      const x = Math.sin(seed + index * 1000) * 10000
       return x - Math.floor(x)
     }
     
-    const indices = words
-      .map((_, index) => index)
-      .filter((_, index) => rng() * (index + 1) < redactionRate * words.length)
-      .slice(0, Math.floor(words.length * redactionRate * 1.5))
+    const indices: number[] = []
+    for (let i = 0; i < words.length; i++) {
+      if (random(i) < redactionRate && indices.length < Math.floor(words.length * redactionRate * 1.5)) {
+        indices.push(i)
+      }
+    }
     
     setRedactedIndices(indices)
   }, [text, redactionRate])
@@ -205,11 +212,12 @@ export function ClassifiedText({
     <p className={className}>
       {words.map((word, index) => {
         const isRedacted = redactedIndices.includes(index)
-        const wordDelay = delay + (redactedIndices.indexOf(index) * 0.1)
+        const redactedIndex = redactedIndices.indexOf(index)
+        const wordDelay = delay + (redactedIndex >= 0 ? redactedIndex * 0.1 : 0)
         
         if (isRedacted) {
           return (
-            <span key={`${word}-${index}`} className="inline">
+            <React.Fragment key={index}>
               <DecryptText 
                 text={word} 
                 Component="span" 
@@ -217,15 +225,15 @@ export function ClassifiedText({
                 className="inline"
               />
               {index < words.length - 1 ? ' ' : ''}
-            </span>
+            </React.Fragment>
           )
         }
         
         return (
-          <span key={`${word}-${index}`} className="inline">
+          <React.Fragment key={index}>
             {word}
             {index < words.length - 1 ? ' ' : ''}
-          </span>
+          </React.Fragment>
         )
       })}
     </p>
