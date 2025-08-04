@@ -1,4 +1,5 @@
 import { AnimatedText } from "@/components/animations/animated-text"
+import { MetallicText } from "@/components/ui/metallic-text"
 import { Button } from "@/components/ui/button"
 import { PageWrapper } from "@/components/layout/page-transition"
 import { MetallicHero } from "@/components/three/metallic-hero"
@@ -66,14 +67,12 @@ export default function HomePage() {
 
         {/* Hero Content - Overlaid */}
         <div className="relative z-10 mx-auto max-w-4xl space-y-8 text-center">
-          {/* Main Heading - Metallic Style */}
+          {/* Main Heading - Live Metallic Style */}
           <div className="space-y-4">
-            <AnimatedText
+            <MetallicText
               text="Tyler Schmidt"
               as="h1"
-              variant="decrypt"
-              className="text-6xl font-bold tracking-tight md:text-8xl bg-gradient-to-r from-gray-200 via-gray-100 to-gray-300 bg-clip-text text-transparent drop-shadow-2xl [filter:drop-shadow(0_0_20px_rgba(192,192,192,0.3))] [text-shadow:0_0_40px_rgba(255,255,255,0.1)]"
-              delay={0.2}
+              className="text-6xl md:text-8xl animate-fade-in [animation-delay:0.2s] [animation-fill-mode:both]"
             />
 
             <AnimatedText
