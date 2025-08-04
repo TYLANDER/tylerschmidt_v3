@@ -1,7 +1,4 @@
-import {
-  AnimatedText,
-  GradientText,
-} from "@/components/animations/animated-text"
+import { AnimatedText } from "@/components/animations/animated-text"
 import { Button } from "@/components/ui/button"
 import { PageWrapper } from "@/components/layout/page-transition"
 import { MeshGradient } from "@/components/ui/mesh-gradient"
@@ -33,31 +30,42 @@ function RecentProjectCard({
         >
           {/* Gradient overlay on hover */}
           <div className="rgb-gradient absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-20" />
-          
+
           {/* Project initial placeholder */}
-          <div className="glitch-text data-viz flex h-full w-full items-center justify-center" data-text={title[0]}>
-            <span className="text-6xl font-bold text-foreground/80">{title[0]}</span>
+          <div
+            className="glitch-text data-viz flex h-full w-full items-center justify-center"
+            data-text={title[0]}
+          >
+            <span className="text-foreground/80 text-6xl font-bold">
+              {title[0]}
+            </span>
           </div>
         </div>
 
         {/* Content */}
         <div className="space-y-3 pt-4">
           <div className="space-y-1">
-            <h3 className="glitch-hover rgb-text group-hover:rgb-text text-xl font-bold transition-colors" data-text={title}>
+            <h3
+              className="glitch-hover rgb-text group-hover:rgb-text text-xl font-bold transition-colors"
+              data-text={title}
+            >
               {title}
             </h3>
             <div className="text-accent bg-accent/20 border-accent/30 inline-block rounded-full border px-2 py-1 text-xs font-medium">
               {role} at {company}
             </div>
           </div>
-          
+
           <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
             {description}
           </p>
-          
+
           <div className="flex items-center justify-between text-xs">
             <span className="text-muted-foreground">{year}</span>
-            <span className="hover:text-accent kinetic-hover glitch-hover text-accent transition-colors" data-text="View →">
+            <span
+              className="hover:text-accent kinetic-hover glitch-hover text-accent transition-colors"
+              data-text="View →"
+            >
               View →
             </span>
           </div>
@@ -71,7 +79,8 @@ export default function HomePage() {
   const recentProjects: ProjectCardProps[] = [
     {
       title: "Commerce Growth Optimization",
-      description: "Leading buy flow optimization initiatives that directly impact conversion rates for millions of users across Adobe's commerce ecosystem.",
+      description:
+        "Leading buy flow optimization initiatives that directly impact conversion rates for millions of users across Adobe's commerce ecosystem.",
       role: "Senior UX Designer",
       company: "Adobe",
       year: "2024-Present",
@@ -79,15 +88,17 @@ export default function HomePage() {
     },
     {
       title: "Ubisoft.com Complete Redesign",
-      description: "Spearheaded the complete digital transformation of Ubisoft's flagship website, creating a modern gaming-focused experience.",
+      description:
+        "Spearheaded the complete digital transformation of Ubisoft's flagship website, creating a modern gaming-focused experience.",
       role: "Lead UX Designer",
-      company: "Ubisoft", 
+      company: "Ubisoft",
       year: "2023",
       gradient: "from-orange-500/10 to-red-500/10",
     },
     {
       title: "Abacus Multichain Wallet",
-      description: "Product lead for an innovative Web3 wallet experience that simplifies multichain cryptocurrency management.",
+      description:
+        "Product lead for an innovative Web3 wallet experience that simplifies multichain cryptocurrency management.",
       role: "Product Lead",
       company: "Abacus",
       year: "2023",
@@ -95,7 +106,8 @@ export default function HomePage() {
     },
     {
       title: "Alfred AI Assistant",
-      description: "Designed the core product experience for an AI-powered assistant, making artificial intelligence feel natural and accessible.",
+      description:
+        "Designed the core product experience for an AI-powered assistant, making artificial intelligence feel natural and accessible.",
       role: "Product Designer",
       company: "Alfred AI",
       year: "2022-2023",
@@ -109,7 +121,7 @@ export default function HomePage() {
       <section className="relative flex min-h-screen flex-1 items-center justify-center overflow-hidden px-6 py-20">
         {/* Interactive Mesh Gradient Background */}
         <MeshGradient />
-        
+
         {/* Hero Content */}
         <div className="relative z-10 mx-auto max-w-4xl space-y-8 text-center">
           {/* Main Heading */}
@@ -182,7 +194,10 @@ export default function HomePage() {
           {/* Projects Grid */}
           <div className="mb-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {recentProjects.map((project, index) => (
-              <div key={project.title} style={{ animationDelay: `${index * 0.1}s` }}>
+              <div
+                key={project.title}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
                 <RecentProjectCard {...project} />
               </div>
             ))}
@@ -191,9 +206,17 @@ export default function HomePage() {
           {/* View All Work CTA */}
           <div className="text-center">
             <Link href="/work">
-              <Button size="lg" variant="outline" className="kinetic-hover group">
-                <span className="glitch-hover" data-text="View All Work">View All Work</span>
-                <span className="text-accent ml-2 transition-transform group-hover:translate-x-1">→</span>
+              <Button
+                size="lg"
+                variant="outline"
+                className="kinetic-hover group"
+              >
+                <span className="glitch-hover" data-text="View All Work">
+                  View All Work
+                </span>
+                <span className="text-accent ml-2 transition-transform group-hover:translate-x-1">
+                  →
+                </span>
               </Button>
             </Link>
           </div>
@@ -201,25 +224,41 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="border-border/50 border-t bg-gradient-to-r from-accent/5 to-primary/5 px-6 py-20">
+      <section className="border-border/50 from-accent/5 to-primary/5 border-t bg-gradient-to-r px-6 py-20">
         <div className="container mx-auto">
           <div className="mx-auto max-w-4xl">
             <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
               <div className="data-viz kinetic-hover text-center">
-                <div className="text-accent mb-2 text-3xl font-bold md:text-4xl">50M+</div>
-                <div className="text-muted-foreground text-sm">Users Impacted</div>
+                <div className="text-accent mb-2 text-3xl font-bold md:text-4xl">
+                  50M+
+                </div>
+                <div className="text-muted-foreground text-sm">
+                  Users Impacted
+                </div>
               </div>
               <div className="data-viz kinetic-hover text-center">
-                <div className="text-accent mb-2 text-3xl font-bold md:text-4xl">15%</div>
-                <div className="text-muted-foreground text-sm">Avg Conversion Lift</div>
+                <div className="text-accent mb-2 text-3xl font-bold md:text-4xl">
+                  15%
+                </div>
+                <div className="text-muted-foreground text-sm">
+                  Avg Conversion Lift
+                </div>
               </div>
               <div className="data-viz kinetic-hover text-center">
-                <div className="text-accent mb-2 text-3xl font-bold md:text-4xl">6+</div>
-                <div className="text-muted-foreground text-sm">Years Experience</div>
+                <div className="text-accent mb-2 text-3xl font-bold md:text-4xl">
+                  6+
+                </div>
+                <div className="text-muted-foreground text-sm">
+                  Years Experience
+                </div>
               </div>
               <div className="data-viz kinetic-hover text-center">
-                <div className="text-accent mb-2 text-3xl font-bold md:text-4xl">200+</div>
-                <div className="text-muted-foreground text-sm">Projects Delivered</div>
+                <div className="text-accent mb-2 text-3xl font-bold md:text-4xl">
+                  200+
+                </div>
+                <div className="text-muted-foreground text-sm">
+                  Projects Delivered
+                </div>
               </div>
             </div>
           </div>

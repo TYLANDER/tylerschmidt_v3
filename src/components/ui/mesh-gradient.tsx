@@ -33,12 +33,12 @@ export function MeshGradient() {
     // Initialize gradient points in a grid
     const gridPoints: GradientPoint[] = []
     const gridSize = 4
-    
+
     for (let i = 0; i < gridSize; i++) {
       for (let j = 0; j < gridSize; j++) {
         const baseX = (j / (gridSize - 1)) * 100
         const baseY = (i / (gridSize - 1)) * 100
-        
+
         gridPoints.push({
           x: baseX,
           y: baseY,
@@ -48,7 +48,7 @@ export function MeshGradient() {
         })
       }
     }
-    
+
     setPoints(gridPoints)
   }, [])
 
@@ -75,26 +75,26 @@ export function MeshGradient() {
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      
+
       // Update point positions based on mouse influence
       const updatedPoints = points.map((point) => {
         const mouseX = mouseRef.current.x
         const mouseY = mouseRef.current.y
-        
+
         // Calculate distance from mouse to point
         const dx = mouseX - point.baseX
         const dy = mouseY - point.baseY
         const distance = Math.sqrt(dx * dx + dy * dy)
-        
+
         // Influence radius
         const maxInfluence = 30
         const influence = Math.max(0, 1 - distance / maxInfluence)
-        
+
         // Warp point position based on mouse proximity
         const warpStrength = 15
         const newX = point.baseX + dx * influence * warpStrength * 0.01
         const newY = point.baseY + dy * influence * warpStrength * 0.01
-        
+
         return {
           ...point,
           x: newX,
@@ -114,10 +114,10 @@ export function MeshGradient() {
             (point.y * canvas.offsetHeight) / 100,
             Math.max(canvas.offsetWidth, canvas.offsetHeight) * 0.6
           )
-          
+
           gradient.addColorStop(0, point.color + "80") // 50% opacity
           gradient.addColorStop(1, point.color + "00") // 0% opacity
-          
+
           ctx.globalCompositeOperation = "screen"
           ctx.fillStyle = gradient
           ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight)
@@ -130,7 +130,7 @@ export function MeshGradient() {
     handleResize()
     window.addEventListener("resize", handleResize)
     canvas.addEventListener("mousemove", handleMouseMove)
-    
+
     if (points.length > 0) {
       animate()
     }
@@ -151,7 +151,8 @@ export function MeshGradient() {
       style={{
         width: "100%",
         height: "100%",
-        background: "radial-gradient(circle at 30% 20%, rgba(255, 0, 128, 0.1) 0%, transparent 50%), radial-gradient(circle at 70% 80%, rgba(0, 128, 255, 0.1) 0%, transparent 50%)",
+        background:
+          "radial-gradient(circle at 30% 20%, rgba(255, 0, 128, 0.1) 0%, transparent 50%), radial-gradient(circle at 70% 80%, rgba(0, 128, 255, 0.1) 0%, transparent 50%)",
       }}
     />
   )
