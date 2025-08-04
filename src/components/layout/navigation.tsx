@@ -65,12 +65,12 @@ export function Navigation({}: NavigationProps) {
       >
         <motion.button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="flex items-center gap-3 px-4 py-3 bg-background/90 backdrop-blur-sm border border-border/50 rounded-full hover:bg-background transition-colors"
+          className="chrome-button flex items-center gap-3 px-4 py-3 rounded-full kinetic-hover neon-glow"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           aria-label="Toggle menu"
         >
-          <span className="text-sm font-medium">Menu</span>
+          <span className="text-sm font-medium neon-text">MENU</span>
           <div className="relative w-5 h-5 flex flex-col justify-center items-center">
             <motion.span
               animate={{
@@ -112,7 +112,7 @@ export function Navigation({}: NavigationProps) {
           >
             {/* Background Overlay */}
             <motion.div 
-              className="absolute inset-0 bg-background/95 backdrop-blur-lg" 
+              className="absolute inset-0 bg-background/95 backdrop-blur-lg dazzle-pattern corruption-grid" 
               onClick={() => setIsMenuOpen(false)}
             />
             
@@ -140,9 +140,10 @@ export function Navigation({}: NavigationProps) {
                         href={item.href}
                         onClick={() => setIsMenuOpen(false)}
                         className={cn(
-                          "block text-4xl md:text-6xl lg:text-7xl font-bold transition-colors hover:text-accent",
-                          pathname === item.href ? "text-accent" : "text-foreground"
+                          "block text-4xl md:text-6xl lg:text-7xl font-bold transition-colors glitch-hover disruptive-overlay data-viz",
+                          pathname === item.href ? "rgb-text neon-glow" : "text-foreground hover:rgb-text"
                         )}
+                        data-text={item.label}
                       >
                         {item.label}
                       </Link>
@@ -160,26 +161,26 @@ export function Navigation({}: NavigationProps) {
                   <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
                     <a 
                       href="mailto:hello@tylerschmidt.com"
-                      className="text-lg md:text-xl text-muted-foreground hover:text-foreground transition-colors"
+                      className="text-lg md:text-xl text-muted-foreground hover:neon-text transition-colors kinetic-hover"
                     >
                       hello@tylerschmidt.com
                     </a>
                     <a 
                       href="tel:+1234567890"
-                      className="text-lg md:text-xl text-muted-foreground hover:text-foreground transition-colors"
+                      className="text-lg md:text-xl text-muted-foreground hover:neon-text transition-colors kinetic-hover"
                     >
                       +1 (234) 567-890
                     </a>
                   </div>
                   
                   <div className="flex gap-6 text-sm text-muted-foreground">
-                    <a href="https://linkedin.com/in/tylerschmidt" className="hover:text-foreground transition-colors">
+                    <a href="https://linkedin.com/in/tylerschmidt" className="hover:rgb-text transition-colors glitch-hover" data-text="LinkedIn">
                       LinkedIn
                     </a>
-                    <a href="https://twitter.com/tylerschmidt" className="hover:text-foreground transition-colors">
+                    <a href="https://twitter.com/tylerschmidt" className="hover:rgb-text transition-colors glitch-hover" data-text="Twitter">
                       Twitter
                     </a>
-                    <a href="https://github.com/tylerschmidt" className="hover:text-foreground transition-colors">
+                    <a href="https://github.com/tylerschmidt" className="hover:rgb-text transition-colors glitch-hover" data-text="GitHub">
                       GitHub
                     </a>
                   </div>

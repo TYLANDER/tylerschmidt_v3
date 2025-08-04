@@ -27,24 +27,24 @@ function ProjectCard({
   gradient
 }: ProjectCardProps) {
   return (
-    <div className="relative group cursor-pointer">
-      {/* Media Area - Large visual space */}
-      <div className={`aspect-[4/3] rounded-lg bg-gradient-to-br ${gradient} border border-border/50 overflow-hidden relative`}>
+    <div className="relative group cursor-pointer kinetic-hover disruptive-overlay">
+      {/* Media Area - Large visual space with Digital Dazzle effects */}
+      <div className={`aspect-[4/3] rounded-lg bg-gradient-to-br ${gradient} border border-border/50 overflow-hidden relative dazzle-pattern corruption-grid`}>
         {isComingSoon && (
-          <div className="absolute top-4 right-4 bg-background/90 backdrop-blur text-foreground px-3 py-1 rounded-full text-xs font-medium z-10">
+          <div className="absolute top-4 right-4 bg-background/90 backdrop-blur neon-text px-3 py-1 rounded-full text-xs font-medium z-10 neon-glow">
             Coming Soon
           </div>
         )}
         
-        {/* Placeholder for media - replace with actual images later */}
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="text-6xl opacity-20 font-bold">
+        {/* Placeholder for media with glitch effect */}
+        <div className="w-full h-full flex items-center justify-center data-viz">
+          <div className="text-6xl opacity-30 font-bold glitch-text rgb-text" data-text={title.charAt(0)}>
             {title.charAt(0)}
           </div>
         </div>
         
-        {/* Hover overlay */}
-        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        {/* Hover overlay with RGB effects */}
+        <div className="absolute inset-0 rgb-gradient opacity-0 group-hover:opacity-30 transition-opacity duration-300" />
       </div>
       
       {/* Content Area - Minimal and focused */}
@@ -56,7 +56,7 @@ function ProjectCard({
             <span>{year}</span>
           </div>
           
-          <h3 className="text-xl font-bold text-foreground group-hover:text-accent transition-colors">
+          <h3 className="text-xl font-bold text-foreground group-hover:rgb-text transition-colors glitch-hover" data-text={title}>
             {title}
           </h3>
           
@@ -66,12 +66,12 @@ function ProjectCard({
         </div>
 
         <div className="flex items-center justify-between">
-          <span className="text-xs text-accent bg-accent/10 px-2 py-1 rounded-full">
+          <span className="text-xs neon-text bg-accent/20 px-2 py-1 rounded-full neon-glow">
             {role}
           </span>
           
           {!isComingSoon && (
-            <button className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <button className="text-sm text-muted-foreground hover:neon-text transition-colors glitch-hover kinetic-hover" data-text="View →">
               View →
             </button>
           )}
@@ -156,7 +156,8 @@ export default function WorkPage() {
                   text="Selected Work"
                   as="h1"
                   variant="fade"
-                  className="text-5xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight"
+                  className="text-5xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight rgb-text neon-glow glitch-text"
+                  data-text="Selected Work"
                 />
               </div>
               
@@ -170,22 +171,22 @@ export default function WorkPage() {
                   className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl"
                 />
                 
-                {/* Inline stats - Reform Collective style */}
+                {/* Inline stats - Digital Dazzle style */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  <div className="space-y-1">
-                    <div className="text-2xl md:text-3xl font-bold text-foreground">50M+</div>
+                  <div className="space-y-1 data-viz kinetic-hover">
+                    <div className="text-2xl md:text-3xl font-bold neon-text">50M+</div>
                     <div className="text-sm text-muted-foreground">Users Impacted</div>
                   </div>
-                  <div className="space-y-1">
-                    <div className="text-2xl md:text-3xl font-bold text-foreground">18%</div>
+                  <div className="space-y-1 data-viz kinetic-hover">
+                    <div className="text-2xl md:text-3xl font-bold neon-text">18%</div>
                     <div className="text-sm text-muted-foreground">Conversion Lift</div>
                   </div>
-                  <div className="space-y-1">
-                    <div className="text-2xl md:text-3xl font-bold text-foreground">40%</div>
+                  <div className="space-y-1 data-viz kinetic-hover">
+                    <div className="text-2xl md:text-3xl font-bold neon-text">40%</div>
                     <div className="text-sm text-muted-foreground">Performance Gain</div>
                   </div>
-                  <div className="space-y-1">
-                    <div className="text-2xl md:text-3xl font-bold text-foreground">6+</div>
+                  <div className="space-y-1 data-viz kinetic-hover">
+                    <div className="text-2xl md:text-3xl font-bold neon-text">6+</div>
                     <div className="text-sm text-muted-foreground">Years Experience</div>
                   </div>
                 </div>
@@ -206,7 +207,7 @@ export default function WorkPage() {
               
               {/* Left - CTA Text */}
               <div className="space-y-6">
-                <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+                <h2 className="text-4xl md:text-5xl font-bold leading-tight rgb-text glitch-text" data-text="Let's Build Something Great Together">
                   Let&apos;s Build Something Great Together
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
@@ -220,14 +221,14 @@ export default function WorkPage() {
                 <div className="space-y-4">
                   <a
                     href="/contact"
-                    className="group block p-6 border border-border/50 rounded-lg hover:border-accent/50 transition-colors"
+                    className="group block p-6 border border-border/50 rounded-lg hover:neon-glow transition-all kinetic-hover disruptive-overlay"
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="font-semibold mb-1">Start a Project</h3>
+                        <h3 className="font-semibold mb-1 group-hover:neon-text transition-colors">Start a Project</h3>
                         <p className="text-sm text-muted-foreground">Let&apos;s discuss your vision</p>
                       </div>
-                      <div className="text-accent group-hover:translate-x-1 transition-transform">
+                      <div className="neon-text group-hover:translate-x-1 transition-transform">
                         →
                       </div>
                     </div>
@@ -235,14 +236,14 @@ export default function WorkPage() {
                   
                   <a
                     href="mailto:hello@tylerschmidt.com"
-                    className="group block p-6 border border-border/50 rounded-lg hover:border-accent/50 transition-colors"
+                    className="group block p-6 border border-border/50 rounded-lg hover:neon-glow transition-all kinetic-hover disruptive-overlay"
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="font-semibold mb-1">Send an Email</h3>
+                        <h3 className="font-semibold mb-1 group-hover:neon-text transition-colors">Send an Email</h3>
                         <p className="text-sm text-muted-foreground">hello@tylerschmidt.com</p>
                       </div>
-                      <div className="text-accent group-hover:translate-x-1 transition-transform">
+                      <div className="neon-text group-hover:translate-x-1 transition-transform">
                         →
                       </div>
                     </div>

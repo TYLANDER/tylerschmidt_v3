@@ -18,30 +18,44 @@
 }
 
 :root {
-  /* Colors - Light Mode */
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --muted: #f8f9fa;
-  --muted-foreground: #6b7280;
-  --card: #ffffff;
-  --card-foreground: #0a0a0a;
-  --border: #e5e7eb;
-  --input: #f3f4f6;
-  --primary: #000000;
-  --primary-foreground: #ffffff;
-  --secondary: #f3f4f6;
-  --secondary-foreground: #374151;
-  --accent: #f59e0b;
-  --accent-foreground: #000000;
-  --destructive: #ef4444;
+  /* Colors - Digital Dazzle Theme */
+  --background: #000000;
+  --foreground: #ffffff;
+  --muted: #111111;
+  --muted-foreground: #888888;
+  --card: #0a0a0a;
+  --card-foreground: #ffffff;
+  --border: #333333;
+  --input: #1a1a1a;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #ffffff;
+  --accent: #ff0080;
+  --accent-foreground: #ffffff;
+  --destructive: #ff0000;
   --destructive-foreground: #ffffff;
-  --ring: #3b82f6;
+  --ring: #00ffff;
   
   /* Semantic Colors */
-  --success: #10b981;
-  --warning: #f59e0b;
-  --error: #ef4444;
-  --info: #3b82f6;
+  --success: #00ff00;
+  --warning: #ffff00;
+  --error: #ff0000;
+  --info: #00ffff;
+  
+  /* Felipe Pantone RGB Colors */
+  --rgb-red: #ff0000;
+  --rgb-green: #00ff00;
+  --rgb-blue: #0000ff;
+  --rgb-cyan: #00ffff;
+  --rgb-magenta: #ff00ff;
+  --rgb-yellow: #ffff00;
+  
+  /* Chrome/Metallic Colors */
+  --chrome-light: #e8e8e8;
+  --chrome-mid: #c0c0c0;
+  --chrome-dark: #808080;
+  --chrome-shadow: #404040;
   
   /* Typography */
   --font-sans: 'Aeonik', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -83,31 +97,24 @@
   --radius-full: 9999px;
 }
 
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
+/* Light Mode Override - Keep Digital Dazzle */
+@media (prefers-color-scheme: light) {
   :root {
+    /* Force dark theme with neon accents for Digital Dazzle aesthetic */
     --background: #000000;
     --foreground: #ffffff;
-    --muted: #0a0a0a;
-    --muted-foreground: #a1a1aa;
+    --muted: #111111;
+    --muted-foreground: #888888;
     --card: #0a0a0a;
     --card-foreground: #ffffff;
-    --border: #27272a;
-    --input: #18181b;
+    --border: #333333;
+    --input: #1a1a1a;
     --primary: #ffffff;
     --primary-foreground: #000000;
-    --secondary: #18181b;
-    --secondary-foreground: #a1a1aa;
-    --accent: #f59e0b;
-    --accent-foreground: #000000;
-    --destructive: #ef4444;
-    --destructive-foreground: #ffffff;
-    --ring: #3b82f6;
-    
-    --success: #10b981;
-    --warning: #f59e0b;
-    --error: #ef4444;
-    --info: #3b82f6;
+    --secondary: #1a1a1a;
+    --secondary-foreground: #ffffff;
+    --accent: #ff0080;
+    --accent-foreground: #ffffff;
   }
 }
 
@@ -131,6 +138,24 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* Digital Dazzle Background */
+body:before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 0, 128, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 255, 0, 0.05) 0%, transparent 50%);
+  z-index: -1;
+  pointer-events: none;
+  animation: rgb-shift 8s ease infinite;
 }
 
 /* Custom Scrollbar */
@@ -200,4 +225,244 @@ body {
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Digital Dazzle Effects - Felipe Pantone + Death Spray Custom */
+
+/* RGB Gradient Animations */
+@keyframes rgb-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes dazzle-shift {
+  0% { background-position: 0px 0px; }
+  100% { background-position: 60px 30px; }
+}
+
+.rgb-gradient {
+  background: linear-gradient(
+    270deg,
+    var(--rgb-red),
+    var(--rgb-magenta),
+    var(--rgb-blue),
+    var(--rgb-cyan),
+    var(--rgb-green),
+    var(--rgb-yellow),
+    var(--rgb-red)
+  );
+  background-size: 400% 400%;
+  animation: rgb-shift 4s ease infinite;
+}
+
+.rgb-text {
+  background: linear-gradient(
+    90deg,
+    var(--rgb-red),
+    var(--rgb-magenta),
+    var(--rgb-blue),
+    var(--rgb-cyan)
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rgb-shift 3s ease infinite;
+}
+
+.glitch-text {
+  position: relative;
+  color: var(--foreground);
+}
+
+.glitch-text:before,
+.glitch-text:after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text:before {
+  animation: glitch 0.3s infinite;
+  color: var(--rgb-cyan);
+  z-index: -1;
+}
+
+.glitch-text:after {
+  animation: glitch 0.3s infinite reverse;
+  color: var(--rgb-magenta);
+  z-index: -2;
+}
+
+.glitch-hover:hover {
+  animation: glitch 0.3s infinite;
+}
+
+.glitch-hover:hover:before {
+  animation: glitch 0.2s infinite;
+  color: var(--rgb-red);
+}
+
+.glitch-hover:hover:after {
+  animation: glitch 0.2s infinite reverse;
+  color: var(--rgb-blue);
+}
+
+/* Dazzle Camouflage Pattern */
+.dazzle-pattern {
+  background-image: 
+    linear-gradient(45deg, transparent 25%, rgba(255, 255, 255, 0.1) 25%),
+    linear-gradient(-45deg, transparent 25%, rgba(255, 255, 255, 0.05) 25%),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.05) 75%, transparent 75%),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 75%, transparent 75%);
+  background-size: 30px 30px;
+  background-position: 0 0, 0 15px, 15px -15px, -15px 0px;
+  animation: dazzle-shift 8s linear infinite;
+}
+
+/* Chrome/Metallic Button Effects */
+.chrome-button {
+  background: linear-gradient(
+    145deg,
+    var(--chrome-light) 0%,
+    var(--chrome-mid) 25%,
+    var(--chrome-dark) 75%,
+    var(--chrome-shadow) 100%
+  );
+  border: 1px solid var(--chrome-mid);
+  color: var(--background);
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    0 2px 4px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+}
+
+.chrome-button:hover {
+  background: linear-gradient(
+    145deg,
+    #f0f0f0 0%,
+    var(--chrome-light) 25%,
+    var(--chrome-mid) 75%,
+    var(--chrome-dark) 100%
+  );
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.4),
+    0 4px 8px rgba(0,0,0,0.4);
+  transform: translateY(-1px);
+}
+
+/* Neon Glow Effects */
+.neon-glow {
+  box-shadow: 
+    0 0 5px var(--accent),
+    0 0 10px var(--accent),
+    0 0 15px var(--accent),
+    0 0 20px var(--accent);
+}
+
+.neon-text {
+  color: var(--accent);
+  text-shadow: 
+    0 0 5px var(--accent),
+    0 0 10px var(--accent),
+    0 0 15px var(--accent),
+    0 0 20px var(--accent);
+}
+
+/* Digital Corruption Grid */
+.corruption-grid {
+  background-image: 
+    radial-gradient(circle at 1px 1px, var(--accent) 1px, transparent 0);
+  background-size: 20px 20px;
+  opacity: 0.1;
+}
+
+/* Kinetic Hover Effects */
+.kinetic-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.kinetic-hover:hover {
+  transform: translateY(-4px) rotate(1deg);
+  box-shadow: 
+    0 8px 25px rgba(255, 0, 128, 0.3),
+    0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+/* Data Visualization Bars */
+.data-viz {
+  position: relative;
+  overflow: hidden;
+}
+
+.data-viz:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 255, 0.4),
+    transparent
+  );
+  animation: scan 2s infinite;
+}
+
+@keyframes scan {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Disruptive Pattern Overlay */
+.disruptive-overlay {
+  position: relative;
+}
+
+.disruptive-overlay:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 0, 128, 0.1) 2px,
+      rgba(255, 0, 128, 0.1) 4px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 255, 0.1) 2px,
+      rgba(0, 255, 255, 0.1) 4px
+    );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.disruptive-overlay:hover:after {
+  opacity: 1;
 }
