@@ -5,7 +5,6 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 import { useScroll } from "@/hooks/use-scroll"
 
 const navigationItems = [
@@ -20,11 +19,11 @@ interface NavigationProps {
   className?: string
 }
 
-export function Navigation({ className }: NavigationProps) {
+export function Navigation({}: NavigationProps) {
   const pathname = usePathname()
   const { position, direction } = useScroll()
   const [isVisible, setIsVisible] = useState(true)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
     if (position.y > 100) {
@@ -38,132 +37,155 @@ export function Navigation({ className }: NavigationProps) {
     }
   }, [position.y, direction.y])
 
-  const navVariants = {
+  const menuButtonVariants = {
     hidden: { y: -100, opacity: 0 },
     visible: { y: 0, opacity: 1 },
   }
 
-  const mobileMenuVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.95 },
+  const overlayVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 }
+  }
+
+  const menuContentVariants = {
+    hidden: { y: -50, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+    exit: { y: -50, opacity: 0 }
   }
 
   return (
     <>
-      <motion.nav
-        variants={navVariants}
+      {/* Menu Button - Fixed Top Right */}
+      <motion.div
+        variants={menuButtonVariants}
         animate={isVisible ? "visible" : "hidden"}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 border-b border-border/50 backdrop-blur-md bg-background/80",
-          className
-        )}
+        className="fixed top-6 right-6 z-50"
       >
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link href="/" className="text-xl font-bold">
-                TS
-              </Link>
-            </motion.div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              {navigationItems.map((item) => (
-                <NavigationLink
-                  key={item.href}
-                  href={item.href}
-                  label={item.label}
-                  isActive={pathname === item.href}
-                />
-              ))}
-            </div>
-
-            {/* CTA Button */}
-            <div className="hidden md:block">
-                             <Button variant="magnetic" size="sm">
-                 Let&apos;s Talk
-               </Button>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden relative w-6 h-6 flex flex-col justify-center items-center"
-              aria-label="Toggle mobile menu"
-            >
-              <motion.span
-                animate={{
-                  rotate: isMobileMenuOpen ? 45 : 0,
-                  y: isMobileMenuOpen ? 0 : -4,
-                }}
-                className="w-6 h-0.5 bg-foreground absolute"
-              />
-              <motion.span
-                animate={{
-                  opacity: isMobileMenuOpen ? 0 : 1,
-                }}
-                className="w-6 h-0.5 bg-foreground absolute"
-              />
-              <motion.span
-                animate={{
-                  rotate: isMobileMenuOpen ? -45 : 0,
-                  y: isMobileMenuOpen ? 0 : 4,
-                }}
-                className="w-6 h-0.5 bg-foreground absolute"
-              />
-            </button>
+        <motion.button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="flex items-center gap-3 px-4 py-3 bg-background/90 backdrop-blur-sm border border-border/50 rounded-full hover:bg-background transition-colors"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label="Toggle menu"
+        >
+          <span className="text-sm font-medium">Menu</span>
+          <div className="relative w-5 h-5 flex flex-col justify-center items-center">
+            <motion.span
+              animate={{
+                rotate: isMenuOpen ? 45 : 0,
+                y: isMenuOpen ? 0 : -3,
+              }}
+              transition={{ duration: 0.2 }}
+              className="w-5 h-0.5 bg-foreground absolute"
+            />
+            <motion.span
+              animate={{
+                opacity: isMenuOpen ? 0 : 1,
+              }}
+              transition={{ duration: 0.2 }}
+              className="w-5 h-0.5 bg-foreground absolute"
+            />
+            <motion.span
+              animate={{
+                rotate: isMenuOpen ? -45 : 0,
+                y: isMenuOpen ? 0 : 3,
+              }}
+              transition={{ duration: 0.2 }}
+              className="w-5 h-0.5 bg-foreground absolute"
+            />
           </div>
-        </div>
-      </motion.nav>
+        </motion.button>
+      </motion.div>
 
-      {/* Mobile Menu */}
+      {/* Full Screen Menu Overlay */}
       <AnimatePresence>
-        {isMobileMenuOpen && (
+        {isMenuOpen && (
           <motion.div
-            variants={mobileMenuVariants}
+            variants={overlayVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 md:hidden"
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40"
           >
-            <div className="fixed inset-0 bg-background/95 backdrop-blur-lg" />
-            <div className="fixed inset-0 flex items-center justify-center">
-              <div className="text-center space-y-8">
-                {navigationItems.map((item, index) => (
-                  <motion.div
-                    key={item.href}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <Link
-                      href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block text-3xl font-medium hover:text-accent transition-colors"
+            {/* Background Overlay */}
+            <motion.div 
+              className="absolute inset-0 bg-background/95 backdrop-blur-lg" 
+              onClick={() => setIsMenuOpen(false)}
+            />
+            
+            {/* Menu Content */}
+            <motion.div
+              variants={menuContentVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="relative h-full flex flex-col justify-center px-6 md:px-12"
+            >
+              <div className="max-w-6xl mx-auto w-full">
+                
+                {/* Navigation Links */}
+                <nav className="space-y-2 md:space-y-4">
+                  {navigationItems.map((item, index) => (
+                    <motion.div
+                      key={item.href}
+                      initial={{ opacity: 0, x: -50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 + 0.2, duration: 0.5 }}
                     >
-                      {item.label}
-                    </Link>
-                  </motion.div>
-                ))}
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsMenuOpen(false)}
+                        className={cn(
+                          "block text-4xl md:text-6xl lg:text-7xl font-bold transition-colors hover:text-accent",
+                          pathname === item.href ? "text-accent" : "text-foreground"
+                        )}
+                      >
+                        {item.label}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </nav>
+
+                {/* Contact Info */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: navigationItems.length * 0.1 }}
-                  className="pt-8"
+                  transition={{ delay: 0.8, duration: 0.5 }}
+                  className="mt-16 md:mt-20 space-y-4"
                 >
-                                     <Button variant="magnetic" size="lg">
-                     Let&apos;s Talk
-                   </Button>
+                  <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+                    <a 
+                      href="mailto:hello@tylerschmidt.com"
+                      className="text-lg md:text-xl text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      hello@tylerschmidt.com
+                    </a>
+                    <a 
+                      href="tel:+1234567890"
+                      className="text-lg md:text-xl text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      +1 (234) 567-890
+                    </a>
+                  </div>
+                  
+                  <div className="flex gap-6 text-sm text-muted-foreground">
+                    <a href="https://linkedin.com/in/tylerschmidt" className="hover:text-foreground transition-colors">
+                      LinkedIn
+                    </a>
+                    <a href="https://twitter.com/tylerschmidt" className="hover:text-foreground transition-colors">
+                      Twitter
+                    </a>
+                    <a href="https://github.com/tylerschmidt" className="hover:text-foreground transition-colors">
+                      GitHub
+                    </a>
+                  </div>
                 </motion.div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -171,33 +193,4 @@ export function Navigation({ className }: NavigationProps) {
   )
 }
 
-interface NavigationLinkProps {
-  href: string
-  label: string
-  isActive: boolean
-}
-
-function NavigationLink({ href, label, isActive }: NavigationLinkProps) {
-  return (
-    <Link href={href} className="relative group">
-      <motion.span
-        className={cn(
-          "text-sm font-medium transition-colors duration-200",
-          isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
-        )}
-        whileHover={{ y: -2 }}
-        transition={{ duration: 0.2 }}
-      >
-        {label}
-      </motion.span>
-      {isActive && (
-        <motion.div
-          layoutId="activeNav"
-          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent"
-          initial={false}
-          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-        />
-      )}
-    </Link>
-  )
-} 
+ 

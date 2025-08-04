@@ -13,8 +13,6 @@ interface ProjectCardProps {
   role: string
   company: string
   year: string
-  tags: string[]
-  features: string[]
   isComingSoon?: boolean
   gradient: string
 }
@@ -25,71 +23,59 @@ function ProjectCard({
   role,
   company,
   year,
-  tags,
-  features,
   isComingSoon = false,
   gradient
 }: ProjectCardProps) {
   return (
-    <div className={`relative rounded-lg p-8 bg-gradient-to-br ${gradient} border border-border/50 overflow-hidden group`}>
-      {isComingSoon && (
-        <div className="absolute top-4 right-4 bg-accent text-accent-foreground px-3 py-1 rounded-full text-xs font-medium">
-          Case Study Coming Soon
+    <div className="relative group cursor-pointer">
+      {/* Media Area - Large visual space */}
+      <div className={`aspect-[4/3] rounded-lg bg-gradient-to-br ${gradient} border border-border/50 overflow-hidden relative`}>
+        {isComingSoon && (
+          <div className="absolute top-4 right-4 bg-background/90 backdrop-blur text-foreground px-3 py-1 rounded-full text-xs font-medium z-10">
+            Coming Soon
+          </div>
+        )}
+        
+        {/* Placeholder for media - replace with actual images later */}
+        <div className="w-full h-full flex items-center justify-center">
+          <div className="text-6xl opacity-20 font-bold">
+            {title.charAt(0)}
+          </div>
         </div>
-      )}
+        
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      </div>
       
-      <div className="space-y-6">
-        <div className="space-y-3">
-          <div className="flex items-center gap-3 text-sm text-muted-foreground">
+      {/* Content Area - Minimal and focused */}
+      <div className="pt-6 space-y-3">
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <span className="font-medium">{company}</span>
             <span>•</span>
             <span>{year}</span>
-            <span>•</span>
-            <span className="bg-accent/20 text-accent px-2 py-1 rounded text-xs">{role}</span>
           </div>
           
-          <h3 className="text-2xl font-bold text-foreground group-hover:text-accent transition-colors">
+          <h3 className="text-xl font-bold text-foreground group-hover:text-accent transition-colors">
             {title}
           </h3>
           
-          <p className="text-muted-foreground leading-relaxed">
+          <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2">
             {description}
           </p>
         </div>
 
-        <div className="space-y-4">
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag, index) => (
-              <span
-                key={index}
-                className="px-3 py-1 bg-background/50 backdrop-blur text-foreground text-xs rounded-full border border-border/50"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <div className="space-y-2">
-            <h4 className="text-sm font-semibold text-foreground">Key Achievements:</h4>
-            <ul className="space-y-1">
-              {features.map((feature, index) => (
-                <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
-                  <span className="text-accent mt-0.5">→</span>
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {!isComingSoon && (
-          <div className="pt-4">
-            <button className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-accent/80 transition-colors">
-              View Details
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
+        <div className="flex items-center justify-between">
+          <span className="text-xs text-accent bg-accent/10 px-2 py-1 rounded-full">
+            {role}
+          </span>
+          
+          {!isComingSoon && (
+            <button className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              View →
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   )
@@ -99,93 +85,57 @@ export default function WorkPage() {
   const projects: ProjectCardProps[] = [
     {
       title: "Commerce Growth Optimization",
-      description: "Leading buy flow optimization initiatives that directly impact conversion rates for millions of users across Adobe's commerce ecosystem. Transforming complex purchase journeys into seamless, intuitive experiences.",
+      description: "Leading buy flow optimization initiatives that directly impact conversion rates for millions of users across Adobe's commerce ecosystem.",
       role: "Senior UX Designer",
       company: "Adobe",
       year: "2024-Present",
-      tags: ["E-commerce", "Conversion Optimization", "A/B Testing", "User Research", "Design Systems"],
-      features: [
-        "Increased checkout conversion rates by 18% through strategic UX improvements",
-        "Led cross-functional team of 12+ stakeholders across product, engineering, and marketing",
-        "Implemented data-driven design methodology with continuous testing and iteration",
-        "Created scalable design patterns adopted across multiple Adobe Commerce products"
-      ],
+
       gradient: "from-blue-500/10 to-purple-500/10",
       isComingSoon: true
     },
     {
       title: "Ubisoft.com Complete Redesign",
-      description: "Spearheaded the complete digital transformation of Ubisoft's flagship website, creating a modern, gaming-focused experience that better showcases their world-class game portfolio and engages millions of players worldwide.",
+      description: "Spearheaded the complete digital transformation of Ubisoft's flagship website, creating a modern gaming-focused experience for millions of players.",
       role: "Lead UX Designer",
       company: "Ubisoft",
       year: "2023",
-      tags: ["Web Design", "Gaming", "Brand Identity", "Responsive Design", "Content Strategy"],
-      features: [
-        "Redesigned entire user experience for 50M+ monthly visitors",
-        "Implemented modern design system aligned with gaming culture and brand values",
-        "Improved page load speeds by 40% through optimized user flows",
-        "Created seamless game discovery experience connecting users to Ubisoft's ecosystem"
-      ],
+
       gradient: "from-orange-500/10 to-red-500/10"
     },
     {
       title: "Abacus Multichain Wallet",
-      description: "Product lead for an innovative Web3 wallet experience that simplifies multichain cryptocurrency management. Bridging the gap between complex blockchain technology and mainstream user adoption.",
+      description: "Product lead for an innovative Web3 wallet experience that simplifies multichain cryptocurrency management and mainstream adoption.",
       role: "Product Lead",
       company: "Abacus",
       year: "2023",
-      tags: ["Web3", "Blockchain", "Product Strategy", "Mobile Design", "Security UX"],
-      features: [
-        "Designed intuitive multichain wallet supporting 15+ blockchain networks",
-        "Reduced user onboarding time by 60% through streamlined KYC flows",
-        "Implemented advanced security features without compromising usability",
-        "Led product strategy resulting in 200K+ active wallet users within 6 months"
-      ],
+
       gradient: "from-green-500/10 to-teal-500/10"
     },
     {
       title: "Alfred AI Assistant",
-      description: "Designed the core product experience for an AI-powered assistant that helps users navigate complex workflows. Focused on making artificial intelligence feel natural and accessible for everyday tasks.",
+      description: "Designed the core product experience for an AI-powered assistant, making artificial intelligence feel natural and accessible.",
       role: "Product Designer",
       company: "Alfred AI",
       year: "2022-2023",
-      tags: ["AI/ML", "Conversational UI", "Product Design", "User Testing", "Interaction Design"],
-      features: [
-        "Created conversational interface handling 1M+ daily interactions",
-        "Designed adaptive AI responses based on user behavior patterns",
-        "Implemented voice and text interaction modes for accessibility",
-        "Achieved 4.8/5.0 user satisfaction rating through iterative testing"
-      ],
+
       gradient: "from-violet-500/10 to-pink-500/10"
     },
     {
       title: "Destiny UX Optimization",
-      description: "Enhanced user experience for a high-traffic digital platform, focusing on user engagement, retention, and conversion optimization through data-driven design decisions.",
+      description: "Enhanced user experience for a high-traffic digital platform, focusing on engagement and conversion optimization through data-driven design.",
       role: "UX Designer",
       company: "Destiny",
       year: "2022",
-      tags: ["UX Design", "Data Analysis", "User Research", "Prototyping", "Growth"],
-      features: [
-        "Increased user engagement by 35% through improved information architecture",
-        "Conducted extensive user research with 500+ participants",
-        "Streamlined user onboarding reducing drop-off rates by 25%",
-        "Implemented responsive design supporting mobile-first user base"
-      ],
+
       gradient: "from-cyan-500/10 to-blue-500/10"
     },
     {
       title: "Mothership Design System",
-      description: "Architected and implemented a comprehensive design system for Ubisoft's digital properties, ensuring consistency and scalability across multiple gaming platforms and experiences.",
+      description: "Architected a comprehensive design system for Ubisoft's digital properties, ensuring consistency across multiple gaming platforms.",
       role: "Design Systems Lead",
       company: "Ubisoft",
       year: "2022",
-      tags: ["Design Systems", "Component Library", "Brand Guidelines", "Developer Tools", "Scalability"],
-      features: [
-        "Built comprehensive design system serving 50+ digital products",
-        "Created automated design-to-code workflow reducing development time by 40%",
-        "Established design governance processes across multiple teams",
-        "Documented 200+ reusable components with usage guidelines"
-      ],
+
       gradient: "from-indigo-500/10 to-purple-500/10",
       isComingSoon: true
     }
@@ -194,136 +144,111 @@ export default function WorkPage() {
   return (
     <PageWrapper>
       <div className="container mx-auto px-6 py-16">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           
-          {/* Header */}
-          <div className="text-center space-y-8 mb-16">
-            <AnimatedText
-              text="Selected Work"
-              as="h1"
-              variant="fade"
-              className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
-            />
-            
-            <AnimatedText
-              text="Crafting digital experiences that transform how people interact with technology—from e-commerce optimization to cutting-edge Web3 innovations."
-              as="p"
-              variant="fade"
-              delay={0.3}
-              className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed"
-            />
-          </div>
-
-          {/* Work Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-            <div className="text-center space-y-2">
-              <div className="text-3xl md:text-4xl font-bold text-accent">50M+</div>
-              <div className="text-sm text-muted-foreground">Users Impacted</div>
-            </div>
-            <div className="text-center space-y-2">
-              <div className="text-3xl md:text-4xl font-bold text-accent">18%</div>
-              <div className="text-sm text-muted-foreground">Conversion Increase</div>
-            </div>
-            <div className="text-center space-y-2">
-              <div className="text-3xl md:text-4xl font-bold text-accent">40%</div>
-              <div className="text-sm text-muted-foreground">Performance Gain</div>
-            </div>
-            <div className="text-center space-y-2">
-              <div className="text-3xl md:text-4xl font-bold text-accent">6+</div>
-              <div className="text-sm text-muted-foreground">Years Experience</div>
-            </div>
-          </div>
-
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            {projects.map((project, index) => (
-              <ProjectCard key={index} {...project} />
-            ))}
-          </div>
-
-          {/* Experience Timeline */}
-          <div className="space-y-8">
-            <AnimatedText
-              text="Professional Journey"
-              as="h2"
-              variant="fade"
-              delay={0.5}
-              className="text-3xl font-bold text-center"
-            />
-            
-            <div className="bg-gradient-to-r from-muted/10 to-accent/5 rounded-lg p-8">
-              <div className="space-y-8">
+          {/* Header - Left-aligned designer style */}
+          <div className="mb-20">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+              
+              {/* Left column - Title */}
+              <div className="lg:col-span-5">
+                <AnimatedText
+                  text="Selected Work"
+                  as="h1"
+                  variant="fade"
+                  className="text-5xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight"
+                />
+              </div>
+              
+              {/* Right column - Description and stats */}
+              <div className="lg:col-span-7 space-y-8">
+                <AnimatedText
+                  text="Crafting digital experiences that transform how people interact with technology—from e-commerce optimization to cutting-edge Web3 innovations."
+                  as="p"
+                  variant="fade"
+                  delay={0.3}
+                  className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl"
+                />
                 
-                <div className="border-l-2 border-accent/20 pl-6 space-y-6">
-                  <div className="relative">
-                    <div className="absolute -left-8 top-1 w-3 h-3 bg-accent rounded-full"></div>
-                    <div className="space-y-2">
-                      <div className="flex flex-col md:flex-row md:items-center gap-2">
-                        <h3 className="text-lg font-semibold">Senior UX Designer - Commerce Growth</h3>
-                        <span className="text-sm text-muted-foreground">Adobe • 2024-Present</span>
-                      </div>
-                      <p className="text-muted-foreground">Leading buy flow optimization and conversion rate improvements for Adobe Commerce ecosystem.</p>
-                    </div>
+                {/* Inline stats - Reform Collective style */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                  <div className="space-y-1">
+                    <div className="text-2xl md:text-3xl font-bold text-foreground">50M+</div>
+                    <div className="text-sm text-muted-foreground">Users Impacted</div>
                   </div>
-                  
-                  <div className="relative">
-                    <div className="absolute -left-8 top-1 w-3 h-3 bg-primary rounded-full"></div>
-                    <div className="space-y-2">
-                      <div className="flex flex-col md:flex-row md:items-center gap-2">
-                        <h3 className="text-lg font-semibold">Lead UX Designer</h3>
-                        <span className="text-sm text-muted-foreground">Ubisoft • 2022-2023</span>
-                      </div>
-                      <p className="text-muted-foreground">Spearheaded complete Ubisoft.com redesign and developed Mothership Design System.</p>
-                    </div>
+                  <div className="space-y-1">
+                    <div className="text-2xl md:text-3xl font-bold text-foreground">18%</div>
+                    <div className="text-sm text-muted-foreground">Conversion Lift</div>
                   </div>
-                  
-                  <div className="relative">
-                    <div className="absolute -left-8 top-1 w-3 h-3 bg-muted-foreground rounded-full"></div>
-                    <div className="space-y-2">
-                      <div className="flex flex-col md:flex-row md:items-center gap-2">
-                        <h3 className="text-lg font-semibold">Product Designer & Strategist</h3>
-                        <span className="text-sm text-muted-foreground">Various Startups • 2020-2022</span>
-                      </div>
-                      <p className="text-muted-foreground">Product lead for Web3 innovations, AI assistants, and user experience optimization across multiple ventures.</p>
-                    </div>
+                  <div className="space-y-1">
+                    <div className="text-2xl md:text-3xl font-bold text-foreground">40%</div>
+                    <div className="text-sm text-muted-foreground">Performance Gain</div>
                   </div>
-                  
-                  <div className="relative">
-                    <div className="absolute -left-8 top-1 w-3 h-3 bg-muted-foreground rounded-full"></div>
-                    <div className="space-y-2">
-                      <div className="flex flex-col md:flex-row md:items-center gap-2">
-                        <h3 className="text-lg font-semibold">Summer Intern - Agency Team</h3>
-                        <span className="text-sm text-muted-foreground">Google • 2019</span>
-                      </div>
-                      <p className="text-muted-foreground">Contributed to agency partnerships and digital advertising solutions, recognized for exceptional performance and organization.</p>
-                    </div>
+                  <div className="space-y-1">
+                    <div className="text-2xl md:text-3xl font-bold text-foreground">6+</div>
+                    <div className="text-sm text-muted-foreground">Years Experience</div>
                   </div>
-                  
                 </div>
               </div>
             </div>
           </div>
 
-          {/* CTA */}
-          <div className="text-center space-y-6 mt-16">
-            <h2 className="text-2xl font-bold">Interested in Working Together?</h2>
-                         <p className="text-muted-foreground max-w-2xl mx-auto">
-               I&apos;m always excited to tackle new challenges and create exceptional digital experiences. 
-               Let&apos;s discuss how we can bring your vision to life.
-             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/contact"
-                className="inline-flex items-center justify-center px-8 py-3 bg-primary text-primary-foreground font-medium rounded-md hover:bg-primary/90 transition-colors"
-              >
-                Start a Project
-              </a>
-              <a
-                href="/lab"
-                className="inline-flex items-center justify-center px-8 py-3 border border-border text-foreground font-medium rounded-md hover:bg-accent/10 transition-colors"
-              >
-                Explore My Lab
-              </a>
+          {/* Projects Grid - Inspired by Reform Collective layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+            {projects.map((project, index) => (
+              <ProjectCard key={index} {...project} />
+            ))}
+          </div>
+
+          {/* CTA Section - Designer style */}
+          <div className="border-t border-border/50 pt-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              
+              {/* Left - CTA Text */}
+              <div className="space-y-6">
+                <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+                  Let&apos;s Build Something Great Together
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Ready to transform your digital experience? I&apos;m always excited to tackle new challenges 
+                  and create exceptional solutions.
+                </p>
+              </div>
+              
+              {/* Right - Contact Actions */}
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <a
+                    href="/contact"
+                    className="group block p-6 border border-border/50 rounded-lg hover:border-accent/50 transition-colors"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-semibold mb-1">Start a Project</h3>
+                        <p className="text-sm text-muted-foreground">Let&apos;s discuss your vision</p>
+                      </div>
+                      <div className="text-accent group-hover:translate-x-1 transition-transform">
+                        →
+                      </div>
+                    </div>
+                  </a>
+                  
+                  <a
+                    href="mailto:hello@tylerschmidt.com"
+                    className="group block p-6 border border-border/50 rounded-lg hover:border-accent/50 transition-colors"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-semibold mb-1">Send an Email</h3>
+                        <p className="text-sm text-muted-foreground">hello@tylerschmidt.com</p>
+                      </div>
+                      <div className="text-accent group-hover:translate-x-1 transition-transform">
+                        →
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
