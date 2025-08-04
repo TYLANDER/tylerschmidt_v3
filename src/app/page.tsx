@@ -100,7 +100,7 @@ export default function HomePage() {
                 />
                 <AnimatedText
                   text="Wave Animation"
-                  variant="wave"
+                  variant="fade"
                   className="text-lg font-medium"
                 />
                 <AnimatedText

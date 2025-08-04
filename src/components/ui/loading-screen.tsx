@@ -217,7 +217,7 @@ function ArtisticLoader({ progress, message }: { progress?: number; message?: st
         >
           <AnimatedText
             text={message}
-            variant="wave"
+            variant="decrypt"
             className="text-lg font-medium"
           />
         </motion.div>

@@ -171,19 +171,36 @@ export function ClassifiedText({
   redactionRate?: number
   delay?: number
 }) {
-  const words = text.split(' ')
+  const [mounted, setMounted] = useState(false)
   const [redactedIndices, setRedactedIndices] = useState<number[]>([])
   
+  // Prevent hydration mismatch by only showing encrypted version client-side
   useEffect(() => {
-    // Randomly select words to redact
+    setMounted(true)
+    const words = text.split(' ')
+    
+    // Use deterministic selection based on text content to avoid hydration issues
+    const seed = text.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+    const rng = () => {
+      const x = Math.sin(seed) * 10000
+      return x - Math.floor(x)
+    }
+    
     const indices = words
       .map((_, index) => index)
-      .filter(() => Math.random() < redactionRate)
-      .filter((_, index) => index < Math.floor(words.length * redactionRate * 1.5)) // Limit total redactions
+      .filter((_, index) => rng() * (index + 1) < redactionRate * words.length)
+      .slice(0, Math.floor(words.length * redactionRate * 1.5))
     
     setRedactedIndices(indices)
-  }, [text, redactionRate, words])
+  }, [text, redactionRate])
 
+  // Show plain text on server, encrypted on client after mount
+  if (!mounted) {
+    return <p className={className}>{text}</p>
+  }
+
+  const words = text.split(' ')
+  
   return (
     <p className={className}>
       {words.map((word, index) => {
@@ -192,7 +209,7 @@ export function ClassifiedText({
         
         if (isRedacted) {
           return (
-            <span key={index}>
+            <span key={`${word}-${index}`} className="inline">
               <DecryptText 
                 text={word} 
                 Component="span" 
@@ -205,7 +222,7 @@ export function ClassifiedText({
         }
         
         return (
-          <span key={index}>
+          <span key={`${word}-${index}`} className="inline">
             {word}
             {index < words.length - 1 ? ' ' : ''}
           </span>
