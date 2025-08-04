@@ -159,6 +159,62 @@ export function GradientText({
   )
 }
 
+// Classified text component - randomly encrypts words like a redacted document
+export function ClassifiedText({ 
+  text, 
+  className, 
+  redactionRate = 0.15,
+  delay = 0 
+}: {
+  text: string
+  className?: string
+  redactionRate?: number
+  delay?: number
+}) {
+  const words = text.split(' ')
+  const [redactedIndices, setRedactedIndices] = useState<number[]>([])
+  
+  useEffect(() => {
+    // Randomly select words to redact
+    const indices = words
+      .map((_, index) => index)
+      .filter(() => Math.random() < redactionRate)
+      .filter((_, index) => index < Math.floor(words.length * redactionRate * 1.5)) // Limit total redactions
+    
+    setRedactedIndices(indices)
+  }, [text, redactionRate, words])
+
+  return (
+    <p className={className}>
+      {words.map((word, index) => {
+        const isRedacted = redactedIndices.includes(index)
+        const wordDelay = delay + (redactedIndices.indexOf(index) * 0.1)
+        
+        if (isRedacted) {
+          return (
+            <span key={index}>
+              <DecryptText 
+                text={word} 
+                Component="span" 
+                delay={wordDelay}
+                className="inline"
+              />
+              {index < words.length - 1 ? ' ' : ''}
+            </span>
+          )
+        }
+        
+        return (
+          <span key={index}>
+            {word}
+            {index < words.length - 1 ? ' ' : ''}
+          </span>
+        )
+      })}
+    </p>
+  )
+}
+
 // Decrypt animation component inspired by Reform Collective
 function DecryptText({ 
   text, 
@@ -210,9 +266,5 @@ function DecryptText({
     return () => clearTimeout(timer)
   }, [text, delay, onComplete, characters])
 
-  return (
-    <Component className={className}>
-      <span>{displayText}</span>
-    </Component>
-  )
+  return React.createElement(Component, { className }, displayText)
 } 
