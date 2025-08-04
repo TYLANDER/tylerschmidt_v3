@@ -1,7 +1,7 @@
 import { AnimatedText } from "@/components/animations/animated-text"
 import { Button } from "@/components/ui/button"
 import { PageWrapper } from "@/components/layout/page-transition"
-import { WebGLMeshGradient } from "@/components/ui/webgl-mesh-gradient"
+import { MetallicHero } from "@/components/three/metallic-hero"
 import { InteractiveProjectCard } from "@/components/ui/interactive-project-card"
 import { InteractiveStats } from "@/components/ui/interactive-stats"
 import Link from "next/link"
@@ -59,20 +59,20 @@ export default function HomePage() {
 
   return (
     <PageWrapper>
-      {/* Hero Section with Interactive Mesh Gradient */}
+      {/* Hero Section with Interactive Metallic Spheres */}
       <section className="relative flex min-h-screen flex-1 items-center justify-center overflow-hidden px-6 py-20">
-        {/* Interactive Mesh Gradient Background */}
-                  <WebGLMeshGradient />
+        {/* Interactive Metallic Hero Background */}
+        <MetallicHero />
 
-        {/* Hero Content */}
+        {/* Hero Content - Overlaid */}
         <div className="relative z-10 mx-auto max-w-4xl space-y-8 text-center">
-          {/* Main Heading */}
+          {/* Main Heading - Metallic Style */}
           <div className="space-y-4">
             <AnimatedText
               text="Tyler Schmidt"
               as="h1"
               variant="decrypt"
-              className="text-6xl font-bold tracking-tight md:text-8xl"
+              className="text-6xl font-bold tracking-tight md:text-8xl bg-gradient-to-r from-gray-200 via-gray-100 to-gray-300 bg-clip-text text-transparent drop-shadow-2xl [filter:drop-shadow(0_0_20px_rgba(192,192,192,0.3))] [text-shadow:0_0_40px_rgba(255,255,255,0.1)]"
               delay={0.2}
             />
 
@@ -80,7 +80,7 @@ export default function HomePage() {
               text="UX/UI Designer & Engineer"
               as="h2"
               variant="slide"
-              className="text-muted-foreground text-xl font-medium md:text-2xl"
+              className="text-gray-300 text-xl font-medium md:text-2xl drop-shadow-lg"
               delay={0.8}
             />
           </div>
@@ -91,7 +91,7 @@ export default function HomePage() {
               text="Crafting award-winning digital experiences that push the boundaries of design and technology."
               as="p"
               variant="fade"
-              className="text-muted-foreground text-lg leading-relaxed"
+              className="text-gray-400 text-lg leading-relaxed drop-shadow-lg"
               delay={1.2}
             />
           </div>
@@ -99,12 +99,16 @@ export default function HomePage() {
           {/* Action Buttons */}
           <div className="flex flex-col items-center justify-center gap-4 pt-8 sm:flex-row">
             <Link href="/work">
-              <Button size="lg" variant="magnetic" className="chrome-button">
+              <Button size="lg" variant="magnetic" className="chrome-button relative">
                 View My Work
               </Button>
             </Link>
             <Link href="/contact">
-              <Button size="lg" variant="outline">
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="border-gray-300 text-gray-300 hover:bg-gray-300 hover:text-black transition-all duration-300"
+              >
                 Get In Touch
               </Button>
             </Link>
