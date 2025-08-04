@@ -90,7 +90,7 @@ export function AnimatedText({
   }
 
   if (variant === "decrypt") {
-    return <DecryptText text={text} className={className} Component={Component} delay={delay} duration={duration} onComplete={onComplete} />
+    return <DecryptText text={text} className={className} Component={Component} delay={delay} onComplete={onComplete} />
   }
 
   return (
@@ -212,7 +212,7 @@ function DecryptText({
 
   return (
     <Component className={className}>
-      {displayText}
+      <span>{displayText}</span>
     </Component>
   )
 } 
