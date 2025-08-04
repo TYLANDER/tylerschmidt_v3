@@ -51,12 +51,12 @@ export function WebGLMeshGradient() {
       float mouseDistance = distance(a_position, u_mouse);
       float influence = 1.0 - smoothstep(0.0, 0.3, mouseDistance);
       
-      // Very gentle wave motion
-      float wave = sin(a_position.x * 3.0 + u_time * 0.5) * 0.02;
-      wave += cos(a_position.y * 2.0 + u_time * 0.3) * 0.015;
+      // Extremely gentle wave motion
+      float wave = sin(a_position.x * 1.0 + u_time * 0.1) * 0.005;
+      wave += cos(a_position.y * 0.8 + u_time * 0.08) * 0.003;
       
-      // Gentle mouse warping
-      vec2 mouseOffset = (u_mouse - a_position) * influence * 0.05;
+      // Very subtle mouse warping
+      vec2 mouseOffset = (u_mouse - a_position) * influence * 0.01;
       position += mouseOffset;
       position.x += wave;
       position.y += wave * 0.8;
@@ -76,8 +76,8 @@ export function WebGLMeshGradient() {
       // Very subtle color variation
       vec3 color = v_color;
       
-      // Very subtle time-based color breathing
-      color += 0.05 * sin(u_time * 0.3);
+      // Barely perceptible color breathing
+      color += 0.01 * sin(u_time * 0.1);
       
       gl_FragColor = vec4(color, 0.7);
     }
@@ -233,37 +233,37 @@ export function WebGLMeshGradient() {
     }
 
     const animate = () => {
-      timeRef.current += 0.016 // ~60fps
+      timeRef.current += 0.003 // Much slower animation
       
       // Prepare vertex data
       const positions: number[] = []
       const colors: number[] = []
       
       points.forEach((point) => {
-        // Smooth movement towards mouse
-        const mouseInfluence = 0.02
-        const restoreForce = 0.01
+        // Ultra-smooth, slow movement towards mouse
+        const mouseInfluence = 0.005
+        const restoreForce = 0.003
         
-        // Calculate target position (mix of base position and mouse influence)
+        // Calculate target position (very subtle mouse influence)
         const dx = mouseRef.current.x - point.x
         const dy = mouseRef.current.y - point.y
         const distance = Math.sqrt(dx * dx + dy * dy)
-        const influence = Math.max(0, 1 - distance / 0.4)
+        const influence = Math.max(0, 1 - distance / 0.6)
         
-        point.targetX = point.baseX + dx * influence * 0.1
-        point.targetY = point.baseY + dy * influence * 0.1
+        point.targetX = point.baseX + dx * influence * 0.02
+        point.targetY = point.baseY + dy * influence * 0.02
         
-        // Apply smooth movement
+        // Apply very gentle movement
         point.velocity.x += (point.targetX - point.x) * mouseInfluence
         point.velocity.y += (point.targetY - point.y) * mouseInfluence
         
-        // Add restore force to base position
+        // Add gentle restore force to base position
         point.velocity.x += (point.baseX - point.x) * restoreForce
         point.velocity.y += (point.baseY - point.y) * restoreForce
         
-        // Apply friction
-        point.velocity.x *= 0.95
-        point.velocity.y *= 0.95
+        // Apply strong friction for ultra-smooth motion
+        point.velocity.x *= 0.92
+        point.velocity.y *= 0.92
         
         // Update position
         point.x += point.velocity.x
