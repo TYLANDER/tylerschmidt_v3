@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/SiteFooter"
 import { injectAnalytics } from "@/lib/analytics"
 import { aeonik, inter } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
+import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration"
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tylerschmidt.dev'),
@@ -118,7 +119,7 @@ export default function RootLayout({
           sizes="16x16"
           href="/favicon-16x16.png"
         />
-        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
@@ -128,6 +129,7 @@ export default function RootLayout({
         inter.variable
       )}>
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-accent focus:text-white focus:px-3 focus:py-2 rounded-md">Skip to content</a>
+        <ServiceWorkerRegistration />
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />

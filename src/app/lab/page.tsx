@@ -1,3 +1,5 @@
+"use client"
+
 import { Metadata } from "next"
 import { AnimatedText } from "@/components/animations/animated-text"
 import { AnimatedHero } from "@/components/three/animated-hero"
@@ -9,256 +11,229 @@ import { AudioCrystals } from "@/components/three/audio-crystals"
 import { ParticleFire } from "@/components/three/particle-fire"
 import { WaveField } from "@/components/three/wave-field"
 import { PageWrapper } from "@/components/layout/page-transition"
-
-export const metadata: Metadata = {
-  title: "Lab",
-  description:
-    "Experimental projects, prototypes, and interactive demos showcasing cutting-edge web technologies.",
-}
+import { motion } from "framer-motion"
+import { cardVariants, revealContainer, revealItem } from "@/lib/interactions"
+import { useState } from "react"
 
 interface DemoCardProps {
   title: string
   description: string
   tech: string[]
   children: React.ReactNode
+  index: number
 }
 
-function DemoCard({ title, description, tech, children }: DemoCardProps) {
+function DemoCard({ title, description, tech, children, index }: DemoCardProps) {
+  const [isHovered, setIsHovered] = useState(false)
+  
   return (
-    <div className="bg-card border-border space-y-4 rounded-lg border p-6">
+    <motion.div 
+      className="bg-white border-ink/10 space-y-4 rounded-lg border p-6"
+      variants={cardVariants}
+      initial="rest"
+      whileHover="hover"
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      custom={index}
+      viewport={{ once: true, margin: "-100px" }}
+    >
       <div className="space-y-2">
-        <h3 className="text-xl font-semibold">{title}</h3>
-        <p className="text-muted-foreground text-sm">{description}</p>
+        <h3 className="text-xl font-semibold text-ink">{title}</h3>
+        <p className="text-ink/60 text-sm">{description}</p>
         <div className="flex flex-wrap gap-2">
           {tech.map((item, index) => (
-            <span
+            <motion.span
               key={index}
               className="bg-accent/10 text-accent rounded-md px-2 py-1 font-mono text-xs"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: index * 0.05 }}
             >
               {item}
-            </span>
+            </motion.span>
           ))}
         </div>
       </div>
-      <div className="border-border/50 h-80 overflow-hidden rounded-lg border">
+      <motion.div 
+        className="relative h-80 overflow-hidden rounded-lg border border-ink/5 bg-muted/20"
+        animate={{ borderColor: isHovered ? "rgba(0, 102, 255, 0.2)" : "rgba(17, 17, 17, 0.05)" }}
+        transition={{ duration: 0.3 }}
+      >
         {children}
-      </div>
-    </div>
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent pointer-events-none"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+        />
+      </motion.div>
+    </motion.div>
   )
 }
 
 export default function LabPage() {
+  const experiments = [
+    {
+      title: "Liquid Metal Blob",
+      description: "Interactive metallic blob with realistic material properties and physics.",
+      tech: ["three.js", "react-three-fiber", "physics"],
+      component: <LiquidMetal />
+    },
+    {
+      title: "Particle Galaxy",
+      description: "Dynamic particle system with gravitational forces and interactive controls.",
+      tech: ["webgl", "shaders", "particles"],
+      component: <ParticleGalaxy />
+    },
+    {
+      title: "Neural Network Visualization",
+      description: "Real-time visualization of neural network processing and data flow.",
+      tech: ["d3.js", "tensorflow", "webgl"],
+      component: <NeuralNetworkViz />
+    },
+    {
+      title: "Fluid Dynamics",
+      description: "GPU-accelerated fluid simulation with interactive flow patterns.",
+      tech: ["webgl2", "compute-shaders", "physics"],
+      component: <FluidDynamics />
+    },
+    {
+      title: "Wave Field",
+      description: "Parametric wave field with customizable frequency and amplitude.",
+      tech: ["three.js", "glsl", "math"],
+      component: <WaveField />
+    },
+    {
+      title: "Particle Fire",
+      description: "Realistic fire effect using particle systems and custom shaders.",
+      tech: ["particles", "shaders", "physics"],
+      component: <ParticleFire />
+    },
+    {
+      title: "Audio Reactive Crystals",
+      description: "3D crystals that respond to audio input with dynamic deformations.",
+      tech: ["web-audio", "three.js", "fft"],
+      component: <AudioCrystals />
+    },
+    {
+      title: "Animated Hero Background",
+      description: "Layered animated background with parallax scrolling effects.",
+      tech: ["react", "framer-motion", "svg"],
+      component: <AnimatedHero />
+    }
+  ]
+
   return (
     <PageWrapper>
-      <div className="container mx-auto px-6 py-16">
-        <div className="mx-auto max-w-6xl">
-          {/* Header */}
-          <div className="mb-16 space-y-8 text-center">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-white px-6 py-20">
+        <div className="container mx-auto">
+          <div className="mx-auto max-w-4xl text-center">
             <AnimatedText
-              text="The Lab"
+              text="Experimental Lab"
               as="h1"
-              variant="fade"
-              className="from-primary via-accent to-primary bg-gradient-to-r bg-clip-text text-4xl font-bold text-transparent md:text-6xl"
+              variant="slide"
+              className="mb-6 text-5xl font-bold md:text-7xl text-ink"
             />
-
             <AnimatedText
-              text="Experimental WebGL demos pushing the boundaries of what&apos;s possible in the browser. Click, hover, and interact with each simulation to explore cutting-edge web technologies."
+              text="A playground for exploring cutting-edge web technologies and creative coding experiments."
               as="p"
               variant="fade"
-              delay={0.3}
-              className="text-muted-foreground mx-auto max-w-3xl text-lg leading-relaxed"
+              className="text-ink/70 mx-auto max-w-2xl text-lg"
+              delay={0.5}
             />
           </div>
+        </div>
+      </section>
 
-          {/* Demo Grid */}
-          <div className="grid grid-cols-1 gap-8 space-y-0 lg:grid-cols-2">
-            {/* Particle Galaxy */}
-            <DemoCard
-              title="🌌 Particle Galaxy"
-              description="An interactive spiral galaxy with thousands of particles forming cosmic structures. Watch the galaxy slowly rotate while stars twinkle in the background."
-              tech={[
-                "Three.js",
-                "Particle Systems",
-                "Additive Blending",
-                "Custom Shaders",
-              ]}
-            >
-              <ParticleGalaxy />
-            </DemoCard>
+      {/* Experiments Grid */}
+      <section className="border-t border-ink/5 bg-muted/30 px-6 py-20">
+        <div className="container mx-auto">
+          <motion.div 
+            className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+            variants={revealContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            {experiments.map((experiment, index) => (
+              <motion.div key={experiment.title} variants={revealItem}>
+                <DemoCard
+                  title={experiment.title}
+                  description={experiment.description}
+                  tech={experiment.tech}
+                  index={index}
+                >
+                  {experiment.component}
+                </DemoCard>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
 
-            {/* Liquid Metal */}
-            <DemoCard
-              title="🔮 Liquid Metal"
-              description="Chrome-like liquid metal blob that morphs and distorts in real-time. Hover to interact and watch the surface ripple with metallic reflections."
-              tech={[
-                "Displacement Shaders",
-                "PBR Materials",
-                "Environment Mapping",
-                "Mesh Distortion",
-              ]}
-            >
-              <LiquidMetal />
-            </DemoCard>
-
-            {/* Neural Network */}
-            <DemoCard
-              title="⚡ Neural Network"
-              description="Visualize how artificial neural networks process information. Click any node to trigger electrical pulses that propagate through the network layers."
-              tech={[
-                "Graph Algorithms",
-                "Particle Trails",
-                "Interactive Nodes",
-                "Animation Sequencing",
-              ]}
-            >
-              <NeuralNetworkViz />
-            </DemoCard>
-
-            {/* Fluid Dynamics */}
-            <DemoCard
-              title="🌊 Fluid Dynamics"
-              description="Real-time fluid simulation with interactive dye mixing. Move your mouse to create turbulent flow patterns and watch colors blend in the fluid field."
-              tech={[
-                "Fluid Simulation",
-                "Custom Shaders",
-                "Turbulence",
-                "Real-time Physics",
-              ]}
-            >
-              <FluidDynamics />
-            </DemoCard>
-
-            {/* Audio Reactive Crystals */}
-            <DemoCard
-              title="🎵 Audio Reactive Crystals"
-              description="Geometric crystals that pulse and grow with music or microphone input. Grant microphone access to see crystals react to your voice in real-time."
-              tech={[
-                "Web Audio API",
-                "Frequency Analysis",
-                "Procedural Geometry",
-                "Real-time Audio",
-              ]}
-            >
-              <AudioCrystals />
-            </DemoCard>
-
-            {/* Particle Fire */}
-            <DemoCard
-              title="🔥 Particle Fire"
-              description="Realistic fire simulation with heat distortion effects. Move your mouse to influence the flames and watch particles transform from hot white to cool red."
-              tech={[
-                "Particle Physics",
-                "Heat Simulation",
-                "Custom Shaders",
-                "Real-time Distortion",
-              ]}
-            >
-              <ParticleFire />
-            </DemoCard>
-
-            {/* Morphing Wave Field */}
-            <DemoCard
-              title="🌊 Morphing Wave Field"
-              description="An organic wave field that responds to your mouse with flowing geometric patterns. Watch as particles swarm around your cursor while the surface ripples with color."
-              tech={[
-                "Custom GLSL Shaders",
-                "Procedural Noise",
-                "Interactive Geometry",
-                "Dynamic Particle Systems",
-              ]}
-            >
-              <WaveField />
-            </DemoCard>
-
-            {/* Original Animated Hero */}
-            <DemoCard
-              title="🎭 Distorted Sphere"
-              description="The original demo - a continuously morphing sphere with displacement mapping. A study in geometric transformation and surface distortion."
-              tech={[
-                "Geometry Displacement",
-                "Orbit Controls",
-                "Dynamic Materials",
-                "Animation Loops",
-              ]}
-            >
-              <AnimatedHero />
-            </DemoCard>
-          </div>
-
-          {/* Performance Info */}
-          <div className="border-border mt-16 rounded-lg border bg-gradient-to-r from-blue-500/10 to-purple-500/10 p-8">
-            <div className="space-y-4 text-center">
-              <h3 className="text-xl font-semibold">
-                🚀 Performance Optimized
-              </h3>
-              <div className="grid grid-cols-1 gap-6 text-sm md:grid-cols-3">
-                <div className="space-y-2">
-                  <div className="font-semibold text-green-400">
-                    Hardware Accelerated
-                  </div>
-                  <p className="text-muted-foreground">
-                    All demos use WebGL for GPU-accelerated rendering, ensuring
-                    smooth 60fps performance
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <div className="font-semibold text-blue-400">
-                    Adaptive Quality
-                  </div>
-                  <p className="text-muted-foreground">
-                    Dynamic particle counts and LOD systems adjust to your
-                    device capabilities
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <div className="font-semibold text-purple-400">
-                    Optimized Shaders
-                  </div>
-                  <p className="text-muted-foreground">
-                    Custom GLSL shaders minimize draw calls and maximize visual
-                    impact
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Tech Stack Info */}
-          <div className="from-muted/10 to-accent/5 border-border mt-8 rounded-lg border bg-gradient-to-r p-8">
-            <div className="space-y-4 text-center">
-              <h3 className="text-xl font-semibold">Powered By</h3>
-              <div className="flex flex-wrap justify-center gap-4 text-sm">
-                <span className="bg-background border-border rounded-full border px-3 py-1">
-                  Three.js
-                </span>
-                <span className="bg-background border-border rounded-full border px-3 py-1">
-                  @react-three/fiber
-                </span>
-                <span className="bg-background border-border rounded-full border px-3 py-1">
-                  @react-three/drei
-                </span>
-                <span className="bg-background border-border rounded-full border px-3 py-1">
-                  WebGL Shaders
-                </span>
-                <span className="bg-background border-border rounded-full border px-3 py-1">
-                  GLSL
-                </span>
-                <span className="bg-background border-border rounded-full border px-3 py-1">
-                  Web Audio API
-                </span>
-                <span className="bg-background border-border rounded-full border px-3 py-1">
-                  TypeScript
-                </span>
-              </div>
-              <p className="text-muted-foreground mx-auto max-w-2xl text-sm">
-                All demos run entirely in the browser using WebGL for
-                hardware-accelerated graphics. No plugins required - just modern
-                web technology pushing creative boundaries.
-              </p>
+      {/* Tech Stack Section */}
+      <section className="border-t border-ink/5 bg-white px-6 py-20">
+        <div className="container mx-auto">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="mb-8 text-center text-3xl font-bold text-ink">
+              Technologies & Tools
+            </h2>
+            <div className="grid gap-6 md:grid-cols-3">
+              {[
+                {
+                  category: "3D Graphics",
+                  items: ["Three.js", "React Three Fiber", "WebGL", "GLSL Shaders"],
+                },
+                {
+                  category: "Animation",
+                  items: ["Framer Motion", "GSAP", "Lottie", "CSS Animations"],
+                },
+                {
+                  category: "Creative Coding",
+                  items: ["Canvas API", "Web Audio API", "WebGPU", "Matter.js"],
+                },
+              ].map((group, index) => (
+                <motion.div
+                  key={group.category}
+                  className="space-y-3"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-ink/50">
+                    {group.category}
+                  </h3>
+                  <ul className="space-y-2">
+                    {group.items.map((item) => (
+                      <li
+                        key={item}
+                        className="text-ink/80 hover:text-accent transition-colors cursor-default"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="border-t border-ink/5 bg-muted/30 px-6 py-16">
+        <div className="container mx-auto text-center">
+          <p className="text-ink/60 mb-4">
+            Interested in collaborating on experimental projects?
+          </p>
+          <a
+            href="/contact"
+            className="text-accent hover:underline underline-offset-4 font-medium transition-all"
+          >
+            Let&apos;s create something unique →
+          </a>
+        </div>
+      </section>
     </PageWrapper>
   )
 }
