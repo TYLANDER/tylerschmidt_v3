@@ -1,6 +1,19 @@
 /**
- * Lightweight sun calculation utilities
- * Based on NOAA solar calculations for accuracy
+ * Sun Calculation Utilities
+ * 
+ * Provides accurate sunrise/sunset calculations based on NOAA astronomical algorithms.
+ * These calculations power the automatic theme switching, ensuring the site's
+ * appearance naturally follows the sun throughout the day.
+ * 
+ * Key features:
+ * - Calculates sunrise, sunset, and civil twilight times
+ * - Accounts for user's exact latitude/longitude
+ * - Uses simplified but accurate solar position algorithms
+ * - Provides smooth transition progress for dawn/dusk effects
+ * 
+ * Civil twilight is used instead of actual sunrise/sunset for more natural
+ * theme transitions - this is when the sun is 6° below the horizon and
+ * there's still ambient light in the sky.
  */
 
 export interface SunTimes {
@@ -17,7 +30,20 @@ export interface Coordinates {
 
 /**
  * Calculate sun times for given coordinates and date
- * Uses simplified but accurate NOAA algorithm
+ * 
+ * This is the core function that determines when to switch themes.
+ * It calculates not just sunrise/sunset, but also civil twilight times
+ * for smoother, more natural transitions.
+ * 
+ * @param coords - User's latitude/longitude
+ * @param date - Date to calculate for (defaults to today)
+ * @returns Object with sunrise, sunset, and twilight times
+ * 
+ * Example timeline for New York on June 21:
+ * - Civil Dawn: 5:00 AM (theme starts transitioning to light)
+ * - Sunrise: 5:30 AM (full daylight theme)
+ * - Sunset: 8:30 PM (theme starts transitioning to dark)
+ * - Civil Dusk: 9:00 PM (full dark theme)
  */
 export function calculateSunTimes(coords: Coordinates, date = new Date()): SunTimes {
   const { latitude, longitude } = coords
@@ -41,6 +67,14 @@ export function calculateSunTimes(coords: Coordinates, date = new Date()): SunTi
 
 /**
  * Determine theme based on current time and sun position
+ * 
+ * Uses civil twilight as the transition point for a more natural feel.
+ * This means the theme changes when there's still some ambient light,
+ * rather than waiting for complete darkness.
+ * 
+ * @param sunTimes - Calculated sun times for the day
+ * @param now - Current time to check
+ * @returns 'light' during day, 'dark' at night
  */
 export function getThemeFromSunTimes(sunTimes: SunTimes, now = new Date()): 'light' | 'dark' {
   const time = now.getTime()
@@ -55,7 +89,17 @@ export function getThemeFromSunTimes(sunTimes: SunTimes, now = new Date()): 'lig
 
 /**
  * Get transition progress for smooth theme changes
- * Returns 0-1 where 0 is full dark and 1 is full light
+ * 
+ * This enables gradual theme transitions during dawn and dusk,
+ * creating a beautiful sunrise/sunset effect rather than an abrupt switch.
+ * 
+ * @param sunTimes - Calculated sun times for the day  
+ * @param now - Current time
+ * @returns Progress from 0 (full dark) to 1 (full light)
+ * 
+ * Transition periods:
+ * - Dawn: Civil dawn to sunrise (typically ~30 minutes)
+ * - Dusk: Sunset to civil dusk (typically ~30 minutes)
  */
 export function getTransitionProgress(sunTimes: SunTimes, now = new Date()): number {
   const time = now.getTime()
@@ -141,7 +185,10 @@ function hoursToDate(hours: number, date: Date): Date {
 }
 
 /**
- * Cache sun times with expiry
+ * Cached sun times structure
+ * 
+ * Sun positions only need to be calculated once per day per location.
+ * Caching prevents unnecessary recalculations and API calls.
  */
 export interface CachedSunTimes {
   sunTimes: SunTimes
@@ -150,6 +197,16 @@ export interface CachedSunTimes {
   expires: number
 }
 
+/**
+ * Cache calculated sun times for 24 hours
+ * 
+ * This significantly improves performance by avoiding recalculation
+ * on every page load. Sun times change very slowly day-to-day,
+ * so 24-hour caching is perfectly acceptable.
+ * 
+ * @param sunTimes - Calculated times to cache
+ * @param coordinates - Location used for calculation
+ */
 export function cacheSunTimes(sunTimes: SunTimes, coordinates: Coordinates): void {
   const cached: CachedSunTimes = {
     sunTimes,

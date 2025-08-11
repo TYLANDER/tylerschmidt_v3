@@ -1,24 +1,40 @@
 @import "tailwindcss";
 
+/**
+ * Global CSS Variables - Precision Bold Design System
+ * 
+ * This design system uses CSS custom properties (variables) to enable
+ * automatic theme switching based on sunrise/sunset times. All colors
+ * are defined here and referenced throughout the app.
+ * 
+ * Light Theme (Daytime):
+ * - Clean white backgrounds with deep ink text
+ * - Blue accent color (#0066FF) for interactive elements
+ * - Subtle gray tones for secondary content
+ * 
+ * The theme automatically switches based on your local sun position,
+ * creating a natural browsing experience that respects your circadian rhythm.
+ */
+
 :root {
-  /* Precision Bold Light Theme */
-  --background: #FFFFFF;
-  --foreground: #111111;
-  --muted: #F5F5F5;
-  --muted-foreground: #555555;
-  --card: #FFFFFF;
-  --card-foreground: #111111;
-  --border: #E5E5E5;
-  --input: #FFFFFF;
-  --primary: #111111;
-  --primary-foreground: #FFFFFF;
-  --secondary: #F5F5F5;
+  /* Light Theme - Active during daylight hours */
+  --background: #FFFFFF;         /* Pure white background */
+  --foreground: #111111;         /* Deep ink text */
+  --muted: #F5F5F5;             /* Light gray backgrounds */
+  --muted-foreground: #555555;   /* Medium gray text */
+  --card: #FFFFFF;              /* Card backgrounds */
+  --card-foreground: #111111;    /* Card text */
+  --border: #E5E5E5;            /* Subtle borders */
+  --input: #FFFFFF;             /* Form inputs */
+  --primary: #111111;           /* Primary actions (black on white) */
+  --primary-foreground: #FFFFFF; /* Text on primary */
+  --secondary: #F5F5F5;         /* Secondary buttons */
   --secondary-foreground: #111111;
-  --accent: #0066FF;
-  --accent-foreground: #FFFFFF;
-  --destructive: #EB5757;
+  --accent: #0066FF;            /* Blue accent - links, CTAs */
+  --accent-foreground: #FFFFFF;  /* Text on accent */
+  --destructive: #EB5757;       /* Error states */
   --destructive-foreground: #FFFFFF;
-  --ring: #0066FF;
+  --ring: #0066FF;              /* Focus rings */
 
   /* Typography */
   --font-heading: var(--font-aeonik), system-ui, sans-serif;
@@ -26,21 +42,29 @@
   --font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
 }
 
+/**
+ * Dark Theme - Automatically activated after sunset
+ * 
+ * The dark theme provides a comfortable viewing experience at night,
+ * with reduced blue light and lower contrast to minimize eye strain.
+ * Colors are carefully chosen to maintain readability while being
+ * easy on the eyes in low-light conditions.
+ */
 .dark {
-  /* Precision Bold Dark Theme */
-  --background: #0A0A0A;
-  --foreground: #FAFAFA;
-  --muted: #1A1A1A;
-  --muted-foreground: #A0A0A0;
-  --card: #0F0F0F;
+  /* Dark Theme - Active during nighttime hours */
+  --background: #0A0A0A;         /* Near-black background */
+  --foreground: #FAFAFA;         /* Off-white text */
+  --muted: #1A1A1A;             /* Dark gray backgrounds */
+  --muted-foreground: #A0A0A0;   /* Muted text */
+  --card: #0F0F0F;              /* Slightly elevated cards */
   --card-foreground: #FAFAFA;
-  --border: #2A2A2A;
-  --input: #1A1A1A;
-  --primary: #FAFAFA;
+  --border: #2A2A2A;            /* Subtle dark borders */
+  --input: #1A1A1A;             /* Form inputs */
+  --primary: #FAFAFA;           /* Primary actions (white on black) */
   --primary-foreground: #0A0A0A;
   --secondary: #1A1A1A;
   --secondary-foreground: #FAFAFA;
-  --accent: #3B82F6; /* Slightly lighter blue for dark mode */
+  --accent: #3B82F6;            /* Softer blue for dark mode */
   --accent-foreground: #FAFAFA;
   --destructive: #EF4444;
   --destructive-foreground: #FAFAFA;
@@ -91,12 +115,21 @@ body {
   border-radius: 2px;
 }
 
-/* Sun-based theme transitions */
+/**
+ * Theme Transition Styles
+ * 
+ * When the sun crosses the horizon (sunrise/sunset), these styles
+ * create a smooth 1-second fade between light and dark themes.
+ * This mimics the gradual nature of dawn and dusk, making the
+ * transition feel natural rather than jarring.
+ */
+
+/* Active during theme transitions (dawn/dusk) */
 .theme-transitioning * {
   transition: background-color 1s ease, color 1s ease, border-color 1s ease !important;
 }
 
-/* Prevent flash on load */
+/* Prevent flash of unstyled content on initial load */
 html:not(.theme-transitioning) * {
   transition: none;
 }

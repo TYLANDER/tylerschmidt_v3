@@ -1,7 +1,21 @@
 import type { Config } from 'tailwindcss'
 
+/**
+ * Tailwind CSS Configuration - Precision Bold Design System
+ * 
+ * This configuration extends Tailwind with our custom design tokens
+ * while maintaining full compatibility with the automatic sun-based
+ * theme switching system.
+ * 
+ * Key Features:
+ * - All colors reference CSS variables for theme switching
+ * - Custom spacing scale based on 4px grid system
+ * - Extended animations for micro-interactions
+ * - Typography scale optimized for both light/dark themes
+ */
+
 const config: Config = {
-  darkMode: 'class',
+  darkMode: 'class', // Enables .dark class for theme switching
   content: [
     './src/app/**/*.{ts,tsx}',
     './src/components/**/*.{ts,tsx}',
@@ -10,12 +24,27 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Map to CSS variables for dark mode support
-        accent: 'var(--accent)',
-        accent2: '#00FF7F',
-        ink: 'var(--foreground)',
-        muted: 'var(--muted)',
-        bg: 'var(--background)',
+        /**
+         * Color Palette
+         * 
+         * All colors use CSS custom properties (variables) that
+         * automatically update when the theme changes. This ensures
+         * consistent theming without manual dark: variants.
+         * 
+         * The actual color values are defined in globals.css and
+         * change based on whether it's day or night in your location.
+         */
+        
+        // Primary brand colors
+        accent: 'var(--accent)',           // Blue - CTAs, links, focus
+        accent2: '#00FF7F',               // Green - success, secondary accent
+        
+        // Legacy color mappings (for backward compatibility)
+        ink: 'var(--foreground)',         // Main text color
+        muted: 'var(--muted)',           // Muted backgrounds
+        bg: 'var(--background)',         // Main background
+        
+        // Semantic color mappings
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         card: {

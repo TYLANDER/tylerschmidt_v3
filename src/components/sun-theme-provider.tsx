@@ -4,6 +4,29 @@ import { useEffect, useRef, useState } from 'react'
 import { getUserCoordinates } from '@/lib/geolocation'
 import { calculateSunTimes, getThemeFromSunTimes, getCachedSunTimes, cacheSunTimes, getTransitionProgress } from '@/lib/sun-calc'
 
+/**
+ * Automatic Sun-Based Theme Provider
+ * 
+ * This component automatically switches between light and dark themes based on
+ * the user's local sunrise and sunset times. It provides a magical "it just knows"
+ * experience without requiring any user interaction.
+ * 
+ * How it works:
+ * 1. Gets user's location via IP geolocation (instant, no permissions)
+ * 2. Calculates local sunrise/sunset times using astronomical algorithms
+ * 3. Applies light theme during daylight hours, dark theme at night
+ * 4. Smoothly transitions during dawn/dusk periods
+ * 5. Optionally requests precise location for more accurate times
+ * 
+ * Features:
+ * - Zero user input required - theme "just works"
+ * - Respects civil twilight for natural transitions
+ * - Caches calculations for 24 hours to minimize API calls
+ * - Falls back gracefully through IP → timezone → system preference
+ * - Updates theme throughout the day automatically
+ * 
+ * @param {React.ReactNode} children - Child components to wrap
+ */
 export function SunThemeProvider({ children }: { children: React.ReactNode }) {
   const [isInitialized, setIsInitialized] = useState(false)
   const updateIntervalRef = useRef<NodeJS.Timeout | null>(null)
@@ -11,15 +34,21 @@ export function SunThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     let isMounted = true
     
+    /**
+     * Initialize the sun-based theme system
+     * This runs once on mount and sets up the automatic theme switching
+     */
     async function initializeTheme() {
       try {
-        // First, apply any cached theme immediately to prevent flash
+        // Step 1: Apply cached theme immediately to prevent flash of wrong theme
+        // This happens before React hydrates, ensuring smooth experience
         const cachedTheme = localStorage.getItem('theme')
         if (cachedTheme === 'dark') {
           document.documentElement.classList.add('dark')
         }
         
-        // Check for cached sun times
+        // Step 2: Check for cached sun times (stored for 24 hours)
+        // This avoids unnecessary API calls and provides instant theming
         const cached = getCachedSunTimes()
         if (cached) {
           const theme = getThemeFromSunTimes(cached.sunTimes)
@@ -29,7 +58,8 @@ export function SunThemeProvider({ children }: { children: React.ReactNode }) {
           return
         }
         
-        // Get user coordinates (hybrid approach)
+        // Step 3: Get user coordinates using hybrid approach
+        // Tries: IP geolocation → Browser geolocation → Timezone estimation
         const geoResult = await getUserCoordinates()
         const sunTimes = calculateSunTimes(geoResult.coordinates)
         
@@ -43,7 +73,8 @@ export function SunThemeProvider({ children }: { children: React.ReactNode }) {
         // Schedule next theme update
         scheduleNextUpdate(sunTimes)
         
-        // If we only have IP/timezone coords, try to get precise location in background
+        // Step 4: If using imprecise location, request precise coords in background
+        // This happens silently 3 seconds after load to avoid interrupting the user
         if (geoResult.source !== 'precise') {
           requestPreciseLocationInBackground()
         }
@@ -58,10 +89,17 @@ export function SunThemeProvider({ children }: { children: React.ReactNode }) {
       }
     }
     
+    /**
+     * Apply theme to the document
+     * Handles smooth transitions and updates all necessary properties
+     * 
+     * @param theme - 'light' or 'dark' based on sun position
+     */
     function applyTheme(theme: 'light' | 'dark') {
       const root = document.documentElement
       
-      // Add transition class for smooth changes (except on initial load)
+      // Add transition class for smooth 1-second fade (except on initial load)
+      // This creates a beautiful sunrise/sunset effect
       if (isInitialized) {
         root.classList.add('theme-transitioning')
       }
@@ -84,18 +122,26 @@ export function SunThemeProvider({ children }: { children: React.ReactNode }) {
       }
     }
     
+    /**
+     * Schedule automatic theme updates throughout the day
+     * Checks more frequently during twilight transitions
+     * 
+     * @param sunTimes - Calculated sunrise/sunset times for the day
+     */
     function scheduleNextUpdate(sunTimes: ReturnType<typeof calculateSunTimes>) {
       // Clear any existing interval
       if (updateIntervalRef.current) {
         clearInterval(updateIntervalRef.current)
       }
       
-      // Check theme every minute during transition periods
+      // Check theme every minute
+      // During dawn/dusk transitions, the theme will gradually change
       const checkTheme = () => {
         const now = new Date()
         const progress = getTransitionProgress(sunTimes, now)
         
-        // During transitions (dawn/dusk), check more frequently
+        // Only update during active transition periods (10% to 90% progress)
+        // This prevents unnecessary updates during full day/night
         if (progress > 0.1 && progress < 0.9) {
           const theme = getThemeFromSunTimes(sunTimes, now)
           applyTheme(theme)
@@ -109,12 +155,17 @@ export function SunThemeProvider({ children }: { children: React.ReactNode }) {
       checkTheme()
     }
     
+    /**
+     * Request precise geolocation in the background
+     * This improves accuracy from city-level to exact location
+     * Happens silently after initial page load
+     */
     async function requestPreciseLocationInBackground() {
-      // Only try if we haven't been denied
+      // Respect user's previous denial
       const permission = localStorage.getItem('geoPermission')
       if (permission === 'denied') return
       
-      // Wait a bit before asking for precise location
+      // Wait 3 seconds to avoid interrupting initial page experience
       setTimeout(async () => {
         if (!isMounted) return
         

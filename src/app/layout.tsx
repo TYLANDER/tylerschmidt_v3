@@ -124,11 +124,19 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* 
+          Critical: This script prevents flash of wrong theme on page load.
+          It runs before React hydrates, immediately applying the correct theme
+          based on cached preference or system settings. This ensures users
+          never see a jarring theme switch when navigating pages.
+        */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               try {
+                // Check for cached theme from sun calculations
                 const theme = localStorage.getItem('theme');
+                // Fallback to system preference if no cached theme
                 const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                 if (theme === 'dark' || (!theme && systemDark)) {
                   document.documentElement.classList.add('dark');

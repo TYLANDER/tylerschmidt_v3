@@ -4,23 +4,41 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { getCachedSunTimes } from '@/lib/sun-calc'
 
+/**
+ * Sun Theme Indicator Component
+ * 
+ * Shows a brief notification when the page first loads, informing users
+ * that the theme automatically follows the sun. This helps users understand
+ * why the site might look different at different times of day.
+ * 
+ * Features:
+ * - Only shows once per user (tracked in localStorage)
+ * - Displays actual sunrise/sunset times for their location
+ * - Auto-dismisses after 3 seconds
+ * - Beautiful enter/exit animations
+ * 
+ * This creates a moment of delight and education, helping users
+ * appreciate the thoughtful UX of automatic theme switching.
+ */
 export function SunIndicator() {
   const [isVisible, setIsVisible] = useState(false)
   const [sunInfo, setSunInfo] = useState<{ sunrise: string; sunset: string } | null>(null)
   
   useEffect(() => {
-    // Show indicator briefly on load to inform users
+    // Check if we have calculated sun times to display
     const cached = getCachedSunTimes()
     if (cached) {
+      // Format times in user's local format (e.g., "6:32 AM")
       const sunrise = cached.sunTimes.sunrise.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
       const sunset = cached.sunTimes.sunset.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
       setSunInfo({ sunrise, sunset })
       
-      // Show for 3 seconds on first visit
+      // Only show indicator once per user to avoid annoyance
       const hasSeenIndicator = localStorage.getItem('hasSeenSunIndicator')
       if (!hasSeenIndicator) {
         setIsVisible(true)
         localStorage.setItem('hasSeenSunIndicator', 'true')
+        // Auto-dismiss after 3 seconds
         setTimeout(() => setIsVisible(false), 3000)
       }
     }
