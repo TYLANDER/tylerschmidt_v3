@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import "./globals.css"
-import { Navigation } from "@/components/layout/navigation"
-import { SmoothScrollWrapper } from "@/components/layout/smooth-scroll-wrapper"
-import { PageTransition } from "@/components/layout/page-transition"
+import { SiteHeader } from "@/components/SiteHeader"
+import { SiteFooter } from "@/components/SiteFooter"
+import { injectAnalytics } from "@/lib/analytics"
 
 export const metadata: Metadata = {
   title: {
@@ -63,6 +63,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // Non-blocking analytics injection on client
+  if (typeof window !== 'undefined') {
+    // small guard so it only runs once per load
+    const w = window as unknown as { __analyticsInjected?: boolean }
+    if (!w.__analyticsInjected) {
+      w.__analyticsInjected = true
+      injectAnalytics()
+    }
+  }
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -88,13 +97,11 @@ export default function RootLayout({
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className="font-sans antialiased">
-        <SmoothScrollWrapper>
-          <div className="bg-background relative min-h-screen">
-            <Navigation />
-            <PageTransition>{children}</PageTransition>
-          </div>
-        </SmoothScrollWrapper>
+      <body className="font-sans antialiased bg-white text-ink">
+        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-accent focus:text-white focus:px-3 focus:py-2 rounded-md">Skip to content</a>
+        <SiteHeader />
+        <main id="main">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   )

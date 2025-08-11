@@ -108,7 +108,9 @@ export function T1000Text({ text, className, as: Component = "h1" }: T1000TextPr
 
   return (
     <Component
-      ref={textRef as any}
+      ref={(el) => {
+        textRef.current = (el as unknown as HTMLElement) || null
+      }}
       className={cn(
         "relative font-bold tracking-tight select-none cursor-pointer",
         "transform-gpu will-change-transform",
