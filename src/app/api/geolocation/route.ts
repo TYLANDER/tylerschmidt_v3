@@ -36,12 +36,26 @@ export async function GET() {
     const latitude = headersList.get('x-vercel-ip-latitude')
     const longitude = headersList.get('x-vercel-ip-longitude')
     
+    // Debug logging for Vercel deployment
+    console.log('Geolocation API called:', {
+      hasLatitude: !!latitude,
+      hasLongitude: !!longitude,
+      headers: {
+        'x-vercel-ip-latitude': latitude,
+        'x-vercel-ip-longitude': longitude,
+        'x-forwarded-for': headersList.get('x-forwarded-for'),
+        'x-real-ip': headersList.get('x-real-ip')
+      }
+    })
+    
     if (latitude && longitude) {
-      return NextResponse.json({
+      const result = {
         latitude: parseFloat(latitude),
         longitude: parseFloat(longitude),
         source: 'vercel'
-      })
+      }
+      console.log('Returning Vercel geolocation:', result)
+      return NextResponse.json(result)
     }
     
     // Method 2: Fallback to IP-based service
@@ -58,24 +72,31 @@ export async function GET() {
     })
     
     if (!response.ok) {
+      console.error('ipapi.co request failed:', response.status)
       throw new Error('Geolocation failed')
     }
     
     const data = await response.json()
+    console.log('ipapi.co response:', data)
     
-    return NextResponse.json({
+    const result = {
       latitude: data.latitude,
       longitude: data.longitude,
       source: 'ipapi'
-    })
-  } catch {
+    }
+    console.log('Returning IP geolocation:', result)
+    return NextResponse.json(result)
+  } catch (error) {
     // Method 3: Return sensible default (New York City)
     // This ensures the theme system always works, even if
     // geolocation fails. NYC is chosen as it's in a common timezone.
-    return NextResponse.json({
+    console.error('Geolocation error:', error)
+    const fallback = {
       latitude: 40.7128,
       longitude: -74.0060,
       source: 'default'
-    })
+    }
+    console.log('Returning fallback location:', fallback)
+    return NextResponse.json(fallback)
   }
 }

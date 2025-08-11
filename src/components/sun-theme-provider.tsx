@@ -61,13 +61,22 @@ export function SunThemeProvider({ children }: { children: React.ReactNode }) {
         // Step 3: Get user coordinates using hybrid approach
         // Tries: IP geolocation → Browser geolocation → Timezone estimation
         const geoResult = await getUserCoordinates()
+        console.log('[SunTheme] Location result:', geoResult)
+        
         const sunTimes = calculateSunTimes(geoResult.coordinates)
+        console.log('[SunTheme] Calculated sun times:', {
+          sunrise: sunTimes.sunrise.toLocaleTimeString(),
+          sunset: sunTimes.sunset.toLocaleTimeString(),
+          civilDawn: sunTimes.civilDawn.toLocaleTimeString(),
+          civilDusk: sunTimes.civilDusk.toLocaleTimeString()
+        })
         
         // Cache the results
         cacheSunTimes(sunTimes, geoResult.coordinates)
         
         // Apply theme based on current sun position
         const theme = getThemeFromSunTimes(sunTimes)
+        console.log('[SunTheme] Current theme:', theme, 'at', new Date().toLocaleTimeString())
         applyTheme(theme)
         
         // Schedule next theme update
@@ -81,9 +90,10 @@ export function SunThemeProvider({ children }: { children: React.ReactNode }) {
         
         if (isMounted) setIsInitialized(true)
       } catch (error) {
-        console.error('Failed to initialize sun-based theme:', error)
+        console.error('[SunTheme] Failed to initialize:', error)
         // Fall back to system preference
         const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        console.log('[SunTheme] Falling back to system preference:', systemDark ? 'dark' : 'light')
         applyTheme(systemDark ? 'dark' : 'light')
         if (isMounted) setIsInitialized(true)
       }
