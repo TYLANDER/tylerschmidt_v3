@@ -2,6 +2,7 @@
 
 import { useRef, useState, useMemo } from "react"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
+import type { ThreeEvent } from "@react-three/fiber"
 import { MeshDistortMaterial, Float, useCursor, Environment } from "@react-three/drei"
 import * as THREE from "three"
 import { cn } from "@/lib/utils"
@@ -33,14 +34,14 @@ function T1000Sphere({
   index: number 
 }) {
   const meshRef = useRef<THREE.Mesh>(null)
-  const materialRef = useRef<any>(null)
+  const materialRef = useRef(null)
   const [hovered, setHovered] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
   const dragStartRef = useRef<THREE.Vector3>(new THREE.Vector3())
   const targetPositionRef = useRef<THREE.Vector3>(new THREE.Vector3(...position))
   const currentPositionRef = useRef<THREE.Vector3>(new THREE.Vector3(...position))
   const velocityRef = useRef<THREE.Vector3>(new THREE.Vector3())
-  const { viewport, camera, gl, pointer } = useThree()
+  const { viewport, gl, pointer } = useThree()
   
   useCursor(hovered || isDragging)
 
@@ -95,19 +96,20 @@ function T1000Sphere({
       meshRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), delta * 8)
 
       // T1000 liquid ripple effect
-      if (materialRef.current.distort !== undefined) {
+      const mdm = materialRef.current as unknown as { distort?: number; speed?: number } | null
+      if (mdm && mdm.distort !== undefined) {
         const baseDistort = 0.05
         const hoverDistort = hovered ? 0.15 : 0
         const dragDistort = isDragging ? 0.25 : 0
         const timeDistort = Math.sin(time * 2) * 0.02
-        
-        materialRef.current.distort = baseDistort + hoverDistort + dragDistort + timeDistort
-        materialRef.current.speed = 0.5 + (hovered ? 1 : 0) + (isDragging ? 2 : 0)
+
+        mdm.distort = baseDistort + hoverDistort + dragDistort + timeDistort
+        mdm.speed = 0.5 + (hovered ? 1 : 0) + (isDragging ? 2 : 0)
       }
     }
   })
 
-  const handlePointerDown = (event: THREE.Event) => {
+  const handlePointerDown = (event: ThreeEvent<PointerEvent>) => {
     if (meshRef.current) {
       event.stopPropagation()
       setIsDragging(true)
@@ -116,7 +118,7 @@ function T1000Sphere({
     }
   }
 
-  const handlePointerMove = (event: THREE.Event) => {
+  const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
     if (isDragging && meshRef.current) {
       event.stopPropagation()
       
@@ -153,7 +155,8 @@ function T1000Sphere({
       >
         <sphereGeometry args={[1, 128, 128]} />
         <MeshDistortMaterial
-          ref={materialRef}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ref={(inst) => { (materialRef as unknown as { current: any }).current = inst }}
           color="#C0C0C0"
           metalness={1.0}
           roughness={0.02}

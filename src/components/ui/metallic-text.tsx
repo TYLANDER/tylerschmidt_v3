@@ -10,7 +10,7 @@ interface MetallicTextProps {
 }
 
 export function MetallicText({ text, className, as: Component = "h1" }: MetallicTextProps) {
-  const textRef = useRef<HTMLElement>(null)
+  const textRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     const element = textRef.current
@@ -69,7 +69,10 @@ export function MetallicText({ text, className, as: Component = "h1" }: Metallic
 
   return (
     <Component
-      ref={textRef as any}
+      ref={(el) => {
+        // store the actual element for animation effects
+        textRef.current = (el as unknown as HTMLElement) || null
+      }}
       className={cn(
         "relative font-bold tracking-tight",
         "bg-gradient-to-r from-gray-200 via-gray-100 to-gray-300 bg-clip-text text-transparent",

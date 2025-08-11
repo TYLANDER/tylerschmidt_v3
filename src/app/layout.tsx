@@ -1,46 +1,64 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import "./globals.css"
-import { Navigation } from "@/components/layout/navigation"
-import { SmoothScrollWrapper } from "@/components/layout/smooth-scroll-wrapper"
-import { PageTransition } from "@/components/layout/page-transition"
+import { SiteHeader } from "@/components/SiteHeader"
+import { SiteFooter } from "@/components/SiteFooter"
+import { injectAnalytics } from "@/lib/analytics"
+import { aeonik, inter } from "@/lib/fonts"
+import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://tylerschmidt.dev'),
   title: {
-    default: "Tyler Schmidt - UX/UI Designer & Engineer",
+    default: "Tyler Schmidt - Product Designer & Engineer",
     template: "%s | Tyler Schmidt",
   },
   description:
-    "Award-winning portfolio showcasing cutting-edge UX/UI design and engineering work. Specializing in modern web applications, mobile experiences, and interactive design.",
+    "Product designer and engineer crafting bold, minimalist interfaces with a human edge. Specializing in design systems, user experience, and front-end development.",
   keywords: [
+    "Product Designer",
     "UX Designer",
     "UI Designer",
     "Frontend Engineer",
-    "Portfolio",
-    "Web Design",
-    "Mobile Design",
+    "Design Systems",
+    "User Experience",
     "React",
     "Next.js",
     "TypeScript",
-    "Framer Motion",
-    "Design Systems",
+    "Precision Bold",
+    "Minimalist Design",
   ],
-  authors: [{ name: "Tyler Schmidt" }],
+  authors: [{ name: "Tyler Schmidt", url: "https://tylerschmidt.dev" }],
   creator: "Tyler Schmidt",
+  publisher: "Tyler Schmidt",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://tylerschmidt.dev",
-    title: "Tyler Schmidt - UX/UI Designer & Engineer",
+    title: "Tyler Schmidt - Product Designer & Engineer",
     description:
-      "Award-winning portfolio showcasing cutting-edge UX/UI design and engineering work.",
-    siteName: "Tyler Schmidt Portfolio",
+      "Product designer and engineer crafting bold, minimalist interfaces with a human edge.",
+    siteName: "Tyler Schmidt",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Tyler Schmidt Portfolio",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tyler Schmidt - UX/UI Designer & Engineer",
+    title: "Tyler Schmidt - Product Designer & Engineer",
     description:
-      "Award-winning portfolio showcasing cutting-edge UX/UI design and engineering work.",
+      "Product designer and engineer crafting bold, minimalist interfaces with a human edge.",
     creator: "@tylerschmidt",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -54,8 +72,15 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "google-site-verification-code",
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#0066FF',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 }
 
 export default function RootLayout({
@@ -63,6 +88,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // Non-blocking analytics injection on client
+  if (typeof window !== 'undefined') {
+    // small guard so it only runs once per load
+    const w = window as unknown as { __analyticsInjected?: boolean }
+    if (!w.__analyticsInjected) {
+      w.__analyticsInjected = true
+      injectAnalytics()
+    }
+  }
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -88,13 +122,15 @@ export default function RootLayout({
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className="font-sans antialiased">
-        <SmoothScrollWrapper>
-          <div className="bg-background relative min-h-screen">
-            <Navigation />
-            <PageTransition>{children}</PageTransition>
-          </div>
-        </SmoothScrollWrapper>
+      <body className={cn(
+        "font-sans antialiased bg-white text-ink min-h-screen",
+        aeonik.variable,
+        inter.variable
+      )}>
+        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-accent focus:text-white focus:px-3 focus:py-2 rounded-md">Skip to content</a>
+        <SiteHeader />
+        <main id="main">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   )
