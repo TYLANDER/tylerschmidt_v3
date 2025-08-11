@@ -51,7 +51,8 @@ export function Hero() {
         
         // Draw shape
         ctx.beginPath()
-        ctx.strokeStyle = i === 0 ? '#0066FF' : i === 1 ? '#FF522B' : '#00FF7F'
+        const isDark = document.documentElement.classList.contains('dark')
+        ctx.strokeStyle = i === 0 ? (isDark ? '#3B82F6' : '#0066FF') : i === 1 ? '#FF522B' : '#00FF7F'
         ctx.lineWidth = 2
         ctx.globalAlpha = 0.1
         
@@ -75,7 +76,7 @@ export function Hero() {
   }, [])
 
   return (
-    <section className="relative bg-white overflow-hidden">
+    <section className="relative bg-white dark:bg-ink overflow-hidden">
       <Container className="relative py-24 md:py-32 lg:py-40">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
           <motion.div 
@@ -84,7 +85,7 @@ export function Hero() {
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <motion.h1 
-              className="font-heading text-ink text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[1.1] tracking-tight mb-6"
+              className="font-heading text-ink dark:text-white text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[1.1] tracking-tight mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
@@ -93,7 +94,7 @@ export function Hero() {
               Meets Purpose.
             </motion.h1>
             <motion.p 
-              className="text-ink/70 text-lg md:text-xl leading-relaxed mb-10 max-w-lg"
+              className="text-ink/70 dark:text-white/70 text-lg md:text-xl leading-relaxed mb-10 max-w-lg"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
@@ -123,7 +124,7 @@ export function Hero() {
               </Link>
               <Link 
                 href="/about" 
-                className="text-accent font-medium hover:text-accent/80 transition-colors relative group"
+                className="text-accent dark:text-accent font-medium hover:text-accent/80 dark:hover:text-accent/80 transition-colors relative group"
               >
                 About Me
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300" />

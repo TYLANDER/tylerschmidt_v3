@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  /* Precision Bold (with Human Edge) */
+  /* Precision Bold Light Theme */
   --background: #FFFFFF;
   --foreground: #111111;
   --muted: #F5F5F5;
@@ -14,7 +14,7 @@
   --primary-foreground: #FFFFFF;
   --secondary: #F5F5F5;
   --secondary-foreground: #111111;
-  --accent: #0066FF; /* Switch to #FF522B for Red */
+  --accent: #0066FF;
   --accent-foreground: #FFFFFF;
   --destructive: #EB5757;
   --destructive-foreground: #FFFFFF;
@@ -24,6 +24,27 @@
   --font-heading: var(--font-aeonik), system-ui, sans-serif;
   --font-body: var(--font-inter), system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
+}
+
+.dark {
+  /* Precision Bold Dark Theme */
+  --background: #0A0A0A;
+  --foreground: #FAFAFA;
+  --muted: #1A1A1A;
+  --muted-foreground: #A0A0A0;
+  --card: #0F0F0F;
+  --card-foreground: #FAFAFA;
+  --border: #2A2A2A;
+  --input: #1A1A1A;
+  --primary: #FAFAFA;
+  --primary-foreground: #0A0A0A;
+  --secondary: #1A1A1A;
+  --secondary-foreground: #FAFAFA;
+  --accent: #3B82F6; /* Slightly lighter blue for dark mode */
+  --accent-foreground: #FAFAFA;
+  --destructive: #EF4444;
+  --destructive-foreground: #FAFAFA;
+  --ring: #3B82F6;
 }
 
 @theme inline {
@@ -101,6 +122,16 @@ body {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+/* Dark mode transitions */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Prevent transition on theme toggle */
+.no-transition * {
+  transition: none !important;
 }
 
 /* Smooth animations */

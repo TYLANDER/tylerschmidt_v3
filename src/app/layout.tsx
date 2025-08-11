@@ -6,6 +6,7 @@ import { injectAnalytics } from "@/lib/analytics"
 import { aeonik, inter } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration"
+import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tylerschmidt.dev'),
@@ -122,17 +123,33 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem('theme');
+                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (theme === 'dark' || (!theme && systemDark)) {
+                  document.documentElement.classList.add('dark');
+                  document.documentElement.style.colorScheme = 'dark';
+                }
+              } catch {}
+            `,
+          }}
+        />
       </head>
       <body className={cn(
-        "font-sans antialiased bg-white text-ink min-h-screen",
+        "font-sans antialiased bg-white dark:bg-ink text-ink dark:text-white min-h-screen transition-colors",
         aeonik.variable,
         inter.variable
       )}>
-        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-accent focus:text-white focus:px-3 focus:py-2 rounded-md">Skip to content</a>
-        <ServiceWorkerRegistration />
-        <SiteHeader />
-        <main id="main">{children}</main>
-        <SiteFooter />
+        <ThemeProvider>
+          <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-accent focus:text-white focus:px-3 focus:py-2 rounded-md">Skip to content</a>
+          <ServiceWorkerRegistration />
+          <SiteHeader />
+          <main id="main">{children}</main>
+          <SiteFooter />
+        </ThemeProvider>
       </body>
     </html>
   )
