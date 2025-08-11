@@ -37,7 +37,7 @@ export function ThemeToggle() {
   return (
     <motion.button
       onClick={toggleTheme}
-      className="relative h-8 w-16 rounded-full bg-muted border border-ink/10 dark:border-white/10 p-1"
+      className="relative h-8 w-16 rounded-full bg-muted border border-border p-1"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
@@ -48,7 +48,7 @@ export function ThemeToggle() {
       >
         {/* Sun Icon */}
         <svg
-          className="h-4 w-4 text-accent dark:text-ink/30"
+          className="h-4 w-4 text-accent dark:text-foreground/30"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -63,7 +63,7 @@ export function ThemeToggle() {
         
         {/* Moon Icon */}
         <svg
-          className="h-4 w-4 text-ink/30 dark:text-accent"
+          className="h-4 w-4 text-foreground/30 dark:text-accent"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -79,7 +79,7 @@ export function ThemeToggle() {
       
       {/* Sliding Indicator */}
       <motion.div
-        className="h-6 w-6 rounded-full bg-white dark:bg-ink shadow-sm"
+        className="h-6 w-6 rounded-full bg-background dark:bg-foreground shadow-sm"
         initial={false}
         animate={{
           x: theme === "light" ? 0 : 32,

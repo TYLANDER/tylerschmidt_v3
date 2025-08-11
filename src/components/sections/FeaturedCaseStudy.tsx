@@ -21,7 +21,7 @@ export function FeaturedCaseStudy() {
   if (!featured) return null
   
   return (
-    <section ref={containerRef} className="relative bg-ink text-white overflow-hidden">
+    <section ref={containerRef} className="relative bg-primary text-primary-foreground overflow-hidden">
       <motion.div 
         className="absolute inset-0 opacity-10"
         style={{ y }}
@@ -48,19 +48,19 @@ export function FeaturedCaseStudy() {
             <h3 className="font-heading text-4xl md:text-5xl lg:text-6xl mb-6">
               {featured.title}
             </h3>
-            <p className="text-white/80 text-lg md:text-xl leading-relaxed mb-8 max-w-lg">
+            <p className="text-primary-foreground/80 text-lg md:text-xl leading-relaxed mb-8 max-w-lg">
               {featured.oneLiner}
             </p>
             <div className="flex flex-wrap gap-3 mb-8">
               {featured.tags.map((tag) => (
-                <span key={tag} className="px-3 py-1 bg-white/10 rounded-full text-sm">
+                <span key={tag} className="px-3 py-1 bg-primary-foreground/10 rounded-full text-sm">
                   {tag}
                 </span>
               ))}
             </div>
             <Link href={`/work/${featured.slug}`}>
               <motion.button
-                className="relative inline-flex items-center gap-3 px-8 py-4 bg-accent text-white font-medium rounded-lg overflow-hidden group"
+                className="relative inline-flex items-center gap-3 px-8 py-4 bg-accent text-accent-foreground font-medium rounded-lg overflow-hidden group"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -77,7 +77,7 @@ export function FeaturedCaseStudy() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </motion.svg>
                 <motion.div
-                  className="absolute inset-0 bg-white"
+                  className="absolute inset-0 bg-primary-foreground"
                   initial={{ x: "-100%" }}
                   whileHover={{ x: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
@@ -93,11 +93,11 @@ export function FeaturedCaseStudy() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           >
-            <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-white/5">
+            <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-primary-foreground/5">
               <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-transparent" />
               {/* Placeholder for actual image */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-32 h-32 bg-white/10 rounded-lg animate-pulse" />
+                <div className="w-32 h-32 bg-primary-foreground/10 rounded-lg animate-pulse" />
               </div>
             </div>
           </motion.div>

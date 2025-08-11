@@ -54,14 +54,14 @@ export function AboutTeaser() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
           >
-            <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl text-ink mb-4">
+            <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl text-foreground mb-4">
               Design Without Distraction.
             </h3>
-            <p className="text-ink/70 text-lg leading-relaxed mb-6">
+            <p className="text-foreground/70 text-lg leading-relaxed mb-6">
               I believe in the power of reduction—stripping away the unnecessary to reveal what truly matters. 
               Every pixel, every interaction, every decision is intentional.
             </p>
-            <p className="text-ink/70 text-lg leading-relaxed mb-8">
+            <p className="text-foreground/70 text-lg leading-relaxed mb-8">
               With over a decade of experience, I&apos;ve helped Fortune 500 companies and startups alike 
               create digital experiences that are both beautiful and functional.
             </p>

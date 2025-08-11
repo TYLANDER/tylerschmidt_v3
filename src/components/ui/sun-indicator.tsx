@@ -33,7 +33,7 @@ export function SunIndicator() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
-          className="fixed bottom-4 right-4 bg-white dark:bg-ink border border-ink/10 dark:border-white/10 rounded-lg p-4 shadow-lg z-50"
+          className="fixed bottom-4 right-4 bg-card border border-border rounded-lg p-4 shadow-lg z-50"
         >
           <div className="flex items-center gap-3">
             <div className="relative w-8 h-8">
@@ -62,8 +62,8 @@ export function SunIndicator() {
               </motion.div>
             </div>
             <div className="text-sm">
-              <p className="font-medium text-ink dark:text-white">Theme follows the sun</p>
-              <p className="text-ink/60 dark:text-white/60 text-xs">
+              <p className="font-medium text-foreground">Theme follows the sun</p>
+              <p className="text-foreground/60 text-xs">
                 {sunInfo.sunrise} - {sunInfo.sunset}
               </p>
             </div>

@@ -28,7 +28,7 @@ function DemoCard({ title, description, tech, children, index }: DemoCardProps) 
   
   return (
     <motion.div 
-      className="bg-white border-ink/10 space-y-4 rounded-lg border p-6"
+      className="bg-card border-border space-y-4 rounded-lg border p-6"
       variants={cardVariants}
       initial="rest"
       whileHover="hover"
@@ -38,8 +38,8 @@ function DemoCard({ title, description, tech, children, index }: DemoCardProps) 
       viewport={{ once: true, margin: "-100px" }}
     >
       <div className="space-y-2">
-        <h3 className="text-xl font-semibold text-ink">{title}</h3>
-        <p className="text-ink/60 text-sm">{description}</p>
+        <h3 className="text-xl font-semibold text-foreground">{title}</h3>
+        <p className="text-foreground/60 text-sm">{description}</p>
         <div className="flex flex-wrap gap-2">
           {tech.map((item, index) => (
             <motion.span
@@ -55,8 +55,8 @@ function DemoCard({ title, description, tech, children, index }: DemoCardProps) 
         </div>
       </div>
       <motion.div 
-        className="relative h-80 overflow-hidden rounded-lg border border-ink/5 bg-muted/20"
-        animate={{ borderColor: isHovered ? "rgba(0, 102, 255, 0.2)" : "rgba(17, 17, 17, 0.05)" }}
+        className="relative h-80 overflow-hidden rounded-lg border border-border bg-muted/20"
+        animate={{ borderColor: isHovered ? "rgba(0, 102, 255, 0.2)" : "var(--border)" }}
         transition={{ duration: 0.3 }}
       >
         {children}
@@ -126,20 +126,20 @@ export default function LabPage() {
   return (
     <PageWrapper>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-white px-6 py-20">
+      <section className="relative overflow-hidden bg-background px-6 py-20">
         <div className="container mx-auto">
           <div className="mx-auto max-w-4xl text-center">
             <AnimatedText
               text="Experimental Lab"
               as="h1"
               variant="slide"
-              className="mb-6 text-5xl font-bold md:text-7xl text-ink"
+              className="mb-6 text-5xl font-bold md:text-7xl text-foreground"
             />
             <AnimatedText
               text="A playground for exploring cutting-edge web technologies and creative coding experiments."
               as="p"
               variant="fade"
-              className="text-ink/70 mx-auto max-w-2xl text-lg"
+              className="text-foreground/70 mx-auto max-w-2xl text-lg"
               delay={0.5}
             />
           </div>
@@ -147,7 +147,7 @@ export default function LabPage() {
       </section>
 
       {/* Experiments Grid */}
-      <section className="border-t border-ink/5 bg-muted/30 px-6 py-20">
+      <section className="border-t border-border bg-muted/30 px-6 py-20">
         <div className="container mx-auto">
           <motion.div 
             className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
@@ -172,10 +172,10 @@ export default function LabPage() {
       </section>
 
       {/* Tech Stack Section */}
-      <section className="border-t border-ink/5 bg-white px-6 py-20">
+      <section className="border-t border-border bg-background px-6 py-20">
         <div className="container mx-auto">
           <div className="mx-auto max-w-4xl">
-            <h2 className="mb-8 text-center text-3xl font-bold text-ink">
+            <h2 className="mb-8 text-center text-3xl font-bold text-foreground">
               Technologies & Tools
             </h2>
             <div className="grid gap-6 md:grid-cols-3">
@@ -200,14 +200,14 @@ export default function LabPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-ink/50">
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground/50">
                     {group.category}
                   </h3>
                   <ul className="space-y-2">
                     {group.items.map((item) => (
                       <li
                         key={item}
-                        className="text-ink/80 hover:text-accent transition-colors cursor-default"
+                        className="text-foreground/80 hover:text-accent transition-colors cursor-default"
                       >
                         {item}
                       </li>
@@ -221,9 +221,9 @@ export default function LabPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="border-t border-ink/5 bg-muted/30 px-6 py-16">
+      <section className="border-t border-border bg-muted/30 px-6 py-16">
         <div className="container mx-auto text-center">
-          <p className="text-ink/60 mb-4">
+          <p className="text-foreground/60 mb-4">
             Interested in collaborating on experimental projects?
           </p>
           <a

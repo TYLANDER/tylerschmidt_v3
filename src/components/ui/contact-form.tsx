@@ -109,7 +109,7 @@ export function ContactForm({ className }: ContactFormProps) {
           className="bg-success mx-auto flex h-16 w-16 items-center justify-center rounded-full"
         >
           <svg
-            className="h-8 w-8 text-white"
+            className="h-8 w-8 text-accent-foreground"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
