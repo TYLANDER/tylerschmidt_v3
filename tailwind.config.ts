@@ -10,11 +10,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        accent: '#0066FF',
+        // Map to CSS variables for dark mode support
+        accent: 'var(--accent)',
         accent2: '#00FF7F',
-        ink: '#111111',
-        muted: '#F5F5F5',
-        bg: '#FFFFFF',
+        ink: 'var(--foreground)',
+        muted: 'var(--muted)',
+        bg: 'var(--background)',
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        card: {
+          DEFAULT: 'var(--card)',
+          foreground: 'var(--card-foreground)',
+        },
+        border: 'var(--border)',
+        input: 'var(--input)',
+        primary: {
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
+        },
+        secondary: {
+          DEFAULT: 'var(--secondary)',
+          foreground: 'var(--secondary-foreground)',
+        },
+        destructive: {
+          DEFAULT: 'var(--destructive)',
+          foreground: 'var(--destructive-foreground)',
+        },
+        ring: 'var(--ring)',
       },
       fontFamily: {
         heading: ['var(--font-aeonik)', 'ui-sans-serif', 'system-ui', 'sans-serif'],

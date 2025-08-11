@@ -140,7 +140,7 @@ export default function RootLayout({
         />
       </head>
       <body className={cn(
-        "font-sans antialiased bg-white dark:bg-ink text-ink dark:text-white min-h-screen transition-colors",
+        "font-sans antialiased bg-background text-foreground min-h-screen transition-colors",
         aeonik.variable,
         inter.variable
       )}>

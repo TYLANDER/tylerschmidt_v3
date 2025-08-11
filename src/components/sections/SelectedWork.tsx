@@ -10,7 +10,7 @@ export function SelectedWork() {
   const items = projects.slice(0, 6)
   
   return (
-    <section className="bg-white dark:bg-ink py-20 md:py-24">
+    <section className="bg-background py-20 md:py-24">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -18,10 +18,10 @@ export function SelectedWork() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-ink dark:text-white mb-4">
+          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-foreground mb-4">
             Selected Work
           </h2>
-          <p className="text-ink/60 dark:text-white/60 text-lg mb-12 max-w-2xl">
+          <p className="text-foreground/60 text-lg mb-12 max-w-2xl">
             A curated collection of projects that showcase design thinking and technical execution.
           </p>
         </motion.div>
@@ -40,8 +40,8 @@ export function SelectedWork() {
               }}
             >
               <Link href={`/work/${project.slug}`} className="group block">
-                <article className="relative bg-white dark:bg-card rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl dark:hover:shadow-2xl">
-                  <div className="relative aspect-[16/10] overflow-hidden bg-muted dark:bg-muted">
+                <article className="relative bg-card rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+                  <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                     <Image 
                       src={project.coverSrc} 
                       alt={project.title}
@@ -55,7 +55,7 @@ export function SelectedWork() {
                   
                   <div className="p-6">
                     <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-xl font-semibold text-ink dark:text-white group-hover:text-accent dark:group-hover:text-accent transition-colors">
+                      <h3 className="text-xl font-semibold text-foreground group-hover:text-accent transition-colors">
                         {project.title}
                       </h3>
                       <motion.svg 
@@ -70,10 +70,10 @@ export function SelectedWork() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
                       </motion.svg>
                     </div>
-                    <p className="text-ink/60 dark:text-white/60 text-sm mb-3 line-clamp-2">
+                    <p className="text-foreground/60 text-sm mb-3 line-clamp-2">
                       {project.oneLiner}
                     </p>
-                    <div className="flex items-center gap-4 text-xs text-ink/50 dark:text-white/50">
+                    <div className="flex items-center gap-4 text-xs text-foreground/50">
                       <span>{project.role}</span>
                       <span>•</span>
                       <span>{project.year}</span>
