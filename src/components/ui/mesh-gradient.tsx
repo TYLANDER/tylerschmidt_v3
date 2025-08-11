@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useMemo } from "react"
 
 interface GradientPoint {
   x: number
@@ -17,7 +17,7 @@ export function MeshGradient() {
   const animationRef = useRef<number>(0)
 
   // Felipe Pantone inspired colors
-  const colors = [
+  const colors = useMemo(() => [
     "#ff0080", // Hot Pink
     "#0080ff", // Electric Blue
     "#80ff00", // Neon Green
@@ -27,7 +27,7 @@ export function MeshGradient() {
     "#ff0040", // Red Pink
     "#4000ff", // Deep Purple
     "#00ffff", // Cyan
-  ]
+  ], [])
 
   useEffect(() => {
     // Initialize gradient points in a grid

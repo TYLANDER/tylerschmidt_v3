@@ -1,6 +1,6 @@
 "use client"
 
-import { Metadata } from "next"
+// import { Metadata } from "next" // TODO: Add metadata when needed
 import { AnimatedText } from "@/components/animations/animated-text"
 import { AnimatedHero } from "@/components/three/animated-hero"
 import { ParticleGalaxy } from "@/components/three/particle-galaxy"

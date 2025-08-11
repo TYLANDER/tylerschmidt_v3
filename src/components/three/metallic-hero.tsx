@@ -27,11 +27,9 @@ function generateBallPositions(count: number): [number, number, number][] {
 }
 
 function T1000Sphere({ 
-  position, 
-  index 
+  position 
 }: { 
   position: [number, number, number]
-  index: number 
 }) {
   const meshRef = useRef<THREE.Mesh>(null)
   const materialRef = useRef(null)

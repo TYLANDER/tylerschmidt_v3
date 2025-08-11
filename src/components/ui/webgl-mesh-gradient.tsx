@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useMemo, useCallback } from "react"
 
 interface GradientPoint {
   x: number
@@ -23,12 +23,12 @@ export function WebGLMeshGradient() {
 
 
   // Simple, elegant mesh gradient colors
-  const colors = [
+  const colors = useMemo(() => [
     [0.1, 0.15, 0.3],   // Deep blue
     [0.2, 0.1, 0.4],    // Deep purple  
     [0.3, 0.05, 0.2],   // Deep magenta
     [0.15, 0.2, 0.35],  // Deep teal
-  ]
+  ], [])
 
   // Clean vertex shader for smooth mesh
   const vertexShaderSource = `
@@ -64,7 +64,7 @@ export function WebGLMeshGradient() {
     }
   `
 
-  const createShader = (gl: WebGLRenderingContext, type: number, source: string) => {
+  const createShader = useCallback((gl: WebGLRenderingContext, type: number, source: string) => {
     const shader = gl.createShader(type)
     if (!shader) return null
     
@@ -78,9 +78,9 @@ export function WebGLMeshGradient() {
     }
     
     return shader
-  }
+  }, [])
 
-  const createProgram = (gl: WebGLRenderingContext) => {
+  const createProgram = useCallback((gl: WebGLRenderingContext) => {
     const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource)
     const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource)
     
@@ -100,7 +100,7 @@ export function WebGLMeshGradient() {
     }
     
     return program
-  }
+  }, [createShader, vertexShaderSource, fragmentShaderSource])
 
   useEffect(() => {
     // Simple 4x4 grid for smooth gradient
@@ -289,7 +289,7 @@ export function WebGLMeshGradient() {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [points])
+  }, [points, colors, createProgram]) // All dependencies included
 
   return (
     <canvas
