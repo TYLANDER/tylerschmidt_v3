@@ -47,40 +47,7 @@
   --ring: #3B82F6;
 }
 
-@theme inline {
-  /* Map CSS variables to Tailwind utilities */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-ring: var(--ring);
-  --color-success: var(--success);
-  --color-warning: var(--warning);
-  --color-error: var(--error);
-  --color-info: var(--info);
-
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
-
-  --radius: 0.25rem;
-  --radius-sm: 0.125rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
-  --radius-full: 9999px;
-}
+/* Theme variables are mapped in tailwind.config.ts */
 
 /* Light mode stays light for Precision Bold */
 
@@ -124,14 +91,14 @@ body {
   border-radius: 2px;
 }
 
-/* Dark mode transitions */
-* {
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+/* Sun-based theme transitions */
+.theme-transitioning * {
+  transition: background-color 1s ease, color 1s ease, border-color 1s ease !important;
 }
 
-/* Prevent transition on theme toggle */
-.no-transition * {
-  transition: none !important;
+/* Prevent flash on load */
+html:not(.theme-transitioning) * {
+  transition: none;
 }
 
 /* Smooth animations */

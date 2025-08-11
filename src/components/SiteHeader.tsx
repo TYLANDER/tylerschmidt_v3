@@ -1,7 +1,6 @@
 "use client"
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { ThemeToggle } from '@/components/ui/theme-toggle'
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
@@ -16,14 +15,11 @@ export function SiteHeader() {
     <header className={`sticky top-0 z-40 bg-white/80 dark:bg-ink/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-ink/60 transition-all duration-300 ${scrolled ? 'py-2 shadow-subtle' : 'py-4'}`}>
       <div className="mx-auto max-w-content px-4 flex items-center justify-between">
         <Link href="/" className={`font-heading font-semibold text-ink dark:text-white ${scrolled ? 'text-lg' : 'text-xl'}`}>Tyler Schmidt</Link>
-        <div className="flex items-center gap-6">
-          <nav className="flex items-center gap-6 text-sm font-medium text-ink/80 dark:text-white/80">
-            <Link href="/work" className="hover:text-ink dark:hover:text-white transition-colors">Work</Link>
-            <Link href="/about" className="hover:text-ink dark:hover:text-white transition-colors">About</Link>
-            <Link href="/contact" className="hover:text-ink dark:hover:text-white transition-colors">Contact</Link>
-          </nav>
-          <ThemeToggle />
-        </div>
+        <nav className="flex items-center gap-6 text-sm font-medium text-ink/80 dark:text-white/80">
+          <Link href="/work" className="hover:text-ink dark:hover:text-white transition-colors">Work</Link>
+          <Link href="/about" className="hover:text-ink dark:hover:text-white transition-colors">About</Link>
+          <Link href="/contact" className="hover:text-ink dark:hover:text-white transition-colors">Contact</Link>
+        </nav>
       </div>
     </header>
   )
