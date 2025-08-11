@@ -16,8 +16,9 @@ const config: Config = {
         bg: '#FFFFFF',
       },
       fontFamily: {
-        heading: ['Aeonik', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        body: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-aeonik)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        body: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       maxWidth: { content: '1320px' },
       transitionTimingFunction: {
@@ -46,6 +47,25 @@ const config: Config = {
         12: '48px',
         16: '64px',
         24: '96px',
+      },
+      animation: {
+        'fade-in': 'fade-in 0.5s ease-out',
+        'fade-up': 'fade-up 0.5s ease-out',
+        'scale-in': 'scale-in 0.3s ease-out',
+      },
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'fade-up': {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'scale-in': {
+          '0%': { opacity: '0', transform: 'scale(0.95)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
       },
     },
   },
