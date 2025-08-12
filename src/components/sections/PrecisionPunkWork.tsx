@@ -5,8 +5,7 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import { Container } from '@/components/ui/Container'
 import { BreathingGrid } from '@/components/ui/BreathingGrid'
-import { projects } from '@/data/projects'
-import { precisionPunk } from '@/design/precision-punk-tokens'
+import projects from '@/data/projects'
 
 export function PrecisionPunkWork() {
   const containerRef = useRef<HTMLElement>(null)
@@ -101,14 +100,14 @@ export function PrecisionPunkWork() {
                 {/* Project image with glitch overlay */}
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-voltage/20 to-transparent opacity-0"
-                    whileGroupHover={{ opacity: 1 }}
+                    className="absolute inset-0 bg-gradient-to-br from-voltage/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   />
                   
                   {/* Scan line effect */}
                   <motion.div
-                    className="absolute inset-x-0 h-px bg-voltage opacity-0"
-                    whileGroupHover={{
+                    className="absolute inset-x-0 h-px bg-voltage"
+                    initial={{ opacity: 0 }}
+                    animate={{
                       opacity: [0, 1, 0],
                       y: ['-100%', '100%'],
                     }}
@@ -135,20 +134,15 @@ export function PrecisionPunkWork() {
                   {/* Tags with rebel positioning */}
                   <div className="flex flex-wrap gap-2">
                     {project.tags.slice(0, 3).map((tag, tagIndex) => (
-                      <motion.span
+                      <span
                         key={tag}
-                        className="text-xs px-2 py-1 border border-border"
-                        whileGroupHover={{
-                          borderColor: 'var(--voltage)',
-                          x: tagIndex % 2 === 0 ? -2 : 2,
-                          y: tagIndex % 2 === 0 ? 2 : -2,
-                        }}
-                        transition={{
-                          delay: tagIndex * 0.05
+                        className="text-xs px-2 py-1 border border-border group-hover:border-voltage transition-all duration-300"
+                        style={{
+                          transitionDelay: `${tagIndex * 50}ms`
                         }}
                       >
                         {tag}
-                      </motion.span>
+                      </span>
                     ))}
                   </div>
                   
@@ -160,10 +154,8 @@ export function PrecisionPunkWork() {
 
                 {/* Hover state rebel line */}
                 <motion.div
-                  className="absolute bottom-0 left-0 right-0 h-1 bg-voltage"
-                  initial={{ scaleX: 0 }}
-                  whileGroupHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                  className="absolute bottom-0 left-0 right-0 h-1 bg-voltage origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100"
+                  style={{ transitionTimingFunction: 'cubic-bezier(0.23, 1, 0.32, 1)' }}
                 />
               </motion.article>
             </Link>

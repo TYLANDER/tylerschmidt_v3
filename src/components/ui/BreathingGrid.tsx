@@ -7,17 +7,14 @@ import { precisionPunk } from '@/design/precision-punk-tokens'
 interface BreathingGridProps {
   children: ReactNode[]
   columns?: number
-  breatheIntensity?: number
 }
 
 export function BreathingGrid({ 
   children, 
-  columns = 3,
-  breatheIntensity = 1 
+  columns = 3
 }: BreathingGridProps) {
   // Calculate grid based on golden ratio
   const gridGap = precisionPunk.grid.base * 4
-  const rebelGap = gridGap * precisionPunk.grid.rebel
   
   return (
     <div 

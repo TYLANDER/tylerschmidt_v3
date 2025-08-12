@@ -3,7 +3,6 @@
 import { motion, HTMLMotionProps } from 'framer-motion'
 import { forwardRef, useState } from 'react'
 import { cn } from '@/lib/utils'
-import { precisionPunk } from '@/design/precision-punk-tokens'
 
 interface PunkButtonProps extends HTMLMotionProps<"button"> {
   variant?: 'voltage' | 'danger' | 'ghost' | 'brutal'
@@ -44,7 +43,7 @@ export const PunkButton = forwardRef<HTMLButtonElement, PunkButtonProps>(
         {...props}
       >
         {/* The content */}
-        <span className="relative z-10">{children}</span>
+        <span className="relative z-10">{children as React.ReactNode}</span>
         
         {/* Glitch effect on hover */}
         {rebellion && isRebelling && (
@@ -55,7 +54,7 @@ export const PunkButton = forwardRef<HTMLButtonElement, PunkButtonProps>(
               animate={{ x: [-2, 2, -2, 2, 0] }}
               transition={{ duration: 0.3, repeat: Infinity }}
             >
-              {children}
+              {children as React.ReactNode}
             </motion.span>
             <motion.span
               className="absolute inset-0 flex items-center justify-center text-acid opacity-60"
@@ -63,7 +62,7 @@ export const PunkButton = forwardRef<HTMLButtonElement, PunkButtonProps>(
               animate={{ x: [2, -2, 2, -2, 0] }}
               transition={{ duration: 0.3, repeat: Infinity, delay: 0.05 }}
             >
-              {children}
+              {children as React.ReactNode}
             </motion.span>
           </>
         )}
