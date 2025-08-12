@@ -152,14 +152,14 @@ export default function RootLayout({
         aeonik.variable,
         inter.variable
       )}>
-        <SunThemeProvider>
+        {/* <SunThemeProvider> */}
           <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-accent focus:text-white focus:px-3 focus:py-2 rounded-md">Skip to content</a>
           <ServiceWorkerRegistration />
           <SiteHeader />
           <main id="main">{children}</main>
           <SiteFooter />
-          <SunIndicator />
-        </SunThemeProvider>
+          {/* <SunIndicator /> */}
+        {/* </SunThemeProvider> */}
       </body>
     </html>
   )

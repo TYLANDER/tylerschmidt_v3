@@ -3,85 +3,30 @@ import type { Config } from 'tailwindcss'
 const config: Config = {
   darkMode: 'class',
   content: [
-    './src/app/**/*.{ts,tsx}',
-    './src/components/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       colors: {
-        // Map to CSS variables for dynamic theme switching
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
-        
-        // Precision Punk palette
-        voltage: 'var(--voltage)',
-        danger: 'var(--danger)',
-        acid: 'var(--acid)',
-        plasma: 'var(--plasma)',
-        void: 'var(--void)',
-        pure: 'var(--pure)',
-        concrete: 'var(--concrete)',
-        steel: 'var(--steel)',
-        smoke: 'var(--smoke)',
-        ghost: 'var(--ghost)',
-        
-        // Semantic mappings
-        muted: {
-          DEFAULT: 'var(--muted)',
-          foreground: 'var(--muted-foreground)',
-        },
-        card: {
-          DEFAULT: 'var(--card)',
-          foreground: 'var(--card-foreground)',
-        },
-        border: 'var(--border)',
-        input: 'var(--input)',
-        primary: {
-          DEFAULT: 'var(--primary)',
-          foreground: 'var(--primary-foreground)',
-        },
-        secondary: {
-          DEFAULT: 'var(--secondary)',
-          foreground: 'var(--secondary-foreground)',
-        },
-        accent: {
-          DEFAULT: 'var(--accent)',
-          foreground: 'var(--accent-foreground)',
-        },
-        destructive: {
-          DEFAULT: 'var(--destructive)',
-          foreground: 'var(--destructive-foreground)',
-        },
-        ring: 'var(--ring)',
-      },
-      borderRadius: {
-        lg: '0.5rem',
-        md: '0.375rem',
-        sm: '0.25rem',
+        background: '#ffffff',
+        foreground: '#000000',
+        primary: '#000000',
+        'primary-foreground': '#ffffff',
+        accent: '#0066ff',
+        'accent-foreground': '#ffffff',
+        muted: '#f5f5f5',
+        'muted-foreground': '#666666',
+        border: '#e5e5e5',
       },
       fontFamily: {
-        heading: ['var(--font-aeonik)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        body: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-      },
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-aeonik)', 'system-ui', 'sans-serif'],
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [],
 }
 
 export default config
