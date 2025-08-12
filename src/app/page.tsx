@@ -1,5 +1,6 @@
 import { PageWrapper } from "@/components/layout/page-transition"
 import { Hero } from "@/components/sections/Hero"
+import { HeroFixed } from "@/components/sections/HeroFixed"
 import { SelectedWork } from "@/components/sections/SelectedWork"
 import { AboutTeaser } from "@/components/sections/AboutTeaser"
 import { FeaturedCaseStudy } from "@/components/sections/FeaturedCaseStudy"
@@ -16,7 +17,7 @@ export default function HomePage() {
 
   return (
     <PageWrapper>
-      <Hero />
+      <HeroFixed />
 
       <SelectedWork />
       <AboutTeaser />
