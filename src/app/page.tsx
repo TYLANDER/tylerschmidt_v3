@@ -1,5 +1,5 @@
-import { HeroRefined } from "@/components/sections/HeroRefined"
-import { SelectedWorkRefined } from "@/components/sections/SelectedWorkRefined"
+import { HeroPrecisionPia } from "@/components/sections/HeroPrecisionPia"
+import { SelectedWorkPia } from "@/components/sections/SelectedWorkPia"
 
 
 // migrated project typing handled by data source
@@ -9,8 +9,8 @@ import { SelectedWorkRefined } from "@/components/sections/SelectedWorkRefined"
 export default function HomePage() {
   return (
     <>
-      <HeroRefined />
-      <SelectedWorkRefined />
+      <HeroPrecisionPia />
+      <SelectedWorkPia />
     </>
   )
 }

@@ -7,6 +7,7 @@ import { aeonik, inter } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
+import { initPiaConsole } from "@/lib/pia-console"
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tylerschmidt.dev'),
@@ -93,10 +94,14 @@ export default function RootLayout({
   // Non-blocking analytics injection on client
   if (typeof window !== 'undefined') {
     // small guard so it only runs once per load
-    const w = window as unknown as { __analyticsInjected?: boolean }
+    const w = window as unknown as { __analyticsInjected?: boolean; __piaConsoleInjected?: boolean }
     if (!w.__analyticsInjected) {
       w.__analyticsInjected = true
       injectAnalytics()
+    }
+    if (!w.__piaConsoleInjected) {
+      w.__piaConsoleInjected = true
+      initPiaConsole()
     }
   }
   return (
