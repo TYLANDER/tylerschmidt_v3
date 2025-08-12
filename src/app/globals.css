@@ -1,40 +1,45 @@
 @import "tailwindcss";
 
 /**
- * Global CSS Variables - Precision Bold Design System
+ * PRECISION PUNK DESIGN SYSTEM
+ * Where mathematical precision meets raw emotion
  * 
- * This design system uses CSS custom properties (variables) to enable
- * automatic theme switching based on sunrise/sunset times. All colors
- * are defined here and referenced throughout the app.
- * 
- * Light Theme (Daytime):
- * - Clean white backgrounds with deep ink text
- * - Blue accent color (#0066FF) for interactive elements
- * - Subtle gray tones for secondary content
- * 
- * The theme automatically switches based on your local sun position,
- * creating a natural browsing experience that respects your circadian rhythm.
+ * This system breathes with your local sun position,
+ * creating a living interface that rebels against static design.
+ * Every rule exists to be systematically broken.
  */
 
 :root {
-  /* Light Theme - Active during daylight hours */
-  --background: #FFFFFF;         /* Pure white background */
-  --foreground: #111111;         /* Deep ink text */
-  --muted: #F5F5F5;             /* Light gray backgrounds */
-  --muted-foreground: #555555;   /* Medium gray text */
-  --card: #FFFFFF;              /* Card backgrounds */
-  --card-foreground: #111111;    /* Card text */
-  --border: #E5E5E5;            /* Subtle borders */
-  --input: #FFFFFF;             /* Form inputs */
-  --primary: #111111;           /* Primary actions (black on white) */
-  --primary-foreground: #FFFFFF; /* Text on primary */
-  --secondary: #F5F5F5;         /* Secondary buttons */
-  --secondary-foreground: #111111;
-  --accent: #0066FF;            /* Blue accent - links, CTAs */
-  --accent-foreground: #FFFFFF;  /* Text on accent */
-  --destructive: #EB5757;       /* Error states */
+  /* PRECISION MODE - Mathematical Beauty */
+  --background: #FFFFFF;
+  --foreground: #000000;
+  --muted: #F0F0F0;
+  --muted-foreground: #2D2D2D;
+  --card: #FFFFFF;
+  --card-foreground: #000000;
+  --border: #E0E0E0;
+  --input: #FFFFFF;
+  --primary: #000000;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F0F0F0;
+  --secondary-foreground: #000000;
+  --accent: #0066FF;           /* Voltage blue */
+  --accent-foreground: #FFFFFF;
+  --destructive: #FF0044;      /* Danger signal */
   --destructive-foreground: #FFFFFF;
-  --ring: #0066FF;              /* Focus rings */
+  --ring: #0066FF;
+  
+  /* Punk Variables */
+  --voltage: #0066FF;
+  --danger: #FF0044;
+  --acid: #00FF88;
+  --plasma: #FF00FF;
+  --void: #000000;
+  --pure: #FFFFFF;
+  --concrete: #1A1A1A;
+  --steel: #2D2D2D;
+  --smoke: #F0F0F0;
+  --ghost: #FAFAFA;
 
   /* Typography */
   --font-heading: var(--font-aeonik), system-ui, sans-serif;
@@ -51,27 +56,45 @@
  * easy on the eyes in low-light conditions.
  */
 .dark {
-  /* Dark Theme - Active during nighttime hours */
-  --background: #0A0A0A;         /* Near-black background */
-  --foreground: #FAFAFA;         /* Off-white text */
-  --muted: #1A1A1A;             /* Dark gray backgrounds */
-  --muted-foreground: #A0A0A0;   /* Muted text */
-  --card: #0F0F0F;              /* Slightly elevated cards */
-  --card-foreground: #FAFAFA;
-  --border: #2A2A2A;            /* Subtle dark borders */
-  --input: #1A1A1A;             /* Form inputs */
-  --primary: #FAFAFA;           /* Primary actions (white on black) */
-  --primary-foreground: #0A0A0A;
+  /* PUNK MODE - Raw Rebellion */
+  --background: #000000;        /* The void */
+  --foreground: #FFFFFF;        /* Pure light */
+  --muted: #0A0A0A;
+  --muted-foreground: #E0E0E0;
+  --card: #0A0A0A;
+  --card-foreground: #FFFFFF;
+  --border: #1A1A1A;
+  --input: #0A0A0A;
+  --primary: #FFFFFF;
+  --primary-foreground: #000000;
   --secondary: #1A1A1A;
-  --secondary-foreground: #FAFAFA;
-  --accent: #3B82F6;            /* Softer blue for dark mode */
-  --accent-foreground: #FAFAFA;
-  --destructive: #EF4444;
-  --destructive-foreground: #FAFAFA;
-  --ring: #3B82F6;
+  --secondary-foreground: #FFFFFF;
+  --accent: #0066FF;           /* Electric voltage */
+  --accent-foreground: #FFFFFF;
+  --destructive: #FF0044;
+  --destructive-foreground: #FFFFFF;
+  --ring: #0066FF;
 }
 
-/* Theme variables are mapped in tailwind.config.ts */
+/* Grid System Variables */
+:root {
+  --grid-base: 8px;
+  --grid-golden: 1.618;
+  --grid-rebel: 1.414;
+  
+  /* Kinetic Motion */
+  --motion-pulse: 860ms;
+  --motion-quick: 215ms;
+  --motion-flow: 430ms;
+  --motion-breath: 1720ms;
+  --motion-suspend: 3440ms;
+  
+  /* Easing Curves */
+  --ease-precision: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-punk: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-breathe: cubic-bezier(0.37, 0, 0.63, 1);
+  --ease-impact: cubic-bezier(0.87, 0, 0.13, 1);
+}
 
 /* Light mode stays light for Precision Bold */
 
