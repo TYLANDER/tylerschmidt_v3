@@ -6,8 +6,7 @@ import { injectAnalytics } from "@/lib/analytics"
 import { aeonik, inter } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration"
-import { SunThemeProvider } from "@/components/sun-theme-provider"
-import { SunIndicator } from "@/components/ui/sun-indicator"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tylerschmidt.dev'),
@@ -152,14 +151,14 @@ export default function RootLayout({
         aeonik.variable,
         inter.variable
       )}>
-        {/* <SunThemeProvider> */}
-          <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-accent focus:text-white focus:px-3 focus:py-2 rounded-md">Skip to content</a>
-          <ServiceWorkerRegistration />
-          <SiteHeader />
-          <main id="main">{children}</main>
-          <SiteFooter />
-          {/* <SunIndicator /> */}
-        {/* </SunThemeProvider> */}
+        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-accent focus:text-accent-foreground focus:px-3 focus:py-2 rounded-md">Skip to content</a>
+        <ServiceWorkerRegistration />
+        <SiteHeader />
+        <main id="main">{children}</main>
+        <SiteFooter />
+        <div className="fixed bottom-4 right-4 z-50">
+          <ThemeToggle />
+        </div>
       </body>
     </html>
   )

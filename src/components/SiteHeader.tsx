@@ -1,28 +1,68 @@
 "use client"
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
+  
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16)
+    const onScroll = () => setScrolled(window.scrollY > 20)
     onScroll()
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
-    <header className={`sticky top-0 z-40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300 ${scrolled ? 'py-2 shadow-subtle' : 'py-4'}`}>
-      <div className="mx-auto max-w-content px-4 flex items-center justify-between">
-        <Link href="/" className={`font-heading font-semibold text-foreground ${scrolled ? 'text-lg' : 'text-xl'}`}>Tyler Schmidt</Link>
-        <nav className="flex items-center gap-6 text-sm font-medium text-foreground/80">
-          <Link href="/work" className="hover:text-foreground transition-colors">Work</Link>
-          <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
-          <Link href="/contact" className="hover:text-foreground transition-colors">Contact</Link>
+    <motion.header 
+      className={cn(
+        "fixed top-0 left-0 right-0 z-40 transition-all duration-300",
+        scrolled ? "glass py-3" : "bg-transparent py-6"
+      )}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: [0.19, 1, 0.22, 1] }}
+    >
+      <div className="container mx-auto px-6">
+        <nav className="flex items-center justify-between">
+          <Link 
+            href="/" 
+            className="font-heading font-bold text-xl md:text-2xl text-foreground hover:text-accent transition-colors duration-300"
+          >
+            Tyler Schmidt
+          </Link>
+          
+          <div className="flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-8">
+              {[
+                { href: '/work', label: 'Work' },
+                { href: '/about', label: 'About' },
+                { href: '/contact', label: 'Contact' },
+              ].map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors duration-300 relative group"
+                >
+                  {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300" />
+                </Link>
+              ))}
+            </div>
+            
+            {/* Mobile menu button */}
+            <button className="md:hidden w-8 h-8 flex flex-col justify-center items-center gap-1.5 group">
+              <span className="w-6 h-0.5 bg-foreground transition-all duration-300 group-hover:w-8" />
+              <span className="w-4 h-0.5 bg-foreground transition-all duration-300 group-hover:w-8" />
+              <span className="w-6 h-0.5 bg-foreground transition-all duration-300 group-hover:w-8" />
+            </button>
+          </div>
         </nav>
       </div>
-    </header>
+    </motion.header>
   )
 }
 
-
+function cn(...classes: (string | boolean | undefined)[]) {
+  return classes.filter(Boolean).join(' ')
+}
