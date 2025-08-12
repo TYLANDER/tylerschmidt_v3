@@ -11,6 +11,7 @@ import { ContactCTA } from "@/components/sections/ContactCTA"
 // Removed - using InteractiveProjectCard instead
 
 export default function HomePage() {
+  // Precision Punk aesthetic - where math meets emotion
   // legacy data replaced by data/projects.ts
 
   return (

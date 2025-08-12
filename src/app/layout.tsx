@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: "%s | Tyler Schmidt",
   },
   description:
-    "Product designer and engineer crafting bold, minimalist interfaces with a human edge. Specializing in design systems, user experience, and front-end development.",
+    "Tyler Schmidt - Designer & Engineer. Where mathematical precision meets raw emotion. Creating digital experiences that are both beautiful and functional.",
   keywords: [
     "Product Designer",
     "UX Designer",
