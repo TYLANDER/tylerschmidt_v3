@@ -1,89 +1,189 @@
 "use client"
 
-import Image from 'next/image'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef } from 'react'
 import Link from 'next/link'
 import { Container } from '@/components/ui/Container'
-import { motion } from 'framer-motion'
+import { BreathingGrid } from '@/components/ui/BreathingGrid'
 import projects from '@/data/projects'
 
 export function SelectedWork() {
-  const items = projects.slice(0, 6)
+  const containerRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  })
+  
+  // Mathematical transforms based on scroll
+  const gridRotate = useTransform(scrollYProgress, [0, 1], [0, 3])
+  const lineSkew = useTransform(scrollYProgress, [0, 1], [0, -5])
   
   return (
-    <section className="bg-background py-20 md:py-24">
+    <section 
+      ref={containerRef}
+      className="relative py-32 bg-background overflow-hidden"
+      id="work"
+    >
+      {/* Background grid that responds to scroll */}
+      <motion.div 
+        className="absolute inset-0 opacity-10"
+        style={{ rotate: gridRotate }}
+      >
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(var(--steel) 1px, transparent 1px),
+              linear-gradient(90deg, var(--steel) 1px, transparent 1px)
+            `,
+            backgroundSize: '64px 64px',
+          }}
+        />
+      </motion.div>
+
       <Container>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-foreground mb-4">
-            Selected Work
-          </h2>
-          <p className="text-foreground/60 text-lg mb-12 max-w-2xl">
-            A curated collection of projects that showcase design thinking and technical execution.
-          </p>
-        </motion.div>
-        
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {items.map((project, index) => (
-            <motion.div
-              key={project.slug}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ 
-                duration: 0.5, 
-                delay: index * 0.1,
-                ease: "easeOut" 
-              }}
-            >
-              <Link href={`/work/${project.slug}`} className="group block">
-                <article className="relative bg-card rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
-                  <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-                    <Image 
-                      src={project.coverSrc} 
-                      alt={project.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      priority={index < 3}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        {/* Section header with glitch effect */}
+        <div className="mb-16 relative">
+          <motion.h2 
+            className="font-heading text-6xl md:text-7xl lg:text-8xl font-black relative"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="relative">
+              SELECTED
+              <motion.span
+                className="absolute inset-0 text-voltage"
+                initial={{ x: 0 }}
+                whileInView={{ 
+                  x: [-2, 2, -2, 2, 0],
+                  opacity: [0, 1, 0, 1, 0]
+                }}
+                transition={{ 
+                  duration: 0.5,
+                  times: [0, 0.25, 0.5, 0.75, 1]
+                }}
+              >
+                SELECTED
+              </motion.span>
+            </span>
+            <br />
+            <span className="text-steel dark:text-smoke/50">WORK</span>
+          </motion.h2>
+          
+          {/* Rebel line */}
+          <motion.div
+            className="absolute -bottom-4 left-0 h-px bg-voltage"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
+            style={{ 
+              width: '120%',
+              skewY: lineSkew,
+              transformOrigin: 'left center'
+            }}
+          />
+        </div>
+
+        {/* Projects in breathing grid */}
+        <BreathingGrid columns={3}>
+          {projects.slice(0, 6).map((project, index) => (
+            <Link href={`/work/${project.slug}`} key={project.slug}>
+              <motion.article
+                className="group relative bg-card border border-border overflow-hidden cursor-pointer"
+                whileHover={{ 
+                  borderColor: 'var(--voltage)',
+                  transition: { duration: 0.2 }
+                }}
+              >
+                {/* Project image with glitch overlay */}
+                <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-br from-voltage/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  />
+                  
+                  {/* Scan line effect */}
+                  <motion.div
+                    className="absolute inset-x-0 h-px bg-voltage"
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: [0, 1, 0],
+                      y: ['-100%', '100%'],
+                    }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                    }}
+                  />
+                  
+                  {/* Placeholder for actual image */}
+                  <div className="w-full h-full bg-steel/10 dark:bg-ghost/5" />
+                </div>
+
+                {/* Project info with mathematical precision */}
+                <div className="p-6 relative">
+                  <h3 className="font-heading text-2xl font-bold mb-2 group-hover:text-voltage transition-colors">
+                    {project.title}
+                  </h3>
+                  
+                  <p className="text-muted-foreground mb-4">
+                    {project.oneLiner}
+                  </p>
+                  
+                  {/* Tags with rebel positioning */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.slice(0, 3).map((tag, tagIndex) => (
+                      <span
+                        key={tag}
+                        className="text-xs px-2 py-1 border border-border group-hover:border-voltage transition-all duration-300"
+                        style={{
+                          transitionDelay: `${tagIndex * 50}ms`
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                   
-                  <div className="p-6">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-xl font-semibold text-foreground group-hover:text-accent transition-colors">
-                        {project.title}
-                      </h3>
-                      <motion.svg 
-                        className="w-5 h-5 text-ink/30 group-hover:text-accent transition-colors"
-                        fill="none" 
-                        viewBox="0 0 24 24" 
-                        stroke="currentColor"
-                        initial={{ x: 0, y: 0 }}
-                        whileHover={{ x: 3, y: -3 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
-                      </motion.svg>
-                    </div>
-                    <p className="text-foreground/60 text-sm mb-3 line-clamp-2">
-                      {project.oneLiner}
-                    </p>
-                    <div className="flex items-center gap-4 text-xs text-foreground/50">
-                      <span>{project.role}</span>
-                      <span>•</span>
-                      <span>{project.year}</span>
-                    </div>
+                  {/* Index number - mathematical beauty */}
+                  <div className="absolute top-6 right-6 font-mono text-4xl font-bold text-steel/20 dark:text-smoke/10">
+                    {String(index + 1).padStart(2, '0')}
                   </div>
-                </article>
-              </Link>
-            </motion.div>
+                </div>
+
+                {/* Hover state rebel line */}
+                <motion.div
+                  className="absolute bottom-0 left-0 right-0 h-1 bg-voltage origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100"
+                  style={{ transitionTimingFunction: 'cubic-bezier(0.23, 1, 0.32, 1)' }}
+                />
+              </motion.article>
+            </Link>
           ))}
-        </div>
+        </BreathingGrid>
+
+        {/* View all with punk energy */}
+        <motion.div 
+          className="mt-16 text-center"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          <Link href="/work">
+            <motion.span
+              className="inline-flex items-center gap-4 text-lg font-medium"
+              whileHover={{ gap: '2rem' }}
+            >
+              <span>VIEW ALL PROJECTS</span>
+              <motion.span
+                whileHover={{ x: [0, 5, 0] }}
+                transition={{ repeat: Infinity, duration: 0.5 }}
+              >
+                →
+              </motion.span>
+            </motion.span>
+          </Link>
+        </motion.div>
       </Container>
     </section>
   )

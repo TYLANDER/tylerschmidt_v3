@@ -3,7 +3,7 @@
  * Where mathematical precision meets raw emotion
  */
 
-export const precisionPunk = {
+export const designTokens = {
   // The Grid That Breathes
   grid: {
     base: 8, // The atomic unit

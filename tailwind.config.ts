@@ -47,6 +47,18 @@ const config: Config = {
         // Semantic color mappings
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        
+        // Precision Punk palette
+        voltage: 'var(--voltage)',
+        danger: 'var(--danger)',
+        acid: 'var(--acid)',
+        plasma: 'var(--plasma)',
+        void: 'var(--void)',
+        pure: 'var(--pure)',
+        concrete: 'var(--concrete)',
+        steel: 'var(--steel)',
+        smoke: 'var(--smoke)',
+        ghost: 'var(--ghost)',
         card: {
           DEFAULT: 'var(--card)',
           foreground: 'var(--card-foreground)',

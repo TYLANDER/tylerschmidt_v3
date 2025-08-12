@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
-import { precisionPunk } from '@/design/precision-punk-tokens'
+import { designTokens } from '@/design/design-tokens'
 
 interface BreathingGridProps {
   children: ReactNode[]
@@ -14,7 +14,7 @@ export function BreathingGrid({
   columns = 3
 }: BreathingGridProps) {
   // Calculate grid based on golden ratio
-  const gridGap = precisionPunk.grid.base * 4
+  const gridGap = designTokens.grid.base * 4
   
   return (
     <div 
@@ -41,9 +41,9 @@ export function BreathingGrid({
             }}
             transition={{
               delay: index * 0.1,
-              duration: Number(precisionPunk.motion.flow) / 1000,
+              duration: Number(designTokens.motion.flow) / 1000,
               rotate: {
-                duration: Number(precisionPunk.motion.breath) / 1000,
+                duration: Number(designTokens.motion.breath) / 1000,
                 repeat: Infinity,
                 ease: "linear"
               }
@@ -52,7 +52,7 @@ export function BreathingGrid({
               scale: 1.05,
               zIndex: 10,
               transition: {
-                duration: Number(precisionPunk.motion.quick) / 1000,
+                duration: Number(designTokens.motion.quick) / 1000,
                 ease: [0.23, 1, 0.32, 1]
               }
             }}
@@ -114,7 +114,7 @@ export function BreathingGrid({
                   opacity: [0, 0.3, 0],
                 }}
                 transition={{
-                  duration: Number(precisionPunk.motion.breath) / 1000,
+                  duration: Number(designTokens.motion.breath) / 1000,
                   repeat: Infinity,
                   delay: index * 0.2,
                 }}

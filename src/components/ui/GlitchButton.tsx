@@ -4,13 +4,13 @@ import { motion, HTMLMotionProps } from 'framer-motion'
 import { forwardRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 
-interface PunkButtonProps extends HTMLMotionProps<"button"> {
+interface GlitchButtonProps extends HTMLMotionProps<"button"> {
   variant?: 'voltage' | 'danger' | 'ghost' | 'brutal'
   size?: 'sm' | 'md' | 'lg'
   rebellion?: boolean // Enable chaotic behavior
 }
 
-export const PunkButton = forwardRef<HTMLButtonElement, PunkButtonProps>(
+export const GlitchButton = forwardRef<HTMLButtonElement, GlitchButtonProps>(
   ({ className, variant = 'voltage', size = 'md', rebellion = true, children, ...props }, ref) => {
     const [isRebelling, setIsRebelling] = useState(false)
     
@@ -103,4 +103,4 @@ export const PunkButton = forwardRef<HTMLButtonElement, PunkButtonProps>(
   }
 )
 
-PunkButton.displayName = 'PunkButton'
+GlitchButton.displayName = 'GlitchButton'

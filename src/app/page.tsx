@@ -1,6 +1,6 @@
 import { PageWrapper } from "@/components/layout/page-transition"
-import { PrecisionPunkHero } from "@/components/sections/PrecisionPunkHero"
-import { PrecisionPunkWork } from "@/components/sections/PrecisionPunkWork"
+import { Hero } from "@/components/sections/Hero"
+import { SelectedWork } from "@/components/sections/SelectedWork"
 import { AboutTeaser } from "@/components/sections/AboutTeaser"
 import { FeaturedCaseStudy } from "@/components/sections/FeaturedCaseStudy"
 import { ContactCTA } from "@/components/sections/ContactCTA"
@@ -15,9 +15,9 @@ export default function HomePage() {
 
   return (
     <PageWrapper>
-      <PrecisionPunkHero />
+      <Hero />
 
-      <PrecisionPunkWork />
+      <SelectedWork />
       <AboutTeaser />
       <FeaturedCaseStudy />
       <ContactCTA />
