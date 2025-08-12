@@ -21,10 +21,10 @@ export const GlitchButton = forwardRef<HTMLButtonElement, GlitchButtonProps>(
     }
     
     const variants = {
-      voltage: 'bg-voltage text-pure border-voltage',
-      danger: 'bg-danger text-pure border-danger',
+      voltage: 'bg-voltage text-white border-voltage',
+      danger: 'bg-danger text-white border-danger',
       ghost: 'bg-transparent text-foreground border-border',
-      brutal: 'bg-void dark:bg-pure text-pure dark:text-void border-void dark:border-pure',
+      brutal: 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white',
     }
     
     return (

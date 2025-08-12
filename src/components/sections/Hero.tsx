@@ -40,7 +40,7 @@ export function Hero() {
             fill="none" 
             stroke="currentColor" 
             strokeWidth="0.5"
-            className="text-steel dark:text-smoke/10"
+            className="text-gray-400 dark:text-gray-700"
           />
         </pattern>
       </defs>
@@ -51,7 +51,7 @@ export function Hero() {
   return (
     <section 
       ref={containerRef}
-      className="relative min-h-screen overflow-hidden bg-pure dark:bg-void"
+      className="relative min-h-screen overflow-hidden bg-white dark:bg-black"
       onMouseEnter={() => setIsBreaking(true)}
       onMouseLeave={() => setIsBreaking(false)}
     >
@@ -82,7 +82,7 @@ export function Hero() {
                 style={{ fontSize: designTokens.type.display }}
               >
                 <motion.span
-                  className="block text-void dark:text-pure"
+                  className="block text-black dark:text-white"
                   animate={isBreaking ? {
                     x: [-2, 2, -2],
                     textShadow: [
@@ -100,7 +100,7 @@ export function Hero() {
                   TYLER
                 </motion.span>
                 <motion.span
-                  className="block text-void dark:text-pure mt-[-0.1em]"
+                  className="block text-black dark:text-white mt-[-0.1em]"
                   animate={isBreaking ? {
                     x: [2, -2, 2],
                     textShadow: [
@@ -122,7 +122,7 @@ export function Hero() {
 
               {/* The Statement - Where punk emerges */}
               <motion.p 
-                className="mt-8 text-steel dark:text-smoke/80 max-w-2xl mx-auto"
+                className="mt-8 text-gray-700 dark:text-gray-300 max-w-2xl mx-auto"
                 style={{ fontSize: designTokens.type.title }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -143,7 +143,7 @@ export function Hero() {
 
               {/* The Manifesto - Precision Punk philosophy */}
               <motion.p
-                className="mt-6 text-steel/60 dark:text-smoke/40 max-w-xl mx-auto"
+                className="mt-6 text-gray-600 dark:text-gray-400 max-w-xl mx-auto"
                 style={{ fontSize: designTokens.type.body }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -167,7 +167,7 @@ export function Hero() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span className="relative z-10 font-medium text-pure">
+                <span className="relative z-10 font-medium text-white">
                   BREAK THE GRID
                 </span>
                 <motion.div
@@ -185,7 +185,7 @@ export function Hero() {
 
               <motion.a
                 href="#about"
-                className="px-8 py-4 text-steel dark:text-smoke border border-steel/20 dark:border-smoke/20"
+                className="px-8 py-4 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700"
                 whileHover={{ 
                   borderColor: designTokens.color.voltage,
                   color: designTokens.color.voltage,

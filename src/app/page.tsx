@@ -17,7 +17,7 @@ export default function HomePage() {
 
   return (
     <PageWrapper>
-      <HeroFixed />
+      <Hero />
 
       <SelectedWork />
       <AboutTeaser />

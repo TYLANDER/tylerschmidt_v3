@@ -68,7 +68,7 @@ export function SelectedWork() {
               </motion.span>
             </span>
             <br />
-            <span className="text-steel dark:text-smoke/50">WORK</span>
+            <span className="text-gray-500 dark:text-gray-400">WORK</span>
           </motion.h2>
           
           {/* Rebel line */}
@@ -147,7 +147,7 @@ export function SelectedWork() {
                   </div>
                   
                   {/* Index number - mathematical beauty */}
-                  <div className="absolute top-6 right-6 font-mono text-4xl font-bold text-steel/20 dark:text-smoke/10">
+                  <div className="absolute top-6 right-6 font-mono text-4xl font-bold text-gray-300 dark:text-gray-800">
                     {String(index + 1).padStart(2, '0')}
                   </div>
                 </div>
