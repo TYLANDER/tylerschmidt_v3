@@ -8,12 +8,12 @@ export function initPiaConsole() {
     ╔═══════════════════════════════════════╗
     ║  PRECISION WITH PERSONALITY™          ║
     ║  Designed by Tyler Schmidt            ║
-    ║  Quality assured by Pia               ║
+    ║  Creative direction by Pia            ║
     ╚═══════════════════════════════════════╝
     
          /ᐠ. ܁ .ᐟ\\  ♕
         └────────┘
-      Chief Quality Officer
+      Creative Director
     `,
     'color: #0066ff; font-family: monospace; font-size: 14px; line-height: 1.2;'
   )
@@ -23,13 +23,13 @@ export function initPiaConsole() {
   ;(window as any).piaStatus = () => {
     console.log('%c🐕 Pia is currently:', 'color: #ff00ff; font-size: 16px; font-weight: bold;')
     const activities = [
-      'Reviewing code quality',
-      'Testing user comfort',
-      'Napping on the keyboard',
-      'Chasing bugs',
+      'Reviewing creative concepts',
+      'Testing aesthetic harmony',
+      'Napping on the mood board',
+      'Chasing inspiration',
       'Approving designs',
-      'Playing with deployment scripts',
-      'Supervising from her bed'
+      'Playing with color palettes',
+      'Directing from her bed'
     ]
     const activity = activities[Math.floor(Math.random() * activities.length)]
     console.log(`%c   ${activity}`, 'color: #00ff88; font-size: 14px;')
@@ -39,7 +39,7 @@ export function initPiaConsole() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ;(window as any).givePiaTreats = () => {
     console.log('%c🦴 Treats delivered!', 'color: #ffaa00; font-size: 18px; font-weight: bold;')
-    console.log('%c   Pia is happy! (+100 quality points)', 'color: #00ff88; font-size: 14px;')
+    console.log('%c   Pia is happy! (+100 creativity points)', 'color: #00ff88; font-size: 14px;')
     
     // Trigger a subtle animation on the page
     const paw = document.createElement('div')

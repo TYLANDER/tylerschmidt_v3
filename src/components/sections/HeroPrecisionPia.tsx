@@ -103,10 +103,10 @@ export function HeroPrecisionPia() {
           >
             <div className="bg-primary/10 backdrop-blur-sm rounded-lg p-4 border border-accent/20">
               <p className="text-sm font-mono text-accent">
-                Quality Check: PASSED ✓
+                Creative Review: APPROVED ✓
               </p>
               <p className="text-xs text-muted-foreground mt-1">
-                - Pia, Chief Quality Officer
+                - Pia, Creative Director
               </p>
             </div>
           </motion.div>

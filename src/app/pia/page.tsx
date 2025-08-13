@@ -35,14 +35,14 @@ export default function PiaPage() {
             Meet Pia
           </motion.h1>
           <p className="text-2xl md:text-3xl text-muted-foreground mb-8">
-            Chief Quality Officer
+            Creative Director
           </p>
           <div className="inline-flex items-center gap-4 text-sm font-mono text-muted-foreground">
             <span>Olympia Schmidt</span>
             <span>•</span>
             <span>5 Years Experience</span>
             <span>•</span>
-            <span>100% Approval Rate</span>
+            <span>100% Creative Vision</span>
           </div>
         </motion.div>
 

@@ -45,7 +45,7 @@ export function SelectedWorkPia() {
             Selected Work
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Projects that pass the Pia Standard™ for quality and comfort.
+            Projects that pass Pia&apos;s creative vision and aesthetic standards.
           </p>
         </motion.div>
         
@@ -173,7 +173,7 @@ export function SelectedWorkPia() {
             </motion.svg>
           </Link>
           <p className="text-xs text-muted-foreground/40 mt-2 font-mono">
-            All projects must pass Pia&apos;s quality inspection
+            All projects must pass Pia&apos;s creative approval
           </p>
         </motion.div>
       </div>

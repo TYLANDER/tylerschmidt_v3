@@ -76,7 +76,7 @@ export default function NotFound() {
 
         {/* Hidden message */}
         <p className="text-xs text-muted-foreground/30 mt-12 font-mono">
-          Quality Standards Not Met · Error Code: P14-N0T-F0UND
+          Creative Standards Not Met · Error Code: P14-N0T-F0UND
         </p>
       </div>
     </div>

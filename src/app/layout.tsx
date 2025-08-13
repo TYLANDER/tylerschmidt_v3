@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: "%s | Tyler Schmidt",
   },
   description:
-    "Tyler Schmidt - Designer & Engineer. Where mathematical precision meets raw emotion. Creating digital experiences that are both beautiful and functional.",
+    "Tyler Schmidt - Designer & Engineer. Creative direction by Pia. Where mathematical precision meets raw emotion in digital experiences.",
   keywords: [
     "Product Designer",
     "UX Designer",
