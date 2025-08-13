@@ -7,7 +7,7 @@ import { aeonik, inter } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
-import { initPiaConsole } from "@/lib/pia-console"
+import { PiaConsoleInit } from "@/components/PiaConsoleInit"
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tylerschmidt.dev'),
@@ -94,14 +94,10 @@ export default function RootLayout({
   // Non-blocking analytics injection on client
   if (typeof window !== 'undefined') {
     // small guard so it only runs once per load
-    const w = window as unknown as { __analyticsInjected?: boolean; __piaConsoleInjected?: boolean }
+    const w = window as unknown as { __analyticsInjected?: boolean }
     if (!w.__analyticsInjected) {
       w.__analyticsInjected = true
       injectAnalytics()
-    }
-    if (!w.__piaConsoleInjected) {
-      w.__piaConsoleInjected = true
-      initPiaConsole()
     }
   }
   return (
@@ -158,6 +154,7 @@ export default function RootLayout({
       )}>
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-accent focus:text-accent-foreground focus:px-3 focus:py-2 rounded-md">Skip to content</a>
         <ServiceWorkerRegistration />
+        <PiaConsoleInit />
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
