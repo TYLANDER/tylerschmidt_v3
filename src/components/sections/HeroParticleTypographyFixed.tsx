@@ -62,9 +62,9 @@ export function HeroParticleTypographyFixed() {
       const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height)
       const pixels = imageData.data
       
-      // Create particles
+      // Create particles with higher density
       const newParticles: Particle[] = []
-      const gap = 6
+      const gap = 3 // Reduced gap for more particles
       
       for (let y = 0; y < tempCanvas.height; y += gap) {
         for (let x = 0; x < tempCanvas.width; x += gap) {
@@ -79,7 +79,7 @@ export function HeroParticleTypographyFixed() {
               targetY: y,
               vx: 0,
               vy: 0,
-              size: 2,
+              size: 1.5, // Smaller particles for smoother appearance
               hue: 0
             })
           }
@@ -129,8 +129,8 @@ export function HeroParticleTypographyFixed() {
     if (!ctx) return
     
     const animate = () => {
-      // Clear canvas
-      ctx.fillStyle = 'black'
+      // Clear canvas with slight fade for smoother motion
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.92)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
       
       const mouse = mouseRef.current
@@ -187,29 +187,52 @@ export function HeroParticleTypographyFixed() {
         particle.vy *= 0.88
         
         // Draw particle with enhanced RGB effect
-        if (distance < interactionRadius && particle.hue > 1) {
-          // RGB effect when near mouse
+        if (distance < interactionRadius && particle.hue > 0.1) {
+          // RGB chromatic aberration effect
           ctx.globalCompositeOperation = 'screen'
           
-          const offset = (interactionRadius - distance) / interactionRadius * 3
+          // Calculate offset based on distance and particle velocity
+          const velocityFactor = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy) * 0.2
+          const distanceFactor = (interactionRadius - distance) / interactionRadius
+          const offset = (distanceFactor * 4 + velocityFactor) * Math.min(1, particle.hue / 180)
           
-          // Red
-          ctx.fillStyle = `hsl(0, 100%, 50%)`
-          ctx.fillRect(particle.x - offset, particle.y, particle.size, particle.size)
+          // Draw RGB channels with circular particles for smoother look
+          ctx.save()
           
-          // Green
-          ctx.fillStyle = `hsl(120, 100%, 50%)`
-          ctx.fillRect(particle.x, particle.y, particle.size, particle.size)
+          // Red channel
+          ctx.fillStyle = `rgba(255, 0, 0, 0.8)`
+          ctx.beginPath()
+          ctx.arc(particle.x - offset, particle.y, particle.size, 0, Math.PI * 2)
+          ctx.fill()
           
-          // Blue
-          ctx.fillStyle = `hsl(240, 100%, 50%)`
-          ctx.fillRect(particle.x + offset, particle.y, particle.size, particle.size)
+          // Green channel
+          ctx.fillStyle = `rgba(0, 255, 0, 0.8)`
+          ctx.beginPath()
+          ctx.arc(particle.x, particle.y + offset * 0.3, particle.size, 0, Math.PI * 2)
+          ctx.fill()
           
+          // Blue channel
+          ctx.fillStyle = `rgba(0, 0, 255, 0.8)`
+          ctx.beginPath()
+          ctx.arc(particle.x + offset, particle.y - offset * 0.3, particle.size, 0, Math.PI * 2)
+          ctx.fill()
+          
+          ctx.restore()
           ctx.globalCompositeOperation = 'source-over'
         } else {
-          // Normal metallic color
-          ctx.fillStyle = '#cccccc'
-          ctx.fillRect(particle.x, particle.y, particle.size, particle.size)
+          // Normal metallic color with gradient
+          const gradient = ctx.createRadialGradient(
+            particle.x, particle.y, 0,
+            particle.x, particle.y, particle.size
+          )
+          gradient.addColorStop(0, '#ffffff')
+          gradient.addColorStop(0.5, '#cccccc')
+          gradient.addColorStop(1, '#999999')
+          
+          ctx.fillStyle = gradient
+          ctx.beginPath()
+          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
+          ctx.fill()
         }
       })
       
