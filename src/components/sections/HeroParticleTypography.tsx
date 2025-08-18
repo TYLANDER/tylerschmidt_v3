@@ -168,7 +168,7 @@ export function HeroParticleTypography() {
     
     const animate = () => {
       // Clear canvas with theme-appropriate background
-      const bgColor = theme === 'light' ? 'rgba(255, 255, 255, 0.92)' : 'rgba(0, 0, 0, 0.92)'
+      const bgColor = theme === 'light' ? '#ffffff' : '#000000'
       ctx.fillStyle = bgColor
       ctx.fillRect(0, 0, canvas.width, canvas.height)
       
@@ -274,10 +274,12 @@ export function HeroParticleTypography() {
           )
           ctx.fill()
           
-          // Add white core for brightness
+          // Add core for brightness - theme appropriate
           if (hueFactor > 0.5) {
             ctx.globalCompositeOperation = 'lighter'
-            ctx.fillStyle = `rgba(255, 255, 255, ${hueFactor * 0.3})`
+            // Use dark core in light mode, light core in dark mode
+            const coreColor = theme === 'light' ? 'rgba(0, 0, 0, ' : 'rgba(255, 255, 255, '
+            ctx.fillStyle = `${coreColor}${hueFactor * 0.3})`
             ctx.beginPath()
             ctx.arc(particle.x, particle.y, particle.size * 0.5, 0, Math.PI * 2)
             ctx.fill()
