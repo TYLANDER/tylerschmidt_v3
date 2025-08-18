@@ -158,10 +158,10 @@ export function HeroParticleTypographyFixed() {
           particle.vx += Math.cos(perpAngle) * force * 2
           particle.vy += Math.sin(perpAngle) * force * 2
           
-          // Color change based on angle
-          particle.hue = (angle + Math.PI) * (180 / Math.PI)
+          // Set hue to maximum for strong RGB effect
+          particle.hue = 360 * force // More intense color based on proximity
         } else {
-          particle.hue *= 0.95
+          particle.hue *= 0.92 // Slower fade for lingering effect
         }
         
         // Explode effect
@@ -187,35 +187,62 @@ export function HeroParticleTypographyFixed() {
         particle.vy *= 0.88
         
         // Draw particle with enhanced RGB effect
-        if (distance < interactionRadius && particle.hue > 0.1) {
-          // RGB chromatic aberration effect
-          ctx.globalCompositeOperation = 'screen'
+        if (particle.hue > 1) {
+          // RGB chromatic aberration effect - always active when hue is set
+          ctx.globalCompositeOperation = 'lighter' // Changed to 'lighter' for more vibrant colors
           
-          // Calculate offset based on distance and particle velocity
-          const velocityFactor = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy) * 0.2
-          const distanceFactor = (interactionRadius - distance) / interactionRadius
-          const offset = (distanceFactor * 4 + velocityFactor) * Math.min(1, particle.hue / 180)
+          // Calculate offset based on distance, particle velocity, and hue intensity
+          const velocityFactor = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy) * 0.3
+          const hueFactor = particle.hue / 360
+          const offset = (velocityFactor + hueFactor * 6)
           
-          // Draw RGB channels with circular particles for smoother look
+          // Calculate angle for directional RGB split
+          const velocityAngle = Math.atan2(particle.vy, particle.vx)
+          
+          // Draw RGB channels with directional offset
           ctx.save()
           
-          // Red channel
-          ctx.fillStyle = `rgba(255, 0, 0, 0.8)`
+          // Red channel - offset in velocity direction
+          ctx.fillStyle = `rgba(255, 0, 0, ${0.6 + hueFactor * 0.4})`
           ctx.beginPath()
-          ctx.arc(particle.x - offset, particle.y, particle.size, 0, Math.PI * 2)
+          ctx.arc(
+            particle.x - Math.cos(velocityAngle) * offset,
+            particle.y - Math.sin(velocityAngle) * offset,
+            particle.size * (1 + hueFactor * 0.3),
+            0, Math.PI * 2
+          )
           ctx.fill()
           
-          // Green channel
-          ctx.fillStyle = `rgba(0, 255, 0, 0.8)`
+          // Green channel - perpendicular offset
+          ctx.fillStyle = `rgba(0, 255, 0, ${0.6 + hueFactor * 0.4})`
           ctx.beginPath()
-          ctx.arc(particle.x, particle.y + offset * 0.3, particle.size, 0, Math.PI * 2)
+          ctx.arc(
+            particle.x + Math.cos(velocityAngle + Math.PI/2) * offset * 0.7,
+            particle.y + Math.sin(velocityAngle + Math.PI/2) * offset * 0.7,
+            particle.size * (1 + hueFactor * 0.3),
+            0, Math.PI * 2
+          )
           ctx.fill()
           
-          // Blue channel
-          ctx.fillStyle = `rgba(0, 0, 255, 0.8)`
+          // Blue channel - opposite offset
+          ctx.fillStyle = `rgba(0, 0, 255, ${0.6 + hueFactor * 0.4})`
           ctx.beginPath()
-          ctx.arc(particle.x + offset, particle.y - offset * 0.3, particle.size, 0, Math.PI * 2)
+          ctx.arc(
+            particle.x + Math.cos(velocityAngle) * offset,
+            particle.y + Math.sin(velocityAngle) * offset,
+            particle.size * (1 + hueFactor * 0.3),
+            0, Math.PI * 2
+          )
           ctx.fill()
+          
+          // Add white core for brightness
+          if (hueFactor > 0.5) {
+            ctx.globalCompositeOperation = 'lighter'
+            ctx.fillStyle = `rgba(255, 255, 255, ${hueFactor * 0.3})`
+            ctx.beginPath()
+            ctx.arc(particle.x, particle.y, particle.size * 0.5, 0, Math.PI * 2)
+            ctx.fill()
+          }
           
           ctx.restore()
           ctx.globalCompositeOperation = 'source-over'
