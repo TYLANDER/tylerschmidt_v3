@@ -72,6 +72,7 @@ export function HeroParticleTypography() {
       tempCtx.font = `900 ${fontSize}px Arial, sans-serif`
       tempCtx.textAlign = 'center'
       tempCtx.textBaseline = 'middle'
+      // Always use white text for detection
       tempCtx.fillStyle = 'white'
       
       // Draw text
@@ -292,9 +293,9 @@ export function HeroParticleTypography() {
           )
           
           if (theme === 'light') {
-            gradient.addColorStop(0, '#666666')
+            gradient.addColorStop(0, '#000000')
             gradient.addColorStop(0.5, '#333333')
-            gradient.addColorStop(1, '#000000')
+            gradient.addColorStop(1, '#666666')
           } else {
             gradient.addColorStop(0, '#ffffff')
             gradient.addColorStop(0.5, '#cccccc')
