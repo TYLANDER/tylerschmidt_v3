@@ -20,6 +20,7 @@ export function HeroParticleTypographyFixed() {
   const particlesRef = useRef<Particle[]>([])
   const mouseRef = useRef({ x: -1000, y: -1000 })
   const [currentText, setCurrentText] = useState('TYLER SCHMIDT')
+  const [isExploded, setIsExploded] = useState(false)
   const animationRef = useRef<number>()
   
   // Initialize particles
@@ -142,14 +143,20 @@ export function HeroParticleTypographyFixed() {
         const dy = mouse.y - particle.y
         const distance = Math.sqrt(dx * dx + dy * dy)
         
-        // Mouse interaction
-        if (distance < 100) {
-          const force = (100 - distance) / 100
+        // Mouse interaction with larger radius and stronger force
+        const interactionRadius = 150
+        if (distance < interactionRadius) {
+          const force = Math.pow((interactionRadius - distance) / interactionRadius, 2)
           const angle = Math.atan2(dy, dx)
           
-          // Push particles away
-          particle.vx -= Math.cos(angle) * force * 3
-          particle.vy -= Math.sin(angle) * force * 3
+          // Push particles away with stronger force
+          particle.vx -= Math.cos(angle) * force * 8
+          particle.vy -= Math.sin(angle) * force * 8
+          
+          // Add some perpendicular force for swirl effect
+          const perpAngle = angle + Math.PI / 2
+          particle.vx += Math.cos(perpAngle) * force * 2
+          particle.vy += Math.sin(perpAngle) * force * 2
           
           // Color change based on angle
           particle.hue = (angle + Math.PI) * (180 / Math.PI)
@@ -157,9 +164,16 @@ export function HeroParticleTypographyFixed() {
           particle.hue *= 0.95
         }
         
-        // Return to original position
-        const returnX = (particle.targetX - particle.x) * 0.1
-        const returnY = (particle.targetY - particle.y) * 0.1
+        // Explode effect
+        if (isExploded) {
+          particle.vx += (Math.random() - 0.5) * 20
+          particle.vy += (Math.random() - 0.5) * 20
+        }
+        
+        // Return to original position with adjusted force
+        const returnForce = isExploded ? 0.02 : 0.08
+        const returnX = (particle.targetX - particle.x) * returnForce
+        const returnY = (particle.targetY - particle.y) * returnForce
         
         particle.vx += returnX
         particle.vy += returnY
@@ -168,18 +182,20 @@ export function HeroParticleTypographyFixed() {
         particle.x += particle.vx
         particle.y += particle.vy
         
-        // Damping
-        particle.vx *= 0.85
-        particle.vy *= 0.85
+        // Damping - less damping for more fluid motion
+        particle.vx *= 0.88
+        particle.vy *= 0.88
         
-        // Draw particle
-        if (distance < 100 && particle.hue > 1) {
+        // Draw particle with enhanced RGB effect
+        if (distance < interactionRadius && particle.hue > 1) {
           // RGB effect when near mouse
           ctx.globalCompositeOperation = 'screen'
           
+          const offset = (interactionRadius - distance) / interactionRadius * 3
+          
           // Red
           ctx.fillStyle = `hsl(0, 100%, 50%)`
-          ctx.fillRect(particle.x - 1, particle.y, particle.size, particle.size)
+          ctx.fillRect(particle.x - offset, particle.y, particle.size, particle.size)
           
           // Green
           ctx.fillStyle = `hsl(120, 100%, 50%)`
@@ -187,7 +203,7 @@ export function HeroParticleTypographyFixed() {
           
           // Blue
           ctx.fillStyle = `hsl(240, 100%, 50%)`
-          ctx.fillRect(particle.x + 1, particle.y, particle.size, particle.size)
+          ctx.fillRect(particle.x + offset, particle.y, particle.size, particle.size)
           
           ctx.globalCompositeOperation = 'source-over'
         } else {
@@ -207,7 +223,15 @@ export function HeroParticleTypographyFixed() {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [])
+  }, [isExploded])
+  
+  const handleExplode = () => {
+    setIsExploded(true)
+    // Reset after 2 seconds
+    setTimeout(() => {
+      setIsExploded(false)
+    }, 2000)
+  }
   
   return (
     <section className="relative h-screen bg-black overflow-hidden">
@@ -223,7 +247,7 @@ export function HeroParticleTypographyFixed() {
           className="text-center"
         >
           <p className="text-sm text-gray-400 mb-4">
-            Fixed Particle Typography
+            RGB Particle Typography
           </p>
           
           <div className="flex justify-center gap-2 mb-4 pointer-events-auto">
@@ -246,10 +270,18 @@ export function HeroParticleTypographyFixed() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center"
+          className="text-center space-y-4"
         >
+          <button
+            onClick={handleExplode}
+            className="px-6 py-3 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors pointer-events-auto"
+            disabled={isExploded}
+          >
+            {isExploded ? 'Exploding...' : 'Explode Text'}
+          </button>
+          
           <p className="text-xs text-gray-500">
-            Move cursor near text for RGB effect
+            Move cursor near text for RGB effect • {particlesRef.current.length} particles
           </p>
         </motion.div>
       </Container>
