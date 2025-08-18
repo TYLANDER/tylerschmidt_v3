@@ -21,7 +21,7 @@ export function HeroParticleTypographyFixed() {
   const mouseRef = useRef({ x: -1000, y: -1000 })
   const [currentText, setCurrentText] = useState('TYLER SCHMIDT')
   const [isExploded, setIsExploded] = useState(false)
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number | undefined>(undefined)
   
   // Initialize particles
   useEffect(() => {
@@ -137,7 +137,7 @@ export function HeroParticleTypographyFixed() {
       const particles = particlesRef.current
       
       // Update and draw particles
-      particles.forEach((particle, i) => {
+      particles.forEach((particle) => {
         // Calculate distance from mouse
         const dx = mouse.x - particle.x
         const dy = mouse.y - particle.y
