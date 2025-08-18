@@ -8,6 +8,7 @@ import { HeroRealityLayers } from '@/components/sections/HeroRealityLayers'
 import { HeroConsciousnessStream } from '@/components/sections/HeroConsciousnessStream'
 import { HeroParticleTypography } from '@/components/sections/HeroParticleTypography'
 import { HeroParticleTypographyMetallic } from '@/components/sections/HeroParticleTypographyMetallic'
+import { HeroParticleTypographyRGB } from '@/components/sections/HeroParticleTypographyRGB'
 
 const testConcepts = [
   {
@@ -50,6 +51,13 @@ const testConcepts = [
     name: 'Metallic Particle Typography',
     description: 'Optimized metallic particles with smooth magnetic interactions',
     component: HeroParticleTypographyMetallic,
+    status: 'ready'
+  },
+  {
+    id: 'particle-typography-rgb',
+    name: 'RGB Glitch Typography',
+    description: 'Felipe Pantone-inspired RGB chromatic aberration with warping effects',
+    component: HeroParticleTypographyRGB,
     status: 'ready'
   }
 ]
