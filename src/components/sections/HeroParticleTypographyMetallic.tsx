@@ -40,8 +40,8 @@ export function HeroParticleTypographyMetallic() {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     
     // Set up text with optimized font
-    const fontSize = Math.min(canvas.width / 10, 100)
-    ctx.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`
+    const fontSize = Math.min(canvas.width / 8, 140)
+    ctx.font = `900 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
     
@@ -57,7 +57,7 @@ export function HeroParticleTypographyMetallic() {
     const pixels = imageData.data
     
     const particles: Particle[] = []
-    const spacing = 4 // Increased spacing for fewer particles (better performance)
+    const spacing = 6 // Increased spacing for fewer particles (better performance)
     
     // Metallic color palette (silver to gold gradient)
     const metallicHues = [220, 45, 30] // Blue-silver, Gold, Copper
@@ -67,7 +67,7 @@ export function HeroParticleTypographyMetallic() {
         const index = (y * canvas.width + x) * 4
         const alpha = pixels[index + 3]
         
-        if (alpha > 200) { // Higher threshold for cleaner text
+        if (alpha > 128) { // Standard threshold for text detection
           const hueIndex = Math.floor(Math.random() * metallicHues.length)
           particles.push({
             id: `${x}-${y}`,
@@ -77,7 +77,7 @@ export function HeroParticleTypographyMetallic() {
             vy: 0,
             targetX: x,
             targetY: y,
-            size: 2.5,
+            size: 1.8,
             metalness: 0.8 + Math.random() * 0.2, // High metalness for shiny effect
             baseHue: metallicHues[hueIndex],
             opacity: 0.9,
@@ -99,32 +99,16 @@ export function HeroParticleTypographyMetallic() {
     if (!canvasRef.current) return
     
     const canvas = canvasRef.current
-    // Use device pixel ratio for sharp rendering
-    const dpr = Math.min(window.devicePixelRatio || 1, 2) // Cap at 2 for performance
-    canvas.width = window.innerWidth * dpr
-    canvas.height = window.innerHeight * dpr
-    canvas.style.width = `${window.innerWidth}px`
-    canvas.style.height = `${window.innerHeight}px`
-    
-    const ctx = canvas.getContext('2d')
-    if (ctx) {
-      ctx.scale(dpr, dpr)
-    }
+    // Don't use device pixel ratio in particle generation
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
     
     particlesRef.current = generateTextParticles(currentText)
     setIsLoading(false)
     
     const handleResize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
-      canvas.width = window.innerWidth * dpr
-      canvas.height = window.innerHeight * dpr
-      canvas.style.width = `${window.innerWidth}px`
-      canvas.style.height = `${window.innerHeight}px`
-      
-      const ctx = canvas.getContext('2d')
-      if (ctx) {
-        ctx.scale(dpr, dpr)
-      }
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
       
       particlesRef.current = generateTextParticles(currentText)
     }
@@ -165,8 +149,8 @@ export function HeroParticleTypographyMetallic() {
     if (!canvas || !ctx) return
     
     // Pre-create gradient for metallic effect
-    const createMetallicGradient = (x: number, y: number, hue: number, metalness: number) => {
-      const gradient = ctx.createRadialGradient(x, y, 0, x, y, 3)
+    const createMetallicGradient = (x: number, y: number, hue: number, metalness: number, size: number) => {
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, size * 1.5)
       
       // Metallic color with highlights
       const saturation = 20 + metalness * 30 // Lower saturation for metallic look
@@ -182,7 +166,7 @@ export function HeroParticleTypographyMetallic() {
     
     const animate = () => {
       // Clear with subtle fade for smooth trails
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)'
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
       
       const mouse = mouseRef.current
@@ -236,7 +220,8 @@ export function HeroParticleTypographyMetallic() {
           particle.x,
           particle.y,
           particle.baseHue,
-          particle.metalness
+          particle.metalness,
+          particle.size
         )
         
         ctx.fillStyle = gradient
