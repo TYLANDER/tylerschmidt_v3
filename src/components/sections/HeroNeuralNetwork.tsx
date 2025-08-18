@@ -46,16 +46,15 @@ const nodes: Node[] = [
   { id: 'project4', label: 'Interactive Experience', category: 'project', position: new THREE.Vector3(-4.5, 6, 0), connections: [], activation: 0 },
 ]
 
-function NetworkNode({ node, allNodes, onHover, onLeave }: { 
+function NetworkNode({ node, onHover, onLeave }: { 
   node: Node
-  allNodes: Node[]
   onHover: (node: Node) => void
   onLeave: () => void
 }) {
   const meshRef = useRef<THREE.Mesh>(null)
   const [hovered, setHovered] = useState(false)
   
-  useFrame((state) => {
+  useFrame(() => {
     if (!meshRef.current) return
     
     // Pulsing effect based on activation
@@ -98,21 +97,21 @@ function NetworkNode({ node, allNodes, onHover, onLeave }: {
 function NetworkConnections({ nodes }: { nodes: Node[] }) {
   const linesRef = useRef<THREE.Group>(null)
   
-  useFrame((state) => {
+  useFrame(() => {
     if (!linesRef.current) return
     
     // Animate connections
     linesRef.current.children.forEach((line, i) => {
       if (line instanceof THREE.Line) {
         const material = line.material as THREE.LineBasicMaterial
-        material.opacity = 0.2 + Math.sin(state.clock.elapsedTime * 2 + i) * 0.1
+        material.opacity = 0.2 + Math.sin(Date.now() * 0.001 + i) * 0.1
       }
     })
   })
   
   return (
     <group ref={linesRef}>
-      {nodes.map(node => 
+      {nodes.flatMap(node => 
         node.connections.map(targetId => {
           const target = nodes.find(n => n.id === targetId)
           if (!target) return null
@@ -121,15 +120,19 @@ function NetworkConnections({ nodes }: { nodes: Node[] }) {
           const geometry = new THREE.BufferGeometry().setFromPoints(points)
           
           return (
-            <line key={`${node.id}-${targetId}`} geometry={geometry}>
-              <lineBasicMaterial
-                color="#ffffff"
-                opacity={0.2}
-                transparent
-              />
-            </line>
+            <primitive 
+              key={`${node.id}-${targetId}`} 
+              object={new THREE.Line(
+                geometry,
+                new THREE.LineBasicMaterial({ 
+                  color: 0xffffff, 
+                  opacity: 0.2, 
+                  transparent: true 
+                })
+              )} 
+            />
           )
-        })
+        }).filter(Boolean)
       )}
     </group>
   )
@@ -208,7 +211,6 @@ function NeuralNetworkScene() {
         <NetworkNode
           key={node.id}
           node={node}
-          allNodes={networkNodes}
           onHover={(n) => {
             setActiveNode(n)
             // Activate connected nodes
@@ -251,8 +253,6 @@ function NeuralNetworkScene() {
 }
 
 export function HeroNeuralNetwork() {
-  const [hoveredNode, setHoveredNode] = useState<string | null>(null)
-  
   return (
     <section className="relative h-screen bg-black overflow-hidden">
       {/* 3D Scene */}
