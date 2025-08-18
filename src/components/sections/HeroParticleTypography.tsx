@@ -227,8 +227,8 @@ export function HeroParticleTypography() {
         
         // Draw particle with enhanced RGB effect
         if (particle.hue > 1) {
-          // RGB chromatic aberration effect - always active when hue is set
-          ctx.globalCompositeOperation = 'lighter' // Changed to 'lighter' for more vibrant colors
+          // RGB chromatic aberration effect - use different blend mode for light mode
+          ctx.globalCompositeOperation = theme === 'light' ? 'multiply' : 'lighter'
           
           // Calculate offset based on distance, particle velocity, and hue intensity
           const velocityFactor = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy) * 0.3
@@ -241,8 +241,15 @@ export function HeroParticleTypography() {
           // Draw RGB channels with directional offset
           ctx.save()
           
+          // Theme-appropriate RGB channels
+          const opacity = 0.6 + hueFactor * 0.4
+          
           // Red channel - offset in velocity direction
-          ctx.fillStyle = `rgba(255, 0, 0, ${0.6 + hueFactor * 0.4})`
+          if (theme === 'light') {
+            ctx.fillStyle = `rgba(255, 0, 128, ${opacity})`
+          } else {
+            ctx.fillStyle = `rgba(255, 0, 0, ${opacity})`
+          }
           ctx.beginPath()
           ctx.arc(
             particle.x - Math.cos(velocityAngle) * offset,
@@ -253,7 +260,11 @@ export function HeroParticleTypography() {
           ctx.fill()
           
           // Green channel - perpendicular offset
-          ctx.fillStyle = `rgba(0, 255, 0, ${0.6 + hueFactor * 0.4})`
+          if (theme === 'light') {
+            ctx.fillStyle = `rgba(0, 255, 128, ${opacity})`
+          } else {
+            ctx.fillStyle = `rgba(0, 255, 0, ${opacity})`
+          }
           ctx.beginPath()
           ctx.arc(
             particle.x + Math.cos(velocityAngle + Math.PI/2) * offset * 0.7,
@@ -264,7 +275,11 @@ export function HeroParticleTypography() {
           ctx.fill()
           
           // Blue channel - opposite offset
-          ctx.fillStyle = `rgba(0, 0, 255, ${0.6 + hueFactor * 0.4})`
+          if (theme === 'light') {
+            ctx.fillStyle = `rgba(128, 0, 255, ${opacity})`
+          } else {
+            ctx.fillStyle = `rgba(0, 0, 255, ${opacity})`
+          }
           ctx.beginPath()
           ctx.arc(
             particle.x + Math.cos(velocityAngle) * offset,
@@ -276,10 +291,12 @@ export function HeroParticleTypography() {
           
           // Add core for brightness - theme appropriate
           if (hueFactor > 0.5) {
-            ctx.globalCompositeOperation = 'lighter'
-            // Use dark core in light mode, light core in dark mode
-            const coreColor = theme === 'light' ? 'rgba(0, 0, 0, ' : 'rgba(255, 255, 255, '
-            ctx.fillStyle = `${coreColor}${hueFactor * 0.3})`
+            ctx.globalCompositeOperation = theme === 'light' ? 'multiply' : 'lighter'
+            // Use vibrant color core instead of white/black
+            const coreAlpha = hueFactor * 0.5
+            ctx.fillStyle = theme === 'light' 
+              ? `rgba(255, 0, 255, ${coreAlpha})` // Magenta for light mode
+              : `rgba(255, 255, 255, ${coreAlpha * 0.6})` // White for dark mode
             ctx.beginPath()
             ctx.arc(particle.x, particle.y, particle.size * 0.5, 0, Math.PI * 2)
             ctx.fill()
