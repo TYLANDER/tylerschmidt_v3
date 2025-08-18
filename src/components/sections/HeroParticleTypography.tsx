@@ -286,23 +286,13 @@ export function HeroParticleTypography() {
           ctx.restore()
           ctx.globalCompositeOperation = 'source-over'
         } else {
-          // Theme-appropriate metallic color
-          const gradient = ctx.createRadialGradient(
-            particle.x, particle.y, 0,
-            particle.x, particle.y, particle.size
-          )
-          
+          // Theme-appropriate solid color (no gradient for cleaner look)
           if (theme === 'light') {
-            gradient.addColorStop(0, '#000000')
-            gradient.addColorStop(0.5, '#333333')
-            gradient.addColorStop(1, '#666666')
+            ctx.fillStyle = '#000000'
           } else {
-            gradient.addColorStop(0, '#ffffff')
-            gradient.addColorStop(0.5, '#cccccc')
-            gradient.addColorStop(1, '#999999')
+            ctx.fillStyle = '#cccccc'
           }
           
-          ctx.fillStyle = gradient
           ctx.beginPath()
           ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
           ctx.fill()
