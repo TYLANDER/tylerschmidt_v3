@@ -37,6 +37,7 @@ export function SiteHeader() {
               {[
                 { href: '/work', label: 'Work' },
                 { href: '/about', label: 'About' },
+                { href: '/lab', label: 'Lab' },
                 { href: '/contact', label: 'Contact' },
               ].map((link) => (
                 <Link

@@ -1,4 +1,4 @@
-import { HeroPrecisionPia } from "@/components/sections/HeroPrecisionPia"
+import { HeroParticleTypography } from "@/components/sections/HeroParticleTypography"
 import { SelectedWorkPia } from "@/components/sections/SelectedWorkPia"
 
 
@@ -9,7 +9,7 @@ import { SelectedWorkPia } from "@/components/sections/SelectedWorkPia"
 export default function HomePage() {
   return (
     <>
-      <HeroPrecisionPia />
+      <HeroParticleTypography />
       <SelectedWorkPia />
     </>
   )

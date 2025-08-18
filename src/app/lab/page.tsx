@@ -1,145 +1,141 @@
 "use client"
 
-// import { Metadata } from "next" // TODO: Add metadata when needed
 import { AnimatedText } from "@/components/animations/animated-text"
-import { AnimatedHero } from "@/components/three/animated-hero"
-import { ParticleGalaxy } from "@/components/three/particle-galaxy"
-import { LiquidMetal } from "@/components/three/liquid-metal"
-import { NeuralNetworkViz } from "@/components/three/neural-network"
-import { FluidDynamics } from "@/components/three/fluid-dynamics"
-import { AudioCrystals } from "@/components/three/audio-crystals"
-import { ParticleFire } from "@/components/three/particle-fire"
-import { WaveField } from "@/components/three/wave-field"
 import { PageWrapper } from "@/components/layout/page-transition"
 import { motion } from "framer-motion"
-import { cardVariants, revealContainer, revealItem } from "@/lib/interactions"
-import { useState } from "react"
+import { revealContainer, revealItem } from "@/lib/interactions"
+import Link from "next/link"
 
-interface DemoCardProps {
+interface ExperimentCardProps {
   title: string
   description: string
-  tech: string[]
-  children: React.ReactNode
-  index: number
+  href: string
+  tags: string[]
 }
 
-function DemoCard({ title, description, tech, children, index }: DemoCardProps) {
-  const [isHovered, setIsHovered] = useState(false)
-  
+function ExperimentCard({ title, description, href, tags }: ExperimentCardProps) {
   return (
-    <motion.div 
-      className="bg-card border-border space-y-4 rounded-lg border p-6"
-      variants={cardVariants}
-      initial="rest"
-      whileHover="hover"
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      custom={index}
-      viewport={{ once: true, margin: "-100px" }}
-    >
-      <div className="space-y-2">
-        <h3 className="text-xl font-semibold text-foreground">{title}</h3>
-        <p className="text-foreground/60 text-sm">{description}</p>
-        <div className="flex flex-wrap gap-2">
-          {tech.map((item, index) => (
-            <motion.span
-              key={index}
-              className="bg-accent/10 text-accent rounded-md px-2 py-1 font-mono text-xs"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.05 }}
-            >
-              {item}
-            </motion.span>
-          ))}
-        </div>
-      </div>
+    <Link href={href} className="group block">
       <motion.div 
-        className="relative h-80 overflow-hidden rounded-lg border border-border bg-muted/20"
-        animate={{ borderColor: isHovered ? "rgba(0, 102, 255, 0.2)" : "var(--border)" }}
-        transition={{ duration: 0.3 }}
+        className="h-full bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden hover:border-gray-400 dark:hover:border-gray-600 transition-colors"
+        whileHover={{ y: -4 }}
+        transition={{ duration: 0.2 }}
       >
-        {children}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-        />
+        {/* Preview Window */}
+        <div className="relative h-48 bg-gray-50 dark:bg-gray-900 overflow-hidden">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-2xl font-bold text-gray-300 dark:text-gray-700">
+              {title.split(' ').map(word => word[0]).join('')}
+            </div>
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+        </div>
+        
+        {/* Content */}
+        <div className="p-6">
+          <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+            {title}
+          </h3>
+          <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+            {description}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-400"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
       </motion.div>
-    </motion.div>
+    </Link>
   )
 }
 
 export default function LabPage() {
   const experiments = [
     {
-      title: "Liquid Metal Blob",
-      description: "Interactive metallic blob with realistic material properties and physics.",
-      tech: ["three.js", "react-three-fiber", "physics"],
-      component: <LiquidMetal />
+      title: "Particle Typography",
+      description: "RGB chromatic aberration text with magnetic particle effects and device motion support.",
+      href: "/",
+      tags: ["Canvas", "Particles", "Motion", "Haptics"]
     },
     {
-      title: "Particle Galaxy",
-      description: "Dynamic particle system with gravitational forces and interactive controls.",
-      tech: ["webgl", "shaders", "particles"],
-      component: <ParticleGalaxy />
+      title: "Neural Network Visualizer",
+      description: "Interactive 3D neural network with real-time data flow visualization.",
+      href: "/hero-testing",
+      tags: ["Three.js", "WebGL", "AI", "3D"]
     },
     {
-      title: "Neural Network Visualization",
-      description: "Real-time visualization of neural network processing and data flow.",
-      tech: ["d3.js", "tensorflow", "webgl"],
-      component: <NeuralNetworkViz />
+      title: "Quantum State Portfolio",
+      description: "Projects exist in quantum superposition until observed.",
+      href: "/hero-testing",
+      tags: ["Physics", "Animation", "Interactive"]
     },
     {
-      title: "Fluid Dynamics",
-      description: "GPU-accelerated fluid simulation with interactive flow patterns.",
-      tech: ["webgl2", "compute-shaders", "physics"],
-      component: <FluidDynamics />
+      title: "Reality Layers",
+      description: "Peel back layers of reality to reveal hidden dimensions.",
+      href: "/hero-testing",
+      tags: ["Parallax", "3D", "Interactive"]
     },
     {
-      title: "Wave Field",
-      description: "Parametric wave field with customizable frequency and amplitude.",
-      tech: ["three.js", "glsl", "math"],
-      component: <WaveField />
+      title: "Consciousness Stream",
+      description: "AI-generated thoughts flowing through digital consciousness.",
+      href: "/hero-testing",
+      tags: ["AI", "Generative", "Text"]
     },
     {
-      title: "Particle Fire",
-      description: "Realistic fire effect using particle systems and custom shaders.",
-      tech: ["particles", "shaders", "physics"],
-      component: <ParticleFire />
+      title: "Living Portfolio",
+      description: "Portfolio that evolves and grows with AI-generated content.",
+      href: "/living-portfolio",
+      tags: ["AI", "Dynamic", "Generative"]
     },
     {
-      title: "Audio Reactive Crystals",
-      description: "3D crystals that respond to audio input with dynamic deformations.",
-      tech: ["web-audio", "three.js", "fft"],
-      component: <AudioCrystals />
+      title: "Code-to-Visual Transformer",
+      description: "Transform code into stunning visual representations.",
+      href: "/code-visual",
+      tags: ["Code", "Visualization", "Interactive"]
     },
     {
-      title: "Animated Hero Background",
-      description: "Layered animated background with parallax scrolling effects.",
-      tech: ["react", "framer-motion", "svg"],
-      component: <AnimatedHero />
+      title: "Conversation Canvas",
+      description: "Paint with words in an AI-powered creative canvas.",
+      href: "/conversation-canvas",
+      tags: ["AI", "Creative", "Canvas"]
+    },
+    {
+      title: "Dimensional Typography",
+      description: "Text that exists across multiple dimensions.",
+      href: "/hero-lab",
+      tags: ["3D", "Typography", "WebGL"]
+    },
+    {
+      title: "Temporal Echo System",
+      description: "Visualize the echoes of past visitors in real-time.",
+      href: "/hero-lab",
+      tags: ["Time", "Data", "Visualization"]
     }
   ]
 
   return (
     <PageWrapper>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-background px-6 py-20">
+      <section className="relative overflow-hidden bg-white dark:bg-black px-6 py-20">
         <div className="container mx-auto">
           <div className="mx-auto max-w-4xl text-center">
             <AnimatedText
               text="Experimental Lab"
               as="h1"
               variant="slide"
-              className="mb-6 text-5xl font-bold md:text-7xl text-foreground"
+              className="mb-6 text-5xl font-bold md:text-7xl"
             />
             <AnimatedText
-              text="A playground for exploring cutting-edge web technologies and creative coding experiments."
+              text="Pushing the boundaries of web experiences with cutting-edge technology and creative experimentation."
               as="p"
               variant="fade"
-              className="text-foreground/70 mx-auto max-w-2xl text-lg"
+              className="text-gray-600 dark:text-gray-400 mx-auto max-w-2xl text-lg"
               delay={0.5}
             />
           </div>
@@ -147,91 +143,35 @@ export default function LabPage() {
       </section>
 
       {/* Experiments Grid */}
-      <section className="border-t border-border bg-muted/30 px-6 py-20">
+      <section className="border-t border-gray-200 dark:border-gray-800 px-6 py-20">
         <div className="container mx-auto">
           <motion.div 
-            className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+            className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
             variants={revealContainer}
             initial="hidden"
             animate="visible"
           >
-            {experiments.map((experiment, index) => (
+            {experiments.map((experiment) => (
               <motion.div key={experiment.title} variants={revealItem}>
-                <DemoCard
-                  title={experiment.title}
-                  description={experiment.description}
-                  tech={experiment.tech}
-                  index={index}
-                >
-                  {experiment.component}
-                </DemoCard>
+                <ExperimentCard {...experiment} />
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* Tech Stack Section */}
-      <section className="border-t border-border bg-background px-6 py-20">
-        <div className="container mx-auto">
-          <div className="mx-auto max-w-4xl">
-            <h2 className="mb-8 text-center text-3xl font-bold text-foreground">
-              Technologies & Tools
-            </h2>
-            <div className="grid gap-6 md:grid-cols-3">
-              {[
-                {
-                  category: "3D Graphics",
-                  items: ["Three.js", "React Three Fiber", "WebGL", "GLSL Shaders"],
-                },
-                {
-                  category: "Animation",
-                  items: ["Framer Motion", "GSAP", "Lottie", "CSS Animations"],
-                },
-                {
-                  category: "Creative Coding",
-                  items: ["Canvas API", "Web Audio API", "WebGPU", "Matter.js"],
-                },
-              ].map((group, index) => (
-                <motion.div
-                  key={group.category}
-                  className="space-y-3"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground/50">
-                    {group.category}
-                  </h3>
-                  <ul className="space-y-2">
-                    {group.items.map((item) => (
-                      <li
-                        key={item}
-                        className="text-foreground/80 hover:text-accent transition-colors cursor-default"
-                      >
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="border-t border-border bg-muted/30 px-6 py-16">
+      {/* Tech Stack */}
+      <section className="border-t border-gray-200 dark:border-gray-800 px-6 py-16">
         <div className="container mx-auto text-center">
-          <p className="text-foreground/60 mb-4">
-            Interested in collaborating on experimental projects?
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
+            Built with Three.js, React, Canvas API, WebGL, AI APIs, and experimental web technologies
           </p>
-          <a
+          <Link
             href="/contact"
-            className="text-accent hover:underline underline-offset-4 font-medium transition-all"
+            className="text-blue-600 dark:text-blue-400 hover:underline underline-offset-4 font-medium"
           >
-            Let&apos;s create something unique →
-          </a>
+            Let&apos;s experiment together →
+          </Link>
         </div>
       </section>
     </PageWrapper>
