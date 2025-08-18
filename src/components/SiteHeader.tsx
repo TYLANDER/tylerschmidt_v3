@@ -2,9 +2,11 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { MobileNav } from './MobileNav'
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
   
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -52,14 +54,39 @@ export function SiteHeader() {
             </div>
             
             {/* Mobile menu button */}
-            <button className="md:hidden w-8 h-8 flex flex-col justify-center items-center gap-1.5 group">
-              <span className="w-6 h-0.5 bg-foreground transition-all duration-300 group-hover:w-8" />
-              <span className="w-4 h-0.5 bg-foreground transition-all duration-300 group-hover:w-8" />
-              <span className="w-6 h-0.5 bg-foreground transition-all duration-300 group-hover:w-8" />
+            <button 
+              onClick={() => setMobileNavOpen(!mobileNavOpen)}
+              className="md:hidden w-10 h-10 flex flex-col justify-center items-center gap-1.5 group relative"
+              aria-label="Toggle menu"
+            >
+              <motion.span 
+                className="w-6 h-0.5 bg-foreground transition-all duration-300"
+                animate={{
+                  rotate: mobileNavOpen ? 45 : 0,
+                  y: mobileNavOpen ? 6 : 0
+                }}
+              />
+              <motion.span 
+                className="w-4 h-0.5 bg-foreground transition-all duration-300"
+                animate={{
+                  opacity: mobileNavOpen ? 0 : 1,
+                  x: mobileNavOpen ? 20 : 0
+                }}
+              />
+              <motion.span 
+                className="w-6 h-0.5 bg-foreground transition-all duration-300"
+                animate={{
+                  rotate: mobileNavOpen ? -45 : 0,
+                  y: mobileNavOpen ? -6 : 0
+                }}
+              />
             </button>
           </div>
         </nav>
       </div>
+      
+      {/* Mobile Navigation */}
+      <MobileNav isOpen={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />
     </motion.header>
   )
 }

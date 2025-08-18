@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Container } from '@/components/ui/Container'
-import { useTheme } from 'next-themes'
 
 interface Particle {
   x: number
@@ -20,12 +19,30 @@ export function HeroParticleTypography() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const particlesRef = useRef<Particle[]>([])
   const mouseRef = useRef({ x: -1000, y: -1000 })
-  const [currentText, setCurrentText] = useState('Tyler Schmidt')
+  const [currentText] = useState('Tyler Schmidt')
   const [isExploded, setIsExploded] = useState(false)
   const animationRef = useRef<number | undefined>(undefined)
-  const { theme } = useTheme()
-  const textRotationRef = useRef<NodeJS.Timeout | null>(null)
+  const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const [isMobile, setIsMobile] = useState(false)
+  
+  // Theme detection
+  useEffect(() => {
+    const checkTheme = () => {
+      const isDark = document.documentElement.classList.contains('dark')
+      setTheme(isDark ? 'dark' : 'light')
+    }
+    
+    checkTheme()
+    
+    // Watch for theme changes
+    const observer = new MutationObserver(checkTheme)
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    })
+    
+    return () => observer.disconnect()
+  }, [])
   
   // Initialize particles
   useEffect(() => {
@@ -105,7 +122,7 @@ export function HeroParticleTypography() {
     }
   }, [currentText])
   
-  // Mouse tracking
+  // Mouse and touch tracking
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = { x: e.clientX, y: e.clientY }
@@ -115,12 +132,28 @@ export function HeroParticleTypography() {
       mouseRef.current = { x: -1000, y: -1000 }
     }
     
+    // Touch handlers for mobile
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0]
+        mouseRef.current = { x: touch.clientX, y: touch.clientY }
+      }
+    }
+    
+    const handleTouchEnd = () => {
+      mouseRef.current = { x: -1000, y: -1000 }
+    }
+    
     window.addEventListener('mousemove', handleMouseMove)
     window.addEventListener('mouseleave', handleMouseLeave)
+    window.addEventListener('touchmove', handleTouchMove, { passive: true })
+    window.addEventListener('touchend', handleTouchEnd)
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseleave', handleMouseLeave)
+      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchend', handleTouchEnd)
     }
   }, [])
   
@@ -325,22 +358,7 @@ export function HeroParticleTypography() {
     }
   }, [isMobile])
   
-  // Text rotation effect
-  useEffect(() => {
-    const texts = ['Tyler Schmidt', 'Designer', 'Creative Director']
-    let index = 0
-    
-    textRotationRef.current = setInterval(() => {
-      index = (index + 1) % texts.length
-      setCurrentText(texts[index])
-    }, 5000) // Change text every 5 seconds
-    
-    return () => {
-      if (textRotationRef.current) {
-        clearInterval(textRotationRef.current)
-      }
-    }
-  }, [])
+  // Remove text rotation - keep static "Tyler Schmidt"
   
   const handleExplode = () => {
     setIsExploded(true)
@@ -351,10 +369,10 @@ export function HeroParticleTypography() {
   }
   
   return (
-    <section className="relative h-screen bg-white dark:bg-black overflow-hidden">
+    <section className="relative h-screen overflow-hidden">
       <canvas
         ref={canvasRef}
-        className="absolute inset-0"
+        className="absolute inset-0 bg-white dark:bg-black"
       />
       
       <Container className="relative z-10 h-full flex items-end pb-20 pointer-events-none">
