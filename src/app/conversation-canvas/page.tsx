@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Container } from '@/components/ui/Container'
+
 import Link from 'next/link'
 
 interface Message {
@@ -26,7 +26,7 @@ export default function ConversationCanvasPage() {
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const [strokes, setStrokes] = useState<CanvasStroke[]>([])
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number | undefined>(undefined)
   
   // Sentiment to color mapping
   const sentimentColors = {
@@ -348,7 +348,7 @@ export default function ConversationCanvasPage() {
           className="absolute bottom-6 right-6 bg-background/80 backdrop-blur-sm border border-border rounded-lg px-4 py-2"
         >
           <p className="text-xs text-muted-foreground">
-            Try different emotions: "I love this!", "Create something beautiful", "This is frustrating"
+            Try different emotions: &quot;I love this!&quot;, &quot;Create something beautiful&quot;, &quot;This is frustrating&quot;
           </p>
         </motion.div>
       </div>

@@ -322,7 +322,7 @@ export function HeroParticleTypography() {
             ].map((behavior) => (
               <button
                 key={behavior.id}
-                onClick={() => setSelectedBehavior(behavior.id as any)}
+                onClick={() => setSelectedBehavior(behavior.id as 'flocking' | 'magnetic' | 'explosive')}
                 className={`px-4 py-2 rounded transition-colors ${
                   selectedBehavior === behavior.id
                     ? 'bg-primary text-primary-foreground'

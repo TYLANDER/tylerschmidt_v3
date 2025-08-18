@@ -189,7 +189,7 @@ export function HeroTemporalEcho() {
               Tyler Schmidt
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-              You're not alone here. {filteredTrails.length} visitors before you.
+              You&apos;re not alone here. {filteredTrails.length} visitors before you.
             </p>
           </motion.div>
           

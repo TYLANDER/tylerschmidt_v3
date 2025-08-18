@@ -110,7 +110,7 @@ export default function HeroLabPage() {
               <div className="pt-4 border-t border-border">
                 <p className="text-xs text-muted-foreground">
                   These concepts demonstrate cutting-edge web experiences that create 
-                  that "how did he do that" moment for Site of the Day consideration.
+                  that &quot;how did he do that&quot; moment for Site of the Day consideration.
                 </p>
               </div>
             </div>
