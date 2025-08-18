@@ -7,6 +7,7 @@ import { HeroQuantum } from '@/components/sections/HeroQuantum'
 import { HeroRealityLayers } from '@/components/sections/HeroRealityLayers'
 import { HeroConsciousnessStream } from '@/components/sections/HeroConsciousnessStream'
 import { HeroParticleTypography } from '@/components/sections/HeroParticleTypography'
+import { HeroParticleTypographyMetallic } from '@/components/sections/HeroParticleTypographyMetallic'
 
 const testConcepts = [
   {
@@ -42,6 +43,13 @@ const testConcepts = [
     name: 'Particle Typography Engine',
     description: 'Text made of thousands of autonomous particles',
     component: HeroParticleTypography,
+    status: 'ready'
+  },
+  {
+    id: 'particle-typography-metallic',
+    name: 'Metallic Particle Typography',
+    description: 'Optimized metallic particles with smooth magnetic interactions',
+    component: HeroParticleTypographyMetallic,
     status: 'ready'
   }
 ]
