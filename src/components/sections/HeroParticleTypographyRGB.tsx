@@ -33,45 +33,65 @@ export function HeroParticleTypographyRGB() {
     if (!canvasRef.current) return []
     
     const canvas = canvasRef.current
-    const ctx = canvas.getContext('2d', { alpha: false })
+    const ctx = canvas.getContext('2d')
     if (!ctx) return []
     
-    // Clear canvas
-    ctx.fillStyle = '#000000'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    // Create offscreen canvas for text rendering
+    const offCanvas = document.createElement('canvas')
+    offCanvas.width = canvas.width
+    offCanvas.height = canvas.height
+    const offCtx = offCanvas.getContext('2d')
+    if (!offCtx) return []
     
-    // Set up text
-    const fontSize = Math.min(canvas.width / 8, 140)
-    ctx.font = `900 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`
-    ctx.textAlign = 'center'
-    ctx.textBaseline = 'middle'
+    // Clear and set up text
+    offCtx.fillStyle = '#000000'
+    offCtx.fillRect(0, 0, offCanvas.width, offCanvas.height)
     
-    const textX = canvas.width / 2
-    const textY = canvas.height / 2
+    const fontSize = Math.min(offCanvas.width / 10, 120)
+    offCtx.font = `900 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`
+    offCtx.textAlign = 'center'
+    offCtx.textBaseline = 'middle'
     
-    // Draw text
-    ctx.fillStyle = '#FFFFFF'
-    ctx.fillText(text, textX, textY)
+    const textX = offCanvas.width / 2
+    const textY = offCanvas.height / 2
     
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+    // Draw text in white
+    offCtx.fillStyle = '#FFFFFF'
+    offCtx.fillText(text, textX, textY)
+    
+    // Get image data
+    const imageData = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height)
     const pixels = imageData.data
     
     const particles: Particle[] = []
-    const spacing = 5
+    const spacing = 4
     
-    // Base metallic color (silver-white)
+    // Base metallic color
     const baseMetallic = { r: 200, g: 200, b: 200 }
     
-    for (let y = 0; y < canvas.height; y += spacing) {
-      for (let x = 0; x < canvas.width; x += spacing) {
-        const index = (y * canvas.width + x) * 4
+    // Only check pixels where we expect text to be (optimize scanning area)
+    const textMetrics = offCtx.measureText(text)
+    const scanWidth = Math.min(textMetrics.width * 1.2, offCanvas.width)
+    const scanHeight = fontSize * 1.5
+    const startX = Math.max(0, textX - scanWidth / 2)
+    const endX = Math.min(offCanvas.width, textX + scanWidth / 2)
+    const startY = Math.max(0, textY - scanHeight / 2)
+    const endY = Math.min(offCanvas.height, textY + scanHeight / 2)
+    
+    for (let y = startY; y < endY; y += spacing) {
+      for (let x = startX; x < endX; x += spacing) {
+        const index = (Math.floor(y) * offCanvas.width + Math.floor(x)) * 4
+        const red = pixels[index]
+        const green = pixels[index + 1]
+        const blue = pixels[index + 2]
         const alpha = pixels[index + 3]
         
-        if (alpha > 128) {
+        // Check if pixel is part of text (white pixels)
+        if (red > 200 && green > 200 && blue > 200 && alpha > 200) {
           particles.push({
             id: `${x}-${y}`,
-            x: textX + (Math.random() - 0.5) * canvas.width,
-            y: textY + (Math.random() - 0.5) * canvas.height,
+            x: x,
+            y: y,
             vx: 0,
             vy: 0,
             targetX: x,
@@ -87,9 +107,7 @@ export function HeroParticleTypographyRGB() {
       }
     }
     
-    ctx.fillStyle = '#000000'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-    
+    console.log(`Generated ${particles.length} particles for text: ${text}`)
     return particles
   }, [])
   
@@ -142,12 +160,12 @@ export function HeroParticleTypographyRGB() {
   // Animation loop with RGB glitch effect
   useEffect(() => {
     const canvas = canvasRef.current
-    const ctx = canvas?.getContext('2d', { alpha: false })
+    const ctx = canvas?.getContext('2d')
     if (!canvas || !ctx) return
     
     const animate = () => {
-      // Clear with fade
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)'
+      // Clear canvas completely each frame
+      ctx.fillStyle = 'rgba(0, 0, 0, 1)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
       
       const mouse = mouseRef.current
