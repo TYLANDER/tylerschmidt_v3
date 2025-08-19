@@ -3,30 +3,32 @@ import { projectBySlugQuery, projectsQuery } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import { PortableText } from '@portabletext/react'
 import Image from 'next/image'
-import Link from 'next/link'
+
 import { Container } from '@/components/ui/Container'
 import { PageWrapper } from '@/components/layout/page-transition'
 import { AnimatedText } from '@/components/animations/animated-text'
 import { notFound } from 'next/navigation'
-
-interface ProjectPageProps {
-  params: { slug: string }
-}
+import type { Project } from '@/types/sanity'
 
 async function getProject(slug: string) {
-  return await client.fetch(projectBySlugQuery, { slug })
+  return await client.fetch<Project>(projectBySlugQuery, { slug })
 }
 
 // Generate static params for all projects
 export async function generateStaticParams() {
-  const projects = await client.fetch(projectsQuery)
-  return projects.map((project: any) => ({
+  const projects = await client.fetch<Project[]>(projectsQuery)
+  return projects.map((project) => ({
     slug: project.slug.current,
   }))
 }
 
-export default async function ProjectPage({ params }: ProjectPageProps) {
-  const project = await getProject(params.slug)
+export default async function ProjectPage({ 
+  params 
+}: { 
+  params: Promise<{ slug: string }> 
+}) {
+  const { slug } = await params
+  const project = await getProject(slug)
 
   if (!project) {
     notFound()
@@ -96,7 +98,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <div className="mb-16">
               <h2 className="text-2xl font-semibold mb-8">Project Gallery</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {project.gallery.map((image: any, index: number) => (
+                {project.gallery.map((image, index) => (
                   <div key={index} className="space-y-2">
                     <div className="relative aspect-video rounded-lg overflow-hidden">
                       <Image
