@@ -5,15 +5,28 @@ import { PageWrapper } from "@/components/layout/page-transition"
 import { motion } from "framer-motion"
 import { revealContainer, revealItem } from "@/lib/interactions"
 import Link from "next/link"
+import {
+  ParticleTypographyVisual,
+  NeuralNetworkVisual,
+  QuantumStateVisual,
+  RealityLayersVisual,
+  ConsciousnessStreamVisual,
+  LivingPortfolioVisual,
+  CodeVisualVisual,
+  ConversationCanvasVisual,
+  DimensionalTypographyVisual,
+  TemporalEchoVisual
+} from "@/components/lab/experiment-visuals"
 
 interface ExperimentCardProps {
   title: string
   description: string
   href: string
   tags: string[]
+  visual?: React.ReactNode
 }
 
-function ExperimentCard({ title, description, href, tags }: ExperimentCardProps) {
+function ExperimentCard({ title, description, href, tags, visual }: ExperimentCardProps) {
   return (
     <Link href={href} className="group block">
       <motion.div 
@@ -23,11 +36,17 @@ function ExperimentCard({ title, description, href, tags }: ExperimentCardProps)
       >
         {/* Preview Window */}
         <div className="relative h-48 bg-gray-50 dark:bg-gray-900 overflow-hidden">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-2xl font-bold text-gray-300 dark:text-gray-700">
-              {title.split(' ').map(word => word[0]).join('')}
+          {visual ? (
+            <div className="absolute inset-0 flex items-center justify-center">
+              {visual}
             </div>
-          </div>
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-2xl font-bold text-gray-300 dark:text-gray-700">
+                {title.split(' ').map(word => word[0]).join('')}
+              </div>
+            </div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
         </div>
         
@@ -61,61 +80,71 @@ export default function LabPage() {
       title: "Particle Typography",
       description: "RGB chromatic aberration text with magnetic particle effects and device motion support.",
       href: "/",
-      tags: ["Canvas", "Particles", "Motion", "Haptics"]
+      tags: ["Canvas", "Particles", "Motion", "Haptics"],
+      visual: <ParticleTypographyVisual />
     },
     {
       title: "Neural Network Visualizer",
       description: "Interactive 3D neural network with real-time data flow visualization.",
       href: "/hero-testing",
-      tags: ["Three.js", "WebGL", "AI", "3D"]
+      tags: ["Three.js", "WebGL", "AI", "3D"],
+      visual: <NeuralNetworkVisual />
     },
     {
       title: "Quantum State Portfolio",
       description: "Projects exist in quantum superposition until observed.",
       href: "/hero-testing",
-      tags: ["Physics", "Animation", "Interactive"]
+      tags: ["Physics", "Animation", "Interactive"],
+      visual: <QuantumStateVisual />
     },
     {
       title: "Reality Layers",
       description: "Peel back layers of reality to reveal hidden dimensions.",
       href: "/hero-testing",
-      tags: ["Parallax", "3D", "Interactive"]
+      tags: ["Parallax", "3D", "Interactive"],
+      visual: <RealityLayersVisual />
     },
     {
       title: "Consciousness Stream",
       description: "AI-generated thoughts flowing through digital consciousness.",
       href: "/hero-testing",
-      tags: ["AI", "Generative", "Text"]
+      tags: ["AI", "Generative", "Text"],
+      visual: <ConsciousnessStreamVisual />
     },
     {
       title: "Living Portfolio",
       description: "Portfolio that evolves and grows with AI-generated content.",
       href: "/living-portfolio",
-      tags: ["AI", "Dynamic", "Generative"]
+      tags: ["AI", "Dynamic", "Generative"],
+      visual: <LivingPortfolioVisual />
     },
     {
       title: "Code-to-Visual Transformer",
       description: "Transform code into stunning visual representations.",
       href: "/code-visual",
-      tags: ["Code", "Visualization", "Interactive"]
+      tags: ["Code", "Visualization", "Interactive"],
+      visual: <CodeVisualVisual />
     },
     {
       title: "Conversation Canvas",
       description: "Paint with words in an AI-powered creative canvas.",
       href: "/conversation-canvas",
-      tags: ["AI", "Creative", "Canvas"]
+      tags: ["AI", "Creative", "Canvas"],
+      visual: <ConversationCanvasVisual />
     },
     {
       title: "Dimensional Typography",
       description: "Text that exists across multiple dimensions.",
       href: "/hero-lab",
-      tags: ["3D", "Typography", "WebGL"]
+      tags: ["3D", "Typography", "WebGL"],
+      visual: <DimensionalTypographyVisual />
     },
     {
       title: "Temporal Echo System",
       description: "Visualize the echoes of past visitors in real-time.",
       href: "/hero-lab",
-      tags: ["Time", "Data", "Visualization"]
+      tags: ["Time", "Data", "Visualization"],
+      visual: <TemporalEchoVisual />
     }
   ]
 
