@@ -4,8 +4,23 @@ import { useEffect, useState } from 'react'
 import { Container } from '@/components/ui/Container'
 import { PageWrapper } from '@/components/layout/page-transition'
 
+interface DebugProject {
+  id: string
+  title: string
+  slug: string
+  client: string
+}
+
+interface DebugData {
+  success: boolean
+  projectId: string
+  dataset: string
+  projectCount: number
+  projects: DebugProject[]
+}
+
 export default function WorkDebugPage() {
-  const [data, setData] = useState<any>(null)
+  const [data, setData] = useState<DebugData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -44,7 +59,7 @@ export default function WorkDebugPage() {
                 <h2 className="text-xl font-bold mb-4">Projects Preview</h2>
                 {data.projects && data.projects.length > 0 ? (
                   <div className="grid gap-4">
-                    {data.projects.map((project: any) => (
+                    {data.projects.map((project) => (
                       <div key={project.id} className="border p-4 rounded">
                         <h3 className="font-bold">{project.title}</h3>
                         <p className="text-sm text-gray-600">Client: {project.client}</p>
