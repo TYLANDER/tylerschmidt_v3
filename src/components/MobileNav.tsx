@@ -30,7 +30,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
     { href: '/work', label: 'Work' },
     { href: '/about', label: 'About' },
     { href: '/lab', label: 'Lab' },
-    { href: '/contact', label: 'Contact' },
+    { href: '/pia', label: 'Pia' },
   ]
   
   return (

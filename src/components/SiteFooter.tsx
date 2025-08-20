@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export function SiteFooter() {
   const year = new Date().getFullYear()
   
@@ -10,13 +12,13 @@ export function SiteFooter() {
               © {year} Tyler Schmidt. All rights reserved.
             </p>
             <p className="text-xs text-muted-foreground/60 mt-1">
-              Crafted with precision and care.
+              Crafted with precision and care. <Link href="/colophon" className="underline hover:text-foreground transition-colors">About this site</Link>
             </p>
           </div>
           
           <div className="flex items-center gap-6">
             {[
-              { href: 'https://github.com/tylerschmidt', label: 'GitHub' },
+              { href: 'https://github.com/TYLANDER', label: 'GitHub' },
               { href: 'https://linkedin.com/in/tylerschmidt', label: 'LinkedIn' },
               { href: 'https://twitter.com/tylerschmidt', label: 'Twitter' },
             ].map((link) => (
