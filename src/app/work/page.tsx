@@ -55,12 +55,23 @@ export default async function WorkPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {projects.map((project, index) => {
-                const imageUrl = project.featuredImage?.asset ? urlFor(project.featuredImage).width(800).height(600).url() : ''
+                let imageUrl = ''
+                try {
+                  if (project.featuredImage?.asset) {
+                    const builder = urlFor(project.featuredImage).width(800).height(600)
+                    imageUrl = builder.url()
+                  }
+                } catch (error) {
+                  console.error(`Error generating URL for ${project.title}:`, error)
+                }
+                
                 console.log(`Project ${project.title}:`, {
                   featuredImage: project.featuredImage,
                   hasAsset: !!project.featuredImage?.asset,
-                  generatedUrl: imageUrl
+                  generatedUrl: imageUrl,
+                  urlType: typeof imageUrl
                 })
+                
                 return (
                   <ProjectCard
                     key={project._id}
@@ -83,6 +94,7 @@ export default async function WorkPage() {
                 <div>Has asset: {p.featuredImage?.asset ? 'Yes' : 'No'}</div>
                 <div>Asset ref: {p.featuredImage?.asset?._ref || 'None'}</div>
                 <div>URL: {p.featuredImage?.asset ? urlFor(p.featuredImage).width(100).url() : 'No URL'}</div>
+                <div>URL Type: {p.featuredImage?.asset ? typeof urlFor(p.featuredImage).width(100).url() : 'N/A'}</div>
               </div>
             ))}
           </div>

@@ -12,6 +12,8 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, index, imageUrl }: ProjectCardProps) {
+  console.log(`ProjectCard for ${project.title}:`, { imageUrl, hasImageUrl: !!imageUrl })
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
