@@ -2,10 +2,10 @@ import { groq } from 'next-sanity'
 
 // Get all projects
 export const projectsQuery = groq`
-  *[_type == "project"] | order(order asc, _createdAt desc) {
+  *[_type == "project"] | order(_createdAt desc) {
     _id,
     title,
-    slug,
+    "slug": slug.current,
     client,
     year,
     category,
@@ -18,10 +18,10 @@ export const projectsQuery = groq`
 
 // Get featured projects for homepage
 export const featuredProjectsQuery = groq`
-  *[_type == "project" && featured == true] | order(order asc, _createdAt desc)[0...4] {
+  *[_type == "project" && featured == true] | order(_createdAt desc)[0...4] {
     _id,
     title,
-    slug,
+    "slug": slug.current,
     client,
     year,
     category,
