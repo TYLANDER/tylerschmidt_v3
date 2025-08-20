@@ -18,7 +18,7 @@ async function getProject(slug: string) {
 export async function generateStaticParams() {
   const projects = await client.fetch<Project[]>(projectsQuery)
   return projects.map((project) => ({
-    slug: project.slug.current,
+    slug: project.slug,
   }))
 }
 

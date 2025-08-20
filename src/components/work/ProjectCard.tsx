@@ -19,7 +19,7 @@ export function ProjectCard({ project, index, imageUrl }: ProjectCardProps) {
       transition={{ delay: index * 0.1 }}
     >
       <Link
-        href={`/work/${project.slug.current}`}
+        href={`/work/${project.slug}`}
         className="group block"
       >
         <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-4">

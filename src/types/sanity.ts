@@ -2,9 +2,7 @@ export interface Project {
   _id: string
   _type: 'project'
   title: string
-  slug: {
-    current: string
-  }
+  slug: string
   client?: string
   year?: string
   category?: string
