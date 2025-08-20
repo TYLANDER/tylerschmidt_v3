@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { client } from '@/sanity/lib/client'
 import { projectsQuery } from '@/sanity/lib/queries'
+import type { Project } from '@/types/sanity'
 
 export async function GET() {
   try {
@@ -17,14 +18,14 @@ export async function GET() {
     }
     
     // Try to fetch projects
-    const projects = await client.fetch(projectsQuery)
+    const projects = await client.fetch<Project[]>(projectsQuery)
     
     return NextResponse.json({
       success: true,
       projectId,
       dataset,
       projectCount: projects.length,
-      projects: projects.map((p: any) => ({
+      projects: projects.map((p) => ({
         id: p._id,
         title: p.title,
         slug: p.slug?.current,

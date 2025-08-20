@@ -38,7 +38,7 @@ export default async function SanityDebugPage() {
               <div className="mt-2">
                 <p>Project titles:</p>
                 <ul className="list-disc ml-6">
-                  {projects.map((p: any) => (
+                  {(projects as any[]).map((p) => (
                     <li key={p._id}>{p.title}</li>
                   ))}
                 </ul>
