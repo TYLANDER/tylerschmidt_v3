@@ -54,16 +54,38 @@ export default async function WorkPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {projects.map((project, index) => (
-                <ProjectCard
-                  key={project._id}
-                  project={project}
-                  index={index}
-                  imageUrl={project.featuredImage?.asset ? urlFor(project.featuredImage).width(800).height(600).url() : ''}
-                />
-              ))}
+              {projects.map((project, index) => {
+                const imageUrl = project.featuredImage?.asset ? urlFor(project.featuredImage).width(800).height(600).url() : ''
+                console.log(`Project ${project.title}:`, {
+                  featuredImage: project.featuredImage,
+                  hasAsset: !!project.featuredImage?.asset,
+                  generatedUrl: imageUrl
+                })
+                return (
+                  <ProjectCard
+                    key={project._id}
+                    project={project}
+                    index={index}
+                    imageUrl={imageUrl}
+                  />
+                )
+              })}
             </div>
           )}
+          
+          {/* Debug info - remove after fixing */}
+          <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs font-mono">
+            <h3 className="font-bold mb-2">Debug Info:</h3>
+            {projects.map((p, i) => (
+              <div key={i} className="mb-2">
+                <div>Project: {p.title}</div>
+                <div>Has featuredImage: {p.featuredImage ? 'Yes' : 'No'}</div>
+                <div>Has asset: {p.featuredImage?.asset ? 'Yes' : 'No'}</div>
+                <div>Asset ref: {p.featuredImage?.asset?._ref || 'None'}</div>
+                <div>URL: {p.featuredImage?.asset ? urlFor(p.featuredImage).width(100).url() : 'No URL'}</div>
+              </div>
+            ))}
+          </div>
         </Container>
       </section>
     </PageWrapper>
