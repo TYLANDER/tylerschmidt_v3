@@ -17,7 +17,7 @@ export default function PiaPage() {
           transition={{ duration: 1.5, ease: "easeOut" }}
         >
           <Image
-            src="/pia-hero.jpg" // Replace with your actual image filename
+            src="/Pia_hero_1.png"
             alt="Pia - Creative Director"
             fill
             className="object-cover"
