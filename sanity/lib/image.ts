@@ -11,5 +11,15 @@ const builder = createImageUrlBuilder({
 })
 
 export function urlFor(source: SanityImageSource) {
-  return builder.image(source)
+  if (!source) {
+    console.error('urlFor called with no source')
+    return builder.image('')
+  }
+  
+  console.log('Building URL for source:', source)
+  const imageBuilder = builder.image(source)
+  const url = imageBuilder.url()
+  console.log('Generated URL:', url)
+  
+  return imageBuilder
 }
