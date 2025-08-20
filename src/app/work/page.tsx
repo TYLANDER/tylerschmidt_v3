@@ -11,7 +11,7 @@ import type { Project } from '@/types/sanity'
 async function getProjects() {
   try {
     const projects = await client.fetch<Project[]>(projectsQuery)
-    console.log('Fetched projects:', projects)
+    console.log('Fetched projects:', JSON.stringify(projects, null, 2))
     return projects
   } catch (error) {
     console.error('Error fetching projects:', error)
