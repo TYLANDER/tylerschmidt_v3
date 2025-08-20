@@ -16,10 +16,5 @@ export function urlFor(source: SanityImageSource) {
     return builder.image('')
   }
   
-  console.log('Building URL for source:', source)
-  const imageBuilder = builder.image(source)
-  const url = imageBuilder.url()
-  console.log('Generated URL:', url)
-  
-  return imageBuilder
+  return builder.image(source)
 }

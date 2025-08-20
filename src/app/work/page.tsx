@@ -11,7 +11,7 @@ import type { Project } from '@/types/sanity'
 async function getProjects() {
   try {
     const projects = await client.fetch<Project[]>(projectsQuery)
-    console.log('Fetched projects:', JSON.stringify(projects, null, 2))
+
     return projects
   } catch (error) {
     console.error('Error fetching projects:', error)
@@ -65,13 +65,6 @@ export default async function WorkPage() {
                   console.error(`Error generating URL for ${project.title}:`, error)
                 }
                 
-                console.log(`Project ${project.title}:`, {
-                  featuredImage: project.featuredImage,
-                  hasAsset: !!project.featuredImage?.asset,
-                  generatedUrl: imageUrl,
-                  urlType: typeof imageUrl
-                })
-                
                 return (
                   <ProjectCard
                     key={project._id}
@@ -84,20 +77,7 @@ export default async function WorkPage() {
             </div>
           )}
           
-          {/* Debug info - remove after fixing */}
-          <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs font-mono">
-            <h3 className="font-bold mb-2">Debug Info:</h3>
-            {projects.map((p, i) => (
-              <div key={i} className="mb-2">
-                <div>Project: {p.title}</div>
-                <div>Has featuredImage: {p.featuredImage ? 'Yes' : 'No'}</div>
-                <div>Has asset: {p.featuredImage?.asset ? 'Yes' : 'No'}</div>
-                <div>Asset ref: {p.featuredImage?.asset?._ref || 'None'}</div>
-                <div>URL: {p.featuredImage?.asset ? urlFor(p.featuredImage).width(100).url() : 'No URL'}</div>
-                <div>URL Type: {p.featuredImage?.asset ? typeof urlFor(p.featuredImage).width(100).url() : 'N/A'}</div>
-              </div>
-            ))}
-          </div>
+          
         </Container>
       </section>
     </PageWrapper>
