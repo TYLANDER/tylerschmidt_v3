@@ -2,49 +2,78 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function PiaPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Grid background */}
+      <section className="relative min-h-screen overflow-hidden">
+        {/* Background Image */}
+        <motion.div
+          className="absolute inset-0"
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+        >
+          <Image
+            src="/pia-hero.jpg" // Replace with your actual image filename
+            alt="Pia - Creative Director"
+            fill
+            className="object-cover"
+            priority
+            quality={90}
+          />
+          {/* Overlay gradient for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+        </motion.div>
+
+        {/* Grid background overlay */}
         <div className="absolute inset-0 opacity-[0.02]">
           <svg className="w-full h-full">
             <defs>
               <pattern id="pia-grid" width="32" height="32" patternUnits="userSpaceOnUse">
-                <path d="M 32 0 L 0 0 0 32" fill="none" stroke="currentColor" strokeWidth="1" />
+                <path d="M 32 0 L 0 0 0 32" fill="none" stroke="white" strokeWidth="1" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#pia-grid)" />
           </svg>
         </div>
 
-        <motion.div 
-          className="relative z-10 text-center px-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <motion.h1 
-            className="text-6xl md:text-8xl font-bold mb-4"
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5 }}
+        {/* Content */}
+        <div className="relative z-10 min-h-screen flex items-end pb-20 px-6">
+          <motion.div 
+            className="max-w-6xl mx-auto w-full"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
           >
-            Meet Pia
-          </motion.h1>
-          <p className="text-2xl md:text-3xl text-muted-foreground mb-8">
-            Creative Director
-          </p>
-          <div className="inline-flex items-center gap-4 text-sm font-mono text-muted-foreground">
-            <span>Olympia Schmidt</span>
-            <span>•</span>
-            <span>5 Years Experience</span>
-            <span>•</span>
-            <span>100% Creative Vision</span>
-          </div>
-        </motion.div>
+            <motion.h1 
+              className="text-6xl md:text-8xl lg:text-9xl font-bold mb-4 text-white"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.7 }}
+            >
+              Meet Pia
+            </motion.h1>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.9 }}
+            >
+              <p className="text-2xl md:text-3xl text-gray-200 mb-8">
+                Creative Director
+              </p>
+              <div className="inline-flex items-center gap-4 text-sm font-mono text-gray-300">
+                <span>Olympia Schmidt</span>
+                <span>•</span>
+                <span>5 Years Experience</span>
+                <span>•</span>
+                <span>100% Creative Vision</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
 
         {/* Floating paw prints */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
