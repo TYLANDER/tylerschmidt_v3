@@ -1,15 +1,16 @@
 import { client } from '@/sanity/lib/client'
 import { projectsQuery } from '@/sanity/lib/queries'
+import type { Project } from '@/types/sanity'
 
 export default async function SanityDebugPage() {
   const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
   const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET
   
-  let projects = []
+  let projects: Project[] = []
   let error = null
   
   try {
-    projects = await client.fetch(projectsQuery)
+    projects = await client.fetch<Project[]>(projectsQuery)
   } catch (e) {
     error = e instanceof Error ? e.message : 'Unknown error'
   }
@@ -38,7 +39,7 @@ export default async function SanityDebugPage() {
               <div className="mt-2">
                 <p>Project titles:</p>
                 <ul className="list-disc ml-6">
-                  {(projects as any[]).map((p) => (
+                  {projects.map((p) => (
                     <li key={p._id}>{p.title}</li>
                   ))}
                 </ul>
