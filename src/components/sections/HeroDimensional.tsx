@@ -59,7 +59,7 @@ function DimensionalText() {
   const { camera, mouse } = useThree()
   const [currentWord, setCurrentWord] = useState('DESIGNER')
   
-  useFrame(() => {
+  useFrame((state) => {
     if (!meshRef.current || !materialRef.current) return
     
     // Calculate viewing angle

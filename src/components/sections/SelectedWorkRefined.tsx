@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+
 import projects from '@/data/projects'
 
 export function SelectedWorkRefined() {
@@ -13,7 +13,7 @@ export function SelectedWorkRefined() {
     offset: ["start end", "end start"]
   })
   
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100])
+  useTransform(scrollYProgress, [0, 1], [100, -100])
   
   const featuredProjects = projects.filter(p => p.featured).slice(0, 6)
   
