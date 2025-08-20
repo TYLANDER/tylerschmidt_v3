@@ -9,7 +9,14 @@ import { ProjectCard } from '@/components/work/ProjectCard'
 import type { Project } from '@/types/sanity'
 
 async function getProjects() {
-  return await client.fetch<Project[]>(projectsQuery)
+  try {
+    const projects = await client.fetch<Project[]>(projectsQuery)
+    console.log('Fetched projects:', projects)
+    return projects
+  } catch (error) {
+    console.error('Error fetching projects:', error)
+    return []
+  }
 }
 
 export default async function WorkPage() {
@@ -35,16 +42,25 @@ export default async function WorkPage() {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
-              <ProjectCard
-                key={project._id}
-                project={project}
-                index={index}
-                imageUrl={project.featuredImage ? urlFor(project.featuredImage).width(800).height(600).url() : ''}
-              />
-            ))}
-          </div>
+          {projects.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-gray-500 dark:text-gray-400 mb-4">No projects found.</p>
+              <p className="text-sm text-gray-400 dark:text-gray-500">
+                Projects added in Sanity will appear here once published.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {projects.map((project, index) => (
+                <ProjectCard
+                  key={project._id}
+                  project={project}
+                  index={index}
+                  imageUrl={project.featuredImage ? urlFor(project.featuredImage).width(800).height(600).url() : ''}
+                />
+              ))}
+            </div>
+          )}
         </Container>
       </section>
     </PageWrapper>
