@@ -42,7 +42,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-md z-[9998] md:hidden"
+            className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[9998] md:hidden"
             onClick={onClose}
           />
           
@@ -52,12 +52,16 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-            className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white dark:bg-black border-l border-gray-200 dark:border-gray-800 z-[9999] md:hidden shadow-2xl"
+            className="fixed top-0 right-0 bottom-0 w-full max-w-sm border-l border-gray-200 dark:border-gray-800 z-[9999] md:hidden shadow-2xl"
+            style={{ 
+              backgroundColor: 'rgb(var(--mobile-nav-bg))',
+              isolation: 'isolate'
+            }}
           >
             <div className="flex flex-col h-full">
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-800">
-                <span className="text-lg font-semibold">Menu</span>
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+                <span className="text-lg font-semibold text-gray-900 dark:text-white">Menu</span>
                 <button
                   onClick={onClose}
                   className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors"
@@ -80,7 +84,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
               </div>
               
               {/* Navigation Items */}
-              <div className="flex-1 overflow-y-auto py-6">
+              <div className="flex-1 overflow-y-auto py-6 bg-white dark:bg-gray-950">
                 <ul className="space-y-1 px-3">
                   {navItems.map((item, index) => {
                     const isActive = pathname === item.href || 
@@ -113,7 +117,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
               </div>
               
               {/* Footer */}
-              <div className="p-6 border-t border-gray-200 dark:border-gray-800">
+              <div className="p-6 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   © {new Date().getFullYear()} Tyler Schmidt
                 </p>
