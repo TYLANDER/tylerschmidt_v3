@@ -42,7 +42,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
+            className="fixed inset-0 bg-black/80 backdrop-blur-md z-[9998] md:hidden"
             onClick={onClose}
           />
           
@@ -52,7 +52,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-            className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white dark:bg-black border-l border-gray-200 dark:border-gray-800 z-50 md:hidden"
+            className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white dark:bg-black border-l border-gray-200 dark:border-gray-800 z-[9999] md:hidden shadow-2xl"
           >
             <div className="flex flex-col h-full">
               {/* Header */}
