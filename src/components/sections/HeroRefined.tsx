@@ -5,7 +5,7 @@ import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from
 
 export function HeroRefined() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [isHovered, setIsHovered] = useState(false)
+  const [, setIsHovered] = useState(false)
   const [currentWord, setCurrentWord] = useState(0)
   
   // Dynamic words that describe what I do

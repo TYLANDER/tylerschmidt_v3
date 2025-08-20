@@ -59,7 +59,7 @@ function DimensionalText() {
   const { camera, mouse } = useThree()
   const [currentWord, setCurrentWord] = useState('DESIGNER')
   
-  useFrame((state) => {
+  useFrame(() => {
     if (!meshRef.current || !materialRef.current) return
     
     // Calculate viewing angle
@@ -140,7 +140,7 @@ function PhysicsLetter({ letter, index }: { letter: string; index: number }) {
   const { mouse } = useThree()
   const [hover, setHover] = useState(false)
   
-  useFrame((state) => {
+  useFrame(() => {
     if (!meshRef.current) return
     
     // Apply "gravity" from cursor

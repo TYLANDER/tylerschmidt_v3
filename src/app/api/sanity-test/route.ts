@@ -28,7 +28,7 @@ export async function GET() {
       projects: projects.map((p) => ({
         id: p._id,
         title: p.title,
-        slug: p.slug?.current,
+        slug: p.slug,
         client: p.client
       }))
     })

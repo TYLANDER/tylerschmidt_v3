@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
-import { designTokens } from '@/design/design-tokens'
+
 
 export function HeroFixed() {
   const containerRef = useRef<HTMLElement>(null)
@@ -12,8 +12,8 @@ export function HeroFixed() {
   
   // Create spring physics for the rebellion
   const springConfig = { damping: 25, stiffness: 200 }
-  const x = useSpring(mouseX, springConfig)
-  const y = useSpring(mouseY, springConfig)
+  useSpring(mouseX, springConfig)
+  useSpring(mouseY, springConfig)
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {

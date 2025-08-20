@@ -277,11 +277,11 @@ export function HeroRealityLayers() {
   const peelY = useMotionValue(0)
   
   const peelSpringX = useSpring(peelX, { stiffness: 300, damping: 30 })
-  const peelSpringY = useSpring(peelY, { stiffness: 300, damping: 30 })
+  useSpring(peelY, { stiffness: 300, damping: 30 })
   
   const peelProgress = useTransform(peelSpringX, [-300, 300], [0, 1])
   
-  const handleMouseDown = (e: React.MouseEvent) => {
+  const handleMouseDown = () => {
     if (currentLayer < layers.length - 1) {
       setIsPeeling(true)
     }
