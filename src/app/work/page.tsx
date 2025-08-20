@@ -59,7 +59,7 @@ export default async function WorkPage() {
                   key={project._id}
                   project={project}
                   index={index}
-                  imageUrl={project.featuredImage ? urlFor(project.featuredImage).width(800).height(600).url() : ''}
+                  imageUrl={project.featuredImage?.asset ? urlFor(project.featuredImage).width(800).height(600).url() : ''}
                 />
               ))}
             </div>

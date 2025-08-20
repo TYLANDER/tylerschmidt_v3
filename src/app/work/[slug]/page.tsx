@@ -57,7 +57,7 @@ export default async function ProjectPage({
           </div>
 
           {/* Featured Image */}
-          {project.featuredImage && (
+          {project.featuredImage && project.featuredImage.asset && (
             <div className="relative aspect-video w-full mb-12 rounded-lg overflow-hidden">
               <Image
                 src={urlFor(project.featuredImage).width(1600).height(900).url()}
@@ -98,23 +98,26 @@ export default async function ProjectPage({
             <div className="mb-16">
               <h2 className="text-2xl font-semibold mb-8">Project Gallery</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {project.gallery.map((image, index) => (
-                  <div key={index} className="space-y-2">
-                    <div className="relative aspect-video rounded-lg overflow-hidden">
-                      <Image
-                        src={urlFor(image).width(800).height(450).url()}
-                        alt={image.alt || `${project.title} image ${index + 1}`}
-                        fill
-                        className="object-cover"
-                      />
+                {project.gallery.map((image, index) => {
+                  if (!image.asset) return null
+                  return (
+                    <div key={index} className="space-y-2">
+                      <div className="relative aspect-video rounded-lg overflow-hidden">
+                        <Image
+                          src={urlFor(image).width(800).height(450).url()}
+                          alt={image.alt || `${project.title} image ${index + 1}`}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      {image.caption && (
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          {image.caption}
+                        </p>
+                      )}
                     </div>
-                    {image.caption && (
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {image.caption}
-                      </p>
-                    )}
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           )}

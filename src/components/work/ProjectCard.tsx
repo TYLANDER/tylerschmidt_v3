@@ -22,14 +22,18 @@ export function ProjectCard({ project, index, imageUrl }: ProjectCardProps) {
         href={`/work/${project.slug}`}
         className="group block"
       >
-        <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-4">
-          {project.featuredImage && (
+        <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-4 bg-gray-100 dark:bg-gray-800">
+          {imageUrl ? (
             <Image
               src={imageUrl}
               alt={project.title}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-gray-400 dark:text-gray-600 text-sm">No image</span>
+            </div>
           )}
           <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
