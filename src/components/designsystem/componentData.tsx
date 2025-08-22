@@ -2,15 +2,18 @@ import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/Card'
 import { Container } from '@/components/ui/Container'
-import { AnimatedText } from '@/components/animations/animated-text'
+import { AnimatedTextShowcase } from './AnimatedTextShowcase'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { X } from 'lucide-react'
 
 export interface ComponentProp {
   name: string
   type: string
   default?: string
   description: string
+  required?: boolean
 }
 
 export interface ComponentVariant {
@@ -30,6 +33,7 @@ export interface Component {
   }
   props?: ComponentProp[]
   variants?: ComponentVariant[]
+  guidelines?: string[]
 }
 
 export interface ComponentCategory {
@@ -46,7 +50,7 @@ export const componentCategories: ComponentCategory[] = [
       {
         id: 'primary-button',
         name: 'Primary Button',
-        description: 'The primary call-to-action button used throughout the application.',
+        description: 'The primary call-to-action button used throughout the application. Built with accessibility in mind and supports multiple variants.',
         preview: (
           <div className="flex gap-4 flex-wrap justify-center">
             <Button>Default Button</Button>
@@ -77,7 +81,8 @@ export function ButtonDemo() {
           { name: 'variant', type: 'default | destructive | outline | ghost', default: 'default', description: 'The visual style of the button' },
           { name: 'size', type: 'sm | md | lg', default: 'md', description: 'The size of the button' },
           { name: 'disabled', type: 'boolean', default: 'false', description: 'Whether the button is disabled' },
-          { name: 'onClick', type: '() => void', description: 'Click handler function' }
+          { name: 'onClick', type: '() => void', description: 'Click handler function' },
+          { name: 'children', type: 'ReactNode', description: 'Button content', required: true }
         ],
         variants: [
           {
@@ -99,84 +104,13 @@ export function ButtonDemo() {
               </div>
             )
           }
+        ],
+        guidelines: [
+          'Use default variant for primary actions',
+          'Use destructive variant for dangerous actions like delete',
+          'Ensure sufficient color contrast for accessibility',
+          'Provide clear, action-oriented labels'
         ]
-      },
-      {
-        id: 'glitch-button',
-        name: 'Glitch Button',
-        description: 'An animated button with a glitch effect on hover.',
-        preview: (
-          <div className="flex justify-center">
-            <button className="glitch-button px-6 py-3 font-medium">
-              <span data-text="Glitch Effect">Glitch Effect</span>
-            </button>
-          </div>
-        ),
-        code: {
-          jsx: `export function GlitchButton({ children, onClick }) {
-  return (
-    <button className="glitch-button" onClick={onClick}>
-      <span data-text={children}>{children}</span>
-    </button>
-  )
-}`,
-          css: `.glitch-button {
-  position: relative;
-  padding: 12px 24px;
-  background: transparent;
-  border: 2px solid currentColor;
-  font-weight: 500;
-  cursor: pointer;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.glitch-button span {
-  position: relative;
-  display: block;
-}
-
-.glitch-button:hover span::before,
-.glitch-button:hover span::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.glitch-button:hover span::before {
-  animation: glitch-1 0.3s infinite;
-  color: #00ffff;
-  z-index: -1;
-}
-
-.glitch-button:hover span::after {
-  animation: glitch-2 0.3s infinite;
-  color: #ff00ff;
-  z-index: -2;
-}
-
-@keyframes glitch-1 {
-  0%, 100% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-}
-
-@keyframes glitch-2 {
-  0%, 100% { transform: translate(0); }
-  20% { transform: translate(2px, -2px); }
-  40% { transform: translate(2px, 2px); }
-  60% { transform: translate(-2px, -2px); }
-  80% { transform: translate(-2px, 2px); }
-}`,
-          usage: `<GlitchButton onClick={() => console.log('Glitched!')}>
-  Click Me
-</GlitchButton>`
-        }
       }
     ]
   },
@@ -187,7 +121,7 @@ export function ButtonDemo() {
       {
         id: 'basic-card',
         name: 'Basic Card',
-        description: 'A versatile card component for displaying content.',
+        description: 'A versatile container component for grouping related content. Cards provide a clean way to organize information.',
         preview: (
           <div className="max-w-md mx-auto">
             <Card className="p-6">
@@ -225,13 +159,19 @@ export function CardExample() {
         props: [
           { name: 'className', type: 'string', description: 'Additional CSS classes' },
           { name: 'hover', type: 'boolean', default: 'false', description: 'Enable hover effects' },
-          { name: 'children', type: 'ReactNode', description: 'Card content' }
+          { name: 'children', type: 'ReactNode', description: 'Card content', required: true }
+        ],
+        guidelines: [
+          'Use consistent padding across all cards',
+          'Group related information together',
+          'Avoid overcrowding cards with too much content',
+          'Consider using hover effects for interactive cards'
         ]
       },
       {
         id: 'project-card',
         name: 'Project Card',
-        description: 'A specialized card for displaying project information.',
+        description: 'A specialized card component designed specifically for showcasing portfolio projects with image, metadata, and technologies.',
         preview: (
           <div className="max-w-md mx-auto">
             <motion.div
@@ -304,28 +244,8 @@ export function ProjectCard({ project }) {
       {
         id: 'animated-text',
         name: 'Animated Text',
-        description: 'Text components with entrance animations.',
-        preview: (
-          <div className="space-y-6">
-            <AnimatedText
-              text="Slide Animation"
-              variant="slide"
-              className="text-3xl font-bold"
-            />
-            <AnimatedText
-              text="Fade Animation"
-              variant="fade"
-              className="text-2xl"
-              delay={0.2}
-            />
-            <AnimatedText
-              text="Typewriter animation effect"
-              variant="typewriter"
-              className="text-xl"
-              delay={0.4}
-            />
-          </div>
-        ),
+        description: 'Text components with various entrance animations. Each animation serves a different purpose and creates unique visual emphasis.',
+        preview: <AnimatedTextShowcase />,
         code: {
           jsx: `import { AnimatedText } from '@/components/animations/animated-text'
 
@@ -360,25 +280,50 @@ export function AnimatedTextExample() {
 <AnimatedText text="Your text" as="h1" />`
         },
         props: [
-          { name: 'text', type: 'string', description: 'The text to animate' },
+          { name: 'text', type: 'string', description: 'The text to animate', required: true },
           { name: 'variant', type: 'slide | fade | typewriter | reveal | decrypt', default: 'slide', description: 'Animation variant' },
           { name: 'delay', type: 'number', default: '0', description: 'Animation delay in seconds' },
+          { name: 'duration', type: 'number', default: '0.6', description: 'Animation duration in seconds' },
           { name: 'as', type: 'ElementType', default: 'p', description: 'HTML element to render as' },
           { name: 'className', type: 'string', description: 'Additional CSS classes' }
+        ],
+        guidelines: [
+          'Use sparingly to avoid overwhelming users',
+          'Consider user preferences for reduced motion',
+          'Choose animations that match the content tone',
+          'Ensure text remains readable during animation'
         ]
       },
       {
         id: 'heading-styles',
-        name: 'Heading Styles',
-        description: 'Consistent heading styles across the application.',
+        name: 'Heading Hierarchy',
+        description: 'A consistent heading system that maintains visual hierarchy and readability across all screen sizes.',
         preview: (
-          <div className="space-y-4">
-            <h1 className="text-5xl md:text-7xl font-bold">Heading 1</h1>
-            <h2 className="text-4xl md:text-5xl font-bold">Heading 2</h2>
-            <h3 className="text-3xl md:text-4xl font-semibold">Heading 3</h3>
-            <h4 className="text-2xl md:text-3xl font-semibold">Heading 4</h4>
-            <h5 className="text-xl md:text-2xl font-medium">Heading 5</h5>
-            <h6 className="text-lg md:text-xl font-medium">Heading 6</h6>
+          <div className="space-y-6">
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">H1 • 5xl/7xl • Bold</p>
+              <h1 className="text-5xl md:text-7xl font-bold">Main Page Title</h1>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">H2 • 4xl/5xl • Bold</p>
+              <h2 className="text-4xl md:text-5xl font-bold">Section Heading</h2>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">H3 • 3xl/4xl • Semibold</p>
+              <h3 className="text-3xl md:text-4xl font-semibold">Subsection Title</h3>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">H4 • 2xl/3xl • Semibold</p>
+              <h4 className="text-2xl md:text-3xl font-semibold">Card Heading</h4>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">H5 • xl/2xl • Medium</p>
+              <h5 className="text-xl md:text-2xl font-medium">Small Heading</h5>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">H6 • lg/xl • Medium</p>
+              <h6 className="text-lg md:text-xl font-medium">Label Heading</h6>
+            </div>
           </div>
         ),
         code: {
@@ -390,14 +335,108 @@ export function AnimatedTextExample() {
 <h5 className="text-xl md:text-2xl font-medium">Heading 5</h5>
 <h6 className="text-lg md:text-xl font-medium">Heading 6</h6>`,
           usage: `// For main page titles
-<h1 className="text-5xl md:text-7xl font-bold">Page Title</h1>
+<h1 className="text-5xl md:text-7xl font-bold mb-6">Page Title</h1>
 
 // For section headings
 <h2 className="text-4xl md:text-5xl font-bold mb-6">Section Title</h2>
 
 // For subsections
 <h3 className="text-3xl md:text-4xl font-semibold mb-4">Subsection</h3>`
-        }
+        },
+        guidelines: [
+          'Maintain consistent hierarchy throughout the page',
+          'Use only one H1 per page for SEO',
+          'Ensure sufficient contrast between heading levels',
+          'Include responsive sizing for mobile devices'
+        ]
+      },
+      {
+        id: 'body-copy',
+        name: 'Body Copy',
+        description: 'Standardized text styles for body content, ensuring optimal readability and consistency.',
+        preview: (
+          <div className="space-y-6 max-w-2xl">
+            <div>
+              <p className="text-xs text-muted-foreground mb-2">Body Large • lg</p>
+              <p className="text-lg leading-relaxed">
+                This is large body text used for important introductory content or emphasis. It provides better readability for key information.
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-2">Body Default • base</p>
+              <p className="text-base leading-relaxed">
+                This is the default body text size used throughout the application. It&apos;s optimized for readability at normal reading distances and provides a comfortable reading experience for longer content.
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-2">Body Small • sm</p>
+              <p className="text-sm leading-relaxed">
+                This is small body text used for secondary information, captions, or supporting details. It maintains readability while taking up less space.
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-2">Body Muted • Muted Foreground</p>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                This is muted body text used for supplementary information that should be de-emphasized visually while remaining accessible.
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-2">Link Text</p>
+              <p className="text-base leading-relaxed">
+                This is body text with an <a href="#" className="text-blue-500 hover:text-blue-600 underline transition-colors">inline link</a> that stands out while maintaining readability.
+              </p>
+            </div>
+          </div>
+        ),
+        code: {
+          jsx: `// Large body text
+<p className="text-lg leading-relaxed">
+  Important introductory content
+</p>
+
+// Default body text
+<p className="text-base leading-relaxed">
+  Regular paragraph content
+</p>
+
+// Small body text
+<p className="text-sm leading-relaxed">
+  Secondary information
+</p>
+
+// Muted text
+<p className="text-base text-muted-foreground">
+  De-emphasized content
+</p>
+
+// Text with link
+<p className="text-base">
+  Text with <a href="#" className="text-blue-500 hover:text-blue-600 underline transition-colors">link</a>
+</p>`,
+          usage: `// Article or blog post
+<article className="prose max-w-2xl">
+  <h1 className="text-5xl font-bold mb-6">Article Title</h1>
+  <p className="text-lg leading-relaxed mb-6">
+    Introduction paragraph with larger text...
+  </p>
+  <p className="text-base leading-relaxed mb-4">
+    Regular body paragraphs...
+  </p>
+</article>
+
+// Card with mixed text sizes
+<Card className="p-6">
+  <h3 className="text-2xl font-semibold mb-2">Card Title</h3>
+  <p className="text-base mb-4">Main content...</p>
+  <p className="text-sm text-muted-foreground">Meta information</p>
+</Card>`
+        },
+        guidelines: [
+          'Use 1.5x line height (leading-relaxed) for body text',
+          'Limit line length to 65-75 characters for optimal readability',
+          'Ensure sufficient contrast between text and background',
+          'Use text-muted-foreground for secondary information'
+        ]
       }
     ]
   },
@@ -408,7 +447,7 @@ export function AnimatedTextExample() {
       {
         id: 'container',
         name: 'Container',
-        description: 'A responsive container component that constrains content width.',
+        description: 'A responsive container component that provides consistent max-width constraints and padding. Essential for maintaining readable line lengths.',
         preview: (
           <Container className="bg-gray-100 dark:bg-gray-800 py-8 rounded-lg">
             <p className="text-center">
@@ -440,45 +479,91 @@ export function ContainerExample() {
 </Container>`
         },
         props: [
-          { name: 'children', type: 'ReactNode', description: 'Content to be contained' },
+          { name: 'children', type: 'ReactNode', description: 'Content to be contained', required: true },
           { name: 'className', type: 'string', description: 'Additional CSS classes' },
           { name: 'as', type: 'ElementType', default: 'div', description: 'HTML element to render as' }
+        ],
+        guidelines: [
+          'Use for all main content areas',
+          'Provides responsive padding on mobile',
+          'Maximum width prevents lines from becoming too long',
+          'Can be nested for different width constraints'
         ]
       },
       {
         id: 'grid-system',
         name: 'Grid System',
-        description: 'Responsive grid layouts using Tailwind CSS.',
+        description: 'A flexible CSS Grid-based layout system using Tailwind CSS. Supports responsive breakpoints and asymmetric layouts.',
         preview: (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-blue-500/20 border border-blue-500 rounded-lg p-4 text-center">Column 1</div>
-            <div className="bg-blue-500/20 border border-blue-500 rounded-lg p-4 text-center">Column 2</div>
-            <div className="bg-blue-500/20 border border-blue-500 rounded-lg p-4 text-center">Column 3</div>
+          <div className="space-y-8">
+            <div>
+              <p className="text-sm text-muted-foreground mb-3">12-Column Grid</p>
+              <div className="grid grid-cols-12 gap-4">
+                <div className="col-span-8 bg-blue-500/20 border border-blue-500 rounded p-4 text-center">col-span-8</div>
+                <div className="col-span-4 bg-blue-500/20 border border-blue-500 rounded p-4 text-center">col-span-4</div>
+              </div>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground mb-3">Responsive Grid</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-purple-500/20 border border-purple-500 rounded p-4 text-center">1</div>
+                <div className="bg-purple-500/20 border border-purple-500 rounded p-4 text-center">2</div>
+                <div className="bg-purple-500/20 border border-purple-500 rounded p-4 text-center">3</div>
+                <div className="bg-purple-500/20 border border-purple-500 rounded p-4 text-center">4</div>
+              </div>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground mb-3">Auto-fit Grid</p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="bg-green-500/20 border border-green-500 rounded p-4 text-center">Auto</div>
+                <div className="bg-green-500/20 border border-green-500 rounded p-4 text-center">Fit</div>
+                <div className="bg-green-500/20 border border-green-500 rounded p-4 text-center">Grid</div>
+              </div>
+            </div>
           </div>
         ),
         code: {
-          jsx: `// Responsive grid with Tailwind
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  <div>Column 1</div>
-  <div>Column 2</div>
-  <div>Column 3</div>
-</div>`,
-          usage: `// Basic grid
-<div className="grid grid-cols-3 gap-4">
-  {items.map(item => <div key={item.id}>{item.content}</div>)}
+          jsx: `// 12-column grid system
+<div className="grid grid-cols-12 gap-4">
+  <div className="col-span-8">Main content</div>
+  <div className="col-span-4">Sidebar</div>
 </div>
 
 // Responsive grid
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-  {items.map(item => <Card key={item.id}>{item.content}</Card>)}
+  {items.map(item => (
+    <Card key={item.id}>{item.content}</Card>
+  ))}
 </div>
 
-// Asymmetric grid
-<div className="grid grid-cols-12 gap-4">
-  <div className="col-span-8">Main content</div>
-  <div className="col-span-4">Sidebar</div>
+// Auto-fit grid
+<div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+  {features.map(feature => (
+    <div key={feature.id}>{feature.name}</div>
+  ))}
+</div>`,
+          usage: `// Project grid (used in /work)
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+  {projects.map(project => <ProjectCard key={project.id} {...project} />)}
+</div>
+
+// Feature grid (used in homepage)
+<div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12">
+  <div className="md:col-span-7">Featured content</div>
+  <div className="md:col-span-5">Secondary content</div>
+</div>
+
+// Stats grid
+<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+  {stats.map(stat => <StatCard key={stat.id} {...stat} />)}
 </div>`
-        }
+        },
+        guidelines: [
+          'Use consistent gap sizes: gap-4 (1rem), gap-6 (1.5rem), gap-8 (2rem)',
+          'Always include responsive breakpoints for mobile',
+          'Consider using 12-column grid for complex layouts',
+          'Test on various screen sizes to ensure proper stacking'
+        ]
       }
     ]
   },
@@ -489,7 +574,7 @@ export function ContainerExample() {
       {
         id: 'loading-states',
         name: 'Loading States',
-        description: 'Various loading indicators and skeleton screens.',
+        description: 'Various loading indicators to provide feedback during asynchronous operations.',
         preview: (
           <div className="space-y-8">
             <div className="text-center">
@@ -502,6 +587,14 @@ export function ContainerExample() {
               <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-1/2"></div>
               <p className="mt-2 text-sm text-muted-foreground">Skeleton</p>
             </div>
+            <div className="flex justify-center">
+              <div className="flex space-x-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+              </div>
+              <p className="ml-4 text-sm text-muted-foreground">Dots</p>
+            </div>
           </div>
         ),
         code: {
@@ -513,8 +606,15 @@ export function ContainerExample() {
   <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
   <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-3/4" />
   <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-1/2" />
+</div>
+
+// Loading dots
+<div className="flex space-x-2">
+  <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+  <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+  <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
 </div>`,
-          usage: `// Loading spinner in button
+          usage: `// Loading button
 <Button disabled>
   <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
   Loading...
@@ -533,42 +633,110 @@ export function ContainerExample() {
       {
         id: 'toast-notifications',
         name: 'Toast Notifications',
-        description: 'Temporary notification messages.',
+        description: 'Temporary notification messages that appear at the edge of the screen to provide feedback.',
         preview: (
           <div className="space-y-4">
-            <div className="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span>Success! Your changes have been saved.</span>
+            <div className="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Success! Your changes have been saved.</span>
+              </div>
+              <button className="p-1 hover:bg-green-600 rounded transition-colors">
+                <X size={16} />
+              </button>
             </div>
-            <div className="bg-red-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-              <span>Error! Something went wrong.</span>
+            <div className="bg-red-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <span>Error! Something went wrong.</span>
+              </div>
+              <button className="p-1 hover:bg-red-600 rounded transition-colors">
+                <X size={16} />
+              </button>
+            </div>
+            <div className="bg-blue-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Info: New update available.</span>
+              </div>
+              <button className="p-1 hover:bg-blue-600 rounded transition-colors">
+                <X size={16} />
+              </button>
+            </div>
+            <div className="bg-yellow-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span>Warning: This action cannot be undone.</span>
+              </div>
+              <button className="p-1 hover:bg-yellow-600 rounded transition-colors">
+                <X size={16} />
+              </button>
             </div>
           </div>
         ),
         code: {
           jsx: `// Toast component
-export function Toast({ type, message }) {
+export function Toast({ type, message, onClose }) {
   const styles = {
     success: 'bg-green-500',
     error: 'bg-red-500',
-    info: 'bg-blue-500'
+    info: 'bg-blue-500',
+    warning: 'bg-yellow-500'
+  }
+  
+  const icons = {
+    success: <CheckIcon />,
+    error: <XIcon />,
+    info: <InfoIcon />,
+    warning: <AlertIcon />
   }
   
   return (
-    <div className={\`\${styles[type]} text-white px-6 py-4 rounded-lg shadow-lg\`}>
-      {message}
+    <div className={\`\${styles[type]} text-white px-6 py-4 rounded-lg shadow-lg flex items-center justify-between gap-4\`}>
+      <div className="flex items-center gap-3">
+        {icons[type]}
+        <span>{message}</span>
+      </div>
+      <button 
+        onClick={onClose}
+        className="p-1 hover:bg-black/10 rounded transition-colors"
+      >
+        <X size={16} />
+      </button>
     </div>
   )
 }`,
-          usage: `<Toast type="success" message="Changes saved!" />
-<Toast type="error" message="Something went wrong" />
-<Toast type="info" message="New update available" />`
-        }
+          usage: `<Toast type="success" message="Changes saved!" onClose={() => {}} />
+<Toast type="error" message="Something went wrong" onClose={() => {}} />
+<Toast type="info" message="New update available" onClose={() => {}} />
+<Toast type="warning" message="This action cannot be undone" onClose={() => {}} />
+
+// Toast container (usually at app root)
+<div className="fixed bottom-4 right-4 space-y-2 z-50">
+  {toasts.map(toast => (
+    <Toast 
+      key={toast.id} 
+      {...toast} 
+      onClose={() => removeToast(toast.id)} 
+    />
+  ))}
+</div>`
+        },
+        guidelines: [
+          'Position toasts at the edge of the viewport',
+          'Auto-dismiss after 3-5 seconds for non-critical messages',
+          'Always provide a close button for accessibility',
+          'Stack multiple toasts with proper spacing',
+          'Use appropriate colors for different message types'
+        ]
       }
     ]
   },
@@ -579,7 +747,7 @@ export function Toast({ type, message }) {
       {
         id: 'theme-toggle',
         name: 'Theme Toggle',
-        description: 'A toggle switch for dark/light mode.',
+        description: 'A toggle component for switching between light and dark themes with smooth transitions.',
         preview: (
           <div className="flex justify-center">
             <ThemeToggle />
@@ -602,21 +770,33 @@ export function Header() {
 <div className="fixed top-4 right-4">
   <ThemeToggle />
 </div>`
-        }
+        },
+        guidelines: [
+          'Place in a consistent location across all pages',
+          'Ensure the icon clearly indicates the current theme',
+          'Persist user preference in localStorage',
+          'Provide smooth transitions between themes'
+        ]
       },
       {
         id: 'navigation-menu',
         name: 'Navigation Menu',
-        description: 'Responsive navigation menu with mobile support.',
+        description: 'The primary navigation component with responsive design and animated hover states matching our production site.',
         preview: (
           <nav className="border border-border rounded-lg p-4">
             <div className="flex justify-between items-center">
-              <div className="font-semibold">Logo</div>
-              <div className="hidden md:flex gap-6">
-                <a href="#" className="text-sm hover:text-blue-500 transition-colors">Home</a>
-                <a href="#" className="text-sm hover:text-blue-500 transition-colors">About</a>
-                <a href="#" className="text-sm hover:text-blue-500 transition-colors">Work</a>
-                <a href="#" className="text-sm hover:text-blue-500 transition-colors">Contact</a>
+              <div className="font-semibold text-lg">Tyler Schmidt</div>
+              <div className="hidden md:flex items-center gap-8">
+                {['Work', 'About', 'Lab', 'Pia'].map((item) => (
+                  <Link
+                    key={item}
+                    href="#"
+                    className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors duration-300 relative group"
+                  >
+                    {item}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300" />
+                  </Link>
+                ))}
               </div>
               <button className="md:hidden">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -631,14 +811,21 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   
   return (
-    <nav className="border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-40">
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
-          <Logo />
-          <div className="hidden md:flex gap-6">
-            {navItems.map(item => (
-              <Link key={item.href} href={item.href} className="text-sm hover:text-blue-500 transition-colors">
+          <Link href="/" className="font-semibold text-lg">
+            Tyler Schmidt
+          </Link>
+          <div className="hidden md:flex items-center gap-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors duration-300 relative group"
+              >
                 {item.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300" />
               </Link>
             ))}
           </div>
@@ -655,13 +842,20 @@ export function Header() {
 }`,
           usage: `<Navigation />
 
-// With custom items
-<Navigation items={[
-  { href: '/', label: 'Home' },
+// Navigation items structure
+const navItems = [
+  { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
-  { href: '/work', label: 'Work' }
-]} />`
-        }
+  { href: '/lab', label: 'Lab' },
+  { href: '/pia', label: 'Pia' }
+]`
+        },
+        guidelines: [
+          'Keep navigation items concise and clear',
+          'Highlight the current page in the navigation',
+          'Ensure mobile menu is easily accessible',
+          'Use consistent animation timing across all interactions'
+        ]
       }
     ]
   },
@@ -672,7 +866,7 @@ export function Header() {
       {
         id: 'hover-effects',
         name: 'Hover Effects',
-        description: 'Various hover interactions and effects.',
+        description: 'Interactive hover states that provide visual feedback and enhance user experience.',
         preview: (
           <div className="grid grid-cols-2 gap-6">
             <motion.div
@@ -688,6 +882,16 @@ export function Header() {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <p className="text-center">Lift on Hover</p>
+            </motion.div>
+            <motion.div
+              className="p-6 border border-border rounded-lg cursor-pointer col-span-2"
+              whileHover={{ 
+                boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+                borderColor: "rgb(59, 130, 246)"
+              }}
+              transition={{ duration: 0.2 }}
+            >
+              <p className="text-center">Shadow & Border on Hover</p>
             </motion.div>
           </div>
         ),
@@ -706,6 +910,17 @@ export function Header() {
 <motion.div
   whileHover={{ y: -5 }}
   transition={{ type: "spring", stiffness: 300 }}
+>
+  Hover me
+</motion.div>
+
+// Shadow effect
+<motion.div
+  whileHover={{ 
+    boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+    borderColor: "rgb(59, 130, 246)"
+  }}
+  transition={{ duration: 0.2 }}
 >
   Hover me
 </motion.div>`,
@@ -730,18 +945,27 @@ export function Header() {
 >
   Click me
 </motion.button>`
-        }
+        },
+        guidelines: [
+          'Keep hover effects subtle and purposeful',
+          'Ensure effects don\'t cause layout shifts',
+          'Provide visual feedback within 100ms',
+          'Consider touch devices where hover isn&apos;t available'
+        ]
       },
       {
         id: 'glassmorphism',
         name: 'Glassmorphism',
-        description: 'Frosted glass effect for modern UI elements.',
+        description: 'Modern frosted glass effect using backdrop blur and semi-transparent backgrounds.',
         preview: (
-          <div className="relative p-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-lg border border-white/20">
-            <h3 className="text-xl font-semibold mb-2">Glassmorphism</h3>
-            <p className="text-sm text-muted-foreground">
-              A modern frosted glass effect using backdrop blur and transparency.
-            </p>
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg" />
+            <div className="relative p-8 rounded-lg bg-white/10 backdrop-blur-lg border border-white/20">
+              <h3 className="text-xl font-semibold mb-2 text-white">Glassmorphism</h3>
+              <p className="text-sm text-white/80">
+                A modern frosted glass effect using backdrop blur and transparency.
+              </p>
+            </div>
           </div>
         ),
         code: {
@@ -777,7 +1001,13 @@ export function Header() {
 <div className="bg-black/10 dark:bg-white/10 backdrop-blur-lg border border-white/10 rounded-lg p-6">
   Adaptive glass
 </div>`
-        }
+        },
+        guidelines: [
+          'Ensure sufficient contrast for text readability',
+          'Use sparingly as it can impact performance',
+          'Provide fallbacks for browsers without backdrop-filter support',
+          'Test on various backgrounds to ensure visibility'
+        ]
       }
     ]
   }

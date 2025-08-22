@@ -45,7 +45,7 @@ export function DesignSystemLayout({
         initial={false}
       >
         <div className="p-6 border-b border-border">
-          <h2 className="text-lg font-semibold">Design System</h2>
+          <h2 className="text-lg font-semibold">Components</h2>
         </div>
 
         <nav className="p-6 overflow-y-auto h-[calc(100vh-80px)]">
