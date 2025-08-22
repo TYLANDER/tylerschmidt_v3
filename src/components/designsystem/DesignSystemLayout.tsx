@@ -1,7 +1,6 @@
 "use client"
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
 import { useState } from 'react'
 import { ChevronRight, Menu, X } from 'lucide-react'
 import type { ComponentCategory } from './componentData'
@@ -46,10 +45,7 @@ export function DesignSystemLayout({
         initial={false}
       >
         <div className="p-6 border-b border-border">
-          <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
-            <span className="text-2xl">←</span>
-            <span>Tyler Schmidt</span>
-          </Link>
+          <h2 className="text-lg font-semibold">Design System</h2>
         </div>
 
         <nav className="p-6 overflow-y-auto h-[calc(100vh-80px)]">
