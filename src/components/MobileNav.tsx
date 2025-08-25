@@ -64,7 +64,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
               <Link 
                 href="/" 
                 onClick={onClose}
-                className="text-lg font-semibold text-gray-900 dark:text-white"
+                className="font-heading font-bold text-xl text-foreground hover:text-accent transition-colors duration-300"
               >
                 Tyler Schmidt
               </Link>
