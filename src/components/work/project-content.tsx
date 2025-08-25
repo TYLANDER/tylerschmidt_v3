@@ -6,6 +6,7 @@ import { PortableText } from '@portabletext/react'
 import { urlFor } from '@/sanity/lib/image'
 import { portableTextComponents } from './portable-text-components'
 import { ImageGalleryCarouselV2 } from '@/components/ui/image-gallery-carousel-v2'
+import { ImageCarouselModal, useImageCarouselModal } from '@/components/ui/image-carousel-modal'
 import type { Project } from '@/types/sanity'
 import type { CarouselImage } from '@/components/ui/image-carousel-modal'
 
@@ -14,6 +15,7 @@ interface ProjectContentProps {
 }
 
 export function ProjectContent({ project }: ProjectContentProps) {
+  const { modalProps, openModal } = useImageCarouselModal()
 
   // Prepare gallery images for carousel
   const galleryImages: CarouselImage[] = project.gallery
@@ -23,6 +25,10 @@ export function ProjectContent({ project }: ProjectContentProps) {
       alt: image.alt || `${project.title} gallery image`,
       caption: image.caption
     })) || []
+
+  const handleGalleryImageClick = (index: number) => {
+    openModal(galleryImages, index)
+  }
 
   return (
     <>
@@ -46,41 +52,46 @@ export function ProjectContent({ project }: ProjectContentProps) {
       )}
 
       {/* Overview */}
-      <div className="max-w-4xl mx-auto mb-20">
+      <article className="max-w-4xl mx-auto mb-20">
         {project.overview && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
+            <h2 className="sr-only">Project Overview</h2>
             <PortableText 
               value={project.overview} 
               components={portableTextComponents}
             />
           </motion.div>
         )}
-      </div>
+      </article>
 
       {/* Technologies */}
       {project.technologies && project.technologies.length > 0 && (
-        <motion.div 
+        <motion.section 
           className="max-w-4xl mx-auto mb-20"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
+          aria-labelledby="technologies-heading"
         >
-          <h2 className="text-3xl font-semibold mb-8">Technologies</h2>
-          <div className="flex flex-wrap gap-3">
+          <h2 id="technologies-heading" className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mb-8 md:text-3xl">
+            Technologies Used
+          </h2>
+          <div className="flex flex-wrap gap-3" role="list">
             {project.technologies.map((tech: string) => (
               <span
                 key={tech}
-                className="px-5 py-2.5 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-700 dark:text-gray-300 font-medium"
+                role="listitem"
+                className="px-5 py-2.5 bg-gray-100 dark:bg-gray-800 rounded-full text-base font-medium text-gray-700 dark:text-gray-300 transition-colors hover:bg-gray-200 dark:hover:bg-gray-700"
               >
                 {tech}
               </span>
             ))}
           </div>
-        </motion.div>
+        </motion.section>
       )}
 
       {/* Gallery */}
@@ -90,16 +101,23 @@ export function ProjectContent({ project }: ProjectContentProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
+          aria-labelledby="gallery-heading"
         >
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-semibold mb-12 text-center">Project Gallery</h2>
+            <h2 id="gallery-heading" className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mb-12 text-center md:text-3xl">
+              Project Gallery
+            </h2>
             <ImageGalleryCarouselV2 
               images={galleryImages}
               className="w-full"
+              onImageClick={handleGalleryImageClick}
             />
           </div>
         </motion.section>
       )}
+
+      {/* Image Carousel Modal */}
+      <ImageCarouselModal {...modalProps} />
     </>
   )
 }

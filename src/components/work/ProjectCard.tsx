@@ -49,33 +49,36 @@ export function ProjectCard({ project, index, imageUrl }: ProjectCardProps) {
           
           {/* Content */}
           <div className="p-6 flex flex-col flex-grow">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="text-xl font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                 {project.title}
               </h3>
-              <span className="text-sm text-gray-500">{project.year}</span>
+              <time className="text-sm font-medium text-gray-500 dark:text-gray-500">{project.year}</time>
             </div>
             
-            <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
-              {project.client} • {project.category}
+            <p className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-3">
+              <span className="text-gray-700 dark:text-gray-300">{project.client}</span>
+              <span className="mx-2 text-gray-400">•</span>
+              <span>{project.category}</span>
             </p>
             
-            <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 flex-grow line-clamp-3">
+            <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed mb-4 flex-grow line-clamp-3">
               {project.description}
             </p>
             
             {project.technologies && (
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2" role="list">
                 {project.technologies.slice(0, 4).map((tech) => (
                   <span
                     key={tech}
-                    className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-400"
+                    role="listitem"
+                    className="text-xs font-medium px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-700 dark:text-gray-300"
                   >
                     {tech}
                   </span>
                 ))}
                 {project.technologies.length > 4 && (
-                  <span className="text-xs px-2 py-1 text-gray-500">
+                  <span className="text-xs font-medium px-3 py-1.5 text-gray-500 dark:text-gray-400">
                     +{project.technologies.length - 4} more
                   </span>
                 )}

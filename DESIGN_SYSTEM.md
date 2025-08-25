@@ -78,6 +78,87 @@
 - **Bold**: 700
 - **Black**: 900
 
+### Typography Usage Guidelines
+
+#### Content Pages (/work)
+
+**Page Headers**
+```tsx
+<h1 className="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 dark:text-white mb-6">
+  Selected Work
+</h1>
+<p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+  Introductory description
+</p>
+```
+
+**Project Detail Pages**
+- **Article Content**: Use semantic HTML5 elements (`<article>`, `<section>`, `<header>`)
+- **Section Headers**: H2 with consistent styling
+- **Body Text**: 18px with relaxed line height for optimal readability
+- **Lists**: Enhanced markers with color accent
+
+**Heading Hierarchy Example**
+```tsx
+// Page Title (H1)
+<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+  Project Title
+</h1>
+
+// Major Section (H2)
+<h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mt-12 mb-6">
+  Project Overview
+</h2>
+
+// Subsection (H3)
+<h3 className="text-2xl md:text-3xl font-semibold tracking-tight mt-10 mb-4">
+  Design Process
+</h3>
+
+// Minor Section (H4)
+<h4 className="text-xl md:text-2xl font-semibold tracking-tight mt-8 mb-3">
+  User Research
+</h4>
+```
+
+#### Text Treatments
+
+**Strong Emphasis**
+- Use `font-semibold` instead of `font-bold` for inline emphasis
+- Color: `text-gray-900 dark:text-white` for higher contrast
+
+**Links**
+- Underline with offset for better readability
+- Subtle decoration opacity (30%) that increases on hover (50%)
+- Focus ring for accessibility
+
+**Code Blocks**
+- Monospace font with background
+- Padding for comfortable reading
+- Rounded corners following design system
+
+#### Accessibility Requirements
+
+1. **Color Contrast**
+   - Body text: `text-gray-700` on light, `text-gray-300` on dark
+   - Headers: `text-gray-900` on light, `text-white` on dark
+   - Minimum WCAG AA compliance (4.5:1 for body, 3:1 for large text)
+
+2. **Semantic Structure**
+   - Always use proper heading hierarchy
+   - Include `aria-labelledby` for sections
+   - Use `sr-only` class for screen reader only content
+
+3. **Focus Management**
+   - All interactive elements need focus states
+   - Skip links for keyboard navigation
+   - Proper tab order
+
+4. **Responsive Typography**
+   - Mobile-first approach
+   - Fluid type scaling with breakpoints
+   - Appropriate touch targets (minimum 44x44px)
+
 ---
 
 ## Color System

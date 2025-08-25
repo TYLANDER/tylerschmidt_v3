@@ -135,7 +135,7 @@ export function ImageCarouselModal({
             </div>
 
             {/* Image container - adjusted to fit within viewport */}
-            <div className="flex flex-1 items-center justify-center p-4 md:p-8 overflow-auto">
+            <div className="flex flex-1 items-center justify-center p-4 md:p-8 overflow-auto" onClick={onClose}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentIndex}

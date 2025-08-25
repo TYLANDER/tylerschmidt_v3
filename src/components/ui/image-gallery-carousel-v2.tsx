@@ -13,9 +13,10 @@ interface GalleryImage {
 interface ImageGalleryCarouselV2Props {
   images: GalleryImage[]
   className?: string
+  onImageClick?: (index: number) => void
 }
 
-export function ImageGalleryCarouselV2({ images, className }: ImageGalleryCarouselV2Props) {
+export function ImageGalleryCarouselV2({ images, className, onImageClick }: ImageGalleryCarouselV2Props) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [imageLoadingStates, setImageLoadingStates] = useState<Record<number, boolean>>({})
   const [imageDimensions, setImageDimensions] = useState<Record<number, { width: number; height: number }>>({})
@@ -86,15 +87,36 @@ export function ImageGalleryCarouselV2({ images, className }: ImageGalleryCarous
                 <img
                   src={currentImage.src}
                   alt={currentImage.alt}
-                  className="w-full h-auto"
+                  className="w-full h-auto cursor-zoom-in"
                   style={{ 
                     display: 'block',
                     maxHeight: '80vh'
                   }}
+                  onClick={() => onImageClick?.(currentIndex)}
                   onLoad={() => {
                     setImageLoadingStates(prev => ({ ...prev, [currentIndex]: true }))
                   }}
                 />
+                
+                {/* Zoom indicator on hover */}
+                {onImageClick && (
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity pointer-events-none">
+                    <div className="bg-black/60 backdrop-blur-sm rounded-full p-3">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M15 3h6v6M14 10l6.1-6.1M9 21H3v-6M10 14l-6.1 6.1" />
+                      </svg>
+                    </div>
+                  </div>
+                )}
               </div>
               
               {/* Loading state */}

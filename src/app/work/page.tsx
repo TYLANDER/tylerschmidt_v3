@@ -29,21 +29,21 @@ export default async function WorkPage() {
     <PageWrapper>
       <section className="min-h-screen pt-32 pb-20">
         <Container>
-          <div className="mb-16">
+          <header className="mb-16">
             <AnimatedText
               text="Selected Work"
               as="h1"
               variant="slide"
-              className="text-5xl md:text-7xl font-bold mb-6"
+              className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-gray-900 dark:text-white"
             />
             <AnimatedText
               text="A collection of projects that showcase my expertise in design and development."
               as="p"
               variant="fade"
-              className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl"
+              className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed"
               delay={0.5}
             />
-          </div>
+          </header>
 
           {projects.length === 0 ? (
             <div className="text-center py-20">
