@@ -53,12 +53,12 @@ export default async function WorkPage() {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {projects.map((project, index) => {
                 let imageUrl = ''
                 try {
                   if (project.featuredImage?.asset) {
-                    const builder = urlFor(project.featuredImage).width(800).height(600)
+                    const builder = urlFor(project.featuredImage).width(1200).height(900)
                     imageUrl = builder.url()
                   }
                 } catch (error) {

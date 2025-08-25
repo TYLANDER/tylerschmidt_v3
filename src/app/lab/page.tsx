@@ -28,14 +28,14 @@ interface ExperimentCardProps {
 
 function ExperimentCard({ title, description, href, tags, visual }: ExperimentCardProps) {
   return (
-    <Link href={href} className="group block">
+    <Link href={href} className="group block h-full">
       <motion.div 
-        className="h-full bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden hover:border-gray-400 dark:hover:border-gray-600 transition-colors"
+        className="h-full flex flex-col bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden hover:border-gray-400 dark:hover:border-gray-600 transition-colors"
         whileHover={{ y: -4 }}
         transition={{ duration: 0.2 }}
       >
         {/* Preview Window */}
-        <div className="relative h-48 bg-gray-50 dark:bg-gray-900 overflow-hidden">
+        <div className="relative h-48 bg-gray-50 dark:bg-gray-900 overflow-hidden flex-shrink-0">
           {visual ? (
             <div className="absolute inset-0 flex items-center justify-center">
               {visual}
@@ -51,11 +51,11 @@ function ExperimentCard({ title, description, href, tags, visual }: ExperimentCa
         </div>
         
         {/* Content */}
-        <div className="p-6">
+        <div className="p-6 flex flex-col flex-grow">
           <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
             {title}
           </h3>
-          <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+          <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 flex-grow">
             {description}
           </p>
           <div className="flex flex-wrap gap-2">
@@ -79,35 +79,35 @@ export default function LabPage() {
     {
       title: "Particle Typography",
       description: "RGB chromatic aberration text with magnetic particle effects and device motion support.",
-      href: "/",
+      href: "/particle-typography",
       tags: ["Canvas", "Particles", "Motion", "Haptics"],
       visual: <ParticleTypographyVisual />
     },
     {
       title: "Neural Network Visualizer",
       description: "Interactive 3D neural network with real-time data flow visualization.",
-      href: "/hero-testing",
+      href: "/neural-network",
       tags: ["Three.js", "WebGL", "AI", "3D"],
       visual: <NeuralNetworkVisual />
     },
     {
       title: "Quantum State Portfolio",
       description: "Projects exist in quantum superposition until observed.",
-      href: "/hero-testing",
+      href: "/quantum-portfolio",
       tags: ["Physics", "Animation", "Interactive"],
       visual: <QuantumStateVisual />
     },
     {
       title: "Reality Layers",
       description: "Peel back layers of reality to reveal hidden dimensions.",
-      href: "/hero-testing",
+      href: "/reality-layers",
       tags: ["Parallax", "3D", "Interactive"],
       visual: <RealityLayersVisual />
     },
     {
       title: "Consciousness Stream",
       description: "AI-generated thoughts flowing through digital consciousness.",
-      href: "/hero-testing",
+      href: "/consciousness-stream",
       tags: ["AI", "Generative", "Text"],
       visual: <ConsciousnessStreamVisual />
     },
@@ -142,7 +142,7 @@ export default function LabPage() {
     {
       title: "Temporal Echo System",
       description: "Visualize the echoes of past visitors in real-time.",
-      href: "/hero-lab",
+      href: "/temporal-echo",
       tags: ["Time", "Data", "Visualization"],
       visual: <TemporalEchoVisual />
     }
