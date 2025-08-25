@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { createPortal } from 'react-dom'
 
@@ -144,9 +143,10 @@ export function ImageCarouselModal({
                   exit={{ opacity: 0, scale: 0.98 }}
                   transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
                   className="relative flex flex-col items-center"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <img
+                                  onClick={(e) => e.stopPropagation()}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                     src={currentImage.src}
                     alt={currentImage.alt}
                     className="w-auto h-auto rounded-lg"

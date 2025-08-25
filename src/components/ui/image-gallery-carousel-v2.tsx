@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
@@ -19,16 +19,16 @@ interface ImageGalleryCarouselV2Props {
 export function ImageGalleryCarouselV2({ images, className, onImageClick }: ImageGalleryCarouselV2Props) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [imageLoadingStates, setImageLoadingStates] = useState<Record<number, boolean>>({})
-  const [imageDimensions, setImageDimensions] = useState<Record<number, { width: number; height: number }>>({})
+  // const [imageDimensions, setImageDimensions] = useState<Record<number, { width: number; height: number }>>({})
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const goToPrevious = () => {
+  const goToPrevious = useCallback(() => {
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)
-  }
+  }, [images.length])
 
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % images.length)
-  }
+  }, [images.length])
 
   const goToIndex = (index: number) => {
     setCurrentIndex(index)
@@ -46,7 +46,7 @@ export function ImageGalleryCarouselV2({ images, className, onImageClick }: Imag
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [goToNext, goToPrevious])
 
   // Preload images and get dimensions
   useEffect(() => {
@@ -54,10 +54,10 @@ export function ImageGalleryCarouselV2({ images, className, onImageClick }: Imag
       const img = new Image()
       img.onload = () => {
         setImageLoadingStates(prev => ({ ...prev, [index]: true }))
-        setImageDimensions(prev => ({ 
-          ...prev, 
-          [index]: { width: img.naturalWidth, height: img.naturalHeight }
-        }))
+        // setImageDimensions(prev => ({ 
+        //   ...prev, 
+        //   [index]: { width: img.naturalWidth, height: img.naturalHeight }
+        // }))
       }
       img.src = image.src
     })
@@ -84,19 +84,20 @@ export function ImageGalleryCarouselV2({ images, className, onImageClick }: Imag
             >
               {/* Container that maintains aspect ratio */}
               <div className="relative w-full">
-                <img
-                  src={currentImage.src}
-                  alt={currentImage.alt}
-                  className="w-full h-auto cursor-zoom-in"
-                  style={{ 
-                    display: 'block',
-                    maxHeight: '80vh'
-                  }}
-                  onClick={() => onImageClick?.(currentIndex)}
-                  onLoad={() => {
-                    setImageLoadingStates(prev => ({ ...prev, [currentIndex]: true }))
-                  }}
-                />
+                                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={currentImage.src}
+                        alt={currentImage.alt}
+                        className="w-full h-auto cursor-zoom-in"
+                        style={{ 
+                          display: 'block',
+                          maxHeight: '80vh'
+                        }}
+                        onClick={() => onImageClick?.(currentIndex)}
+                        onLoad={() => {
+                          setImageLoadingStates(prev => ({ ...prev, [currentIndex]: true }))
+                        }}
+                      />
                 
                 {/* Zoom indicator on hover */}
                 {onImageClick && (
@@ -226,6 +227,7 @@ export function ImageGalleryCarouselV2({ images, className, onImageClick }: Imag
                     : "opacity-70 hover:opacity-100"
                 )}
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={image.src}
                   alt={`Thumbnail ${index + 1}`}

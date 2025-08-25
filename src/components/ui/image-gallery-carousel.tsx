@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
@@ -21,13 +21,13 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
   const [imageLoadingStates, setImageLoadingStates] = useState<Record<number, boolean>>({})
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const goToPrevious = () => {
+  const goToPrevious = useCallback(() => {
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)
-  }
+  }, [images.length])
 
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % images.length)
-  }
+  }, [images.length])
 
   const goToIndex = (index: number) => {
     setCurrentIndex(index)
@@ -45,7 +45,7 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [goToNext, goToPrevious])
 
   if (!images || images.length === 0) return null
 
@@ -66,6 +66,7 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
               transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
               className="relative w-full h-full flex items-center justify-center p-8"
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={currentImage.src}
                 alt={currentImage.alt}

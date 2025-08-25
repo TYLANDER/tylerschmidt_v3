@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { createPortal } from 'react-dom'
 
@@ -104,9 +103,10 @@ export function ImageModal({ isOpen, onClose, src, alt, caption }: ImageModalPro
             <div className="flex flex-1 items-center justify-center p-4 md:p-8">
               <div 
                 className="relative w-full h-full flex items-center justify-center"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <img
+                              onClick={(e) => e.stopPropagation()}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                   src={src}
                   alt={alt}
                   className="max-w-full max-h-[calc(100vh-12rem)] w-auto h-auto rounded-lg object-contain"
