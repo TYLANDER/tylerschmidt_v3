@@ -25,6 +25,7 @@ export function ProjectContent({ project }: ProjectContentProps) {
     })) || []
 
   const handleGalleryImageClick = (index: number) => {
+    console.log('Gallery images:', galleryImages.length, galleryImages)
     openModal(galleryImages, index)
   }
 
