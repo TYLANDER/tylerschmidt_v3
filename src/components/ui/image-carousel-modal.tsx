@@ -135,7 +135,7 @@ export function ImageCarouselModal({
             </div>
 
             {/* Image container - adjusted to fit within viewport */}
-            <div className="flex flex-1 items-center justify-center p-4 md:p-8">
+            <div className="flex flex-1 items-center justify-center p-4 md:p-8 overflow-auto">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentIndex}
@@ -143,23 +143,27 @@ export function ImageCarouselModal({
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.98 }}
                   transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-                  className="relative w-full h-full flex items-center justify-center"
+                  className="relative flex flex-col items-center"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <img
                     src={currentImage.src}
                     alt={currentImage.alt}
-                    className="max-w-full max-h-[calc(100vh-12rem)] w-auto h-auto rounded-lg object-contain"
+                    className="w-auto h-auto rounded-lg"
+                    style={{
+                      maxWidth: '90vw',
+                      maxHeight: '80vh',
+                      objectFit: 'contain'
+                    }}
                   />
                   
+                  {/* Caption below image */}
+                  {currentImage.caption && (
+                    <div className="mt-4 text-center">
+                      <p className="text-sm text-white/70 md:text-base">{currentImage.caption}</p>
+                    </div>
+                  )}
                 </motion.div>
-                
-                {/* Caption below image */}
-                {currentImage.caption && (
-                  <div className="mt-4 text-center">
-                    <p className="text-sm text-white/70 md:text-base">{currentImage.caption}</p>
-                  </div>
-                )}
               </AnimatePresence>
             </div>
 

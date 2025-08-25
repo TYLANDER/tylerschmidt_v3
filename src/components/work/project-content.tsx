@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
 import { urlFor } from '@/sanity/lib/image'
 import { portableTextComponents } from './portable-text-components'
-import { ImageGalleryCarousel } from '@/components/ui/image-gallery-carousel'
+import { ImageGalleryCarouselV2 } from '@/components/ui/image-gallery-carousel-v2'
 import type { Project } from '@/types/sanity'
 import type { CarouselImage } from '@/components/ui/image-carousel-modal'
 
@@ -93,7 +93,7 @@ export function ProjectContent({ project }: ProjectContentProps) {
         >
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-semibold mb-12 text-center">Project Gallery</h2>
-            <ImageGalleryCarousel 
+            <ImageGalleryCarouselV2 
               images={galleryImages}
               className="w-full"
             />
