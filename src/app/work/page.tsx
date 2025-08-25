@@ -53,9 +53,8 @@ export default async function WorkPage() {
               </p>
             </div>
           ) : (
-            <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {projects.map((project, index) => {
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:gap-10 gap-6 lg:gap-8 w-full max-w-7xl mx-auto">
+              {projects.map((project, index) => {
                 let imageUrl = ''
                 try {
                   if (project.featuredImage?.asset) {
@@ -75,7 +74,6 @@ export default async function WorkPage() {
                   />
                 )
               })}
-              </div>
             </div>
           )}
         </Container>
