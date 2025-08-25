@@ -45,15 +45,15 @@ export default async function WorkPage() {
             />
           </div>
 
-          <div className="max-w-5xl">
-            {projects.length === 0 ? (
-              <div className="text-center py-20">
-                <p className="text-gray-500 dark:text-gray-400 mb-4">No projects found.</p>
-                <p className="text-sm text-gray-400 dark:text-gray-500">
-                  Projects added in Sanity will appear here once published.
-                </p>
-              </div>
-            ) : (
+          {projects.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-gray-500 dark:text-gray-400 mb-4">No projects found.</p>
+              <p className="text-sm text-gray-400 dark:text-gray-500">
+                Projects added in Sanity will appear here once published.
+              </p>
+            </div>
+          ) : (
+            <div className="max-w-5xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {projects.map((project, index) => {
                 let imageUrl = ''
@@ -76,8 +76,8 @@ export default async function WorkPage() {
                 )
               })}
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </Container>
       </section>
     </PageWrapper>
