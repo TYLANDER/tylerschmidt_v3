@@ -72,17 +72,17 @@ export function ImageModal({ isOpen, onClose, src, alt, caption }: ImageModalPro
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
+            className="fixed inset-0 z-50 flex flex-col pt-20"
             role="dialog"
             aria-modal="true"
             aria-label="Image viewer"
           >
-            <div className="relative max-h-full max-w-full">
-              {/* Close button */}
+            {/* Close button - positioned to avoid navbar */}
+            <div className="absolute top-24 right-4 md:right-6 z-10">
               <button
                 ref={closeButtonRef}
                 onClick={onClose}
-                className="absolute -top-12 right-0 md:-top-14 md:-right-14 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-black/80 text-white backdrop-blur-sm transition-all hover:bg-black/90 focus:outline-none focus:ring-2 focus:ring-white/50"
                 aria-label="Close image viewer"
               >
                 <svg
@@ -98,10 +98,12 @@ export function ImageModal({ isOpen, onClose, src, alt, caption }: ImageModalPro
                   <path d="M18 6L6 18M6 6l12 12" />
                 </svg>
               </button>
-              
-              {/* Image container */}
+            </div>
+            
+            {/* Image container - adjusted to fit within viewport */}
+            <div className="flex flex-1 items-center justify-center p-4 md:p-8">
               <div 
-                className="relative overflow-hidden rounded-lg bg-gray-900"
+                className="relative w-full h-full flex items-center justify-center"
                 onClick={(e) => e.stopPropagation()}
               >
                 <Image
@@ -109,18 +111,19 @@ export function ImageModal({ isOpen, onClose, src, alt, caption }: ImageModalPro
                   alt={alt}
                   width={1920}
                   height={1080}
-                  className="max-h-[85vh] w-auto object-contain"
+                  className="max-w-full max-h-[calc(100vh-12rem)] w-auto h-auto rounded-lg object-contain"
                   quality={95}
                   priority
                 />
                 
-                {/* Caption */}
-                {caption && (
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-center">
-                    <p className="text-sm text-white/90 md:text-base">{caption}</p>
-                  </div>
-                )}
               </div>
+              
+              {/* Caption below image */}
+              {caption && (
+                <div className="mt-4 text-center">
+                  <p className="text-sm text-white/70 md:text-base">{caption}</p>
+                </div>
+              )}
               
               {/* Keyboard instructions (screen reader only) */}
               <div className="sr-only" aria-live="polite">
