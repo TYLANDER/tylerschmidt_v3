@@ -1,12 +1,12 @@
 import { client } from '@/sanity/lib/client'
 import { projectBySlugQuery, projectsQuery } from '@/sanity/lib/queries'
-import { urlFor } from '@/sanity/lib/image'
-import { PortableText } from '@portabletext/react'
-import Image from 'next/image'
+import Link from 'next/link'
+
 
 import { Container } from '@/components/ui/Container'
 import { PageWrapper } from '@/components/layout/page-transition'
 import { AnimatedText } from '@/components/animations/animated-text'
+import { ProjectContent } from '@/components/work/project-content'
 import { notFound } from 'next/navigation'
 import type { Project } from '@/types/sanity'
 
@@ -36,114 +36,93 @@ export default async function ProjectPage({
 
   return (
     <PageWrapper>
-      <article className="min-h-screen pt-32 pb-20">
+      <article className="min-h-screen">
+        {/* Back to Work */}
+        <div className="border-b border-gray-200 dark:border-gray-800">
+          <Container>
+            <div className="py-6">
+              <Link
+                href="/work"
+                className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+              >
+                <span className="text-lg">←</span>
+                <span>Back to Work</span>
+              </Link>
+            </div>
+          </Container>
+        </div>
+
         <Container>
           {/* Header */}
-          <div className="mb-12">
-            <AnimatedText
-              text={project.title}
-              as="h1"
-              variant="slide"
-              className="text-4xl md:text-6xl font-bold mb-4"
-            />
-            
-            <div className="flex flex-wrap gap-4 text-gray-600 dark:text-gray-400">
-              <span>{project.client}</span>
-              <span>•</span>
-              <span>{project.year}</span>
-              <span>•</span>
-              <span>{project.category}</span>
-            </div>
-          </div>
-
-          {/* Featured Image */}
-          {project.featuredImage && project.featuredImage.asset && (
-            <div className="relative aspect-video w-full mb-12 rounded-lg overflow-hidden">
-              <Image
-                src={urlFor(project.featuredImage).width(1600).height(900).url()}
-                alt={project.title}
-                fill
-                className="object-cover"
-                priority
+          <header className="py-16 md:py-20">
+            <div className="max-w-4xl">
+              <AnimatedText
+                text={project.title}
+                as="h1"
+                variant="slide"
+                className="text-5xl md:text-7xl font-bold mb-6"
               />
-            </div>
-          )}
-
-          {/* Overview */}
-          <div className="max-w-3xl mx-auto mb-16">
-            <div className="prose prose-lg dark:prose-invert">
-              {project.overview && <PortableText value={project.overview} />}
-            </div>
-          </div>
-
-          {/* Technologies */}
-          {project.technologies && project.technologies.length > 0 && (
-            <div className="mb-16">
-              <h2 className="text-2xl font-semibold mb-4">Technologies Used</h2>
-              <div className="flex flex-wrap gap-2">
-                {project.technologies.map((tech: string) => (
-                  <span
-                    key={tech}
-                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg"
-                  >
-                    {tech}
-                  </span>
-                ))}
+              
+              <div className="flex flex-wrap items-center gap-2 text-lg text-gray-600 dark:text-gray-400">
+                {project.client && (
+                  <>
+                    <span className="font-medium">{project.client}</span>
+                    <span className="text-gray-400 dark:text-gray-600">•</span>
+                  </>
+                )}
+                {project.category && (
+                  <>
+                    <span>{project.category}</span>
+                    <span className="text-gray-400 dark:text-gray-600">•</span>
+                  </>
+                )}
+                {project.year && <span>{project.year}</span>}
               </div>
-            </div>
-          )}
 
-          {/* Gallery */}
-          {project.gallery && project.gallery.length > 0 && (
-            <div className="mb-16">
-              <h2 className="text-2xl font-semibold mb-8">Project Gallery</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {project.gallery.map((image, index) => {
-                  if (!image.asset) return null
-                  return (
-                    <div key={index} className="space-y-2">
-                      <div className="relative aspect-video rounded-lg overflow-hidden">
-                        <Image
-                          src={urlFor(image).width(800).height(450).url()}
-                          alt={image.alt || `${project.title} image ${index + 1}`}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      {image.caption && (
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                          {image.caption}
-                        </p>
-                      )}
-                    </div>
-                  )
-                })}
-              </div>
+              {/* Project Links */}
+              {(project.liveUrl || project.githubUrl) && (
+                <div className="flex flex-wrap gap-4 mt-8">
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-black dark:bg-white text-white dark:text-black font-medium rounded-lg hover:opacity-90 transition-opacity"
+                    >
+                      View Live Site
+                      <span className="text-sm">↗</span>
+                    </a>
+                  )}
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 dark:border-gray-700 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
+                    >
+                      View on GitHub
+                      <span className="text-sm">↗</span>
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
-          )}
+          </header>
 
-          {/* Links */}
-          <div className="flex gap-4">
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 bg-black dark:bg-white text-white dark:text-black rounded-lg hover:opacity-80 transition-opacity"
+          {/* Project Content */}
+          <ProjectContent project={project} />
+
+          {/* Next Project */}
+          <div className="border-t border-gray-200 dark:border-gray-800 pt-16 pb-20">
+            <div className="text-center">
+              <Link
+                href="/work"
+                className="inline-flex items-center gap-2 text-lg font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
               >
-                View Live Site
-              </a>
-            )}
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
-              >
-                View on GitHub
-              </a>
-            )}
+                View All Projects
+                <span>→</span>
+              </Link>
+            </div>
           </div>
         </Container>
       </article>
