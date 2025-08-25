@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'
+import { ExpandableImage } from '@/components/ui/expandable-image'
 import type { PortableTextReactComponents } from '@portabletext/react'
 
 export const portableTextComponents: Partial<PortableTextReactComponents> = {
@@ -11,19 +11,17 @@ export const portableTextComponents: Partial<PortableTextReactComponents> = {
 
       return (
         <figure className="my-8 -mx-6 md:mx-0">
-          <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-900">
-            <Image
-              src={urlFor(value)
-                .width(1600)
-                .height(900)
-                .quality(90)
-                .url()}
-              alt={value.alt || 'Project image'}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-            />
-          </div>
+          <ExpandableImage
+            src={urlFor(value)
+              .width(1600)
+              .height(900)
+              .quality(90)
+              .url()}
+            alt={value.alt || 'Project image'}
+            caption={value.caption}
+            className="aspect-video w-full bg-gray-100 dark:bg-gray-900"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+          />
           {value.caption && (
             <figcaption className="mt-3 text-center text-sm text-gray-600 dark:text-gray-400">
               {value.caption}
