@@ -198,6 +198,60 @@ Applied to primary CTAs and interactive elements with `magneticEffect()` functio
 - Max-width: 1320px
 - Horizontal padding: 16px (mobile), 32px (desktop)
 
+### Image Modal
+```tsx
+<ImageModal 
+  isOpen={isOpen}
+  onClose={() => setIsOpen(false)}
+  src="/image.jpg"
+  alt="Description"
+  caption="Optional caption"
+/>
+```
+
+**Features**:
+- Full viewport image display with zoom
+- Keyboard navigation (Escape to close)
+- Accessibility compliant with focus management
+- Optional caption support
+- Prevents body scroll when open
+
+### Image Carousel Modal
+```tsx
+<ImageCarouselModal 
+  isOpen={isOpen}
+  onClose={() => setIsOpen(false)}
+  images={[/* array of images */]}
+  initialIndex={0}
+  showPagination={true}
+/>
+```
+
+**Features**:
+- Multi-image navigation with keyboard support
+- Apple-style pagination controls
+- Optional pagination toggle
+- Smooth transitions between images
+- Full accessibility support
+
+### Image Gallery Carousel
+```tsx
+<ImageGalleryCarousel 
+  images={[
+    { src: '/img1.jpg', alt: 'Image 1', caption: 'Caption' },
+    { src: '/img2.jpg', alt: 'Image 2' }
+  ]}
+  className="w-full"
+/>
+```
+
+**Features**:
+- On-page carousel with Apple-inspired design
+- Thumbnail navigation strip
+- Keyboard arrow navigation
+- Smooth animations with loading states
+- Responsive design with touch support
+
 ---
 
 ## Animation Principles

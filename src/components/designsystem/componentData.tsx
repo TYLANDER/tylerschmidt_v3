@@ -238,6 +238,236 @@ export function ProjectCard({ project }) {
     ]
   },
   {
+    id: 'images',
+    name: 'Images & Media',
+    components: [
+      {
+        id: 'image-modal',
+        name: 'Image Modal',
+        description: 'A full-screen modal for viewing images with zoom capabilities. Includes keyboard navigation and accessibility features.',
+        preview: (
+          <div className="space-y-4">
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-8 text-center">
+              <p className="text-sm text-muted-foreground mb-4">Click an image to open modal</p>
+              <div className="inline-block relative group cursor-pointer">
+                <div className="aspect-video w-64 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg" />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="bg-white/90 rounded-full p-3">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M15 3h6v6M14 10l6.1-6.1M9 21H3v-6M10 14l-6.1 6.1" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ),
+        code: {
+          jsx: `import { ImageModal } from '@/components/ui/image-modal'
+import { useState } from 'react'
+
+export function ImageExample() {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <>
+      <button onClick={() => setIsOpen(true)}>
+        <img src="/image.jpg" alt="Click to expand" />
+      </button>
+      
+      <ImageModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        src="/image.jpg"
+        alt="Full size image"
+        caption="Optional image caption"
+      />
+    </>
+  )
+}`,
+          usage: `<ImageModal 
+  isOpen={isOpen}
+  onClose={() => setIsOpen(false)}
+  src="/image.jpg"
+  alt="Description"
+  caption="Optional caption"
+/>`
+        },
+        props: [
+          { name: 'isOpen', type: 'boolean', description: 'Controls modal visibility', required: true },
+          { name: 'onClose', type: '() => void', description: 'Callback when modal closes', required: true },
+          { name: 'src', type: 'string', description: 'Image source URL', required: true },
+          { name: 'alt', type: 'string', description: 'Alt text for accessibility', required: true },
+          { name: 'caption', type: 'string', description: 'Optional image caption' }
+        ],
+        guidelines: [
+          'Always provide meaningful alt text',
+          'Ensure images are optimized for web',
+          'Test keyboard navigation (Escape to close)',
+          'Consider lazy loading for performance'
+        ]
+      },
+      {
+        id: 'image-carousel-modal',
+        name: 'Image Carousel Modal',
+        description: 'A modal carousel for viewing multiple images with navigation controls. Features Apple-style pagination and keyboard support.',
+        preview: (
+          <div className="space-y-4">
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-8">
+              <p className="text-sm text-muted-foreground mb-6 text-center">Multi-image gallery modal preview</p>
+              <div className="relative max-w-md mx-auto">
+                <div className="aspect-video bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg" />
+                <div className="absolute bottom-4 right-4 flex items-center gap-4 bg-white/10 backdrop-blur-md rounded-full px-4 py-3">
+                  <button className="w-8 h-8 flex items-center justify-center text-white">←</button>
+                  <div className="flex gap-1.5">
+                    <div className="w-6 h-1.5 bg-white rounded-full" />
+                    <div className="w-1.5 h-1.5 bg-white/40 rounded-full" />
+                    <div className="w-1.5 h-1.5 bg-white/40 rounded-full" />
+                  </div>
+                  <button className="w-8 h-8 flex items-center justify-center text-white">→</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ),
+        code: {
+          jsx: `import { ImageCarouselModal, useImageCarouselModal } from '@/components/ui/image-carousel-modal'
+
+export function GalleryExample() {
+  const { modalProps, openModal } = useImageCarouselModal()
+  
+  const images = [
+    { src: '/img1.jpg', alt: 'Image 1', caption: 'First image' },
+    { src: '/img2.jpg', alt: 'Image 2', caption: 'Second image' },
+    { src: '/img3.jpg', alt: 'Image 3' }
+  ]
+
+  return (
+    <>
+      <button onClick={() => openModal(images, 0)}>
+        Open Gallery
+      </button>
+      
+      <ImageCarouselModal {...modalProps} />
+    </>
+  )
+}`,
+          usage: `// Using the hook
+const { modalProps, openModal } = useImageCarouselModal()
+
+// Open modal with images
+openModal(images, startIndex)
+
+// Modal component
+<ImageCarouselModal {...modalProps} />
+
+// Direct usage
+<ImageCarouselModal 
+  isOpen={isOpen}
+  onClose={handleClose}
+  images={images}
+  initialIndex={0}
+  showPagination={true}
+/>`
+        },
+        props: [
+          { name: 'isOpen', type: 'boolean', description: 'Controls modal visibility', required: true },
+          { name: 'onClose', type: '() => void', description: 'Callback when modal closes', required: true },
+          { name: 'images', type: 'CarouselImage[]', description: 'Array of images to display', required: true },
+          { name: 'initialIndex', type: 'number', default: '0', description: 'Starting image index' },
+          { name: 'showPagination', type: 'boolean', default: 'true', description: 'Show/hide navigation controls' }
+        ],
+        guidelines: [
+          'Provide keyboard navigation (arrow keys)',
+          'Show controls only for multiple images',
+          'Preload adjacent images for smooth transitions',
+          'Test on touch devices for swipe gestures'
+        ]
+      },
+      {
+        id: 'image-gallery-carousel',
+        name: 'Image Gallery Carousel',
+        description: 'An on-page carousel component with Apple-inspired design. Features smooth transitions, thumbnail navigation, and loading states.',
+        preview: (
+          <div className="max-w-2xl mx-auto">
+            <div className="space-y-4">
+              <div className="relative aspect-video rounded-2xl overflow-hidden bg-gradient-to-br from-green-500 to-blue-600">
+                <button className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                </button>
+                <button className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </button>
+              </div>
+              <div className="flex justify-center gap-2">
+                <div className="w-8 h-2 bg-gray-900 dark:bg-white rounded-full" />
+                <div className="w-2 h-2 bg-gray-300 dark:bg-gray-700 rounded-full" />
+                <div className="w-2 h-2 bg-gray-300 dark:bg-gray-700 rounded-full" />
+              </div>
+              <div className="flex gap-4 justify-center">
+                <div className="w-32 h-20 rounded-lg bg-gradient-to-br from-green-500 to-blue-600 ring-2 ring-blue-500 ring-offset-2" />
+                <div className="w-32 h-20 rounded-lg bg-gray-200 dark:bg-gray-700 opacity-60" />
+                <div className="w-32 h-20 rounded-lg bg-gray-200 dark:bg-gray-700 opacity-60" />
+              </div>
+            </div>
+          </div>
+        ),
+        code: {
+          jsx: `import { ImageGalleryCarousel } from '@/components/ui/image-gallery-carousel'
+
+export function ProjectGallery() {
+  const images = [
+    { src: '/project1.jpg', alt: 'Project screenshot 1', caption: 'Homepage design' },
+    { src: '/project2.jpg', alt: 'Project screenshot 2', caption: 'Dashboard view' },
+    { src: '/project3.jpg', alt: 'Project screenshot 3', caption: 'Mobile responsive' }
+  ]
+
+  return (
+    <div className="max-w-5xl mx-auto">
+      <h2 className="text-3xl font-semibold mb-8">Project Gallery</h2>
+      <ImageGalleryCarousel 
+        images={images}
+        className="w-full"
+      />
+    </div>
+  )
+}`,
+          usage: `<ImageGalleryCarousel 
+  images={[
+    { src: '/img1.jpg', alt: 'Image 1', caption: 'Caption 1' },
+    { src: '/img2.jpg', alt: 'Image 2' },
+    { src: '/img3.jpg', alt: 'Image 3', caption: 'Caption 3' }
+  ]}
+  className="w-full"
+/>
+
+// Minimal usage
+<ImageGalleryCarousel images={images} />
+
+// In a container
+<div className="max-w-4xl mx-auto">
+  <ImageGalleryCarousel images={galleryImages} />
+</div>`
+        },
+        props: [
+          { name: 'images', type: 'GalleryImage[]', description: 'Array of images with src, alt, and optional caption', required: true },
+          { name: 'className', type: 'string', description: 'Additional CSS classes for the container' }
+        ],
+        guidelines: [
+          'Optimize images for web performance',
+          'Provide loading states for better UX',
+          'Ensure touch-friendly navigation on mobile',
+          'Keep thumbnail strip scrollable on small screens',
+          'Use aspect ratios that work across devices'
+        ]
+      }
+    ]
+  },
+  {
     id: 'typography',
     name: 'Typography',
     components: [
