@@ -54,48 +54,53 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
   return (
     <div className={cn("relative w-full", className)} ref={containerRef}>
       {/* Main image container */}
-      <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-900">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-            className="relative h-full w-full"
-          >
-            <Image
-              src={currentImage.src}
-              alt={currentImage.alt}
-              fill
-              className="object-cover"
-              quality={90}
-              priority={currentIndex === 0}
-              onLoad={() => {
-                setImageLoadingStates(prev => ({ ...prev, [currentIndex]: true }))
-              }}
-            />
-            
-            {/* Loading state */}
-            {!imageLoadingStates[currentIndex] && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="h-8 w-8 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600 dark:border-gray-700 dark:border-t-gray-400" />
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
+      <div className="relative w-full bg-gray-100 dark:bg-gray-900 rounded-2xl overflow-hidden">
+        {/* Dynamic height container to accommodate different aspect ratios */}
+        <div className="relative min-h-[400px] max-h-[80vh] flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+              className="relative w-full h-full flex items-center justify-center p-4"
+            >
+              <Image
+                src={currentImage.src}
+                alt={currentImage.alt}
+                width={1920}
+                height={1080}
+                className="max-w-full max-h-[70vh] w-auto h-auto object-contain rounded-lg"
+                quality={90}
+                priority={currentIndex === 0}
+                onLoad={() => {
+                  setImageLoadingStates(prev => ({ ...prev, [currentIndex]: true }))
+                }}
+              />
+              
+              {/* Loading state */}
+              {!imageLoadingStates[currentIndex] && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600 dark:border-gray-700 dark:border-t-gray-400" />
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
-        {/* Navigation arrows - Apple style */}
+        {/* Navigation controls - Same style as modal */}
         {images.length > 1 && (
           <>
+            {/* Previous button */}
             <button
               onClick={goToPrevious}
-              className="absolute left-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-gray-900 shadow-lg backdrop-blur-sm transition-all hover:bg-white focus:outline-none focus:ring-2 focus:ring-white/50 dark:bg-black/90 dark:text-white dark:hover:bg-black"
+              className="absolute left-4 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-gray-900 shadow-md backdrop-blur-sm transition-all hover:bg-white focus:outline-none focus:ring-2 focus:ring-white/50 dark:bg-gray-900/80 dark:text-white dark:hover:bg-gray-900"
               aria-label="Previous image"
             >
               <svg
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -107,14 +112,15 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
               </svg>
             </button>
 
+            {/* Next button */}
             <button
               onClick={goToNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-gray-900 shadow-lg backdrop-blur-sm transition-all hover:bg-white focus:outline-none focus:ring-2 focus:ring-white/50 dark:bg-black/90 dark:text-white dark:hover:bg-black"
+              className="absolute right-4 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-gray-900 shadow-md backdrop-blur-sm transition-all hover:bg-white focus:outline-none focus:ring-2 focus:ring-white/50 dark:bg-gray-900/80 dark:text-white dark:hover:bg-gray-900"
               aria-label="Next image"
             >
               <svg
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -125,6 +131,25 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </button>
+
+            {/* Pagination dots - Modal style at bottom right */}
+            <div className="absolute bottom-4 right-4 flex items-center gap-4 rounded-full bg-white/10 px-4 py-3 backdrop-blur-md">
+              <div className="flex items-center gap-1.5">
+                {images.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToIndex(index)}
+                    className={cn(
+                      "h-1.5 rounded-full transition-all duration-300 focus:outline-none",
+                      index === currentIndex
+                        ? "w-6 bg-white"
+                        : "w-1.5 bg-white/40 hover:bg-white/60"
+                    )}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
           </>
         )}
       </div>
@@ -140,25 +165,6 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
         >
           {currentImage.caption}
         </motion.p>
-      )}
-
-      {/* Apple-style pagination */}
-      {images.length > 1 && (
-        <div className="mt-6 flex items-center justify-center gap-2">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToIndex(index)}
-              className={cn(
-                "h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2",
-                index === currentIndex
-                  ? "w-8 bg-gray-900 dark:bg-white"
-                  : "w-2 bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600"
-              )}
-              aria-label={`Go to image ${index + 1}`}
-            />
-          ))}
-        </div>
       )}
 
       {/* Thumbnail strip - Apple style */}
