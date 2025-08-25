@@ -54,9 +54,9 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
   return (
     <div className={cn("relative w-full", className)} ref={containerRef}>
       {/* Main image container */}
-      <div className="relative w-full bg-gray-100 dark:bg-gray-900 rounded-2xl overflow-hidden">
-        {/* Dynamic height container to accommodate different aspect ratios */}
-        <div className="relative min-h-[400px] max-h-[80vh] flex items-center justify-center">
+      <div className="relative w-full">
+        {/* Dynamic height container that respects image aspect ratio */}
+        <div className="relative bg-gray-100 dark:bg-gray-900 rounded-2xl overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -64,14 +64,15 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-              className="relative w-full h-full flex items-center justify-center p-4"
+              className="relative flex items-center justify-center"
             >
               <Image
                 src={currentImage.src}
                 alt={currentImage.alt}
                 width={1920}
-                height={1080}
-                className="max-w-full max-h-[70vh] w-auto h-auto object-contain rounded-lg"
+                height={2400}
+                className="w-full h-auto object-contain"
+                style={{ maxHeight: '70vh' }}
                 quality={90}
                 priority={currentIndex === 0}
                 onLoad={() => {
@@ -81,7 +82,7 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
               
               {/* Loading state */}
               {!imageLoadingStates[currentIndex] && (
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-900">
                   <div className="h-8 w-8 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600 dark:border-gray-700 dark:border-t-gray-400" />
                 </div>
               )}
@@ -89,13 +90,13 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
           </AnimatePresence>
         </div>
 
-        {/* Navigation controls - Same style as modal */}
+        {/* Navigation controls - Below image */}
         {images.length > 1 && (
-          <>
+          <div className="mt-4 flex items-center justify-between">
             {/* Previous button */}
             <button
               onClick={goToPrevious}
-              className="absolute left-4 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-gray-900 shadow-md backdrop-blur-sm transition-all hover:bg-white focus:outline-none focus:ring-2 focus:ring-white/50 dark:bg-gray-900/80 dark:text-white dark:hover:bg-gray-900"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-gray-700 transition-all hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
               aria-label="Previous image"
             >
               <svg
@@ -112,10 +113,27 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
               </svg>
             </button>
 
+            {/* Pagination dots - Center */}
+            <div className="flex items-center gap-1.5">
+              {images.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToIndex(index)}
+                  className={cn(
+                    "h-1.5 rounded-full transition-all duration-300 focus:outline-none",
+                    index === currentIndex
+                      ? "w-6 bg-gray-900 dark:bg-white"
+                      : "w-1.5 bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600"
+                  )}
+                  aria-label={`Go to image ${index + 1}`}
+                />
+              ))}
+            </div>
+
             {/* Next button */}
             <button
               onClick={goToNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-gray-900 shadow-md backdrop-blur-sm transition-all hover:bg-white focus:outline-none focus:ring-2 focus:ring-white/50 dark:bg-gray-900/80 dark:text-white dark:hover:bg-gray-900"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-gray-700 transition-all hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
               aria-label="Next image"
             >
               <svg
@@ -131,26 +149,7 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </button>
-
-            {/* Pagination dots - Modal style at bottom right */}
-            <div className="absolute bottom-4 right-4 flex items-center gap-4 rounded-full bg-white/10 px-4 py-3 backdrop-blur-md">
-              <div className="flex items-center gap-1.5">
-                {images.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => goToIndex(index)}
-                    className={cn(
-                      "h-1.5 rounded-full transition-all duration-300 focus:outline-none",
-                      index === currentIndex
-                        ? "w-6 bg-white"
-                        : "w-1.5 bg-white/40 hover:bg-white/60"
-                    )}
-                    aria-label={`Go to image ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </>
+          </div>
         )}
       </div>
 
