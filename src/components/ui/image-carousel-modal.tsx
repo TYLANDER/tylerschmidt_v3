@@ -146,14 +146,10 @@ export function ImageCarouselModal({
                   className="relative w-full h-full flex items-center justify-center"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <Image
+                  <img
                     src={currentImage.src}
                     alt={currentImage.alt}
-                    width={1920}
-                    height={1080}
                     className="max-w-full max-h-[calc(100vh-12rem)] w-auto h-auto rounded-lg object-contain"
-                    quality={95}
-                    priority
                   />
                   
                 </motion.div>
@@ -167,29 +163,9 @@ export function ImageCarouselModal({
               </AnimatePresence>
             </div>
 
-            {/* Apple-style controls */}
+            {/* Apple-style controls - right aligned with dots first, then buttons together */}
             {showPagination && images.length > 1 && (
               <div className="fixed bottom-6 right-6 z-10 flex items-center gap-4 rounded-full bg-white/10 px-4 py-3 backdrop-blur-md">
-                {/* Previous button */}
-                <button
-                  onClick={goToPrevious}
-                  className="flex h-8 w-8 items-center justify-center rounded-full text-white transition-all hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
-                  aria-label="Previous image"
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M15 18l-6-6 6-6" />
-                  </svg>
-                </button>
-
                 {/* Pagination dots */}
                 <div className="flex items-center gap-1.5">
                   {images.map((_, index) => (
@@ -206,25 +182,48 @@ export function ImageCarouselModal({
                   ))}
                 </div>
 
-                {/* Next button */}
-                <button
-                  onClick={goToNext}
-                  className="flex h-8 w-8 items-center justify-center rounded-full text-white transition-all hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
-                  aria-label="Next image"
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                {/* Navigation buttons grouped together */}
+                <div className="flex items-center gap-1">
+                  {/* Previous button */}
+                  <button
+                    onClick={goToPrevious}
+                    className="flex h-8 w-8 items-center justify-center rounded-full text-white/60 hover:text-white hover:bg-white/10 transition-all focus:outline-none focus:ring-2 focus:ring-white/50"
+                    aria-label="Previous image"
                   >
-                    <path d="M9 18l6-6-6-6" />
-                  </svg>
-                </button>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                  </button>
+
+                  {/* Next button */}
+                  <button
+                    onClick={goToNext}
+                    className="flex h-8 w-8 items-center justify-center rounded-full text-white/60 hover:text-white hover:bg-white/10 transition-all focus:outline-none focus:ring-2 focus:ring-white/50"
+                    aria-label="Next image"
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             )}
 

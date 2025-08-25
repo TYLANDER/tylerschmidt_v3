@@ -106,16 +106,11 @@ export function ImageModal({ isOpen, onClose, src, alt, caption }: ImageModalPro
                 className="relative w-full h-full flex items-center justify-center"
                 onClick={(e) => e.stopPropagation()}
               >
-                <Image
+                <img
                   src={src}
                   alt={alt}
-                  width={1920}
-                  height={1080}
                   className="max-w-full max-h-[calc(100vh-12rem)] w-auto h-auto rounded-lg object-contain"
-                  quality={95}
-                  priority
                 />
-                
               </div>
               
               {/* Caption below image */}

@@ -55,8 +55,8 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
     <div className={cn("relative w-full", className)} ref={containerRef}>
       {/* Main image container */}
       <div className="relative w-full">
-        {/* Dynamic height container that respects image aspect ratio */}
-        <div className="relative bg-gray-100 dark:bg-gray-900 rounded-2xl overflow-hidden">
+        {/* Container that shows full image bounds */}
+        <div className="relative bg-gray-100 dark:bg-gray-900 rounded-2xl overflow-hidden flex items-center justify-center" style={{ minHeight: '400px', maxHeight: '70vh' }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -64,17 +64,12 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-              className="relative flex items-center justify-center"
+              className="relative w-full h-full flex items-center justify-center p-8"
             >
-              <Image
+              <img
                 src={currentImage.src}
                 alt={currentImage.alt}
-                width={1920}
-                height={2400}
-                className="w-full h-auto object-contain"
-                style={{ maxHeight: '70vh' }}
-                quality={90}
-                priority={currentIndex === 0}
+                className="max-w-full max-h-full w-auto h-auto object-contain"
                 onLoad={() => {
                   setImageLoadingStates(prev => ({ ...prev, [currentIndex]: true }))
                 }}
@@ -90,30 +85,10 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
           </AnimatePresence>
         </div>
 
-        {/* Navigation controls - Below image */}
+        {/* Navigation controls - Apple style right-aligned */}
         {images.length > 1 && (
-          <div className="mt-4 flex items-center justify-between">
-            {/* Previous button */}
-            <button
-              onClick={goToPrevious}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-gray-700 transition-all hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-              aria-label="Previous image"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
-            </button>
-
-            {/* Pagination dots - Center */}
+          <div className="mt-4 flex items-center justify-end gap-4">
+            {/* Pagination dots */}
             <div className="flex items-center gap-1.5">
               {images.map((_, index) => (
                 <button
@@ -130,25 +105,48 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
               ))}
             </div>
 
-            {/* Next button */}
-            <button
-              onClick={goToNext}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-gray-700 transition-all hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-              aria-label="Next image"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            {/* Navigation buttons grouped together */}
+            <div className="flex items-center gap-2">
+              {/* Previous button */}
+              <button
+                onClick={goToPrevious}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-gray-700 transition-all hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                aria-label="Previous image"
               >
-                <path d="M9 18l6-6-6-6" />
-              </svg>
-            </button>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+
+              {/* Next button */}
+              <button
+                onClick={goToNext}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-gray-700 transition-all hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                aria-label="Next image"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </div>
           </div>
         )}
       </div>
