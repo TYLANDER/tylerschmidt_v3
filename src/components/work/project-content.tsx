@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
 import { urlFor } from '@/sanity/lib/image'
 import { portableTextComponents } from './portable-text-components'
-import { ExpandableImage } from '@/components/ui/expandable-image'
 import { ImageCarouselModal, useImageCarouselModal, type CarouselImage } from '@/components/ui/image-carousel-modal'
 import type { Project } from '@/types/sanity'
 
