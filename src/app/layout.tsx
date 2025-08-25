@@ -12,11 +12,11 @@ import { PiaConsoleInit } from "@/components/PiaConsoleInit"
 export const metadata: Metadata = {
   metadataBase: new URL('https://tylerschmidt.dev'),
   title: {
-    default: "Tyler Schmidt - Product Designer & Engineer",
+    default: "Tyler Schmidt - Product Designer",
     template: "%s | Tyler Schmidt",
   },
   description:
-    "Tyler Schmidt - Designer & Engineer. Creative direction by Pia. Where mathematical precision meets raw emotion in digital experiences.",
+    "Tyler Schmidt - Product Designer. Creative direction by Pia. Where mathematical precision meets raw emotion in digital experiences.",
   keywords: [
     "Product Designer",
     "UX Designer",
@@ -42,9 +42,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://tylerschmidt.dev",
-    title: "Tyler Schmidt - Product Designer & Engineer",
+    title: "Tyler Schmidt - Product Designer",
     description:
-      "Product designer and engineer crafting bold, minimalist interfaces with a human edge.",
+      "Product designer crafting bold, minimalist interfaces with a human edge.",
     siteName: "Tyler Schmidt",
     images: [
       {
@@ -57,9 +57,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tyler Schmidt - Product Designer & Engineer",
+    title: "Tyler Schmidt - Product Designer",
     description:
-      "Product designer and engineer crafting bold, minimalist interfaces with a human edge.",
+      "Product designer crafting bold, minimalist interfaces with a human edge.",
     creator: "@tylerschmidt",
     images: ["/og-image.png"],
   },

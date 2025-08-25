@@ -237,7 +237,7 @@ const layers: Layer[] = [
       <div className="flex items-center justify-center h-full">
         <div className="text-center">
           <h1 className="text-6xl md:text-7xl font-bold mb-4">Tyler Schmidt</h1>
-          <p className="text-2xl text-muted-foreground">Product Designer & Engineer</p>
+          <p className="text-2xl text-muted-foreground">Product Designer</p>
         </div>
       </div>
     ),

@@ -8,7 +8,7 @@ export async function GET(request: Request) {
  
     // Dynamic params
     const title = searchParams.get('title') || 'Tyler Schmidt'
-    const subtitle = searchParams.get('subtitle') || 'Product Designer & Engineer'
+    const subtitle = searchParams.get('subtitle') || 'Product Designer'
     
     return new ImageResponse(
       (
@@ -20,8 +20,8 @@ export async function GET(request: Request) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: '#ffffff',
-            backgroundImage: 'radial-gradient(circle at 20% 80%, rgba(0, 102, 255, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(0, 255, 127, 0.05) 0%, transparent 50%)',
+            backgroundColor: '#000000',
+            backgroundImage: 'radial-gradient(circle at 20% 80%, rgba(0, 102, 255, 0.15) 0%, transparent 40%), radial-gradient(circle at 80% 20%, rgba(0, 255, 127, 0.1) 0%, transparent 40%), radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 70%)',
           }}
         >
           <div
@@ -37,22 +37,24 @@ export async function GET(request: Request) {
           >
             <h1
               style={{
-                fontSize: '72px',
+                fontSize: '84px',
                 fontWeight: 900,
-                color: '#111111',
-                lineHeight: 1.1,
-                marginBottom: '20px',
-                letterSpacing: '-0.02em',
+                color: '#ffffff',
+                lineHeight: 1,
+                marginBottom: '24px',
+                letterSpacing: '-0.03em',
+                textShadow: '0 0 40px rgba(0, 102, 255, 0.3)',
               }}
             >
               {title}
             </h1>
             <p
               style={{
-                fontSize: '32px',
-                color: '#666666',
-                lineHeight: 1.4,
-                fontWeight: 400,
+                fontSize: '36px',
+                color: '#a0a0a0',
+                lineHeight: 1.3,
+                fontWeight: 500,
+                letterSpacing: '-0.01em',
               }}
             >
               {subtitle}
@@ -63,25 +65,39 @@ export async function GET(request: Request) {
           <div
             style={{
               position: 'absolute',
-              top: '60px',
-              left: '60px',
-              width: '120px',
-              height: '120px',
-              border: '3px solid #0066FF',
-              borderRadius: '8px',
-              opacity: 0.2,
+              top: '40px',
+              left: '40px',
+              width: '160px',
+              height: '160px',
+              border: '4px solid #0066FF',
+              borderRadius: '12px',
+              opacity: 0.3,
+              filter: 'blur(1px)',
             }}
           />
           <div
             style={{
               position: 'absolute',
-              bottom: '60px',
-              right: '60px',
-              width: '120px',
-              height: '120px',
+              bottom: '40px',
+              right: '40px',
+              width: '140px',
+              height: '140px',
               backgroundColor: '#00FF7F',
-              borderRadius: '60px',
-              opacity: 0.1,
+              borderRadius: '70px',
+              opacity: 0.2,
+              filter: 'blur(2px)',
+            }}
+          />
+          {/* Additional design element */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '600px',
+              height: '1px',
+              background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent)',
+              transform: 'translate(-50%, -50%)',
             }}
           />
         </div>
