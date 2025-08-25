@@ -29,7 +29,7 @@ export function ProjectCard({ project, index, imageUrl }: ProjectCardProps) {
           transition={{ duration: 0.2 }}
         >
           {/* Preview Window */}
-          <div className="relative h-64 md:h-72 bg-gray-50 dark:bg-gray-900 overflow-hidden flex-shrink-0">
+          <div className="relative aspect-[4/3] bg-gray-50 dark:bg-gray-900 overflow-hidden flex-shrink-0">
             {imageUrl ? (
               <Image
                 src={imageUrl}

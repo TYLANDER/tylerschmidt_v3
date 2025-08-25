@@ -34,15 +34,16 @@ export function ProjectContent({ project }: ProjectContentProps) {
       {/* Featured Image */}
       {project.featuredImage && project.featuredImage.asset && (
         <motion.div 
-          className="mb-20 -mx-6 md:mx-0"
+          className="relative aspect-video w-full mb-20 -mx-6 md:mx-0 md:rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-900"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <ExpandableImage
+          <Image
             src={urlFor(project.featuredImage).width(2400).height(1350).quality(90).url()}
             alt={project.title}
-            className="aspect-video w-full md:rounded-2xl bg-gray-100 dark:bg-gray-900"
+            fill
+            className="object-cover"
             priority
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1320px"
           />
