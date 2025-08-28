@@ -1,3 +1,0 @@
-Last deployment trigger: 2024-12-19
-
-This file is used to trigger Vercel redeployments when needed.
