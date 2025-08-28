@@ -37,7 +37,7 @@ export default async function WorkPage() {
               className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-gray-900 dark:text-white"
             />
             <AnimatedText
-              text="A collection of projects that showcase my expertise in design and development."
+              text="From enterprise transformations to emerging tech innovations. Each project tells a story of strategic design thinking."
               as="p"
               variant="fade"
               className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed"

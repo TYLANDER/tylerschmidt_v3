@@ -386,19 +386,35 @@ export function HeroParticleTypography() {
       />
       
       <Container className="relative z-10 h-full flex items-end pb-20 pointer-events-none">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-4"
-        >
-          <button
-            onClick={handleExplode}
-            className="px-4 py-2 bg-black dark:bg-white text-white dark:text-black rounded-full font-medium hover:opacity-80 transition-opacity pointer-events-auto"
-            disabled={isExploded}
+        <div className="w-full">
+          {/* Subtitle */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="mb-8"
           >
-            {isExploded ? 'Exploding...' : 'Explode'}
-          </button>
-        </motion.div>
+            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 font-medium">
+              Product Designer at Adobe • Crafting experiences that convert
+            </p>
+          </motion.div>
+          
+          {/* Action buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className="flex items-center gap-4"
+          >
+            <button
+              onClick={handleExplode}
+              className="px-4 py-2 bg-black dark:bg-white text-white dark:text-black rounded-full font-medium hover:opacity-80 transition-opacity pointer-events-auto"
+              disabled={isExploded}
+            >
+              {isExploded ? 'Exploding...' : 'Explode'}
+            </button>
+          </motion.div>
+        </div>
       </Container>
     </section>
   )
