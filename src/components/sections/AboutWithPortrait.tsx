@@ -1,7 +1,7 @@
 "use client"
 
 import { PortraitImage } from "@/components/ui/portrait-image"
-import { ClassifiedText } from "@/components/animations/animated-text"
+import { AnimatedText } from "@/components/animations/animated-text"
 
 interface AboutWithPortraitProps {
   portraitSrc: string
@@ -25,25 +25,28 @@ export function AboutWithPortrait({
         </div>
         
         <div className="content-column space-y-4">
-          <ClassifiedText
+          <AnimatedText
             text="I don&apos;t just design interfaces—I architect the future of how humans interact with technology."
-            className="text-foreground text-lg font-medium"
-            redactionRate={0.2}
+            as="p"
+            variant="fade"
             delay={0.7}
+            className="text-foreground text-lg font-medium"
           />
 
-          <ClassifiedText
+          <AnimatedText
             text="My journey began at Johns Hopkins University, where I learned to think systemically about complex problems. But the real education happened in the trenches of Silicon Valley—from Google&apos;s agency team as a summer intern to leading buy flow optimization at Adobe, each role taught me that great design isn&apos;t about making things pretty. It&apos;s about making the impossible feel inevitable."
-            className="text-muted-foreground"
-            redactionRate={0.15}
+            as="p"
+            variant="fade"
             delay={1.0}
+            className="text-muted-foreground"
           />
 
-          <ClassifiedText
+          <AnimatedText
             text="I&apos;ve had the privilege of working across the entire spectrum of digital transformation. At Adobe, I&apos;m currently focused on Commerce Growth, specifically buy flow optimization—the critical moment where browsing becomes buying. It&apos;s here that I&apos;ve learned that every pixel, every interaction, every micro-moment can be the difference between a lost opportunity and a converted customer."
-            className="text-muted-foreground"
-            redactionRate={0.18}
+            as="p"
+            variant="fade"
             delay={1.3}
+            className="text-muted-foreground"
           />
         </div>
 
@@ -96,25 +99,28 @@ export function AboutWithPortrait({
         className="md:w-1/3"
       />
       
-      <ClassifiedText
+      <AnimatedText
         text="I don&apos;t just design interfaces—I architect the future of how humans interact with technology."
-        className="text-foreground text-lg font-medium"
-        redactionRate={0.2}
+        as="p"
+        variant="fade"
         delay={0.7}
+        className="text-foreground text-lg font-medium"
       />
 
-      <ClassifiedText
+      <AnimatedText
         text="My journey began at Johns Hopkins University, where I learned to think systemically about complex problems. But the real education happened in the trenches of Silicon Valley—from Google&apos;s agency team as a summer intern to leading buy flow optimization at Adobe, each role taught me that great design isn&apos;t about making things pretty. It&apos;s about making the impossible feel inevitable."
-        className="text-muted-foreground"
-        redactionRate={0.15}
+        as="p"
+        variant="fade"
         delay={1.0}
+        className="text-muted-foreground"
       />
 
-      <ClassifiedText
+      <AnimatedText
         text="I&apos;ve had the privilege of working across the entire spectrum of digital transformation. At Adobe, I&apos;m currently focused on Commerce Growth, specifically buy flow optimization—the critical moment where browsing becomes buying. It&apos;s here that I&apos;ve learned that every pixel, every interaction, every micro-moment can be the difference between a lost opportunity and a converted customer."
-        className="text-muted-foreground"
-        redactionRate={0.18}
+        as="p"
+        variant="fade"
         delay={1.3}
+        className="text-muted-foreground"
       />
     </div>
   )

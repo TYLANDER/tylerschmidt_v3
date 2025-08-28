@@ -40,38 +40,42 @@ export default function AboutPage() {
                 className="text-foreground mb-6 text-3xl font-bold"
               />
 
-              <div className="text-muted-foreground space-y-4 leading-relaxed">
-                {/* Portrait image with creative shape */}
-                <PortraitImage
-                  src="/images/tyler-portrait@2x.jpg"
-                  alt="Tyler Schmidt - Product Designer"
-                  variant="creative"
-                  className="md:w-1/3"
-                />
+              {/* Grid Layout: Portrait on left, content on right */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
+                <div className="lg:col-span-1">
+                  <PortraitImage
+                    src="/images/tyler-portrait@2x.jpg"
+                    alt="Tyler Schmidt - Product Designer"
+                    variant="creative"
+                    className="w-full lg:sticky lg:top-32"
+                  />
+                </div>
                 
-                <AnimatedText
-                  text="I don&apos;t just design interfaces—I architect the future of how humans interact with technology."
-                  as="p"
-                  variant="fade"
-                  delay={0.7}
-                  className="text-foreground text-lg font-medium"
-                />
+                <div className="lg:col-span-2 space-y-4 text-muted-foreground leading-relaxed">
+                  <AnimatedText
+                    text="I don&apos;t just design interfaces—I architect the future of how humans interact with technology."
+                    as="p"
+                    variant="fade"
+                    delay={0.7}
+                    className="text-foreground text-lg font-medium"
+                  />
 
-                <AnimatedText
-                  text="My journey began at Johns Hopkins University, where I learned to think systemically about complex problems. But the real education happened in the trenches of Silicon Valley—from Google&apos;s agency team as a summer intern to leading buy flow optimization at Adobe, each role taught me that great design isn&apos;t about making things pretty. It&apos;s about making the impossible feel inevitable."
-                  as="p"
-                  variant="fade"
-                  delay={1.0}
-                  className="text-muted-foreground"
-                />
+                  <AnimatedText
+                    text="My journey began at Johns Hopkins University, where I learned to think systemically about complex problems. But the real education happened in the trenches of Silicon Valley—from Google&apos;s agency team as a summer intern to leading buy flow optimization at Adobe, each role taught me that great design isn&apos;t about making things pretty. It&apos;s about making the impossible feel inevitable."
+                    as="p"
+                    variant="fade"
+                    delay={1.0}
+                    className="text-muted-foreground"
+                  />
 
-                <AnimatedText
-                  text="I&apos;ve had the privilege of working across the entire spectrum of digital transformation. At Adobe, I&apos;m currently focused on Commerce Growth, specifically buy flow optimization—the critical moment where browsing becomes buying. It&apos;s here that I&apos;ve learned that every pixel, every interaction, every micro-moment can be the difference between a lost opportunity and a converted customer."
-                  as="p"
-                  variant="fade"
-                  delay={1.3}
-                  className="text-muted-foreground"
-                />
+                  <AnimatedText
+                    text="I&apos;ve had the privilege of working across the entire spectrum of digital transformation. At Adobe, I&apos;m currently focused on Commerce Growth, specifically buy flow optimization—the critical moment where browsing becomes buying. It&apos;s here that I&apos;ve learned that every pixel, every interaction, every micro-moment can be the difference between a lost opportunity and a converted customer."
+                    as="p"
+                    variant="fade"
+                    delay={1.3}
+                    className="text-muted-foreground"
+                  />
+                </div>
               </div>
             </div>
 

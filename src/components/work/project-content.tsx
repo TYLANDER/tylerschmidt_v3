@@ -5,20 +5,19 @@ import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
 import { urlFor } from '@/sanity/lib/image'
 import { portableTextComponents } from './portable-text-components'
-import { ImageGalleryCarouselV2 } from '@/components/ui/image-gallery-carousel-v2'
-import { ImageCarouselModal, useImageCarouselModal } from '@/components/ui/image-carousel-modal'
+import { ImageDisplayEnhanced, EnhancedImageModal, useEnhancedImageModal } from '@/components/ui/image-display-enhanced'
 import type { Project } from '@/types/sanity'
-import type { CarouselImage } from '@/components/ui/image-carousel-modal'
+import type { DisplayImage } from '@/components/ui/image-display-enhanced'
 
 interface ProjectContentProps {
   project: Project
 }
 
 export function ProjectContent({ project }: ProjectContentProps) {
-  const { modalProps, openModal } = useImageCarouselModal()
+  const { modalProps, openModal } = useEnhancedImageModal()
 
-  // Prepare gallery images for carousel - using original dimensions for full quality
-  const galleryImages: CarouselImage[] = project.gallery
+  // Prepare gallery images with enhanced display support
+  const galleryImages: DisplayImage[] = project.gallery
     ?.filter(image => image.asset)
     ?.map((image) => ({
       src: urlFor(image).quality(95).url(),
@@ -107,17 +106,18 @@ export function ProjectContent({ project }: ProjectContentProps) {
             <h2 id="gallery-heading" className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mb-12 text-center md:text-3xl">
               Project Gallery
             </h2>
-            <ImageGalleryCarouselV2 
+            <ImageDisplayEnhanced 
               images={galleryImages}
               className="w-full"
               onImageClick={handleGalleryImageClick}
+              variant="carousel"
             />
           </div>
         </motion.section>
       )}
 
-      {/* Image Carousel Modal */}
-      <ImageCarouselModal {...modalProps} />
+      {/* Enhanced Image Modal */}
+      <EnhancedImageModal {...modalProps} />
     </>
   )
 }

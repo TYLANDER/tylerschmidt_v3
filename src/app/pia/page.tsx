@@ -209,22 +209,22 @@ export default function PiaPage() {
           <div className="grid md:grid-cols-2 gap-8">
             {[
               {
-                quote: "Best code review I&apos;ve ever had. The tail wag at the end really sealed the deal.",
+                quote: "Best code review I've ever had. The tail wag at the end really sealed the deal.",
                 author: "Anonymous Developer",
                 rating: "5/5 paws"
               },
               {
-                quote: "Pia&apos;s comfort testing revealed critical UX issues we hadn&apos;t considered.",
+                quote: "Pia's comfort testing revealed critical UX issues we hadn't considered.",
                 author: "Product Manager",
                 rating: "10/10 would pet again"
               },
               {
-                quote: "The &apos;treat-driven development&apos; methodology has revolutionized our workflow.",
+                quote: "The 'treat-driven development' methodology has revolutionized our workflow.",
                 author: "Tech Lead",
                 rating: "Certified Good Girl"
               },
               {
-                quote: "Her attention to detail is unmatched. Also, she&apos;s very soft.",
+                quote: "Her attention to detail is unmatched. Also, she's very soft.",
                 author: "Designer",
                 rating: "Royal Approval"
               }
