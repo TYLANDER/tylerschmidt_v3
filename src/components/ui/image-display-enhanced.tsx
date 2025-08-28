@@ -67,35 +67,11 @@ export function ImageDisplayEnhanced({
     const state = imageStates[index]
     if (!state) return {}
 
-    const aspectRatio = state.naturalWidth / state.naturalHeight
-    const isWide = aspectRatio > 1.5
-    const isTall = aspectRatio < 0.67
-
-    // For very wide images (like the button specs), limit height
-    if (isWide && aspectRatio > 2.5) {
-      return {
-        maxHeight: '60vh',
-        width: 'auto',
-        maxWidth: '100%',
-        objectFit: 'contain' as const
-      }
-    }
-
-    // For tall images, limit height more aggressively
-    if (isTall) {
-      return {
-        maxHeight: '70vh',
-        width: 'auto',
-        maxWidth: '100%',
-        objectFit: 'contain' as const
-      }
-    }
-
-    // For normal aspect ratios
+    // Since we now have a fixed container, we just need object-fit
     return {
-      maxHeight: '80vh',
+      objectFit: 'contain' as const,
       width: '100%',
-      objectFit: 'contain' as const
+      height: '100%'
     }
   }
 
@@ -148,8 +124,9 @@ export function ImageDisplayEnhanced({
   const currentState = imageStates[currentIndex]
 
   return (
-    <div className={cn("relative w-full", className)}>
-      <div className="relative bg-gray-50 dark:bg-gray-900 rounded-2xl overflow-hidden">
+    <div className={cn("relative w-full grid grid-rows-[1fr_auto_auto] gap-4", className)}>
+      {/* Image container with stable height */}
+      <div className="relative overflow-hidden rounded-2xl bg-gray-50 dark:bg-gray-900" style={{ height: '60vh', minHeight: '400px' }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -157,14 +134,16 @@ export function ImageDisplayEnhanced({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="relative flex items-center justify-center min-h-[300px]"
+            className="absolute inset-0 flex items-center justify-center"
           >
             <img
               src={currentImage.src}
               alt={currentImage.alt}
               className="cursor-zoom-in"
               style={{
-                ...getImageDisplayStyle(currentIndex),
+                maxWidth: '100%',
+                maxHeight: '100%',
+                objectFit: 'contain',
                 display: currentState?.loaded ? 'block' : 'none'
               }}
               onClick={() => onImageClick?.(currentIndex)}
@@ -192,21 +171,22 @@ export function ImageDisplayEnhanced({
         </AnimatePresence>
       </div>
 
-      {/* Caption */}
+      {/* Caption - in its own grid row */}
       {currentImage.caption && (
         <motion.p
           key={`caption-${currentIndex}`}
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-3 text-center text-sm text-gray-600 dark:text-gray-400"
+          className="text-center text-sm text-gray-600 dark:text-gray-400 min-h-[1.5rem]"
         >
           {currentImage.caption}
         </motion.p>
       )}
+      {!currentImage.caption && <div className="min-h-[1.5rem]" />}
 
-      {/* Navigation for carousel */}
+      {/* Navigation for carousel - in its own grid row */}
       {images.length > 1 && variant === 'carousel' && (
-        <div className="mt-6 flex items-center justify-between">
+        <div className="flex items-center justify-between">
           <span className="text-sm text-gray-500 dark:text-gray-400">
             {currentIndex + 1} / {images.length}
           </span>
