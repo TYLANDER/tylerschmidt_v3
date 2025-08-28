@@ -17,11 +17,11 @@ interface ProjectContentProps {
 export function ProjectContent({ project }: ProjectContentProps) {
   const { modalProps, openModal } = useImageCarouselModal()
 
-  // Prepare gallery images for carousel
+  // Prepare gallery images for carousel - using original dimensions for full quality
   const galleryImages: CarouselImage[] = project.gallery
     ?.filter(image => image.asset)
     ?.map((image) => ({
-      src: urlFor(image).width(1920).height(1080).quality(95).url(),
+      src: urlFor(image).quality(95).url(),
       alt: image.alt || `${project.title} gallery image`,
       caption: image.caption
     })) || []

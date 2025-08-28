@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { createPortal } from 'react-dom'
+import '@/styles/image-carousel-modal.css'
 
 export interface CarouselImage {
   src: string
@@ -133,7 +134,7 @@ export function ImageCarouselModal({
               </button>
             </div>
 
-            {/* Image container - adjusted to fit within viewport */}
+            {/* Image container - with scroll support for large images */}
             <div className="flex flex-1 items-center justify-center p-4 md:p-8 overflow-auto" onClick={onClose}>
               <AnimatePresence mode="wait">
                 <motion.div
@@ -142,27 +143,30 @@ export function ImageCarouselModal({
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.98 }}
                   transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-                  className="relative flex flex-col items-center"
-                                  onClick={(e) => e.stopPropagation()}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                    src={currentImage.src}
-                    alt={currentImage.alt}
-                    className="w-auto h-auto rounded-lg"
-                    style={{
-                      maxWidth: '90vw',
-                      maxHeight: '80vh',
-                      objectFit: 'contain'
-                    }}
-                  />
-                  
-                  {/* Caption below image */}
-                  {currentImage.caption && (
-                    <div className="mt-4 text-center">
-                      <p className="text-sm text-white/70 md:text-base">{currentImage.caption}</p>
-                    </div>
-                  )}
+                  className="relative flex flex-col items-center w-full max-w-[90vw] max-h-[calc(100vh-8rem)] overflow-auto custom-scrollbar"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Image wrapper with scroll */}
+                  <div className="relative flex flex-col items-center">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={currentImage.src}
+                      alt={currentImage.alt}
+                      className="w-auto h-auto rounded-lg"
+                      style={{
+                        maxWidth: '100%',
+                        height: 'auto',
+                        objectFit: 'contain'
+                      }}
+                    />
+                    
+                    {/* Caption below image */}
+                    {currentImage.caption && (
+                      <div className="mt-4 text-center px-4">
+                        <p className="text-sm text-white/70 md:text-base">{currentImage.caption}</p>
+                      </div>
+                    )}
+                  </div>
                 </motion.div>
               </AnimatePresence>
             </div>
