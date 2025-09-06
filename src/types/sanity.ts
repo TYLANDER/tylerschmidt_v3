@@ -1,3 +1,41 @@
+export interface AboutPage {
+  _id: string
+  title: string
+  headline: string
+  portraitImage?: {
+    asset: {
+      _id: string
+      url: string
+    }
+    alt?: string
+  }
+  bioFirstParagraph: string
+  bioSecondParagraph: string
+  expertiseSection: {
+    title: string
+    skills: Array<{
+      icon: string
+      title: string
+      description: string
+    }>
+  }
+  philosophyQuote: {
+    quote: string
+    showAttribution: boolean
+  }
+  careerHighlights: {
+    title: string
+    highlights: Array<{
+      company: string
+      description: string
+    }>
+  }
+  seo?: {
+    metaTitle?: string
+    metaDescription?: string
+  }
+}
+
 export interface Project {
   _id: string
   _type: "project"

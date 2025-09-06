@@ -29,21 +29,21 @@ export function DesignSystemLayout({
       {/* Mobile menu button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="fixed left-4 top-4 z-50 rounded-lg border border-border bg-background p-2 md:hidden"
+        className="fixed left-4 top-24 z-50 rounded-lg border border-border bg-background p-2 md:hidden"
       >
         {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
 
       {/* Sidebar */}
       <motion.aside
-        className={`fixed left-0 top-0 z-40 h-full w-80 transform border-r border-border bg-background transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+        className={`fixed left-0 top-0 z-40 h-full w-80 transform border-r border-border bg-background pt-20 transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
         initial={false}
       >
         <div className="border-b border-border p-6">
           <h2 className="text-lg font-semibold">Components</h2>
         </div>
 
-        <nav className="h-[calc(100vh-80px)] overflow-y-auto p-6">
+        <nav className="h-[calc(100vh-80px-5rem)] overflow-y-auto p-6">
           {categories.map((category) => (
             <div key={category.id} className="mb-8">
               <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -85,7 +85,7 @@ export function DesignSystemLayout({
       </motion.aside>
 
       {/* Main content */}
-      <main className="min-h-screen md:ml-80">
+      <main className="min-h-screen pt-20 md:ml-80">
         <div className="max-w-6xl px-6 py-12 md:px-12 md:py-16">{children}</div>
       </main>
 

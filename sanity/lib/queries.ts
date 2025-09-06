@@ -51,3 +51,38 @@ export const projectBySlugQuery = groq`
     githubUrl
   }
 `
+
+// Get about page content
+export const aboutPageQuery = groq`
+  *[_type == "about"][0] {
+    _id,
+    title,
+    headline,
+    portraitImage,
+    bioFirstParagraph,
+    bioSecondParagraph,
+    expertiseSection {
+      title,
+      skills[] {
+        icon,
+        title,
+        description
+      }
+    },
+    philosophyQuote {
+      quote,
+      showAttribution
+    },
+    careerHighlights {
+      title,
+      highlights[] {
+        company,
+        description
+      }
+    },
+    seo {
+      metaTitle,
+      metaDescription
+    }
+  }
+`
