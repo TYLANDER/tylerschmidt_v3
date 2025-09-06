@@ -1,24 +1,24 @@
 "use client"
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import { MobileNav } from './MobileNav'
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
+import { MobileNav } from "./MobileNav"
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
-  
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
     onScroll()
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
+    window.addEventListener("scroll", onScroll)
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
   return (
-    <motion.header 
+    <motion.header
       className={cn(
-        "fixed top-0 left-0 right-0 z-[100] transition-all duration-300",
+        "fixed left-0 right-0 top-0 z-[100] transition-all duration-300",
         scrolled ? "glass py-3" : "bg-transparent py-6"
       )}
       initial={{ y: -100 }}
@@ -27,70 +27,73 @@ export function SiteHeader() {
     >
       <div className="container mx-auto px-6">
         <nav className="flex items-center justify-between">
-          <Link 
-            href="/" 
-            className="font-heading font-bold text-xl md:text-2xl text-foreground hover:text-accent transition-colors duration-300"
+          <Link
+            href="/"
+            className="font-heading text-xl font-bold text-foreground transition-colors duration-300 hover:text-accent md:text-2xl"
           >
             Tyler Schmidt
           </Link>
-          
+
           <div className="flex items-center gap-8">
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden items-center gap-8 md:flex">
               {[
-                { href: '/work', label: 'Work' },
-                { href: '/about', label: 'About' },
-                { href: '/lab', label: 'Lab' },
-                { href: '/pia', label: 'Pia' },
+                { href: "/work", label: "Work" },
+                { href: "/about", label: "About" },
+                { href: "/lab", label: "Lab" },
+                { href: "/pia", label: "Pia" },
               ].map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors duration-300 relative group"
+                  className="group relative text-sm font-medium text-foreground/80 transition-colors duration-300 hover:text-foreground"
                 >
                   {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300" />
+                  <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-accent transition-all duration-300 group-hover:w-full" />
                 </Link>
               ))}
             </div>
-            
+
             {/* Mobile menu button */}
-            <button 
+            <button
               onClick={() => setMobileNavOpen(!mobileNavOpen)}
-              className="md:hidden w-10 h-10 flex flex-col justify-center items-center gap-1.5 group relative"
+              className="group relative flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
               aria-label="Toggle menu"
             >
-              <motion.span 
-                className="w-6 h-0.5 bg-foreground transition-all duration-300"
+              <motion.span
+                className="h-0.5 w-6 bg-foreground transition-all duration-300"
                 animate={{
                   rotate: mobileNavOpen ? 45 : 0,
-                  y: mobileNavOpen ? 6 : 0
+                  y: mobileNavOpen ? 6 : 0,
                 }}
               />
-              <motion.span 
-                className="w-4 h-0.5 bg-foreground transition-all duration-300"
+              <motion.span
+                className="h-0.5 w-4 bg-foreground transition-all duration-300"
                 animate={{
                   opacity: mobileNavOpen ? 0 : 1,
-                  x: mobileNavOpen ? 20 : 0
+                  x: mobileNavOpen ? 20 : 0,
                 }}
               />
-              <motion.span 
-                className="w-6 h-0.5 bg-foreground transition-all duration-300"
+              <motion.span
+                className="h-0.5 w-6 bg-foreground transition-all duration-300"
                 animate={{
                   rotate: mobileNavOpen ? -45 : 0,
-                  y: mobileNavOpen ? -6 : 0
+                  y: mobileNavOpen ? -6 : 0,
                 }}
               />
             </button>
           </div>
         </nav>
       </div>
-      
+
       {/* Mobile Navigation */}
-      <MobileNav isOpen={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />
+      <MobileNav
+        isOpen={mobileNavOpen}
+        onClose={() => setMobileNavOpen(false)}
+      />
     </motion.header>
   )
 }
 
 function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ")
 }

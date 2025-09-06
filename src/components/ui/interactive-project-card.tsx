@@ -138,7 +138,7 @@ export function InteractiveProjectCard({
 
           {/* Media Area */}
           <div
-            className={`aspect-[4/3] rounded-lg bg-gradient-to-br ${gradient} border-border/50 dazzle-pattern relative overflow-hidden border transition-all duration-300`}
+            className={`aspect-[4/3] rounded-lg bg-gradient-to-br ${gradient} dazzle-pattern relative overflow-hidden border border-border/50 transition-all duration-300`}
           >
             {/* RGB gradient overlay on hover */}
             <div className="rgb-gradient absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-30" />
@@ -153,17 +153,19 @@ export function InteractiveProjectCard({
                     linear-gradient(-45deg, transparent 30%, rgba(0,255,255,0.1) 50%, transparent 70%)
                   `,
                   backgroundSize: "60px 60px",
-                  animation: isHovered ? "dazzle-shift 2s ease-in-out infinite" : "none",
+                  animation: isHovered
+                    ? "dazzle-shift 2s ease-in-out infinite"
+                    : "none",
                 }}
               />
             </div>
 
             {/* Project initial placeholder */}
             <div
-              className="glitch-text data-viz flex h-full w-full items-center justify-center relative z-10"
+              className="glitch-text data-viz relative z-10 flex h-full w-full items-center justify-center"
               data-text={title[0]}
             >
-              <span className="text-foreground/80 text-6xl font-bold transition-all duration-300 group-hover:scale-110 group-hover:text-accent">
+              <span className="text-6xl font-bold text-foreground/80 transition-all duration-300 group-hover:scale-110 group-hover:text-accent">
                 {title[0]}
               </span>
             </div>
@@ -178,12 +180,12 @@ export function InteractiveProjectCard({
               >
                 {title}
               </h3>
-              <div className="text-accent bg-accent/20 border-accent/30 inline-block rounded-full border px-2 py-1 text-xs font-medium transition-all duration-300 group-hover:bg-accent/30 group-hover:border-accent/50">
+              <div className="inline-block rounded-full border border-accent/30 bg-accent/20 px-2 py-1 text-xs font-medium text-accent transition-all duration-300 group-hover:border-accent/50 group-hover:bg-accent/30">
                 {role} at {company}
               </div>
             </div>
 
-            <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed transition-colors duration-300 group-hover:text-foreground/80">
+            <p className="line-clamp-2 text-sm leading-relaxed text-muted-foreground transition-colors duration-300 group-hover:text-foreground/80">
               {description}
             </p>
 
@@ -192,7 +194,7 @@ export function InteractiveProjectCard({
                 {year}
               </span>
               <span
-                className="hover:text-accent kinetic-hover glitch-hover text-accent transition-all duration-300 group-hover:translate-x-1"
+                className="kinetic-hover glitch-hover text-accent transition-all duration-300 hover:text-accent group-hover:translate-x-1"
                 data-text="View →"
               >
                 View →

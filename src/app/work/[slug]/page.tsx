@@ -1,14 +1,13 @@
-import { client } from '@/sanity/lib/client'
-import { projectBySlugQuery, projectsQuery } from '@/sanity/lib/queries'
-import Link from 'next/link'
+import { client } from "@/sanity/lib/client"
+import { projectBySlugQuery, projectsQuery } from "@/sanity/lib/queries"
+import Link from "next/link"
 
-
-import { Container } from '@/components/ui/Container'
-import { PageWrapper } from '@/components/layout/page-transition'
-import { AnimatedText } from '@/components/animations/animated-text'
-import { ProjectContent } from '@/components/work/project-content'
-import { notFound } from 'next/navigation'
-import type { Project } from '@/types/sanity'
+import { Container } from "@/components/ui/Container"
+import { PageWrapper } from "@/components/layout/page-transition"
+import { AnimatedText } from "@/components/animations/animated-text"
+import { ProjectContent } from "@/components/work/project-content"
+import { notFound } from "next/navigation"
+import type { Project } from "@/types/sanity"
 
 async function getProject(slug: string) {
   return await client.fetch<Project>(projectBySlugQuery, { slug })
@@ -22,10 +21,10 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function ProjectPage({ 
-  params 
-}: { 
-  params: Promise<{ slug: string }> 
+export default async function ProjectPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
   const project = await getProject(slug)
@@ -43,7 +42,7 @@ export default async function ProjectPage({
             <div className="py-6">
               <Link
                 href="/work"
-                className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                className="inline-flex items-center gap-2 text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
               >
                 <span className="text-lg">←</span>
                 <span>Back to Work</span>
@@ -60,9 +59,9 @@ export default async function ProjectPage({
                 text={project.title}
                 as="h1"
                 variant="slide"
-                className="text-5xl md:text-7xl font-bold mb-6"
+                className="mb-6 text-5xl font-bold md:text-7xl"
               />
-              
+
               <div className="flex flex-wrap items-center gap-2 text-lg text-gray-600 dark:text-gray-400">
                 {project.client && (
                   <>
@@ -81,13 +80,13 @@ export default async function ProjectPage({
 
               {/* Project Links */}
               {(project.liveUrl || project.githubUrl) && (
-                <div className="flex flex-wrap gap-4 mt-8">
+                <div className="mt-8 flex flex-wrap gap-4">
                   {project.liveUrl && (
                     <a
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-black dark:bg-white text-white dark:text-black font-medium rounded-lg hover:opacity-90 transition-opacity"
+                      className="inline-flex items-center gap-2 rounded-lg bg-black px-6 py-3 font-medium text-white transition-opacity hover:opacity-90 dark:bg-white dark:text-black"
                     >
                       View Live Site
                       <span className="text-sm">↗</span>
@@ -98,7 +97,7 @@ export default async function ProjectPage({
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 dark:border-gray-700 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
+                      className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-6 py-3 font-medium transition-colors hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-900"
                     >
                       View on GitHub
                       <span className="text-sm">↗</span>
@@ -113,11 +112,11 @@ export default async function ProjectPage({
           <ProjectContent project={project} />
 
           {/* Next Project */}
-          <div className="border-t border-gray-200 dark:border-gray-800 pt-16 pb-20">
+          <div className="border-t border-gray-200 pb-20 pt-16 dark:border-gray-800">
             <div className="text-center">
               <Link
                 href="/work"
-                className="inline-flex items-center gap-2 text-lg font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                className="inline-flex items-center gap-2 text-lg font-medium text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
               >
                 View All Projects
                 <span>→</span>

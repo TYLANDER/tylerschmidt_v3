@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { useState, useRef, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { cn } from '@/lib/utils'
+import { useState, useRef, useEffect, useCallback } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { cn } from "@/lib/utils"
 
 interface GalleryImage {
   src: string
@@ -16,9 +16,15 @@ interface ImageGalleryCarouselV2Props {
   onImageClick?: (index: number) => void
 }
 
-export function ImageGalleryCarouselV2({ images, className, onImageClick }: ImageGalleryCarouselV2Props) {
+export function ImageGalleryCarouselV2({
+  images,
+  className,
+  onImageClick,
+}: ImageGalleryCarouselV2Props) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [imageLoadingStates, setImageLoadingStates] = useState<Record<number, boolean>>({})
+  const [imageLoadingStates, setImageLoadingStates] = useState<
+    Record<number, boolean>
+  >({})
   // const [imageDimensions, setImageDimensions] = useState<Record<number, { width: number; height: number }>>({})
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -37,15 +43,15 @@ export function ImageGalleryCarouselV2({ images, className, onImageClick }: Imag
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') {
+      if (e.key === "ArrowLeft") {
         goToPrevious()
-      } else if (e.key === 'ArrowRight') {
+      } else if (e.key === "ArrowRight") {
         goToNext()
       }
     }
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
   }, [goToNext, goToPrevious])
 
   // Preload images and get dimensions
@@ -53,9 +59,9 @@ export function ImageGalleryCarouselV2({ images, className, onImageClick }: Imag
     images.forEach((image, index) => {
       const img = new Image()
       img.onload = () => {
-        setImageLoadingStates(prev => ({ ...prev, [index]: true }))
-        // setImageDimensions(prev => ({ 
-        //   ...prev, 
+        setImageLoadingStates((prev) => ({ ...prev, [index]: true }))
+        // setImageDimensions(prev => ({
+        //   ...prev,
         //   [index]: { width: img.naturalWidth, height: img.naturalHeight }
         // }))
       }
@@ -72,7 +78,7 @@ export function ImageGalleryCarouselV2({ images, className, onImageClick }: Imag
       {/* Main image container - App Store style */}
       <div className="relative w-full">
         {/* Dynamic container that adapts to image aspect ratio */}
-        <div className="relative bg-white dark:bg-gray-950 rounded-2xl shadow-xl overflow-hidden">
+        <div className="relative overflow-hidden rounded-2xl bg-white shadow-xl dark:bg-gray-950">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -84,25 +90,28 @@ export function ImageGalleryCarouselV2({ images, className, onImageClick }: Imag
             >
               {/* Container that maintains aspect ratio */}
               <div className="relative w-full">
-                                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={currentImage.src}
-                        alt={currentImage.alt}
-                        className="w-full h-auto cursor-zoom-in"
-                        style={{ 
-                          display: 'block',
-                          maxHeight: '80vh'
-                        }}
-                        onClick={() => onImageClick?.(currentIndex)}
-                        onLoad={() => {
-                          setImageLoadingStates(prev => ({ ...prev, [currentIndex]: true }))
-                        }}
-                      />
-                
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={currentImage.src}
+                  alt={currentImage.alt}
+                  className="h-auto w-full cursor-zoom-in"
+                  style={{
+                    display: "block",
+                    maxHeight: "80vh",
+                  }}
+                  onClick={() => onImageClick?.(currentIndex)}
+                  onLoad={() => {
+                    setImageLoadingStates((prev) => ({
+                      ...prev,
+                      [currentIndex]: true,
+                    }))
+                  }}
+                />
+
                 {/* Zoom indicator on hover */}
                 {onImageClick && (
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity pointer-events-none">
-                    <div className="bg-black/60 backdrop-blur-sm rounded-full p-3">
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity hover:opacity-100">
+                    <div className="rounded-full bg-black/60 p-3 backdrop-blur-sm">
                       <svg
                         width="24"
                         height="24"
@@ -119,7 +128,7 @@ export function ImageGalleryCarouselV2({ images, className, onImageClick }: Imag
                   </div>
                 )}
               </div>
-              
+
               {/* Loading state */}
               {!imageLoadingStates[currentIndex] && (
                 <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-900">
@@ -147,7 +156,7 @@ export function ImageGalleryCarouselV2({ images, className, onImageClick }: Imag
         {images.length > 1 && (
           <div className="mt-6 flex items-center justify-end gap-3">
             {/* Image counter */}
-            <span className="text-sm text-gray-500 dark:text-gray-400 mr-2">
+            <span className="mr-2 text-sm text-gray-500 dark:text-gray-400">
               {currentIndex + 1} / {images.length}
             </span>
 
@@ -169,7 +178,7 @@ export function ImageGalleryCarouselV2({ images, className, onImageClick }: Imag
             </div>
 
             {/* Navigation buttons */}
-            <div className="flex items-center gap-1 ml-2">
+            <div className="ml-2 flex items-center gap-1">
               <button
                 onClick={goToPrevious}
                 className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-all hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700"
@@ -215,7 +224,7 @@ export function ImageGalleryCarouselV2({ images, className, onImageClick }: Imag
       {/* Thumbnail strip - Optional, App Store style */}
       {images.length > 3 && (
         <div className="mt-8">
-          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+          <div className="scrollbar-hide flex gap-3 overflow-x-auto pb-2">
             {images.map((image, index) => (
               <button
                 key={index}

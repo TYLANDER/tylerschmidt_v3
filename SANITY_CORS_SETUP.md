@@ -8,6 +8,7 @@ If you're getting CORS errors, follow these steps:
 2. **Navigate to API → CORS Origins**
 
 3. **Add these origins** (one per line):
+
    ```
    http://localhost:3000
    https://tylerschmidt-v3.vercel.app

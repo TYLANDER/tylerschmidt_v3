@@ -8,9 +8,9 @@ interface AboutWithPortraitProps {
   variant?: "grid" | "floating"
 }
 
-export function AboutWithPortrait({ 
-  portraitSrc, 
-  variant = "grid" 
+export function AboutWithPortrait({
+  portraitSrc,
+  variant = "grid",
 }: AboutWithPortraitProps) {
   if (variant === "grid") {
     return (
@@ -23,18 +23,18 @@ export function AboutWithPortrait({
             className="sticky top-32"
           />
         </div>
-        
+
         <div className="content-column space-y-4">
           <AnimatedText
-            text="I don&apos;t just design interfaces—I architect the future of how humans interact with technology."
+            text="I don't just design interfaces—I architect the future of how humans interact with technology."
             as="p"
             variant="fade"
             delay={0.7}
-            className="text-foreground text-lg font-medium"
+            className="text-lg font-medium text-foreground"
           />
 
           <AnimatedText
-            text="My journey began at Johns Hopkins University, where I learned to think systemically about complex problems. But the real education happened in the trenches of Silicon Valley—from Google&apos;s agency team as a summer intern to leading buy flow optimization at Adobe, each role taught me that great design isn&apos;t about making things pretty. It&apos;s about making the impossible feel inevitable."
+            text="My journey began at Johns Hopkins University, where I learned to think systemically about complex problems. But the real education happened in the trenches of Silicon Valley—from Google's agency team as a summer intern to leading buy flow optimization at Adobe, each role taught me that great design isn't about making things pretty. It's about making the impossible feel inevitable."
             as="p"
             variant="fade"
             delay={1.0}
@@ -42,7 +42,7 @@ export function AboutWithPortrait({
           />
 
           <AnimatedText
-            text="I&apos;ve had the privilege of working across the entire spectrum of digital transformation. At Adobe, I&apos;m currently focused on Commerce Growth, specifically buy flow optimization—the critical moment where browsing becomes buying. It&apos;s here that I&apos;ve learned that every pixel, every interaction, every micro-moment can be the difference between a lost opportunity and a converted customer."
+            text="I've had the privilege of working across the entire spectrum of digital transformation. At Adobe, I'm currently focused on Commerce Growth, specifically buy flow optimization—the critical moment where browsing becomes buying. It's here that I've learned that every pixel, every interaction, every micro-moment can be the difference between a lost opportunity and a converted customer."
             as="p"
             variant="fade"
             delay={1.3}
@@ -91,24 +91,24 @@ export function AboutWithPortrait({
 
   // Floating variant (default behavior with text wrap)
   return (
-    <div className="text-muted-foreground space-y-4 leading-relaxed">
+    <div className="space-y-4 leading-relaxed text-muted-foreground">
       <PortraitImage
         src={portraitSrc}
         alt="Tyler Schmidt - Product Designer"
         variant="creative"
         className="md:w-1/3"
       />
-      
+
       <AnimatedText
-        text="I don&apos;t just design interfaces—I architect the future of how humans interact with technology."
+        text="I don't just design interfaces—I architect the future of how humans interact with technology."
         as="p"
         variant="fade"
         delay={0.7}
-        className="text-foreground text-lg font-medium"
+        className="text-lg font-medium text-foreground"
       />
 
       <AnimatedText
-        text="My journey began at Johns Hopkins University, where I learned to think systemically about complex problems. But the real education happened in the trenches of Silicon Valley—from Google&apos;s agency team as a summer intern to leading buy flow optimization at Adobe, each role taught me that great design isn&apos;t about making things pretty. It&apos;s about making the impossible feel inevitable."
+        text="My journey began at Johns Hopkins University, where I learned to think systemically about complex problems. But the real education happened in the trenches of Silicon Valley—from Google's agency team as a summer intern to leading buy flow optimization at Adobe, each role taught me that great design isn't about making things pretty. It's about making the impossible feel inevitable."
         as="p"
         variant="fade"
         delay={1.0}
@@ -116,7 +116,7 @@ export function AboutWithPortrait({
       />
 
       <AnimatedText
-        text="I&apos;ve had the privilege of working across the entire spectrum of digital transformation. At Adobe, I&apos;m currently focused on Commerce Growth, specifically buy flow optimization—the critical moment where browsing becomes buying. It&apos;s here that I&apos;ve learned that every pixel, every interaction, every micro-moment can be the difference between a lost opportunity and a converted customer."
+        text="I've had the privilege of working across the entire spectrum of digital transformation. At Adobe, I'm currently focused on Commerce Growth, specifically buy flow optimization—the critical moment where browsing becomes buying. It's here that I've learned that every pixel, every interaction, every micro-moment can be the difference between a lost opportunity and a converted customer."
         as="p"
         variant="fade"
         delay={1.3}

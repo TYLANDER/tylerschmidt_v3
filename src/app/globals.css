@@ -12,111 +12,128 @@
     /* Core Colors - Light Mode */
     --background: 250 250 250; /* Warm white */
     --foreground: 10 10 10; /* Rich black */
-    
+
     /* Neutral Palette */
     --muted: 245 245 247; /* Subtle gray */
     --muted-foreground: 100 100 110; /* Readable gray */
-    
+
     /* UI Elements */
     --card: 255 255 255;
     --card-foreground: 10 10 10;
     --border: 230 230 235;
     --input: 255 255 255;
-    
+
     /* Brand Colors */
     --primary: 10 10 10;
     --primary-foreground: 250 250 250;
     --accent: 37 99 235; /* Refined blue */
     --accent-foreground: 255 255 255;
-    
+
     /* Semantic Colors */
     --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
     --success: 34 197 94;
     --success-foreground: 255 255 255;
-    
+
     /* Shadows & Effects */
     --ring: 37 99 235;
     --shadow-color: 0 0 0;
     --shadow-opacity: 0.05;
-    
+
     /* Mobile Nav */
     --mobile-nav-bg: 255 255 255;
   }
-  
+
   .dark {
     /* Core Colors - Dark Mode */
     --background: 9 9 11; /* Deep black */
     --foreground: 248 248 248; /* Soft white */
-    
+
     /* Neutral Palette */
     --muted: 24 24 27;
     --muted-foreground: 161 161 170;
-    
+
     /* UI Elements */
     --card: 24 24 27;
     --card-foreground: 248 248 248;
     --border: 39 39 42;
     --input: 24 24 27;
-    
+
     /* Brand Colors */
     --primary: 248 248 248;
     --primary-foreground: 9 9 11;
     --accent: 59 130 246; /* Brighter blue for dark mode */
     --accent-foreground: 255 255 255;
-    
+
     /* Semantic Colors */
     --destructive: 220 38 38;
     --destructive-foreground: 255 255 255;
     --success: 22 163 74;
     --success-foreground: 255 255 255;
-    
+
     /* Shadows & Effects */
     --ring: 59 130 246;
     --shadow-color: 0 0 0;
     --shadow-opacity: 0.25;
-    
+
     /* Mobile Nav */
     --mobile-nav-bg: 9 9 11;
   }
-  
+
   /* Base Styles */
   * {
     @apply border-border;
   }
-  
+
   html {
     @apply scroll-smooth antialiased;
     font-size: 16px;
   }
-  
+
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    font-feature-settings:
+      "kern" 1,
+      "liga" 1,
+      "calt" 1;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
+
   /* Typography Scale */
-  h1 { @apply text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight; }
-  h2 { @apply text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight; }
-  h3 { @apply text-2xl md:text-3xl font-semibold; }
-  h4 { @apply text-xl md:text-2xl font-semibold; }
-  h5 { @apply text-lg md:text-xl font-medium; }
-  h6 { @apply text-base md:text-lg font-medium; }
-  
-  p { @apply leading-relaxed; }
-  
+  h1 {
+    @apply text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl xl:text-8xl;
+  }
+  h2 {
+    @apply text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl;
+  }
+  h3 {
+    @apply text-2xl font-semibold md:text-3xl;
+  }
+  h4 {
+    @apply text-xl font-semibold md:text-2xl;
+  }
+  h5 {
+    @apply text-lg font-medium md:text-xl;
+  }
+  h6 {
+    @apply text-base font-medium md:text-lg;
+  }
+
+  p {
+    @apply leading-relaxed;
+  }
+
   /* Focus States */
   :focus {
     @apply outline-none;
   }
-  
+
   :focus-visible {
-    @apply ring-2 ring-ring ring-offset-2 ring-offset-background rounded-sm;
+    @apply rounded-sm ring-2 ring-ring ring-offset-2 ring-offset-background;
   }
-  
+
   /* Selection */
   ::selection {
     @apply bg-accent text-accent-foreground;
@@ -129,37 +146,37 @@
   .animate-in {
     animation: animateIn 0.5s ease-out;
   }
-  
+
   .animate-out {
     animation: animateOut 0.3s ease-in forwards;
   }
-  
+
   /* Text Gradients */
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
   }
-  
+
   /* Glass Effect */
   .glass {
-    @apply bg-background/80 backdrop-blur-md border border-border/50;
+    @apply border border-border/50 bg-background/80 backdrop-blur-md;
   }
-  
+
   /* Smooth Shadow */
   .shadow-smooth {
-    box-shadow: 
+    box-shadow:
       0 1px 2px rgba(var(--shadow-color), calc(var(--shadow-opacity) * 0.5)),
       0 2px 4px rgba(var(--shadow-color), calc(var(--shadow-opacity) * 0.5)),
       0 4px 8px rgba(var(--shadow-color), calc(var(--shadow-opacity) * 0.5)),
       0 8px 16px rgba(var(--shadow-color), calc(var(--shadow-opacity) * 0.5));
   }
-  
+
   /* Hover Lift */
   .hover-lift {
     @apply transition-all duration-300 ease-out;
   }
-  
+
   .hover-lift:hover {
-    @apply -translate-y-1 shadow-smooth;
+    @apply shadow-smooth -translate-y-1;
   }
 }
 
@@ -187,7 +204,8 @@
 }
 
 @keyframes pulse-subtle {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.8;
   }
   50% {
@@ -233,7 +251,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-muted-foreground/30 rounded-full;
+  @apply rounded-full bg-muted-foreground/30;
   @apply hover:bg-muted-foreground/50;
 }
 
@@ -277,19 +295,41 @@
 }
 
 @keyframes glitch-1 {
-  0%, 100% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
+  0%,
+  100% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
 }
 
 @keyframes glitch-2 {
-  0%, 100% { transform: translate(0); }
-  20% { transform: translate(2px, -2px); }
-  40% { transform: translate(2px, 2px); }
-  60% { transform: translate(-2px, -2px); }
-  80% { transform: translate(-2px, 2px); }
+  0%,
+  100% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(2px, -2px);
+  }
+  40% {
+    transform: translate(2px, 2px);
+  }
+  60% {
+    transform: translate(-2px, -2px);
+  }
+  80% {
+    transform: translate(-2px, 2px);
+  }
 }
 
 /* Reduced Motion */

@@ -16,18 +16,18 @@ export default function ContactPage() {
         <div className="mx-auto max-w-4xl">
           <div className="mb-16 space-y-8 text-center">
             <AnimatedText
-              text="Let&apos;s Work Together"
+              text="Let's Work Together"
               as="h1"
               variant="fade"
               className="text-4xl font-bold md:text-6xl"
             />
 
             <AnimatedText
-              text="Ready to bring your vision to life? I&apos;d love to hear about your project."
+              text="Ready to bring your vision to life? I'd love to hear about your project."
               as="p"
               variant="fade"
               delay={0.3}
-              className="text-muted-foreground mx-auto max-w-2xl text-lg"
+              className="mx-auto max-w-2xl text-lg text-muted-foreground"
             />
           </div>
 

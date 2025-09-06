@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { ImageModal } from './image-modal'
+import { useState } from "react"
+import Image from "next/image"
+import { motion } from "framer-motion"
+import { ImageModal } from "./image-modal"
 
 interface ExpandableImageProps {
   src: string
@@ -22,7 +22,7 @@ export function ExpandableImage({
   caption,
   width = 1600,
   height = 900,
-  className = '',
+  className = "",
   priority = false,
   sizes,
 }: ExpandableImageProps) {
@@ -45,7 +45,7 @@ export function ExpandableImage({
             priority={priority}
             sizes={sizes}
           />
-          
+
           {/* Hover overlay */}
           <motion.div
             className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/20"
@@ -72,13 +72,11 @@ export function ExpandableImage({
             </motion.div>
           </motion.div>
         </div>
-        
+
         {/* Inline caption */}
-        {caption && (
-          <span className="sr-only">{caption}</span>
-        )}
+        {caption && <span className="sr-only">{caption}</span>}
       </button>
-      
+
       <ImageModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

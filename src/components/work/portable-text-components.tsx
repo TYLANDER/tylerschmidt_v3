@@ -1,6 +1,6 @@
-import { urlFor } from '@/sanity/lib/image'
-import { ExpandableImage } from '@/components/ui/expandable-image'
-import type { PortableTextReactComponents } from '@portabletext/react'
+import { urlFor } from "@/sanity/lib/image"
+import { ExpandableImage } from "@/components/ui/expandable-image"
+import type { PortableTextReactComponents } from "@portabletext/react"
 
 export const portableTextComponents: Partial<PortableTextReactComponents> = {
   types: {
@@ -10,14 +10,10 @@ export const portableTextComponents: Partial<PortableTextReactComponents> = {
       }
 
       return (
-        <figure className="my-8 -mx-6 md:mx-0">
+        <figure className="-mx-6 my-8 md:mx-0">
           <ExpandableImage
-            src={urlFor(value)
-              .width(1600)
-              .height(900)
-              .quality(90)
-              .url()}
-            alt={value.alt || 'Project image'}
+            src={urlFor(value).width(1600).height(900).quality(90).url()}
+            alt={value.alt || "Project image"}
             caption={value.caption}
             className="aspect-video w-full bg-gray-100 dark:bg-gray-900"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
@@ -71,7 +67,7 @@ export const portableTextComponents: Partial<PortableTextReactComponents> = {
     ),
     // Callout/quote styling
     blockquote: ({ children }) => (
-      <blockquote className="my-8 border-l-4 border-blue-500 bg-gray-50 dark:bg-gray-900/50 py-4 pl-6 pr-4 rounded-r-lg">
+      <blockquote className="my-8 rounded-r-lg border-l-4 border-blue-500 bg-gray-50 py-4 pl-6 pr-4 dark:bg-gray-900/50">
         <p className="text-lg italic leading-relaxed text-gray-700 dark:text-gray-300">
           {children}
         </p>
@@ -80,22 +76,22 @@ export const portableTextComponents: Partial<PortableTextReactComponents> = {
   },
   list: {
     bullet: ({ children }) => (
-      <ul className="mb-6 ml-6 list-disc space-y-3 text-lg text-gray-700 dark:text-gray-300 marker:text-blue-500">
+      <ul className="mb-6 ml-6 list-disc space-y-3 text-lg text-gray-700 marker:text-blue-500 dark:text-gray-300">
         {children}
       </ul>
     ),
     number: ({ children }) => (
-      <ol className="mb-6 ml-6 list-decimal space-y-3 text-lg text-gray-700 dark:text-gray-300 marker:font-semibold marker:text-blue-500">
+      <ol className="mb-6 ml-6 list-decimal space-y-3 text-lg text-gray-700 marker:font-semibold marker:text-blue-500 dark:text-gray-300">
         {children}
       </ol>
     ),
   },
   listItem: {
     bullet: ({ children }) => (
-      <li className="leading-relaxed pl-2">{children}</li>
+      <li className="pl-2 leading-relaxed">{children}</li>
     ),
     number: ({ children }) => (
-      <li className="leading-relaxed pl-2">{children}</li>
+      <li className="pl-2 leading-relaxed">{children}</li>
     ),
   },
   marks: {
@@ -117,15 +113,17 @@ export const portableTextComponents: Partial<PortableTextReactComponents> = {
     ),
     // Links with proper contrast and hover states
     link: ({ value, children }) => {
-      const target = (value?.href || '').startsWith('http') ? '_blank' : undefined
-      const rel = target === '_blank' ? 'noopener noreferrer' : undefined
-      
+      const target = (value?.href || "").startsWith("http")
+        ? "_blank"
+        : undefined
+      const rel = target === "_blank" ? "noopener noreferrer" : undefined
+
       return (
         <a
           href={value?.href}
           target={target}
           rel={rel}
-          className="text-blue-600 underline decoration-blue-600/30 underline-offset-2 transition-colors hover:text-blue-700 hover:decoration-blue-700/50 dark:text-blue-400 dark:decoration-blue-400/30 dark:hover:text-blue-300 dark:hover:decoration-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+          className="text-blue-600 underline decoration-blue-600/30 underline-offset-2 transition-colors hover:text-blue-700 hover:decoration-blue-700/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:text-blue-400 dark:decoration-blue-400/30 dark:hover:text-blue-300 dark:hover:decoration-blue-300/50 dark:focus:ring-offset-gray-900"
         >
           {children}
         </a>

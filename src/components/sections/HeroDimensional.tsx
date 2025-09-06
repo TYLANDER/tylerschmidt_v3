@@ -1,10 +1,10 @@
 "use client"
 
-import { useRef, useState } from 'react'
-import { motion } from 'framer-motion'
-import * as THREE from 'three'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Text3D, Center, OrbitControls } from '@react-three/drei'
+import { useRef, useState } from "react"
+import { motion } from "framer-motion"
+import * as THREE from "three"
+import { Canvas, useFrame, useThree } from "@react-three/fiber"
+import { Text3D, Center, OrbitControls } from "@react-three/drei"
 
 // Custom shader for impossible geometry text
 const vertexShader = `
@@ -57,11 +57,11 @@ function DimensionalText() {
   const meshRef = useRef<THREE.Mesh>(null)
   const materialRef = useRef<THREE.ShaderMaterial>(null)
   const { camera, mouse } = useThree()
-  const [currentWord, setCurrentWord] = useState('DESIGNER')
-  
+  const [currentWord, setCurrentWord] = useState("DESIGNER")
+
   useFrame((state) => {
     if (!meshRef.current || !materialRef.current) return
-    
+
     // Calculate viewing angle
     const cameraPosition = camera.position
     const textPosition = meshRef.current.position
@@ -69,7 +69,7 @@ function DimensionalText() {
       cameraPosition.x - textPosition.x,
       cameraPosition.z - textPosition.z
     )
-    
+
     // Update shader uniforms
     materialRef.current.uniforms.uTime.value = state.clock.elapsedTime
     materialRef.current.uniforms.uMouse.value = new THREE.Vector3(
@@ -77,22 +77,27 @@ function DimensionalText() {
       mouse.y * 5,
       0
     )
-    materialRef.current.uniforms.uAngle.value = (angle + Math.PI) / (Math.PI * 2)
-    
+    materialRef.current.uniforms.uAngle.value =
+      (angle + Math.PI) / (Math.PI * 2)
+
     // Change text based on viewing angle
     const normalizedAngle = (angle + Math.PI) / (Math.PI * 2)
-    if (normalizedAngle < 0.33 && currentWord !== 'DESIGNER') {
-      setCurrentWord('DESIGNER')
-    } else if (normalizedAngle >= 0.33 && normalizedAngle < 0.66 && currentWord !== 'ENGINEER') {
-      setCurrentWord('ENGINEER')
-    } else if (normalizedAngle >= 0.66 && currentWord !== 'CREATIVE') {
-      setCurrentWord('CREATIVE')
+    if (normalizedAngle < 0.33 && currentWord !== "DESIGNER") {
+      setCurrentWord("DESIGNER")
+    } else if (
+      normalizedAngle >= 0.33 &&
+      normalizedAngle < 0.66 &&
+      currentWord !== "ENGINEER"
+    ) {
+      setCurrentWord("ENGINEER")
+    } else if (normalizedAngle >= 0.66 && currentWord !== "CREATIVE") {
+      setCurrentWord("CREATIVE")
     }
-    
+
     // Subtle rotation
     meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1
   })
-  
+
   return (
     <Center>
       <Text3D
@@ -115,7 +120,7 @@ function DimensionalText() {
           uniforms={{
             uTime: { value: 0 },
             uMouse: { value: new THREE.Vector3() },
-            uAngle: { value: 0 }
+            uAngle: { value: 0 },
           }}
         />
       </Text3D>
@@ -124,8 +129,8 @@ function DimensionalText() {
 }
 
 function PhysicsLetters({ text }: { text: string }) {
-  const letters = text.split('')
-  
+  const letters = text.split("")
+
   return (
     <>
       {letters.map((letter, i) => (
@@ -139,15 +144,15 @@ function PhysicsLetter({ letter, index }: { letter: string; index: number }) {
   const meshRef = useRef<THREE.Mesh>(null)
   const { mouse } = useThree()
   const [hover, setHover] = useState(false)
-  
+
   useFrame(() => {
     if (!meshRef.current) return
-    
+
     // Apply "gravity" from cursor
     const mousePos = new THREE.Vector3(mouse.x * 10, mouse.y * 10, 0)
     const letterPos = meshRef.current.position
     const distance = mousePos.distanceTo(letterPos)
-    
+
     if (distance < 3) {
       // Repel from cursor
       const direction = letterPos.clone().sub(mousePos).normalize()
@@ -159,14 +164,14 @@ function PhysicsLetter({ letter, index }: { letter: string; index: number }) {
       meshRef.current.position.x += (targetX - meshRef.current.position.x) * 0.1
       meshRef.current.position.y += (0 - meshRef.current.position.y) * 0.1
     }
-    
+
     // Rotation on hover
     if (hover) {
       meshRef.current.rotation.x += 0.1
       meshRef.current.rotation.y += 0.1
     }
   })
-  
+
   return (
     <Text3D
       ref={meshRef}
@@ -179,8 +184,8 @@ function PhysicsLetter({ letter, index }: { letter: string; index: number }) {
     >
       {letter}
       <meshStandardMaterial
-        color={hover ? '#ff6b6b' : '#4a9eff'}
-        emissive={hover ? '#ff6b6b' : '#000000'}
+        color={hover ? "#ff6b6b" : "#4a9eff"}
+        emissive={hover ? "#ff6b6b" : "#000000"}
         emissiveIntensity={hover ? 0.5 : 0}
       />
     </Text3D>
@@ -188,10 +193,10 @@ function PhysicsLetter({ letter, index }: { letter: string; index: number }) {
 }
 
 export function HeroDimensional() {
-  const [mode, setMode] = useState<'dimensional' | 'physics'>('dimensional')
-  
+  const [mode, setMode] = useState<"dimensional" | "physics">("dimensional")
+
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-background">
+    <section className="relative flex h-screen items-center justify-center overflow-hidden bg-background">
       {/* 3D Canvas */}
       <div className="absolute inset-0">
         <Canvas
@@ -201,8 +206,8 @@ export function HeroDimensional() {
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} />
           <pointLight position={[-10, -10, -10]} color="#ff6b6b" />
-          
-          {mode === 'dimensional' ? (
+
+          {mode === "dimensional" ? (
             <>
               <DimensionalText />
               <OrbitControls
@@ -217,53 +222,52 @@ export function HeroDimensional() {
           )}
         </Canvas>
       </div>
-      
+
       {/* UI Overlay */}
-      <div className="relative z-10 text-center px-6">
+      <div className="relative z-10 px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
           className="mb-8"
         >
-          <p className="text-lg text-muted-foreground mb-4">
-            {mode === 'dimensional' 
+          <p className="mb-4 text-lg text-muted-foreground">
+            {mode === "dimensional"
               ? "Drag to rotate • Watch the text transform"
-              : "Move your cursor • Interact with the letters"
-            }
+              : "Move your cursor • Interact with the letters"}
           </p>
-          
-          <div className="flex gap-4 justify-center">
+
+          <div className="flex justify-center gap-4">
             <button
-              onClick={() => setMode('dimensional')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
-                mode === 'dimensional' 
-                  ? 'bg-primary text-primary-foreground' 
-                  : 'bg-muted text-muted-foreground hover:bg-muted/80'
+              onClick={() => setMode("dimensional")}
+              className={`rounded-lg px-4 py-2 transition-colors ${
+                mode === "dimensional"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
               }`}
             >
               Dimensional Mode
             </button>
             <button
-              onClick={() => setMode('physics')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
-                mode === 'physics' 
-                  ? 'bg-primary text-primary-foreground' 
-                  : 'bg-muted text-muted-foreground hover:bg-muted/80'
+              onClick={() => setMode("physics")}
+              className={`rounded-lg px-4 py-2 transition-colors ${
+                mode === "physics"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
               }`}
             >
               Physics Mode
             </button>
           </div>
         </motion.div>
-        
+
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
           className="space-y-2"
         >
-          <h2 className="text-2xl md:text-3xl text-muted-foreground">
+          <h2 className="text-2xl text-muted-foreground md:text-3xl">
             Tyler Schmidt
           </h2>
           <p className="text-lg text-muted-foreground/80">
@@ -271,7 +275,7 @@ export function HeroDimensional() {
           </p>
         </motion.div>
       </div>
-      
+
       {/* Instructions */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -280,7 +284,7 @@ export function HeroDimensional() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center"
       >
         <p className="text-sm text-muted-foreground/60">
-          {mode === 'dimensional'
+          {mode === "dimensional"
             ? "The text reveals different words from different angles"
             : "Each letter has its own physics"}
         </p>

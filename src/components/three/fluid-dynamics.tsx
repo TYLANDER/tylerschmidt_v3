@@ -194,7 +194,7 @@ export function FluidDynamics({ className }: FluidDynamicsProps) {
 
         {/* Instructions */}
         <Html position={[0, 0, 0]} center>
-          <div className="pointer-events-none absolute top-4 left-4 rounded bg-black/50 p-2 text-sm text-white backdrop-blur">
+          <div className="pointer-events-none absolute left-4 top-4 rounded bg-black/50 p-2 text-sm text-white backdrop-blur">
             Move mouse to create fluid turbulence
           </div>
         </Html>

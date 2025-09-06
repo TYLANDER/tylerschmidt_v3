@@ -10,7 +10,7 @@ import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { PiaConsoleInit } from "@/components/PiaConsoleInit"
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://tylerschmidt.dev'),
+  metadataBase: new URL("https://tylerschmidt.dev"),
   title: {
     default: "Tyler Schmidt - Product Designer",
     template: "%s | Tyler Schmidt",
@@ -79,16 +79,16 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico' }
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico" },
     ],
-    apple: '/apple-touch-icon.png',
+    apple: "/apple-touch-icon.png",
   },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0066FF',
-  width: 'device-width',
+  themeColor: "#0066FF",
+  width: "device-width",
   initialScale: 1,
   maximumScale: 5,
 }
@@ -99,7 +99,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   // Non-blocking analytics injection on client
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     // small guard so it only runs once per load
     const w = window as unknown as { __analyticsInjected?: boolean }
     if (!w.__analyticsInjected) {
@@ -134,12 +134,19 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={cn(
-        "font-sans antialiased bg-background text-foreground min-h-screen transition-colors",
-        aeonik.variable,
-        inter.variable
-      )}>
-        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-accent focus:text-accent-foreground focus:px-3 focus:py-2 rounded-md">Skip to content</a>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans text-foreground antialiased transition-colors",
+          aeonik.variable,
+          inter.variable
+        )}
+      >
+        <a
+          href="#main"
+          className="sr-only rounded-md focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-50 focus:bg-accent focus:px-3 focus:py-2 focus:text-accent-foreground"
+        >
+          Skip to content
+        </a>
         <ServiceWorkerRegistration />
         <PiaConsoleInit />
         <SiteHeader />

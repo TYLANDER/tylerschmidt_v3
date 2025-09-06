@@ -269,7 +269,7 @@ export function WaveField({ className }: WaveFieldProps) {
       </Canvas>
 
       {/* Info overlay */}
-      <div className="absolute top-4 left-4 z-10 text-foreground/80">
+      <div className="absolute left-4 top-4 z-10 text-foreground/80">
         <h3 className="mb-2 font-medium">Morphing Wave Field</h3>
         <p className="max-w-xs text-sm text-foreground/60">
           Move your mouse to influence the wave patterns and particle swarm.
@@ -283,7 +283,7 @@ export function WaveField({ className }: WaveFieldProps) {
       </div>
 
       {/* Controls hint */}
-      <div className="absolute right-4 bottom-4 text-xs text-foreground/60">
+      <div className="absolute bottom-4 right-4 text-xs text-foreground/60">
         Move mouse to interact • Scroll to zoom
       </div>
     </div>

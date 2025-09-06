@@ -1,15 +1,15 @@
 "use client"
 
-import { useEffect, useRef, useState } from 'react'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
-import { designTokens } from '@/design/design-tokens'
+import { useEffect, useRef, useState } from "react"
+import { motion, useMotionValue, useSpring } from "framer-motion"
+import { designTokens } from "@/design/design-tokens"
 
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null)
   const [isBreaking, setIsBreaking] = useState(false)
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
-  
+
   // Create spring physics for the rebellion
   const springConfig = { damping: 25, stiffness: 200 }
   const x = useSpring(mouseX, springConfig)
@@ -26,19 +26,27 @@ export function Hero() {
       }
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [mouseX, mouseY])
 
   // Grid lines that breathe
   const GridLines = () => (
-    <svg className="absolute inset-0 w-full h-full" style={{ zIndex: designTokens.layers.ground }}>
+    <svg
+      className="absolute inset-0 h-full w-full"
+      style={{ zIndex: designTokens.layers.ground }}
+    >
       <defs>
-        <pattern id="grid" width={designTokens.grid.base * 8} height={designTokens.grid.base * 8} patternUnits="userSpaceOnUse">
-          <path 
-            d={`M ${designTokens.grid.base * 8} 0 L 0 0 0 ${designTokens.grid.base * 8}`} 
-            fill="none" 
-            stroke="currentColor" 
+        <pattern
+          id="grid"
+          width={designTokens.grid.base * 8}
+          height={designTokens.grid.base * 8}
+          patternUnits="userSpaceOnUse"
+        >
+          <path
+            d={`M ${designTokens.grid.base * 8} 0 L 0 0 0 ${designTokens.grid.base * 8}`}
+            fill="none"
+            stroke="currentColor"
             strokeWidth="0.5"
             className="text-gray-400 dark:text-gray-700"
           />
@@ -49,7 +57,7 @@ export function Hero() {
   )
 
   return (
-    <section 
+    <section
       ref={containerRef}
       className="relative min-h-screen overflow-hidden bg-white dark:bg-black"
       onMouseEnter={() => setIsBreaking(true)}
@@ -61,59 +69,64 @@ export function Hero() {
       </div>
 
       {/* The Breaking Point */}
-      <motion.div 
-        className="absolute inset-0"
-        style={{ x, y }}
-      >
-        <div className="relative h-full flex items-center justify-center">
+      <motion.div className="absolute inset-0" style={{ x, y }}>
+        <div className="relative flex h-full items-center justify-center">
           {/* Mathematical Beauty */}
-          <div className="relative z-10 text-center px-8">
+          <div className="relative z-10 px-8 text-center">
             <motion.div
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ 
+              transition={{
                 duration: Number(designTokens.motion.breath) / 1000,
-                ease: [0.37, 0, 0.63, 1] 
+                ease: [0.37, 0, 0.63, 1],
               }}
             >
               {/* The Name - Where precision begins */}
-              <motion.h1 
-                className="font-heading tracking-tighter leading-none relative"
+              <motion.h1
+                className="relative font-heading leading-none tracking-tighter"
                 style={{ fontSize: designTokens.type.display }}
               >
                 <motion.span
                   className="block text-black dark:text-white"
-                  animate={isBreaking ? {
-                    x: [-2, 2, -2],
-                    textShadow: [
-                      '0 0 0 rgba(0,102,255,0)',
-                      '4px 4px 0 rgba(0,102,255,0.5)',
-                      '-4px -4px 0 rgba(255,0,68,0.5)'
-                    ]
-                  } : {}}
+                  animate={
+                    isBreaking
+                      ? {
+                          x: [-2, 2, -2],
+                          textShadow: [
+                            "0 0 0 rgba(0,102,255,0)",
+                            "4px 4px 0 rgba(0,102,255,0.5)",
+                            "-4px -4px 0 rgba(255,0,68,0.5)",
+                          ],
+                        }
+                      : {}
+                  }
                   transition={{
                     duration: 0.3,
                     repeat: isBreaking ? Infinity : 0,
-                    repeatType: "reverse"
+                    repeatType: "reverse",
                   }}
                 >
                   TYLER
                 </motion.span>
                 <motion.span
-                  className="block text-black dark:text-white mt-[-0.1em]"
-                  animate={isBreaking ? {
-                    x: [2, -2, 2],
-                    textShadow: [
-                      '0 0 0 rgba(255,0,68,0)',
-                      '-4px -4px 0 rgba(255,0,68,0.5)',
-                      '4px 4px 0 rgba(0,255,136,0.5)'
-                    ]
-                  } : {}}
+                  className="mt-[-0.1em] block text-black dark:text-white"
+                  animate={
+                    isBreaking
+                      ? {
+                          x: [2, -2, 2],
+                          textShadow: [
+                            "0 0 0 rgba(255,0,68,0)",
+                            "-4px -4px 0 rgba(255,0,68,0.5)",
+                            "4px 4px 0 rgba(0,255,136,0.5)",
+                          ],
+                        }
+                      : {}
+                  }
                   transition={{
                     duration: 0.3,
                     repeat: isBreaking ? Infinity : 0,
                     repeatType: "reverse",
-                    delay: 0.1
+                    delay: 0.1,
                   }}
                 >
                   SCHMIDT
@@ -121,19 +134,27 @@ export function Hero() {
               </motion.h1>
 
               {/* The Statement - Where punk emerges */}
-              <motion.p 
-                className="mt-8 text-gray-700 dark:text-gray-300 max-w-2xl mx-auto"
+              <motion.p
+                className="mx-auto mt-8 max-w-2xl text-gray-700 dark:text-gray-300"
                 style={{ fontSize: designTokens.type.title }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5, duration: 1 }}
               >
                 <span className="font-light">I design </span>
-                <motion.span 
-                  className="font-bold text-voltage"
-                  animate={isBreaking ? { 
-                    color: [designTokens.color.voltage, designTokens.color.danger, designTokens.color.acid],
-                  } : {}}
+                <motion.span
+                  className="text-voltage font-bold"
+                  animate={
+                    isBreaking
+                      ? {
+                          color: [
+                            designTokens.color.voltage,
+                            designTokens.color.danger,
+                            designTokens.color.acid,
+                          ],
+                        }
+                      : {}
+                  }
                   transition={{ duration: 2, repeat: Infinity }}
                 >
                   systems that feel
@@ -143,27 +164,27 @@ export function Hero() {
 
               {/* The Manifesto - Precision Punk philosophy */}
               <motion.p
-                className="mt-6 text-gray-600 dark:text-gray-400 max-w-xl mx-auto"
+                className="mx-auto mt-6 max-w-xl text-gray-600 dark:text-gray-400"
                 style={{ fontSize: designTokens.type.body }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.8, duration: 1 }}
               >
-                Where mathematical precision meets raw emotion.
-                Every pixel calculated to move the soul.
+                Where mathematical precision meets raw emotion. Every pixel
+                calculated to move the soul.
               </motion.p>
             </motion.div>
 
             {/* The Action - Breaking the grid */}
             <motion.div
-              className="mt-12 flex gap-6 justify-center"
+              className="mt-12 flex justify-center gap-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2 }}
             >
               <motion.a
                 href="#work"
-                className="group relative px-8 py-4 overflow-hidden"
+                className="group relative overflow-hidden px-8 py-4"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -171,22 +192,22 @@ export function Hero() {
                   BREAK THE GRID
                 </span>
                 <motion.div
-                  className="absolute inset-0 bg-voltage"
-                  initial={{ skewX: -45, x: '-100%' }}
+                  className="bg-voltage absolute inset-0"
+                  initial={{ skewX: -45, x: "-100%" }}
                   whileHover={{ x: 0 }}
-                  transition={{ 
+                  transition={{
                     type: "spring",
                     stiffness: 400,
-                    damping: 30
+                    damping: 30,
                   }}
                 />
-                <div className="absolute inset-0 border-2 border-voltage" />
+                <div className="border-voltage absolute inset-0 border-2" />
               </motion.a>
 
               <motion.a
                 href="#about"
-                className="px-8 py-4 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700"
-                whileHover={{ 
+                className="border border-gray-300 px-8 py-4 text-gray-700 dark:border-gray-700 dark:text-gray-300"
+                whileHover={{
                   borderColor: designTokens.color.voltage,
                   color: designTokens.color.voltage,
                   x: [0, -2, 2, -2, 2, 0],
@@ -199,24 +220,28 @@ export function Hero() {
           </div>
 
           {/* The Chaos - Mathematical rebellion */}
-          <div className="absolute inset-0 pointer-events-none">
+          <div className="pointer-events-none absolute inset-0">
             {[...Array(5)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-px bg-voltage/20"
+                className="bg-voltage/20 absolute w-px"
                 style={{
                   height: `${100 + i * 50}px`,
                   left: `${20 + i * 15}%`,
                   top: `${30 + i * 10}%`,
                 }}
-                animate={isBreaking ? {
-                  rotate: [0, 180, 360],
-                  opacity: [0.2, 0.8, 0.2],
-                  scaleY: [1, 1.5, 1],
-                } : {
-                  rotate: 0,
-                  opacity: 0,
-                }}
+                animate={
+                  isBreaking
+                    ? {
+                        rotate: [0, 180, 360],
+                        opacity: [0.2, 0.8, 0.2],
+                        scaleY: [1, 1.5, 1],
+                      }
+                    : {
+                        rotate: 0,
+                        opacity: 0,
+                      }
+                }
                 transition={{
                   duration: 3 + i,
                   repeat: Infinity,
@@ -231,8 +256,8 @@ export function Hero() {
 
       {/* The Pulse - Heartbeat of the system */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        animate={{ 
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 transform"
+        animate={{
           opacity: [0.3, 0.6, 0.3],
           scale: [1, 1.1, 1],
         }}
@@ -242,7 +267,7 @@ export function Hero() {
           ease: [0.37, 0, 0.63, 1],
         }}
       >
-        <div className="w-1 h-16 bg-voltage/50" />
+        <div className="bg-voltage/50 h-16 w-1" />
       </motion.div>
     </section>
   )

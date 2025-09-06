@@ -7,27 +7,32 @@ A modern portfolio website showcasing the intersection of design and engineering
 ### Tech Stack
 
 #### Core Framework
+
 - **Next.js 15.4.3** - React framework with App Router for optimal performance
 - **React 19.1.0** - Latest React with concurrent features
 - **TypeScript 5.7.2** - Full type safety across the codebase
 
 #### Styling & Design System
+
 - **Tailwind CSS 3.5.7** - Utility-first CSS with custom design tokens
 - **Aeonik Variable Font** - Self-hosted premium typeface with multiple weights
 - **CSS Grid & Flexbox** - Modern layout techniques for responsive design
 
 #### Animation & Graphics
+
 - **Framer Motion 12.3.1** - Declarative animations and page transitions
 - **Three.js / React Three Fiber** - WebGL-powered 3D graphics
 - **Canvas API** - Custom particle systems and 2D graphics
 - **GSAP** - High-performance timeline animations
 
 #### Content Management
+
 - **Sanity.io** - Headless CMS with structured content
 - **Portable Text** - Rich text rendering with custom components
 - **GROQ** - Powerful query language for content fetching
 
 #### Developer Experience
+
 - **Turbopack** - Lightning-fast HMR in development
 - **ESLint & Prettier** - Consistent code style
 - **Husky** - Git hooks for quality control
@@ -36,6 +41,7 @@ A modern portfolio website showcasing the intersection of design and engineering
 ## Key Features
 
 ### Performance Optimizations
+
 - Static generation for instant page loads
 - Optimized image loading with Next.js Image component
 - Code splitting and lazy loading for WebGL demos
@@ -43,6 +49,7 @@ A modern portfolio website showcasing the intersection of design and engineering
 - Service worker for offline capability
 
 ### Interactive Experiences
+
 - **8 WebGL Demos** in the Lab section showcasing creative coding
 - **Live Photo Support** - Apple-style animated portraits
 - **Dynamic Theme System** - Light/dark mode with smooth transitions
@@ -51,6 +58,7 @@ A modern portfolio website showcasing the intersection of design and engineering
 ### Engineering Highlights
 
 #### Component Architecture
+
 ```
 src/
 ├── components/
@@ -64,6 +72,7 @@ src/
 ```
 
 #### Custom Solutions
+
 - **Enhanced Image Display** - Intelligent aspect ratio handling for various image dimensions
 - **Sanity Integration** - Type-safe content queries with preview support
 - **Animation System** - Reusable motion components with performance optimizations
@@ -72,11 +81,13 @@ src/
 ### Code Quality
 
 #### Type Safety
+
 - Strict TypeScript configuration
 - Generated types for Sanity schema
 - Type-safe API routes and data fetching
 
 #### Testing & Validation
+
 ```bash
 npm run verify      # Comprehensive checks
 npm run type-check  # TypeScript validation
@@ -85,6 +96,7 @@ npm run build       # Production build test
 ```
 
 #### Bundle Analysis
+
 - Optimized chunk splitting
 - Tree-shaking for minimal bundle size
 - Dynamic imports for code splitting
@@ -92,6 +104,7 @@ npm run build       # Production build test
 ## Development
 
 ### Getting Started
+
 ```bash
 # Install dependencies
 npm install
@@ -104,7 +117,9 @@ npm run build
 ```
 
 ### Environment Setup
+
 Create `.env.local`:
+
 ```env
 NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
 NEXT_PUBLIC_SANITY_DATASET=production
@@ -112,6 +127,7 @@ SANITY_API_TOKEN=your_token
 ```
 
 ### Key Scripts
+
 - `dev` - Development with Turbopack
 - `build` - Production build
 - `verify` - Full verification suite

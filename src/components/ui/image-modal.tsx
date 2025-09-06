@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { createPortal } from 'react-dom'
+import { useState, useEffect, useRef } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { createPortal } from "react-dom"
 
 interface ImageModalProps {
   isOpen: boolean
@@ -12,7 +12,13 @@ interface ImageModalProps {
   caption?: string
 }
 
-export function ImageModal({ isOpen, onClose, src, alt, caption }: ImageModalProps) {
+export function ImageModal({
+  isOpen,
+  onClose,
+  src,
+  alt,
+  caption,
+}: ImageModalProps) {
   const [mounted, setMounted] = useState(false)
   const previouslyFocusedElement = useRef<HTMLElement | null>(null)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
@@ -27,21 +33,21 @@ export function ImageModal({ isOpen, onClose, src, alt, caption }: ImageModalPro
       previouslyFocusedElement.current = document.activeElement as HTMLElement
       // Focus the close button when modal opens
       setTimeout(() => closeButtonRef.current?.focus(), 100)
-      
+
       // Prevent body scroll
-      document.body.style.overflow = 'hidden'
-      
+      document.body.style.overflow = "hidden"
+
       // Handle escape key
       const handleEscape = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
+        if (e.key === "Escape") {
           onClose()
         }
       }
-      document.addEventListener('keydown', handleEscape)
-      
+      document.addEventListener("keydown", handleEscape)
+
       return () => {
-        document.removeEventListener('keydown', handleEscape)
-        document.body.style.overflow = ''
+        document.removeEventListener("keydown", handleEscape)
+        document.body.style.overflow = ""
         // Restore focus to previously focused element
         previouslyFocusedElement.current?.focus()
       }
@@ -64,7 +70,7 @@ export function ImageModal({ isOpen, onClose, src, alt, caption }: ImageModalPro
             onClick={onClose}
             aria-hidden="true"
           />
-          
+
           {/* Modal Content */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -77,7 +83,7 @@ export function ImageModal({ isOpen, onClose, src, alt, caption }: ImageModalPro
             aria-label="Image viewer"
           >
             {/* Close button - positioned to avoid navbar */}
-            <div className="absolute top-24 right-4 md:right-6 z-10">
+            <div className="absolute right-4 top-24 z-10 md:right-6">
               <button
                 ref={closeButtonRef}
                 onClick={onClose}
@@ -98,28 +104,30 @@ export function ImageModal({ isOpen, onClose, src, alt, caption }: ImageModalPro
                 </svg>
               </button>
             </div>
-            
+
             {/* Image container - adjusted to fit within viewport */}
             <div className="flex flex-1 items-center justify-center p-4 md:p-8">
-              <div 
-                className="relative w-full h-full flex items-center justify-center"
-                              onClick={(e) => e.stopPropagation()}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <div
+                className="relative flex h-full w-full items-center justify-center"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={src}
                   alt={alt}
-                  className="max-w-full max-h-[calc(100vh-12rem)] w-auto h-auto rounded-lg object-contain"
+                  className="h-auto max-h-[calc(100vh-12rem)] w-auto max-w-full rounded-lg object-contain"
                 />
               </div>
-              
+
               {/* Caption below image */}
               {caption && (
                 <div className="mt-4 text-center">
-                  <p className="text-sm text-white/70 md:text-base">{caption}</p>
+                  <p className="text-sm text-white/70 md:text-base">
+                    {caption}
+                  </p>
                 </div>
               )}
-              
+
               {/* Keyboard instructions (screen reader only) */}
               <div className="sr-only" aria-live="polite">
                 Press Escape to close the image viewer
@@ -143,8 +151,8 @@ export function useImageModal() {
     caption?: string
   }>({
     isOpen: false,
-    src: '',
-    alt: '',
+    src: "",
+    alt: "",
     caption: undefined,
   })
 
@@ -153,7 +161,7 @@ export function useImageModal() {
   }
 
   const closeModal = () => {
-    setModalState(prev => ({ ...prev, isOpen: false }))
+    setModalState((prev) => ({ ...prev, isOpen: false }))
   }
 
   return {

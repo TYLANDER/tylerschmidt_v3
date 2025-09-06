@@ -106,7 +106,7 @@ export function ContactForm({ className }: ContactFormProps) {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", bounce: 0.5 }}
-          className="bg-success mx-auto flex h-16 w-16 items-center justify-center rounded-full"
+          className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-success"
         >
           <svg
             className="h-8 w-8 text-accent-foreground"
@@ -131,7 +131,7 @@ export function ContactForm({ className }: ContactFormProps) {
         />
 
         <AnimatedText
-                      text="I&apos;ll get back to you within 24 hours. Looking forward to discussing your project!"
+          text="I'll get back to you within 24 hours. Looking forward to discussing your project!"
           as="p"
           variant="fade"
           delay={0.2}
@@ -251,7 +251,7 @@ function FormField({
 
   return (
     <div className="space-y-2">
-      <label htmlFor={id} className="text-foreground text-sm font-medium">
+      <label htmlFor={id} className="text-sm font-medium text-foreground">
         {label} {required && <span className="text-destructive">*</span>}
       </label>
 
@@ -264,8 +264,8 @@ function FormField({
             placeholder={placeholder}
             rows={rows}
             className={cn(
-              "border-border bg-background w-full rounded-lg border px-4 py-3",
-              "focus:border-accent focus:ring-accent focus:ring-1 focus:outline-none",
+              "w-full rounded-lg border border-border bg-background px-4 py-3",
+              "focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent",
               "resize-none transition-colors duration-200",
               error &&
                 "border-destructive focus:border-destructive focus:ring-destructive"
@@ -279,8 +279,8 @@ function FormField({
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
             className={cn(
-              "border-border bg-background w-full rounded-lg border px-4 py-3",
-              "focus:border-accent focus:ring-accent focus:ring-1 focus:outline-none",
+              "w-full rounded-lg border border-border bg-background px-4 py-3",
+              "focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent",
               "transition-colors duration-200",
               error &&
                 "border-destructive focus:border-destructive focus:ring-destructive"
@@ -296,7 +296,7 @@ function FormField({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="text-destructive text-sm"
+            className="text-sm text-destructive"
           >
             {error}
           </motion.p>
@@ -318,7 +318,7 @@ function SelectField({ label, value, onChange, options }: SelectFieldProps) {
 
   return (
     <div className="space-y-2">
-      <label htmlFor={id} className="text-foreground text-sm font-medium">
+      <label htmlFor={id} className="text-sm font-medium text-foreground">
         {label}
       </label>
 
@@ -327,8 +327,8 @@ function SelectField({ label, value, onChange, options }: SelectFieldProps) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className={cn(
-          "border-border bg-background w-full rounded-lg border px-4 py-3",
-          "focus:border-accent focus:ring-accent focus:ring-1 focus:outline-none",
+          "w-full rounded-lg border border-border bg-background px-4 py-3",
+          "focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent",
           "transition-colors duration-200"
         )}
       >

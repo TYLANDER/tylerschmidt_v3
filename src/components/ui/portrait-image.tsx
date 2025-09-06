@@ -18,16 +18,16 @@ interface PortraitImageProps {
   mp4Src?: string // Optional converted MP4
 }
 
-export function PortraitImage({ 
-  src, 
-  alt, 
+export function PortraitImage({
+  src,
+  alt,
   variant = "floating",
   className,
   isLivePhoto = false,
   videoSrc,
   isAppleLivePhoto = false,
   movSrc,
-  mp4Src
+  mp4Src,
 }: PortraitImageProps) {
   const imageRef = useRef<HTMLDivElement>(null)
   const [scrollY, setScrollY] = useState(0)
@@ -51,31 +51,32 @@ export function PortraitImage({
 
   const variants = {
     standard: "relative overflow-hidden rounded-lg",
-    floating: "relative overflow-hidden rounded-2xl shadow-2xl float-left mr-8 mb-8 shape-outside-circle",
+    floating:
+      "relative overflow-hidden rounded-2xl shadow-2xl float-left mr-8 mb-8 shape-outside-circle",
     shaped: "relative overflow-hidden portrait-shape float-left mr-8 mb-8",
-    creative: "relative overflow-hidden portrait-creative float-left mr-10 mb-8"
+    creative:
+      "relative overflow-hidden portrait-creative float-left mr-10 mb-8",
   }
 
   return (
-    <div 
+    <div
       ref={imageRef}
-      className={cn(
-        variants[variant],
-        "portrait-container",
-        className
-      )}
+      className={cn(variants[variant], "portrait-container", className)}
       style={{
-        transform: variant !== "standard" ? `translateY(${-parallaxOffset}px)` : undefined,
+        transform:
+          variant !== "standard"
+            ? `translateY(${-parallaxOffset}px)`
+            : undefined,
       }}
     >
-      <div className="portrait-inner relative w-full h-full">
+      <div className="portrait-inner relative h-full w-full">
         {isAppleLivePhoto && movSrc ? (
           <AppleLivePhoto
             jpgSrc={src}
             movSrc={movSrc}
             mp4Src={mp4Src}
             alt={alt}
-            className="w-full h-full"
+            className="h-full w-full"
             autoPlay={true}
             playOnHover={true}
             playOnInView={true}
@@ -85,7 +86,7 @@ export function PortraitImage({
             videoSrc={videoSrc}
             imageSrc={src}
             alt={alt}
-            className="w-full h-full"
+            className="h-full w-full"
             autoPlay={true}
             playOnHover={true}
             playOnInView={true}
@@ -98,11 +99,11 @@ export function PortraitImage({
               alt={alt}
               width={400}
               height={500}
-              className="object-cover w-full h-full"
+              className="h-full w-full object-cover"
               priority
               quality={90}
             />
-            
+
             {/* Overlay gradient for better text contrast */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 transition-opacity duration-300 hover:opacity-100" />
           </>
@@ -181,7 +182,7 @@ export function PortraitImage({
             0% 15%
           );
           shape-margin: 30px;
-          box-shadow: 
+          box-shadow:
             20px 20px 60px rgba(0, 0, 0, 0.15),
             -20px -20px 60px rgba(255, 255, 255, 0.1);
         }
@@ -189,7 +190,7 @@ export function PortraitImage({
         /* Dark mode adjustments */
         @media (prefers-color-scheme: dark) {
           .portrait-creative {
-            box-shadow: 
+            box-shadow:
               20px 20px 60px rgba(0, 0, 0, 0.5),
               -20px -20px 60px rgba(255, 255, 255, 0.05);
           }

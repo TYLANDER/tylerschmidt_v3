@@ -1,11 +1,11 @@
 "use client"
 
-import Image, { ImageProps } from 'next/image'
-import { motion } from 'framer-motion'
-import { useState } from 'react'
-import { cn } from '@/lib/utils'
+import Image, { ImageProps } from "next/image"
+import { motion } from "framer-motion"
+import { useState } from "react"
+import { cn } from "@/lib/utils"
 
-interface OptimizedImageProps extends Omit<ImageProps, 'onLoad'> {
+interface OptimizedImageProps extends Omit<ImageProps, "onLoad"> {
   blurDataURL?: string
   animate?: boolean
 }
@@ -23,12 +23,12 @@ export function OptimizedImage({
     <div className={cn("relative overflow-hidden", className)}>
       <motion.div
         initial={{ opacity: 0, scale: 1.02 }}
-        animate={{ 
-          opacity: isLoaded ? 1 : 0, 
-          scale: isLoaded ? 1 : 1.02 
+        animate={{
+          opacity: isLoaded ? 1 : 0,
+          scale: isLoaded ? 1 : 1.02,
         }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        className="relative w-full h-full"
+        className="relative h-full w-full"
       >
         <Image
           {...props}
@@ -42,11 +42,9 @@ export function OptimizedImage({
           )}
         />
       </motion.div>
-      
+
       {/* Loading skeleton */}
-      {!isLoaded && (
-        <div className="absolute inset-0 bg-muted animate-pulse" />
-      )}
+      {!isLoaded && <div className="absolute inset-0 animate-pulse bg-muted" />}
     </div>
   )
 }

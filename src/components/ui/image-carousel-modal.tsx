@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useState, useEffect, useRef, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { createPortal } from 'react-dom'
-import '@/styles/image-carousel-modal.css'
+import { useState, useEffect, useRef, useCallback } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { createPortal } from "react-dom"
+import "@/styles/image-carousel-modal.css"
 
 export interface CarouselImage {
   src: string
@@ -19,12 +19,12 @@ interface ImageCarouselModalProps {
   showPagination?: boolean
 }
 
-export function ImageCarouselModal({ 
-  isOpen, 
-  onClose, 
-  images, 
+export function ImageCarouselModal({
+  isOpen,
+  onClose,
+  images,
   initialIndex = 0,
-  showPagination = true
+  showPagination = true,
 }: ImageCarouselModalProps) {
   const [mounted, setMounted] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
@@ -55,27 +55,27 @@ export function ImageCarouselModal({
     if (isOpen) {
       previouslyFocusedElement.current = document.activeElement as HTMLElement
       setTimeout(() => closeButtonRef.current?.focus(), 100)
-      document.body.style.overflow = 'hidden'
-      
+      document.body.style.overflow = "hidden"
+
       const handleKeyDown = (e: KeyboardEvent) => {
         switch (e.key) {
-          case 'Escape':
+          case "Escape":
             onClose()
             break
-          case 'ArrowLeft':
+          case "ArrowLeft":
             goToPrevious()
             break
-          case 'ArrowRight':
+          case "ArrowRight":
             goToNext()
             break
         }
       }
-      
-      document.addEventListener('keydown', handleKeyDown)
-      
+
+      document.addEventListener("keydown", handleKeyDown)
+
       return () => {
-        document.removeEventListener('keydown', handleKeyDown)
-        document.body.style.overflow = ''
+        document.removeEventListener("keydown", handleKeyDown)
+        document.body.style.overflow = ""
         previouslyFocusedElement.current?.focus()
       }
     }
@@ -99,7 +99,7 @@ export function ImageCarouselModal({
             onClick={onClose}
             aria-hidden="true"
           />
-          
+
           {/* Modal Content */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -112,7 +112,7 @@ export function ImageCarouselModal({
             aria-label="Image gallery viewer"
           >
             {/* Header with close button - positioned to avoid navbar */}
-            <div className="absolute top-24 right-4 md:right-6 z-10">
+            <div className="absolute right-4 top-24 z-10 md:right-6">
               <button
                 ref={closeButtonRef}
                 onClick={onClose}
@@ -135,7 +135,10 @@ export function ImageCarouselModal({
             </div>
 
             {/* Image container - with scroll support for large images */}
-            <div className="flex flex-1 items-center justify-center p-4 md:p-8 overflow-auto" onClick={onClose}>
+            <div
+              className="flex flex-1 items-center justify-center overflow-auto p-4 md:p-8"
+              onClick={onClose}
+            >
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentIndex}
@@ -143,7 +146,7 @@ export function ImageCarouselModal({
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.98 }}
                   transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-                  className="relative flex flex-col items-center w-full max-w-[90vw] max-h-[calc(100vh-8rem)] overflow-auto custom-scrollbar"
+                  className="custom-scrollbar relative flex max-h-[calc(100vh-8rem)] w-full max-w-[90vw] flex-col items-center overflow-auto"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {/* Image wrapper with scroll */}
@@ -152,18 +155,20 @@ export function ImageCarouselModal({
                     <img
                       src={currentImage.src}
                       alt={currentImage.alt}
-                      className="w-auto h-auto rounded-lg"
+                      className="h-auto w-auto rounded-lg"
                       style={{
-                        maxWidth: '100%',
-                        height: 'auto',
-                        objectFit: 'contain'
+                        maxWidth: "100%",
+                        height: "auto",
+                        objectFit: "contain",
                       }}
                     />
-                    
+
                     {/* Caption below image */}
                     {currentImage.caption && (
-                      <div className="mt-4 text-center px-4">
-                        <p className="text-sm text-white/70 md:text-base">{currentImage.caption}</p>
+                      <div className="mt-4 px-4 text-center">
+                        <p className="text-sm text-white/70 md:text-base">
+                          {currentImage.caption}
+                        </p>
                       </div>
                     )}
                   </div>
@@ -182,8 +187,8 @@ export function ImageCarouselModal({
                       onClick={() => goToIndex(index)}
                       className={`h-1.5 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-white/50 ${
                         index === currentIndex
-                          ? 'w-6 bg-white'
-                          : 'w-1.5 bg-white/40 hover:bg-white/60'
+                          ? "w-6 bg-white"
+                          : "w-1.5 bg-white/40 hover:bg-white/60"
                       }`}
                       aria-label={`Go to image ${index + 1}`}
                     />
@@ -195,7 +200,7 @@ export function ImageCarouselModal({
                   {/* Previous button */}
                   <button
                     onClick={goToPrevious}
-                    className="flex h-8 w-8 items-center justify-center rounded-full text-white/60 hover:text-white hover:bg-white/10 transition-all focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="flex h-8 w-8 items-center justify-center rounded-full text-white/60 transition-all hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/50"
                     aria-label="Previous image"
                   >
                     <svg
@@ -215,7 +220,7 @@ export function ImageCarouselModal({
                   {/* Next button */}
                   <button
                     onClick={goToNext}
-                    className="flex h-8 w-8 items-center justify-center rounded-full text-white/60 hover:text-white hover:bg-white/10 transition-all focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="flex h-8 w-8 items-center justify-center rounded-full text-white/60 transition-all hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/50"
                     aria-label="Next image"
                   >
                     <svg
@@ -237,8 +242,8 @@ export function ImageCarouselModal({
 
             {/* Keyboard instructions (screen reader only) */}
             <div className="sr-only" aria-live="polite">
-              Image {currentIndex + 1} of {images.length}. 
-              Use arrow keys to navigate, Escape to close.
+              Image {currentIndex + 1} of {images.length}. Use arrow keys to
+              navigate, Escape to close.
             </div>
           </motion.div>
         </>
@@ -263,12 +268,16 @@ export function useImageCarouselModal() {
     showPagination: true,
   })
 
-  const openModal = (images: CarouselImage[], initialIndex: number = 0, showPagination: boolean = true) => {
+  const openModal = (
+    images: CarouselImage[],
+    initialIndex: number = 0,
+    showPagination: boolean = true
+  ) => {
     setModalState({ isOpen: true, images, initialIndex, showPagination })
   }
 
   const closeModal = () => {
-    setModalState(prev => ({ ...prev, isOpen: false }))
+    setModalState((prev) => ({ ...prev, isOpen: false }))
   }
 
   return {

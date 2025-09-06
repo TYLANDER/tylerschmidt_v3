@@ -1,6 +1,6 @@
 export interface Project {
   _id: string
-  _type: 'project'
+  _type: "project"
   title: string
   slug: string
   client?: string
@@ -12,17 +12,17 @@ export interface Project {
     [key: string]: unknown
   }> // Portable Text array
   featuredImage?: {
-    _type: 'image'
+    _type: "image"
     asset: {
       _ref: string
-      _type: 'reference'
+      _type: "reference"
     }
   }
   gallery?: Array<{
-    _type: 'image'
+    _type: "image"
     asset: {
       _ref: string
-      _type: 'reference'
+      _type: "reference"
     }
     alt?: string
     caption?: string

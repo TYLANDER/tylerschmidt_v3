@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useState, useRef, useEffect, useCallback } from 'react'
-import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
-import { cn } from '@/lib/utils'
+import { useState, useRef, useEffect, useCallback } from "react"
+import Image from "next/image"
+import { motion, AnimatePresence } from "framer-motion"
+import { cn } from "@/lib/utils"
 
 interface GalleryImage {
   src: string
@@ -16,9 +16,14 @@ interface ImageGalleryCarouselProps {
   className?: string
 }
 
-export function ImageGalleryCarousel({ images, className }: ImageGalleryCarouselProps) {
+export function ImageGalleryCarousel({
+  images,
+  className,
+}: ImageGalleryCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [imageLoadingStates, setImageLoadingStates] = useState<Record<number, boolean>>({})
+  const [imageLoadingStates, setImageLoadingStates] = useState<
+    Record<number, boolean>
+  >({})
   const containerRef = useRef<HTMLDivElement>(null)
 
   const goToPrevious = useCallback(() => {
@@ -36,15 +41,15 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') {
+      if (e.key === "ArrowLeft") {
         goToPrevious()
-      } else if (e.key === 'ArrowRight') {
+      } else if (e.key === "ArrowRight") {
         goToNext()
       }
     }
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
   }, [goToNext, goToPrevious])
 
   if (!images || images.length === 0) return null
@@ -56,7 +61,10 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
       {/* Main image container */}
       <div className="relative w-full">
         {/* Container that shows full image bounds */}
-        <div className="relative bg-gray-100 dark:bg-gray-900 rounded-2xl overflow-hidden flex items-center justify-center" style={{ minHeight: '400px', maxHeight: '70vh' }}>
+        <div
+          className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-900"
+          style={{ minHeight: "400px", maxHeight: "70vh" }}
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -64,18 +72,21 @@ export function ImageGalleryCarousel({ images, className }: ImageGalleryCarousel
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-              className="relative w-full h-full flex items-center justify-center p-8"
+              className="relative flex h-full w-full items-center justify-center p-8"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={currentImage.src}
                 alt={currentImage.alt}
-                className="max-w-full max-h-full w-auto h-auto object-contain"
+                className="h-auto max-h-full w-auto max-w-full object-contain"
                 onLoad={() => {
-                  setImageLoadingStates(prev => ({ ...prev, [currentIndex]: true }))
+                  setImageLoadingStates((prev) => ({
+                    ...prev,
+                    [currentIndex]: true,
+                  }))
                 }}
               />
-              
+
               {/* Loading state */}
               {!imageLoadingStates[currentIndex] && (
                 <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-900">

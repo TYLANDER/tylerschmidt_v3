@@ -25,7 +25,7 @@ export function LivePhoto({
   playOnHover = false,
   playOnInView = true,
   duration = 3000,
-  onPlayComplete
+  onPlayComplete,
 }: LivePhotoProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -62,20 +62,20 @@ export function LivePhoto({
     try {
       setIsPlaying(true)
       setShowVideo(true)
-      
+
       // Reset video to start
       videoRef.current.currentTime = 0
-      
+
       // Play video
       await videoRef.current.play()
-      
+
       // Stop after duration
       setTimeout(() => {
         if (videoRef.current) {
           videoRef.current.pause()
           setIsPlaying(false)
           setHasPlayed(true)
-          
+
           // Fade back to image
           setTimeout(() => {
             setShowVideo(false)
@@ -105,10 +105,7 @@ export function LivePhoto({
   return (
     <div
       ref={containerRef}
-      className={cn(
-        "relative overflow-hidden cursor-pointer group",
-        className
-      )}
+      className={cn("group relative cursor-pointer overflow-hidden", className)}
       onMouseEnter={handleMouseEnter}
       onClick={handleClick}
     >
@@ -117,7 +114,7 @@ export function LivePhoto({
         ref={videoRef}
         src={videoSrc}
         className={cn(
-          "absolute inset-0 w-full h-full object-cover transition-opacity duration-300",
+          "absolute inset-0 h-full w-full object-cover transition-opacity duration-300",
           showVideo ? "opacity-100" : "opacity-0"
         )}
         playsInline
@@ -133,32 +130,36 @@ export function LivePhoto({
         width={800}
         height={1000}
         className={cn(
-          "w-full h-full object-cover transition-opacity duration-300",
+          "h-full w-full object-cover transition-opacity duration-300",
           showVideo ? "opacity-0" : "opacity-100"
         )}
         priority
       />
 
       {/* Live indicator */}
-      <div className={cn(
-        "absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-full",
-        "bg-black/70 text-white text-sm font-medium backdrop-blur-sm",
-        "transition-all duration-300",
-        isPlaying ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-      )}>
-        <div className={cn(
-          "w-2 h-2 rounded-full",
-          isPlaying ? "bg-red-500 animate-pulse" : "bg-white"
-        )} />
+      <div
+        className={cn(
+          "absolute left-4 top-4 flex items-center gap-2 rounded-full px-3 py-1.5",
+          "bg-black/70 text-sm font-medium text-white backdrop-blur-sm",
+          "transition-all duration-300",
+          isPlaying ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+        )}
+      >
+        <div
+          className={cn(
+            "h-2 w-2 rounded-full",
+            isPlaying ? "animate-pulse bg-red-500" : "bg-white"
+          )}
+        />
         <span>{isPlaying ? "LIVE" : "LIVE PHOTO"}</span>
       </div>
 
       {/* Play icon overlay (when not playing) */}
       {!isPlaying && !hasPlayed && (
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="bg-white/90 dark:bg-black/90 rounded-full p-4 backdrop-blur-sm">
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <div className="rounded-full bg-white/90 p-4 backdrop-blur-sm dark:bg-black/90">
             <svg
-              className="w-8 h-8 text-gray-800 dark:text-gray-200"
+              className="h-8 w-8 text-gray-800 dark:text-gray-200"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -182,7 +183,7 @@ export function LivePhoto({
 
       {/* Subtle animation hint */}
       {!hasPlayed && (
-        <div className="absolute bottom-4 right-4 text-xs text-white/70 dark:text-white/50 backdrop-blur-sm bg-black/30 px-2 py-1 rounded">
+        <div className="absolute bottom-4 right-4 rounded bg-black/30 px-2 py-1 text-xs text-white/70 backdrop-blur-sm dark:text-white/50">
           Click to play
         </div>
       )}

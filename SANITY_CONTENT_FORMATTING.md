@@ -9,12 +9,14 @@ This guide helps ensure all project content in Sanity uses proper typography and
 Instead of using normal text for section titles, use proper heading levels:
 
 **❌ Don't do this:**
+
 ```
 Project Overview
 This project involved creating...
 ```
 
 **✅ Do this:**
+
 ```
 ## Project Overview
 This project involved creating...
@@ -26,60 +28,77 @@ Use these formatted headers for consistency across all projects:
 
 ```markdown
 ## Project Overview
+
 [Your overview content]
 
 ## Design Process
+
 [Your design process content]
 
 ### Research & Discovery
+
 [Research details]
 
 ### User Experience Design
+
 [UX details]
 
 ### Visual Design
+
 [Visual design details]
 
 ## Technical Implementation
+
 [Technical details]
 
 ### Architecture
+
 [Architecture details]
 
 ### Key Features
+
 [Features list]
 
 ## Challenges & Solutions
+
 [Challenges faced and how they were solved]
 
 ## Results & Impact
+
 [Project outcomes]
 ```
 
 ### 3. Text Formatting
 
 #### Bold Text (Strong Emphasis)
+
 Use for important keywords or emphasis:
+
 - **Key Feature:** Description
 - **Technology Stack:** React, TypeScript, Next.js
 - **Timeline:** 3 months
 
 #### Lists
+
 Use bullet points for features, technologies, or outcomes:
 
 **Features:**
+
 - Real-time collaboration
 - Advanced search functionality
 - Responsive design
 - Accessibility compliance
 
 **Technologies Used:**
+
 - Frontend: React, TypeScript, Tailwind CSS
 - Backend: Node.js, Express, PostgreSQL
 - Infrastructure: AWS, Docker, CI/CD
 
 #### Links
+
 Format links with descriptive text:
+
 - [View live project](https://example.com)
 - [Read the case study](https://example.com/case-study)
 
@@ -97,6 +116,7 @@ Here's a complete example for a project:
 ### Research & Discovery
 
 We began with extensive **user research** and **stakeholder interviews** to understand:
+
 - Current pain points in the design workflow
 - Inconsistencies across products
 - Developer needs and constraints
@@ -104,6 +124,7 @@ We began with extensive **user research** and **stakeholder interviews** to unde
 ### Design System Architecture
 
 The system was built on three core principles:
+
 - **Modularity:** Components that work independently
 - **Scalability:** Easy to extend and maintain
 - **Accessibility:** WCAG AAA compliance
@@ -113,6 +134,7 @@ The system was built on three core principles:
 ### Component Architecture
 
 Built using:
+
 - **React** with TypeScript for type safety
 - **Styled Components** for dynamic theming
 - **Storybook** for component documentation

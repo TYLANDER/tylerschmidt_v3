@@ -1,11 +1,20 @@
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils"
 
-export function Card({ className, children }: { className?: string; children: React.ReactNode }) {
+export function Card({
+  className,
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) {
   return (
-    <div className={cn('bg-card border border-border rounded-md shadow-subtle overflow-hidden', className)}>
+    <div
+      className={cn(
+        "shadow-subtle overflow-hidden rounded-md border border-border bg-card",
+        className
+      )}
+    >
       {children}
     </div>
   )
 }
-
-

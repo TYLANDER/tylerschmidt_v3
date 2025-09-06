@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useState, useEffect, useRef, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { createPortal } from 'react-dom'
-import { cn } from '@/lib/utils'
+import { useState, useEffect, useRef, useCallback } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { createPortal } from "react-dom"
+import { cn } from "@/lib/utils"
 
 export interface DisplayImage {
   src: string
@@ -17,37 +17,42 @@ interface ImageDisplayEnhancedProps {
   images: DisplayImage[]
   className?: string
   onImageClick?: (index: number) => void
-  variant?: 'inline' | 'grid' | 'carousel'
+  variant?: "inline" | "grid" | "carousel"
   columns?: 1 | 2 | 3
 }
 
 // Enhanced inline image display component
-export function ImageDisplayEnhanced({ 
-  images, 
-  className, 
+export function ImageDisplayEnhanced({
+  images,
+  className,
   onImageClick,
-  variant = 'carousel',
-  columns = 1
+  variant = "carousel",
+  columns = 1,
 }: ImageDisplayEnhancedProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [imageStates, setImageStates] = useState<Record<number, {
-    loaded: boolean
-    naturalWidth: number
-    naturalHeight: number
-  }>>({})
+  const [imageStates, setImageStates] = useState<
+    Record<
+      number,
+      {
+        loaded: boolean
+        naturalWidth: number
+        naturalHeight: number
+      }
+    >
+  >({})
 
   // Preload images and get natural dimensions
   useEffect(() => {
     images.forEach((image, index) => {
       const img = new Image()
       img.onload = () => {
-        setImageStates(prev => ({
+        setImageStates((prev) => ({
           ...prev,
           [index]: {
             loaded: true,
             naturalWidth: img.naturalWidth,
-            naturalHeight: img.naturalHeight
-          }
+            naturalHeight: img.naturalHeight,
+          },
         }))
       }
       img.src = image.src
@@ -69,39 +74,48 @@ export function ImageDisplayEnhanced({
 
     // Since we now have a fixed container, we just need object-fit
     return {
-      objectFit: 'contain' as const,
-      width: '100%',
-      height: '100%'
+      objectFit: "contain" as const,
+      width: "100%",
+      height: "100%",
     }
   }
 
   if (!images || images.length === 0) return null
 
   // Grid layout for multiple images
-  if (variant === 'grid' && images.length > 1) {
+  if (variant === "grid" && images.length > 1) {
     return (
-      <div className={cn(
-        "grid gap-4",
-        columns === 1 && "grid-cols-1",
-        columns === 2 && "grid-cols-1 md:grid-cols-2",
-        columns === 3 && "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
-        className
-      )}>
+      <div
+        className={cn(
+          "grid gap-4",
+          columns === 1 && "grid-cols-1",
+          columns === 2 && "grid-cols-1 md:grid-cols-2",
+          columns === 3 && "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+          className
+        )}
+      >
         {images.map((image, index) => (
-          <div key={index} className="relative group">
-            <div className="relative bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden">
+          <div key={index} className="group relative">
+            <div className="relative overflow-hidden rounded-lg bg-gray-50 dark:bg-gray-900">
               <img
                 src={image.src}
                 alt={image.alt}
-                className="w-full h-auto cursor-zoom-in transition-transform group-hover:scale-[1.02]"
+                className="h-auto w-full cursor-zoom-in transition-transform group-hover:scale-[1.02]"
                 style={getImageDisplayStyle(index)}
                 onClick={() => onImageClick?.(index)}
                 loading="lazy"
               />
               {onImageClick && (
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none bg-black/20">
-                  <div className="bg-black/60 backdrop-blur-sm rounded-full p-3">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
+                  <div className="rounded-full bg-black/60 p-3 backdrop-blur-sm">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="2"
+                    >
                       <path d="M15 3h6v6M14 10l6.1-6.1M9 21H3v-6M10 14l-6.1 6.1" />
                     </svg>
                   </div>
@@ -109,7 +123,7 @@ export function ImageDisplayEnhanced({
               )}
             </div>
             {image.caption && (
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 text-center">
+              <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
                 {image.caption}
               </p>
             )}
@@ -124,9 +138,17 @@ export function ImageDisplayEnhanced({
   const currentState = imageStates[currentIndex]
 
   return (
-    <div className={cn("relative w-full grid grid-rows-[1fr_auto_auto] gap-4", className)}>
+    <div
+      className={cn(
+        "relative grid w-full grid-rows-[1fr_auto_auto] gap-4",
+        className
+      )}
+    >
       {/* Image container with stable height */}
-      <div className="relative overflow-hidden rounded-2xl bg-gray-50 dark:bg-gray-900" style={{ height: '60vh', minHeight: '400px' }}>
+      <div
+        className="relative overflow-hidden rounded-2xl bg-gray-50 dark:bg-gray-900"
+        style={{ height: "60vh", minHeight: "400px" }}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -141,15 +163,15 @@ export function ImageDisplayEnhanced({
               alt={currentImage.alt}
               className="cursor-zoom-in"
               style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
-                objectFit: 'contain',
-                display: currentState?.loaded ? 'block' : 'none'
+                maxWidth: "100%",
+                maxHeight: "100%",
+                objectFit: "contain",
+                display: currentState?.loaded ? "block" : "none",
               }}
               onClick={() => onImageClick?.(currentIndex)}
               loading={currentIndex === 0 ? "eager" : "lazy"}
             />
-            
+
             {/* Loading spinner */}
             {!currentState?.loaded && (
               <div className="absolute inset-0 flex items-center justify-center">
@@ -159,9 +181,16 @@ export function ImageDisplayEnhanced({
 
             {/* Zoom indicator */}
             {onImageClick && currentState?.loaded && (
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity pointer-events-none bg-black/10">
-                <div className="bg-black/60 backdrop-blur-sm rounded-full p-3">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 transition-opacity hover:opacity-100">
+                <div className="rounded-full bg-black/60 p-3 backdrop-blur-sm">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                  >
                     <path d="M15 3h6v6M14 10l6.1-6.1M9 21H3v-6M10 14l-6.1 6.1" />
                   </svg>
                 </div>
@@ -177,7 +206,7 @@ export function ImageDisplayEnhanced({
           key={`caption-${currentIndex}`}
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center text-sm text-gray-600 dark:text-gray-400 min-h-[1.5rem]"
+          className="min-h-[1.5rem] text-center text-sm text-gray-600 dark:text-gray-400"
         >
           {currentImage.caption}
         </motion.p>
@@ -185,7 +214,7 @@ export function ImageDisplayEnhanced({
       {!currentImage.caption && <div className="min-h-[1.5rem]" />}
 
       {/* Navigation for carousel - in its own grid row */}
-      {images.length > 1 && variant === 'carousel' && (
+      {images.length > 1 && variant === "carousel" && (
         <div className="flex items-center justify-between">
           <span className="text-sm text-gray-500 dark:text-gray-400">
             {currentIndex + 1} / {images.length}
@@ -213,19 +242,33 @@ export function ImageDisplayEnhanced({
             <div className="flex items-center gap-1">
               <button
                 onClick={goToPrevious}
-                className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+                className="rounded-full bg-gray-100 p-2 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
                 aria-label="Previous"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path d="M15 18l-6-6 6-6" />
                 </svg>
               </button>
               <button
                 onClick={goToNext}
-                className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+                className="rounded-full bg-gray-100 p-2 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
                 aria-label="Next"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path d="M9 18l6-6-6-6" />
                 </svg>
               </button>
@@ -245,7 +288,12 @@ interface EnhancedModalProps {
   initialIndex?: number
 }
 
-export function EnhancedImageModal({ isOpen, onClose, images, initialIndex = 0 }: EnhancedModalProps) {
+export function EnhancedImageModal({
+  isOpen,
+  onClose,
+  images,
+  initialIndex = 0,
+}: EnhancedModalProps) {
   const [mounted, setMounted] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
   const [scale, setScale] = useState(1)
@@ -262,37 +310,39 @@ export function EnhancedImageModal({ isOpen, onClose, images, initialIndex = 0 }
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden'
-      
+      document.body.style.overflow = "hidden"
+
       const handleKeyDown = (e: KeyboardEvent) => {
         switch (e.key) {
-          case 'Escape':
+          case "Escape":
             onClose()
             break
-          case 'ArrowLeft':
-            setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)
+          case "ArrowLeft":
+            setCurrentIndex(
+              (prev) => (prev - 1 + images.length) % images.length
+            )
             break
-          case 'ArrowRight':
+          case "ArrowRight":
             setCurrentIndex((prev) => (prev + 1) % images.length)
             break
-          case '+':
-          case '=':
-            setScale(s => Math.min(s + 0.25, 3))
+          case "+":
+          case "=":
+            setScale((s) => Math.min(s + 0.25, 3))
             break
-          case '-':
-            setScale(s => Math.max(s - 0.25, 0.5))
+          case "-":
+            setScale((s) => Math.max(s - 0.25, 0.5))
             break
-          case '0':
+          case "0":
             setScale(1)
             setPosition({ x: 0, y: 0 })
             break
         }
       }
-      
-      document.addEventListener('keydown', handleKeyDown)
+
+      document.addEventListener("keydown", handleKeyDown)
       return () => {
-        document.removeEventListener('keydown', handleKeyDown)
-        document.body.style.overflow = ''
+        document.removeEventListener("keydown", handleKeyDown)
+        document.body.style.overflow = ""
       }
     }
   }, [isOpen, onClose, images.length])
@@ -314,29 +364,36 @@ export function EnhancedImageModal({ isOpen, onClose, images, initialIndex = 0 }
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-black flex flex-col"
+          className="fixed inset-0 z-50 flex flex-col bg-black"
         >
           {/* Header */}
-          <div className="relative z-10 flex items-center justify-between p-4 bg-black/50 backdrop-blur-sm">
+          <div className="relative z-10 flex items-center justify-between bg-black/50 p-4 backdrop-blur-sm">
             <div className="flex items-center gap-4">
-              <span className="text-white/80 text-sm">
+              <span className="text-sm text-white/80">
                 {currentIndex + 1} / {images.length}
               </span>
               {scale !== 1 && (
-                <span className="text-white/60 text-sm">
+                <span className="text-sm text-white/60">
                   {Math.round(scale * 100)}%
                 </span>
               )}
             </div>
-            
+
             <div className="flex items-center gap-2">
               {/* Zoom controls */}
               <button
-                onClick={() => setScale(s => Math.max(s - 0.25, 0.5))}
-                className="p-2 rounded bg-white/10 hover:bg-white/20 text-white/80"
+                onClick={() => setScale((s) => Math.max(s - 0.25, 0.5))}
+                className="rounded bg-white/10 p-2 text-white/80 hover:bg-white/20"
                 aria-label="Zoom out"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <circle cx="11" cy="11" r="8" />
                   <path d="m21 21-4.35-4.35M8 11h6" />
                 </svg>
@@ -346,31 +403,45 @@ export function EnhancedImageModal({ isOpen, onClose, images, initialIndex = 0 }
                   setScale(1)
                   setPosition({ x: 0, y: 0 })
                 }}
-                className="p-2 rounded bg-white/10 hover:bg-white/20 text-white/80 text-sm font-medium"
+                className="rounded bg-white/10 p-2 text-sm font-medium text-white/80 hover:bg-white/20"
                 aria-label="Reset zoom"
               >
                 100%
               </button>
               <button
-                onClick={() => setScale(s => Math.min(s + 0.25, 3))}
-                className="p-2 rounded bg-white/10 hover:bg-white/20 text-white/80"
+                onClick={() => setScale((s) => Math.min(s + 0.25, 3))}
+                className="rounded bg-white/10 p-2 text-white/80 hover:bg-white/20"
                 aria-label="Zoom in"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <circle cx="11" cy="11" r="8" />
                   <path d="m21 21-4.35-4.35M11 8v6M8 11h6" />
                 </svg>
               </button>
-              
-              <div className="w-px h-6 bg-white/20 mx-2" />
-              
+
+              <div className="mx-2 h-6 w-px bg-white/20" />
+
               {/* Close button */}
               <button
                 onClick={onClose}
-                className="p-2 rounded bg-white/10 hover:bg-white/20 text-white"
+                className="rounded bg-white/10 p-2 text-white hover:bg-white/20"
                 aria-label="Close"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path d="M18 6L6 18M6 6l12 12" />
                 </svg>
               </button>
@@ -378,9 +449,9 @@ export function EnhancedImageModal({ isOpen, onClose, images, initialIndex = 0 }
           </div>
 
           {/* Image container */}
-          <div 
+          <div
             ref={containerRef}
-            className="flex-1 overflow-auto flex items-center justify-center p-4"
+            className="flex flex-1 items-center justify-center overflow-auto p-4"
             onClick={onClose}
           >
             <motion.div
@@ -403,35 +474,46 @@ export function EnhancedImageModal({ isOpen, onClose, images, initialIndex = 0 }
                 alt={currentImage.alt}
                 className="max-w-none"
                 style={{
-                  maxHeight: '90vh',
-                  width: 'auto',
-                  cursor: scale > 1 ? 'move' : 'default'
+                  maxHeight: "90vh",
+                  width: "auto",
+                  cursor: scale > 1 ? "move" : "default",
                 }}
               />
             </motion.div>
           </div>
 
           {/* Bottom navigation */}
-          <div className="relative z-10 p-4 bg-black/50 backdrop-blur-sm">
+          <div className="relative z-10 bg-black/50 p-4 backdrop-blur-sm">
             <div className="flex items-center justify-center gap-4">
               <button
-                onClick={() => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)}
-                className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white"
+                onClick={() =>
+                  setCurrentIndex(
+                    (prev) => (prev - 1 + images.length) % images.length
+                  )
+                }
+                className="rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
                 aria-label="Previous"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path d="M15 18l-6-6 6-6" />
                 </svg>
               </button>
 
               {/* Thumbnails */}
-              <div className="flex items-center gap-2 max-w-xl overflow-x-auto">
+              <div className="flex max-w-xl items-center gap-2 overflow-x-auto">
                 {images.map((image, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentIndex(index)}
                     className={cn(
-                      "relative flex-shrink-0 w-16 h-16 rounded overflow-hidden transition-all",
+                      "relative h-16 w-16 flex-shrink-0 overflow-hidden rounded transition-all",
                       index === currentIndex
                         ? "ring-2 ring-white"
                         : "opacity-50 hover:opacity-80"
@@ -440,25 +522,34 @@ export function EnhancedImageModal({ isOpen, onClose, images, initialIndex = 0 }
                     <img
                       src={image.src}
                       alt={`Thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
+                      className="h-full w-full object-cover"
                     />
                   </button>
                 ))}
               </div>
 
               <button
-                onClick={() => setCurrentIndex((prev) => (prev + 1) % images.length)}
-                className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white"
+                onClick={() =>
+                  setCurrentIndex((prev) => (prev + 1) % images.length)
+                }
+                className="rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
                 aria-label="Next"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path d="M9 18l6-6-6-6" />
                 </svg>
               </button>
             </div>
 
             {currentImage.caption && (
-              <p className="text-center text-white/70 text-sm mt-4">
+              <p className="mt-4 text-center text-sm text-white/70">
                 {currentImage.caption}
               </p>
             )}
@@ -488,7 +579,7 @@ export function useEnhancedImageModal() {
   }
 
   const closeModal = () => {
-    setModalState(prev => ({ ...prev, isOpen: false }))
+    setModalState((prev) => ({ ...prev, isOpen: false }))
   }
 
   return {

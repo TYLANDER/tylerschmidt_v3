@@ -1,12 +1,12 @@
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/Card'
-import { Container } from '@/components/ui/Container'
-import { AnimatedTextShowcase } from './AnimatedTextShowcase'
-import { ThemeToggle } from '@/components/ui/theme-toggle'
-import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { X } from 'lucide-react'
+import React from "react"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/Card"
+import { Container } from "@/components/ui/Container"
+import { AnimatedTextShowcase } from "./AnimatedTextShowcase"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
+import { motion } from "framer-motion"
+import Link from "next/link"
+import { X } from "lucide-react"
 
 export interface ComponentProp {
   name: string
@@ -44,15 +44,16 @@ export interface ComponentCategory {
 
 export const componentCategories: ComponentCategory[] = [
   {
-    id: 'buttons',
-    name: 'Buttons',
+    id: "buttons",
+    name: "Buttons",
     components: [
       {
-        id: 'primary-button',
-        name: 'Primary Button',
-        description: 'The primary call-to-action button used throughout the application. Built with accessibility in mind and supports multiple variants.',
+        id: "primary-button",
+        name: "Primary Button",
+        description:
+          "The primary call-to-action button used throughout the application. Built with accessibility in mind and supports multiple variants.",
         preview: (
-          <div className="flex gap-4 flex-wrap justify-center">
+          <div className="flex flex-wrap justify-center gap-4">
             <Button>Default Button</Button>
             <Button variant="destructive">Destructive</Button>
             <Button variant="outline">Outline</Button>
@@ -75,59 +76,85 @@ export function ButtonDemo() {
 <Button variant="ghost">Ghost</Button>
 <Button size="sm">Small</Button>
 <Button size="lg">Large</Button>
-<Button disabled>Disabled</Button>`
+<Button disabled>Disabled</Button>`,
         },
         props: [
-          { name: 'variant', type: 'default | destructive | outline | ghost', default: 'default', description: 'The visual style of the button' },
-          { name: 'size', type: 'sm | md | lg', default: 'md', description: 'The size of the button' },
-          { name: 'disabled', type: 'boolean', default: 'false', description: 'Whether the button is disabled' },
-          { name: 'onClick', type: '() => void', description: 'Click handler function' },
-          { name: 'children', type: 'ReactNode', description: 'Button content', required: true }
+          {
+            name: "variant",
+            type: "default | destructive | outline | ghost",
+            default: "default",
+            description: "The visual style of the button",
+          },
+          {
+            name: "size",
+            type: "sm | md | lg",
+            default: "md",
+            description: "The size of the button",
+          },
+          {
+            name: "disabled",
+            type: "boolean",
+            default: "false",
+            description: "Whether the button is disabled",
+          },
+          {
+            name: "onClick",
+            type: "() => void",
+            description: "Click handler function",
+          },
+          {
+            name: "children",
+            type: "ReactNode",
+            description: "Button content",
+            required: true,
+          },
         ],
         variants: [
           {
-            name: 'Sizes',
+            name: "Sizes",
             preview: (
-              <div className="flex gap-4 items-center">
+              <div className="flex items-center gap-4">
                 <Button size="sm">Small</Button>
                 <Button>Medium</Button>
                 <Button size="lg">Large</Button>
               </div>
-            )
+            ),
           },
           {
-            name: 'States',
+            name: "States",
             preview: (
               <div className="flex gap-4">
                 <Button>Normal</Button>
                 <Button disabled>Disabled</Button>
               </div>
-            )
-          }
+            ),
+          },
         ],
         guidelines: [
-          'Use default variant for primary actions',
-          'Use destructive variant for dangerous actions like delete',
-          'Ensure sufficient color contrast for accessibility',
-          'Provide clear, action-oriented labels'
-        ]
-      }
-    ]
+          "Use default variant for primary actions",
+          "Use destructive variant for dangerous actions like delete",
+          "Ensure sufficient color contrast for accessibility",
+          "Provide clear, action-oriented labels",
+        ],
+      },
+    ],
   },
   {
-    id: 'cards',
-    name: 'Cards',
+    id: "cards",
+    name: "Cards",
     components: [
       {
-        id: 'basic-card',
-        name: 'Basic Card',
-        description: 'A versatile container component for grouping related content. Cards provide a clean way to organize information.',
+        id: "basic-card",
+        name: "Basic Card",
+        description:
+          "A versatile container component for grouping related content. Cards provide a clean way to organize information.",
         preview: (
-          <div className="max-w-md mx-auto">
+          <div className="mx-auto max-w-md">
             <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-2">Card Title</h3>
+              <h3 className="mb-2 text-xl font-semibold">Card Title</h3>
               <p className="text-muted-foreground">
-                This is a basic card component that can be used to display various types of content in a clean, organized manner.
+                This is a basic card component that can be used to display
+                various types of content in a clean, organized manner.
               </p>
             </Card>
           </div>
@@ -154,44 +181,63 @@ export function CardExample() {
 
 <Card hover className="p-4">
   Hoverable card
-</Card>`
+</Card>`,
         },
         props: [
-          { name: 'className', type: 'string', description: 'Additional CSS classes' },
-          { name: 'hover', type: 'boolean', default: 'false', description: 'Enable hover effects' },
-          { name: 'children', type: 'ReactNode', description: 'Card content', required: true }
+          {
+            name: "className",
+            type: "string",
+            description: "Additional CSS classes",
+          },
+          {
+            name: "hover",
+            type: "boolean",
+            default: "false",
+            description: "Enable hover effects",
+          },
+          {
+            name: "children",
+            type: "ReactNode",
+            description: "Card content",
+            required: true,
+          },
         ],
         guidelines: [
-          'Use consistent padding across all cards',
-          'Group related information together',
-          'Avoid overcrowding cards with too much content',
-          'Consider using hover effects for interactive cards'
-        ]
+          "Use consistent padding across all cards",
+          "Group related information together",
+          "Avoid overcrowding cards with too much content",
+          "Consider using hover effects for interactive cards",
+        ],
       },
       {
-        id: 'project-card',
-        name: 'Project Card',
-        description: 'A specialized card component designed specifically for showcasing portfolio projects with image, metadata, and technologies.',
+        id: "project-card",
+        name: "Project Card",
+        description:
+          "A specialized card component designed specifically for showcasing portfolio projects with image, metadata, and technologies.",
         preview: (
-          <div className="max-w-md mx-auto">
+          <div className="mx-auto max-w-md">
             <motion.div
-              className="border border-border rounded-lg overflow-hidden"
+              className="overflow-hidden rounded-lg border border-border"
               whileHover={{ y: -4 }}
               transition={{ duration: 0.2 }}
             >
               <div className="aspect-video bg-gradient-to-br from-blue-500 to-purple-600" />
               <div className="p-6">
-                <div className="flex justify-between text-sm text-muted-foreground mb-2">
+                <div className="mb-2 flex justify-between text-sm text-muted-foreground">
                   <span>Client Name</span>
                   <span>2024</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Project Title</h3>
+                <h3 className="mb-2 text-xl font-semibold">Project Title</h3>
                 <p className="text-muted-foreground">
                   A brief description of the project and its key achievements.
                 </p>
-                <div className="flex gap-2 mt-4">
-                  <span className="text-xs px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800">React</span>
-                  <span className="text-xs px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800">TypeScript</span>
+                <div className="mt-4 flex gap-2">
+                  <span className="rounded-full bg-gray-100 px-2 py-1 text-xs dark:bg-gray-800">
+                    React
+                  </span>
+                  <span className="rounded-full bg-gray-100 px-2 py-1 text-xs dark:bg-gray-800">
+                    TypeScript
+                  </span>
                 </div>
               </div>
             </motion.div>
@@ -232,28 +278,38 @@ export function ProjectCard({ project }) {
   title: "Project Title",
   description: "Project description",
   technologies: ["React", "TypeScript"]
-}} />`
-        }
-      }
-    ]
+}} />`,
+        },
+      },
+    ],
   },
   {
-    id: 'images',
-    name: 'Images & Media',
+    id: "images",
+    name: "Images & Media",
     components: [
       {
-        id: 'image-modal',
-        name: 'Image Modal',
-        description: 'A full-screen modal for viewing images with zoom capabilities. Includes keyboard navigation and accessibility features.',
+        id: "image-modal",
+        name: "Image Modal",
+        description:
+          "A full-screen modal for viewing images with zoom capabilities. Includes keyboard navigation and accessibility features.",
         preview: (
           <div className="space-y-4">
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-8 text-center">
-              <p className="text-sm text-muted-foreground mb-4">Click an image to open modal</p>
-              <div className="inline-block relative group cursor-pointer">
-                <div className="aspect-video w-64 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg" />
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="bg-white/90 rounded-full p-3">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <div className="rounded-lg bg-gray-100 p-8 text-center dark:bg-gray-800">
+              <p className="mb-4 text-sm text-muted-foreground">
+                Click an image to open modal
+              </p>
+              <div className="group relative inline-block cursor-pointer">
+                <div className="aspect-video w-64 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600" />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
+                  <div className="rounded-full bg-white/90 p-3">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
                       <path d="M15 3h6v6M14 10l6.1-6.1M9 21H3v-6M10 14l-6.1 6.1" />
                     </svg>
                   </div>
@@ -291,40 +347,71 @@ export function ImageExample() {
   src="/image.jpg"
   alt="Description"
   caption="Optional caption"
-/>`
+/>`,
         },
         props: [
-          { name: 'isOpen', type: 'boolean', description: 'Controls modal visibility', required: true },
-          { name: 'onClose', type: '() => void', description: 'Callback when modal closes', required: true },
-          { name: 'src', type: 'string', description: 'Image source URL', required: true },
-          { name: 'alt', type: 'string', description: 'Alt text for accessibility', required: true },
-          { name: 'caption', type: 'string', description: 'Optional image caption' }
+          {
+            name: "isOpen",
+            type: "boolean",
+            description: "Controls modal visibility",
+            required: true,
+          },
+          {
+            name: "onClose",
+            type: "() => void",
+            description: "Callback when modal closes",
+            required: true,
+          },
+          {
+            name: "src",
+            type: "string",
+            description: "Image source URL",
+            required: true,
+          },
+          {
+            name: "alt",
+            type: "string",
+            description: "Alt text for accessibility",
+            required: true,
+          },
+          {
+            name: "caption",
+            type: "string",
+            description: "Optional image caption",
+          },
         ],
         guidelines: [
-          'Always provide meaningful alt text',
-          'Ensure images are optimized for web',
-          'Test keyboard navigation (Escape to close)',
-          'Consider lazy loading for performance'
-        ]
+          "Always provide meaningful alt text",
+          "Ensure images are optimized for web",
+          "Test keyboard navigation (Escape to close)",
+          "Consider lazy loading for performance",
+        ],
       },
       {
-        id: 'image-carousel-modal',
-        name: 'Image Carousel Modal',
-        description: 'A modal carousel for viewing multiple images with navigation controls. Features Apple-style pagination and keyboard support.',
+        id: "image-carousel-modal",
+        name: "Image Carousel Modal",
+        description:
+          "A modal carousel for viewing multiple images with navigation controls. Features Apple-style pagination and keyboard support.",
         preview: (
           <div className="space-y-4">
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-8">
-              <p className="text-sm text-muted-foreground mb-6 text-center">Multi-image gallery modal preview</p>
-              <div className="relative max-w-md mx-auto">
-                <div className="aspect-video bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg" />
-                <div className="absolute bottom-4 right-4 flex items-center gap-4 bg-white/10 backdrop-blur-md rounded-full px-4 py-3">
-                  <button className="w-8 h-8 flex items-center justify-center text-white">←</button>
+            <div className="rounded-lg bg-gray-100 p-8 dark:bg-gray-800">
+              <p className="mb-6 text-center text-sm text-muted-foreground">
+                Multi-image gallery modal preview
+              </p>
+              <div className="relative mx-auto max-w-md">
+                <div className="aspect-video rounded-lg bg-gradient-to-br from-purple-500 to-pink-600" />
+                <div className="absolute bottom-4 right-4 flex items-center gap-4 rounded-full bg-white/10 px-4 py-3 backdrop-blur-md">
+                  <button className="flex h-8 w-8 items-center justify-center text-white">
+                    ←
+                  </button>
                   <div className="flex gap-1.5">
-                    <div className="w-6 h-1.5 bg-white rounded-full" />
-                    <div className="w-1.5 h-1.5 bg-white/40 rounded-full" />
-                    <div className="w-1.5 h-1.5 bg-white/40 rounded-full" />
+                    <div className="h-1.5 w-6 rounded-full bg-white" />
+                    <div className="h-1.5 w-1.5 rounded-full bg-white/40" />
+                    <div className="h-1.5 w-1.5 rounded-full bg-white/40" />
                   </div>
-                  <button className="w-8 h-8 flex items-center justify-center text-white">→</button>
+                  <button className="flex h-8 w-8 items-center justify-center text-white">
+                    →
+                  </button>
                 </div>
               </div>
             </div>
@@ -368,50 +455,90 @@ openModal(images, startIndex)
   images={images}
   initialIndex={0}
   showPagination={true}
-/>`
+/>`,
         },
         props: [
-          { name: 'isOpen', type: 'boolean', description: 'Controls modal visibility', required: true },
-          { name: 'onClose', type: '() => void', description: 'Callback when modal closes', required: true },
-          { name: 'images', type: 'CarouselImage[]', description: 'Array of images to display', required: true },
-          { name: 'initialIndex', type: 'number', default: '0', description: 'Starting image index' },
-          { name: 'showPagination', type: 'boolean', default: 'true', description: 'Show/hide navigation controls' }
+          {
+            name: "isOpen",
+            type: "boolean",
+            description: "Controls modal visibility",
+            required: true,
+          },
+          {
+            name: "onClose",
+            type: "() => void",
+            description: "Callback when modal closes",
+            required: true,
+          },
+          {
+            name: "images",
+            type: "CarouselImage[]",
+            description: "Array of images to display",
+            required: true,
+          },
+          {
+            name: "initialIndex",
+            type: "number",
+            default: "0",
+            description: "Starting image index",
+          },
+          {
+            name: "showPagination",
+            type: "boolean",
+            default: "true",
+            description: "Show/hide navigation controls",
+          },
         ],
         guidelines: [
-          'Provide keyboard navigation (arrow keys)',
-          'Show controls only for multiple images',
-          'Preload adjacent images for smooth transitions',
-          'Test on touch devices for swipe gestures'
-        ]
+          "Provide keyboard navigation (arrow keys)",
+          "Show controls only for multiple images",
+          "Preload adjacent images for smooth transitions",
+          "Test on touch devices for swipe gestures",
+        ],
       },
       {
-        id: 'image-gallery-carousel',
-        name: 'Image Gallery Carousel',
-        description: 'An on-page carousel component with Apple-inspired design. Features smooth transitions, thumbnail navigation, and loading states.',
+        id: "image-gallery-carousel",
+        name: "Image Gallery Carousel",
+        description:
+          "An on-page carousel component with Apple-inspired design. Features smooth transitions, thumbnail navigation, and loading states.",
         preview: (
-          <div className="max-w-2xl mx-auto">
+          <div className="mx-auto max-w-2xl">
             <div className="space-y-4">
-              <div className="relative aspect-video rounded-2xl overflow-hidden bg-gradient-to-br from-green-500 to-blue-600">
-                <button className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-green-500 to-blue-600">
+                <button className="absolute left-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow-lg">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
                     <path d="M15 18l-6-6 6-6" />
                   </svg>
                 </button>
-                <button className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <button className="absolute right-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow-lg">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
                     <path d="M9 18l6-6-6-6" />
                   </svg>
                 </button>
               </div>
               <div className="flex justify-center gap-2">
-                <div className="w-8 h-2 bg-gray-900 dark:bg-white rounded-full" />
-                <div className="w-2 h-2 bg-gray-300 dark:bg-gray-700 rounded-full" />
-                <div className="w-2 h-2 bg-gray-300 dark:bg-gray-700 rounded-full" />
+                <div className="h-2 w-8 rounded-full bg-gray-900 dark:bg-white" />
+                <div className="h-2 w-2 rounded-full bg-gray-300 dark:bg-gray-700" />
+                <div className="h-2 w-2 rounded-full bg-gray-300 dark:bg-gray-700" />
               </div>
-              <div className="flex gap-4 justify-center">
-                <div className="w-32 h-20 rounded-lg bg-gradient-to-br from-green-500 to-blue-600 ring-2 ring-blue-500 ring-offset-2" />
-                <div className="w-32 h-20 rounded-lg bg-gray-200 dark:bg-gray-700 opacity-60" />
-                <div className="w-32 h-20 rounded-lg bg-gray-200 dark:bg-gray-700 opacity-60" />
+              <div className="flex justify-center gap-4">
+                <div className="h-20 w-32 rounded-lg bg-gradient-to-br from-green-500 to-blue-600 ring-2 ring-blue-500 ring-offset-2" />
+                <div className="h-20 w-32 rounded-lg bg-gray-200 opacity-60 dark:bg-gray-700" />
+                <div className="h-20 w-32 rounded-lg bg-gray-200 opacity-60 dark:bg-gray-700" />
               </div>
             </div>
           </div>
@@ -451,30 +578,40 @@ export function ProjectGallery() {
 // In a container
 <div className="max-w-4xl mx-auto">
   <ImageGalleryCarousel images={galleryImages} />
-</div>`
+</div>`,
         },
         props: [
-          { name: 'images', type: 'GalleryImage[]', description: 'Array of images with src, alt, and optional caption', required: true },
-          { name: 'className', type: 'string', description: 'Additional CSS classes for the container' }
+          {
+            name: "images",
+            type: "GalleryImage[]",
+            description: "Array of images with src, alt, and optional caption",
+            required: true,
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Additional CSS classes for the container",
+          },
         ],
         guidelines: [
-          'Optimize images for web performance',
-          'Provide loading states for better UX',
-          'Ensure touch-friendly navigation on mobile',
-          'Keep thumbnail strip scrollable on small screens',
-          'Use aspect ratios that work across devices'
-        ]
-      }
-    ]
+          "Optimize images for web performance",
+          "Provide loading states for better UX",
+          "Ensure touch-friendly navigation on mobile",
+          "Keep thumbnail strip scrollable on small screens",
+          "Use aspect ratios that work across devices",
+        ],
+      },
+    ],
   },
   {
-    id: 'typography',
-    name: 'Typography',
+    id: "typography",
+    name: "Typography",
     components: [
       {
-        id: 'animated-text',
-        name: 'Animated Text',
-        description: 'Text components with various entrance animations. Each animation serves a different purpose and creates unique visual emphasis.',
+        id: "animated-text",
+        name: "Animated Text",
+        description:
+          "Text components with various entrance animations. Each animation serves a different purpose and creates unique visual emphasis.",
         preview: <AnimatedTextShowcase />,
         code: {
           jsx: `import { AnimatedText } from '@/components/animations/animated-text'
@@ -507,52 +644,102 @@ export function AnimatedTextExample() {
 <AnimatedText text="Your text" variant="reveal" />
 <AnimatedText text="Your text" variant="decrypt" />
 <AnimatedText text="Your text" delay={0.5} />
-<AnimatedText text="Your text" as="h1" />`
+<AnimatedText text="Your text" as="h1" />`,
         },
         props: [
-          { name: 'text', type: 'string', description: 'The text to animate', required: true },
-          { name: 'variant', type: 'slide | fade | typewriter | reveal | decrypt', default: 'slide', description: 'Animation variant' },
-          { name: 'delay', type: 'number', default: '0', description: 'Animation delay in seconds' },
-          { name: 'duration', type: 'number', default: '0.6', description: 'Animation duration in seconds' },
-          { name: 'as', type: 'ElementType', default: 'p', description: 'HTML element to render as' },
-          { name: 'className', type: 'string', description: 'Additional CSS classes' }
+          {
+            name: "text",
+            type: "string",
+            description: "The text to animate",
+            required: true,
+          },
+          {
+            name: "variant",
+            type: "slide | fade | typewriter | reveal | decrypt",
+            default: "slide",
+            description: "Animation variant",
+          },
+          {
+            name: "delay",
+            type: "number",
+            default: "0",
+            description: "Animation delay in seconds",
+          },
+          {
+            name: "duration",
+            type: "number",
+            default: "0.6",
+            description: "Animation duration in seconds",
+          },
+          {
+            name: "as",
+            type: "ElementType",
+            default: "p",
+            description: "HTML element to render as",
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Additional CSS classes",
+          },
         ],
         guidelines: [
-          'Use sparingly to avoid overwhelming users',
-          'Consider user preferences for reduced motion',
-          'Choose animations that match the content tone',
-          'Ensure text remains readable during animation'
-        ]
+          "Use sparingly to avoid overwhelming users",
+          "Consider user preferences for reduced motion",
+          "Choose animations that match the content tone",
+          "Ensure text remains readable during animation",
+        ],
       },
       {
-        id: 'heading-styles',
-        name: 'Heading Hierarchy',
-        description: 'A consistent heading system that maintains visual hierarchy and readability across all screen sizes.',
+        id: "heading-styles",
+        name: "Heading Hierarchy",
+        description:
+          "A consistent heading system that maintains visual hierarchy and readability across all screen sizes.",
         preview: (
           <div className="space-y-6">
             <div>
-              <p className="text-xs text-muted-foreground mb-1">H1 • 5xl/7xl • Bold</p>
-              <h1 className="text-5xl md:text-7xl font-bold">Main Page Title</h1>
+              <p className="mb-1 text-xs text-muted-foreground">
+                H1 • 5xl/7xl • Bold
+              </p>
+              <h1 className="text-5xl font-bold md:text-7xl">
+                Main Page Title
+              </h1>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground mb-1">H2 • 4xl/5xl • Bold</p>
-              <h2 className="text-4xl md:text-5xl font-bold">Section Heading</h2>
+              <p className="mb-1 text-xs text-muted-foreground">
+                H2 • 4xl/5xl • Bold
+              </p>
+              <h2 className="text-4xl font-bold md:text-5xl">
+                Section Heading
+              </h2>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground mb-1">H3 • 3xl/4xl • Semibold</p>
-              <h3 className="text-3xl md:text-4xl font-semibold">Subsection Title</h3>
+              <p className="mb-1 text-xs text-muted-foreground">
+                H3 • 3xl/4xl • Semibold
+              </p>
+              <h3 className="text-3xl font-semibold md:text-4xl">
+                Subsection Title
+              </h3>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground mb-1">H4 • 2xl/3xl • Semibold</p>
-              <h4 className="text-2xl md:text-3xl font-semibold">Card Heading</h4>
+              <p className="mb-1 text-xs text-muted-foreground">
+                H4 • 2xl/3xl • Semibold
+              </p>
+              <h4 className="text-2xl font-semibold md:text-3xl">
+                Card Heading
+              </h4>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground mb-1">H5 • xl/2xl • Medium</p>
-              <h5 className="text-xl md:text-2xl font-medium">Small Heading</h5>
+              <p className="mb-1 text-xs text-muted-foreground">
+                H5 • xl/2xl • Medium
+              </p>
+              <h5 className="text-xl font-medium md:text-2xl">Small Heading</h5>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground mb-1">H6 • lg/xl • Medium</p>
-              <h6 className="text-lg md:text-xl font-medium">Label Heading</h6>
+              <p className="mb-1 text-xs text-muted-foreground">
+                H6 • lg/xl • Medium
+              </p>
+              <h6 className="text-lg font-medium md:text-xl">Label Heading</h6>
             </div>
           </div>
         ),
@@ -571,49 +758,72 @@ export function AnimatedTextExample() {
 <h2 className="text-4xl md:text-5xl font-bold mb-6">Section Title</h2>
 
 // For subsections
-<h3 className="text-3xl md:text-4xl font-semibold mb-4">Subsection</h3>`
+<h3 className="text-3xl md:text-4xl font-semibold mb-4">Subsection</h3>`,
         },
         guidelines: [
-          'Maintain consistent hierarchy throughout the page',
-          'Use only one H1 per page for SEO',
-          'Ensure sufficient contrast between heading levels',
-          'Include responsive sizing for mobile devices'
-        ]
+          "Maintain consistent hierarchy throughout the page",
+          "Use only one H1 per page for SEO",
+          "Ensure sufficient contrast between heading levels",
+          "Include responsive sizing for mobile devices",
+        ],
       },
       {
-        id: 'body-copy',
-        name: 'Body Copy',
-        description: 'Standardized text styles for body content, ensuring optimal readability and consistency.',
+        id: "body-copy",
+        name: "Body Copy",
+        description:
+          "Standardized text styles for body content, ensuring optimal readability and consistency.",
         preview: (
-          <div className="space-y-6 max-w-2xl">
+          <div className="max-w-2xl space-y-6">
             <div>
-              <p className="text-xs text-muted-foreground mb-2">Body Large • lg</p>
+              <p className="mb-2 text-xs text-muted-foreground">
+                Body Large • lg
+              </p>
               <p className="text-lg leading-relaxed">
-                This is large body text used for important introductory content or emphasis. It provides better readability for key information.
+                This is large body text used for important introductory content
+                or emphasis. It provides better readability for key information.
               </p>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground mb-2">Body Default • base</p>
+              <p className="mb-2 text-xs text-muted-foreground">
+                Body Default • base
+              </p>
               <p className="text-base leading-relaxed">
-                This is the default body text size used throughout the application. It&apos;s optimized for readability at normal reading distances and provides a comfortable reading experience for longer content.
+                This is the default body text size used throughout the
+                application. It&apos;s optimized for readability at normal
+                reading distances and provides a comfortable reading experience
+                for longer content.
               </p>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground mb-2">Body Small • sm</p>
+              <p className="mb-2 text-xs text-muted-foreground">
+                Body Small • sm
+              </p>
               <p className="text-sm leading-relaxed">
-                This is small body text used for secondary information, captions, or supporting details. It maintains readability while taking up less space.
+                This is small body text used for secondary information,
+                captions, or supporting details. It maintains readability while
+                taking up less space.
               </p>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground mb-2">Body Muted • Muted Foreground</p>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                This is muted body text used for supplementary information that should be de-emphasized visually while remaining accessible.
+              <p className="mb-2 text-xs text-muted-foreground">
+                Body Muted • Muted Foreground
+              </p>
+              <p className="text-base leading-relaxed text-muted-foreground">
+                This is muted body text used for supplementary information that
+                should be de-emphasized visually while remaining accessible.
               </p>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground mb-2">Link Text</p>
+              <p className="mb-2 text-xs text-muted-foreground">Link Text</p>
               <p className="text-base leading-relaxed">
-                This is body text with an <a href="#" className="text-blue-500 hover:text-blue-600 underline transition-colors">inline link</a> that stands out while maintaining readability.
+                This is body text with an{" "}
+                <a
+                  href="#"
+                  className="text-blue-500 underline transition-colors hover:text-blue-600"
+                >
+                  inline link
+                </a>{" "}
+                that stands out while maintaining readability.
               </p>
             </div>
           </div>
@@ -659,29 +869,31 @@ export function AnimatedTextExample() {
   <h3 className="text-2xl font-semibold mb-2">Card Title</h3>
   <p className="text-base mb-4">Main content...</p>
   <p className="text-sm text-muted-foreground">Meta information</p>
-</Card>`
+</Card>`,
         },
         guidelines: [
-          'Use 1.5x line height (leading-relaxed) for body text',
-          'Limit line length to 65-75 characters for optimal readability',
-          'Ensure sufficient contrast between text and background',
-          'Use text-muted-foreground for secondary information'
-        ]
-      }
-    ]
+          "Use 1.5x line height (leading-relaxed) for body text",
+          "Limit line length to 65-75 characters for optimal readability",
+          "Ensure sufficient contrast between text and background",
+          "Use text-muted-foreground for secondary information",
+        ],
+      },
+    ],
   },
   {
-    id: 'layout',
-    name: 'Layout',
+    id: "layout",
+    name: "Layout",
     components: [
       {
-        id: 'container',
-        name: 'Container',
-        description: 'A responsive container component that provides consistent max-width constraints and padding. Essential for maintaining readable line lengths.',
+        id: "container",
+        name: "Container",
+        description:
+          "A responsive container component that provides consistent max-width constraints and padding. Essential for maintaining readable line lengths.",
         preview: (
-          <Container className="bg-gray-100 dark:bg-gray-800 py-8 rounded-lg">
+          <Container className="rounded-lg bg-gray-100 py-8 dark:bg-gray-800">
             <p className="text-center">
-              This content is wrapped in a Container component that provides consistent spacing and max-width constraints.
+              This content is wrapped in a Container component that provides
+              consistent spacing and max-width constraints.
             </p>
           </Container>
         ),
@@ -706,48 +918,87 @@ export function ContainerExample() {
 
 <Container as="section">
   Semantic HTML element
-</Container>`
+</Container>`,
         },
         props: [
-          { name: 'children', type: 'ReactNode', description: 'Content to be contained', required: true },
-          { name: 'className', type: 'string', description: 'Additional CSS classes' },
-          { name: 'as', type: 'ElementType', default: 'div', description: 'HTML element to render as' }
+          {
+            name: "children",
+            type: "ReactNode",
+            description: "Content to be contained",
+            required: true,
+          },
+          {
+            name: "className",
+            type: "string",
+            description: "Additional CSS classes",
+          },
+          {
+            name: "as",
+            type: "ElementType",
+            default: "div",
+            description: "HTML element to render as",
+          },
         ],
         guidelines: [
-          'Use for all main content areas',
-          'Provides responsive padding on mobile',
-          'Maximum width prevents lines from becoming too long',
-          'Can be nested for different width constraints'
-        ]
+          "Use for all main content areas",
+          "Provides responsive padding on mobile",
+          "Maximum width prevents lines from becoming too long",
+          "Can be nested for different width constraints",
+        ],
       },
       {
-        id: 'grid-system',
-        name: 'Grid System',
-        description: 'A flexible CSS Grid-based layout system using Tailwind CSS. Supports responsive breakpoints and asymmetric layouts.',
+        id: "grid-system",
+        name: "Grid System",
+        description:
+          "A flexible CSS Grid-based layout system using Tailwind CSS. Supports responsive breakpoints and asymmetric layouts.",
         preview: (
           <div className="space-y-8">
             <div>
-              <p className="text-sm text-muted-foreground mb-3">12-Column Grid</p>
+              <p className="mb-3 text-sm text-muted-foreground">
+                12-Column Grid
+              </p>
               <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-8 bg-blue-500/20 border border-blue-500 rounded p-4 text-center">col-span-8</div>
-                <div className="col-span-4 bg-blue-500/20 border border-blue-500 rounded p-4 text-center">col-span-4</div>
+                <div className="col-span-8 rounded border border-blue-500 bg-blue-500/20 p-4 text-center">
+                  col-span-8
+                </div>
+                <div className="col-span-4 rounded border border-blue-500 bg-blue-500/20 p-4 text-center">
+                  col-span-4
+                </div>
               </div>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground mb-3">Responsive Grid</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-purple-500/20 border border-purple-500 rounded p-4 text-center">1</div>
-                <div className="bg-purple-500/20 border border-purple-500 rounded p-4 text-center">2</div>
-                <div className="bg-purple-500/20 border border-purple-500 rounded p-4 text-center">3</div>
-                <div className="bg-purple-500/20 border border-purple-500 rounded p-4 text-center">4</div>
+              <p className="mb-3 text-sm text-muted-foreground">
+                Responsive Grid
+              </p>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <div className="rounded border border-purple-500 bg-purple-500/20 p-4 text-center">
+                  1
+                </div>
+                <div className="rounded border border-purple-500 bg-purple-500/20 p-4 text-center">
+                  2
+                </div>
+                <div className="rounded border border-purple-500 bg-purple-500/20 p-4 text-center">
+                  3
+                </div>
+                <div className="rounded border border-purple-500 bg-purple-500/20 p-4 text-center">
+                  4
+                </div>
               </div>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground mb-3">Auto-fit Grid</p>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="bg-green-500/20 border border-green-500 rounded p-4 text-center">Auto</div>
-                <div className="bg-green-500/20 border border-green-500 rounded p-4 text-center">Fit</div>
-                <div className="bg-green-500/20 border border-green-500 rounded p-4 text-center">Grid</div>
+              <p className="mb-3 text-sm text-muted-foreground">
+                Auto-fit Grid
+              </p>
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+                <div className="rounded border border-green-500 bg-green-500/20 p-4 text-center">
+                  Auto
+                </div>
+                <div className="rounded border border-green-500 bg-green-500/20 p-4 text-center">
+                  Fit
+                </div>
+                <div className="rounded border border-green-500 bg-green-500/20 p-4 text-center">
+                  Grid
+                </div>
               </div>
             </div>
           </div>
@@ -786,42 +1037,52 @@ export function ContainerExample() {
 // Stats grid
 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
   {stats.map(stat => <StatCard key={stat.id} {...stat} />)}
-</div>`
+</div>`,
         },
         guidelines: [
-          'Use consistent gap sizes: gap-4 (1rem), gap-6 (1.5rem), gap-8 (2rem)',
-          'Always include responsive breakpoints for mobile',
-          'Consider using 12-column grid for complex layouts',
-          'Test on various screen sizes to ensure proper stacking'
-        ]
-      }
-    ]
+          "Use consistent gap sizes: gap-4 (1rem), gap-6 (1.5rem), gap-8 (2rem)",
+          "Always include responsive breakpoints for mobile",
+          "Consider using 12-column grid for complex layouts",
+          "Test on various screen sizes to ensure proper stacking",
+        ],
+      },
+    ],
   },
   {
-    id: 'feedback',
-    name: 'Feedback',
+    id: "feedback",
+    name: "Feedback",
     components: [
       {
-        id: 'loading-states',
-        name: 'Loading States',
-        description: 'Various loading indicators to provide feedback during asynchronous operations.',
+        id: "loading-states",
+        name: "Loading States",
+        description:
+          "Various loading indicators to provide feedback during asynchronous operations.",
         preview: (
           <div className="space-y-8">
             <div className="text-center">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+              <div className="inline-block h-8 w-8 animate-spin rounded-full border-b-2 border-blue-500"></div>
               <p className="mt-2 text-sm text-muted-foreground">Spinner</p>
             </div>
             <div className="space-y-3">
-              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
-              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-3/4"></div>
-              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-1/2"></div>
+              <div className="h-4 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
+              <div className="h-4 w-3/4 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
+              <div className="h-4 w-1/2 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
               <p className="mt-2 text-sm text-muted-foreground">Skeleton</p>
             </div>
             <div className="flex justify-center">
               <div className="flex space-x-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                <div
+                  className="h-2 w-2 animate-bounce rounded-full bg-blue-500"
+                  style={{ animationDelay: "0ms" }}
+                ></div>
+                <div
+                  className="h-2 w-2 animate-bounce rounded-full bg-blue-500"
+                  style={{ animationDelay: "150ms" }}
+                ></div>
+                <div
+                  className="h-2 w-2 animate-bounce rounded-full bg-blue-500"
+                  style={{ animationDelay: "300ms" }}
+                ></div>
               </div>
               <p className="ml-4 text-sm text-muted-foreground">Dots</p>
             </div>
@@ -857,56 +1118,97 @@ export function ContainerExample() {
     <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded" />
     <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6" />
   </div>
-</div>`
-        }
+</div>`,
+        },
       },
       {
-        id: 'toast-notifications',
-        name: 'Toast Notifications',
-        description: 'Temporary notification messages that appear at the edge of the screen to provide feedback.',
+        id: "toast-notifications",
+        name: "Toast Notifications",
+        description:
+          "Temporary notification messages that appear at the edge of the screen to provide feedback.",
         preview: (
           <div className="space-y-4">
-            <div className="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-4 rounded-lg bg-green-500 px-6 py-4 text-white shadow-lg">
               <div className="flex items-center gap-3">
-                <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <svg
+                  className="h-5 w-5 flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
                 <span>Success! Your changes have been saved.</span>
               </div>
-              <button className="p-1 hover:bg-green-600 rounded transition-colors">
+              <button className="rounded p-1 transition-colors hover:bg-green-600">
                 <X size={16} />
               </button>
             </div>
-            <div className="bg-red-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-4 rounded-lg bg-red-500 px-6 py-4 text-white shadow-lg">
               <div className="flex items-center gap-3">
-                <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="h-5 w-5 flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
                 <span>Error! Something went wrong.</span>
               </div>
-              <button className="p-1 hover:bg-red-600 rounded transition-colors">
+              <button className="rounded p-1 transition-colors hover:bg-red-600">
                 <X size={16} />
               </button>
             </div>
-            <div className="bg-blue-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-4 rounded-lg bg-blue-500 px-6 py-4 text-white shadow-lg">
               <div className="flex items-center gap-3">
-                <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <svg
+                  className="h-5 w-5 flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
                 </svg>
                 <span>Info: New update available.</span>
               </div>
-              <button className="p-1 hover:bg-blue-600 rounded transition-colors">
+              <button className="rounded p-1 transition-colors hover:bg-blue-600">
                 <X size={16} />
               </button>
             </div>
-            <div className="bg-yellow-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-4 rounded-lg bg-yellow-500 px-6 py-4 text-white shadow-lg">
               <div className="flex items-center gap-3">
-                <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                <svg
+                  className="h-5 w-5 flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
                 </svg>
                 <span>Warning: This action cannot be undone.</span>
               </div>
-              <button className="p-1 hover:bg-yellow-600 rounded transition-colors">
+              <button className="rounded p-1 transition-colors hover:bg-yellow-600">
                 <X size={16} />
               </button>
             </div>
@@ -958,26 +1260,27 @@ export function Toast({ type, message, onClose }) {
       onClose={() => removeToast(toast.id)} 
     />
   ))}
-</div>`
+</div>`,
         },
         guidelines: [
-          'Position toasts at the edge of the viewport',
-          'Auto-dismiss after 3-5 seconds for non-critical messages',
-          'Always provide a close button for accessibility',
-          'Stack multiple toasts with proper spacing',
-          'Use appropriate colors for different message types'
-        ]
-      }
-    ]
+          "Position toasts at the edge of the viewport",
+          "Auto-dismiss after 3-5 seconds for non-critical messages",
+          "Always provide a close button for accessibility",
+          "Stack multiple toasts with proper spacing",
+          "Use appropriate colors for different message types",
+        ],
+      },
+    ],
   },
   {
-    id: 'navigation',
-    name: 'Navigation',
+    id: "navigation",
+    name: "Navigation",
     components: [
       {
-        id: 'theme-toggle',
-        name: 'Theme Toggle',
-        description: 'A toggle component for switching between light and dark themes with smooth transitions.',
+        id: "theme-toggle",
+        name: "Theme Toggle",
+        description:
+          "A toggle component for switching between light and dark themes with smooth transitions.",
         preview: (
           <div className="flex justify-center">
             <ThemeToggle />
@@ -999,38 +1302,49 @@ export function Header() {
 // With custom styling
 <div className="fixed top-4 right-4">
   <ThemeToggle />
-</div>`
+</div>`,
         },
         guidelines: [
-          'Place in a consistent location across all pages',
-          'Ensure the icon clearly indicates the current theme',
-          'Persist user preference in localStorage',
-          'Provide smooth transitions between themes'
-        ]
+          "Place in a consistent location across all pages",
+          "Ensure the icon clearly indicates the current theme",
+          "Persist user preference in localStorage",
+          "Provide smooth transitions between themes",
+        ],
       },
       {
-        id: 'navigation-menu',
-        name: 'Navigation Menu',
-        description: 'The primary navigation component with responsive design and animated hover states matching our production site.',
+        id: "navigation-menu",
+        name: "Navigation Menu",
+        description:
+          "The primary navigation component with responsive design and animated hover states matching our production site.",
         preview: (
-          <nav className="border border-border rounded-lg p-4">
-            <div className="flex justify-between items-center">
-              <div className="font-semibold text-lg">Tyler Schmidt</div>
-              <div className="hidden md:flex items-center gap-8">
-                {['Work', 'About', 'Lab', 'Pia'].map((item) => (
+          <nav className="rounded-lg border border-border p-4">
+            <div className="flex items-center justify-between">
+              <div className="text-lg font-semibold">Tyler Schmidt</div>
+              <div className="hidden items-center gap-8 md:flex">
+                {["Work", "About", "Lab", "Pia"].map((item) => (
                   <Link
                     key={item}
                     href="#"
-                    className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors duration-300 relative group"
+                    className="group relative text-sm font-medium text-foreground/80 transition-colors duration-300 hover:text-foreground"
                   >
                     {item}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300" />
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-accent transition-all duration-300 group-hover:w-full" />
                   </Link>
                 ))}
               </div>
               <button className="md:hidden">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               </button>
             </div>
@@ -1078,46 +1392,47 @@ const navItems = [
   { href: '/about', label: 'About' },
   { href: '/lab', label: 'Lab' },
   { href: '/pia', label: 'Pia' }
-]`
+]`,
         },
         guidelines: [
-          'Keep navigation items concise and clear',
-          'Highlight the current page in the navigation',
-          'Ensure mobile menu is easily accessible',
-          'Use consistent animation timing across all interactions'
-        ]
-      }
-    ]
+          "Keep navigation items concise and clear",
+          "Highlight the current page in the navigation",
+          "Ensure mobile menu is easily accessible",
+          "Use consistent animation timing across all interactions",
+        ],
+      },
+    ],
   },
   {
-    id: 'effects',
-    name: 'Effects',
+    id: "effects",
+    name: "Effects",
     components: [
       {
-        id: 'hover-effects',
-        name: 'Hover Effects',
-        description: 'Interactive hover states that provide visual feedback and enhance user experience.',
+        id: "hover-effects",
+        name: "Hover Effects",
+        description:
+          "Interactive hover states that provide visual feedback and enhance user experience.",
         preview: (
           <div className="grid grid-cols-2 gap-6">
             <motion.div
-              className="p-6 border border-border rounded-lg cursor-pointer"
+              className="cursor-pointer rounded-lg border border-border p-6"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
               <p className="text-center">Scale on Hover</p>
             </motion.div>
             <motion.div
-              className="p-6 border border-border rounded-lg cursor-pointer"
+              className="cursor-pointer rounded-lg border border-border p-6"
               whileHover={{ y: -5 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
               <p className="text-center">Lift on Hover</p>
             </motion.div>
             <motion.div
-              className="p-6 border border-border rounded-lg cursor-pointer col-span-2"
-              whileHover={{ 
+              className="col-span-2 cursor-pointer rounded-lg border border-border p-6"
+              whileHover={{
                 boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
-                borderColor: "rgb(59, 130, 246)"
+                borderColor: "rgb(59, 130, 246)",
               }}
               transition={{ duration: 0.2 }}
             >
@@ -1174,26 +1489,30 @@ const navItems = [
   whileTap={{ scale: 0.95 }}
 >
   Click me
-</motion.button>`
+</motion.button>`,
         },
         guidelines: [
-          'Keep hover effects subtle and purposeful',
-          'Ensure effects don\'t cause layout shifts',
-          'Provide visual feedback within 100ms',
-          'Consider touch devices where hover isn&apos;t available'
-        ]
+          "Keep hover effects subtle and purposeful",
+          "Ensure effects don't cause layout shifts",
+          "Provide visual feedback within 100ms",
+          "Consider touch devices where hover isn&apos;t available",
+        ],
       },
       {
-        id: 'glassmorphism',
-        name: 'Glassmorphism',
-        description: 'Modern frosted glass effect using backdrop blur and semi-transparent backgrounds.',
+        id: "glassmorphism",
+        name: "Glassmorphism",
+        description:
+          "Modern frosted glass effect using backdrop blur and semi-transparent backgrounds.",
         preview: (
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg" />
-            <div className="relative p-8 rounded-lg bg-white/10 backdrop-blur-lg border border-white/20">
-              <h3 className="text-xl font-semibold mb-2 text-white">Glassmorphism</h3>
+            <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-blue-400 to-purple-600" />
+            <div className="relative rounded-lg border border-white/20 bg-white/10 p-8 backdrop-blur-lg">
+              <h3 className="mb-2 text-xl font-semibold text-white">
+                Glassmorphism
+              </h3>
               <p className="text-sm text-white/80">
-                A modern frosted glass effect using backdrop blur and transparency.
+                A modern frosted glass effect using backdrop blur and
+                transparency.
               </p>
             </div>
           </div>
@@ -1230,15 +1549,15 @@ const navItems = [
 // Dark mode glass
 <div className="bg-black/10 dark:bg-white/10 backdrop-blur-lg border border-white/10 rounded-lg p-6">
   Adaptive glass
-</div>`
+</div>`,
         },
         guidelines: [
-          'Ensure sufficient contrast for text readability',
-          'Use sparingly as it can impact performance',
-          'Provide fallbacks for browsers without backdrop-filter support',
-          'Test on various backgrounds to ensure visibility'
-        ]
-      }
-    ]
-  }
+          "Ensure sufficient contrast for text readability",
+          "Use sparingly as it can impact performance",
+          "Provide fallbacks for browsers without backdrop-filter support",
+          "Test on various backgrounds to ensure visibility",
+        ],
+      },
+    ],
+  },
 ]

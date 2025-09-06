@@ -1,4 +1,4 @@
-import { groq } from 'next-sanity'
+import { groq } from "next-sanity"
 
 // Get all projects
 export const projectsQuery = groq`

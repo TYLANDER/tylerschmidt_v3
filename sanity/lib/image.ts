@@ -1,9 +1,9 @@
-import createImageUrlBuilder from '@sanity/image-url'
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
+import createImageUrlBuilder from "@sanity/image-url"
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 // Hardcode values to ensure they're available
-const projectId = 'w41634kr'
-const dataset = 'production'
+const projectId = "w41634kr"
+const dataset = "production"
 
 const builder = createImageUrlBuilder({
   projectId,
@@ -12,9 +12,9 @@ const builder = createImageUrlBuilder({
 
 export function urlFor(source: SanityImageSource) {
   if (!source) {
-    console.error('urlFor called with no source')
-    return builder.image('')
+    console.error("urlFor called with no source")
+    return builder.image("")
   }
-  
+
   return builder.image(source)
 }

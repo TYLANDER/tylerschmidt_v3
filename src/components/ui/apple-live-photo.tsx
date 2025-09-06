@@ -5,10 +5,10 @@ import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 interface AppleLivePhotoProps {
-  heicSrc?: string  // Original HEIC file path (optional)
-  jpgSrc: string    // Converted JPG for web compatibility
-  movSrc: string    // Original MOV file from iPhone
-  mp4Src?: string   // Converted MP4 for better browser support (optional)
+  heicSrc?: string // Original HEIC file path (optional)
+  jpgSrc: string // Converted JPG for web compatibility
+  movSrc: string // Original MOV file from iPhone
+  mp4Src?: string // Converted MP4 for better browser support (optional)
   alt: string
   className?: string
   autoPlay?: boolean
@@ -27,7 +27,7 @@ export function AppleLivePhoto({
   autoPlay = true,
   playOnHover = false,
   playOnInView = true,
-  onPlayComplete
+  onPlayComplete,
 }: AppleLivePhotoProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -68,13 +68,13 @@ export function AppleLivePhoto({
     try {
       setIsPlaying(true)
       setShowVideo(true)
-      
+
       // Reset video to start
       videoRef.current.currentTime = 0
-      
+
       // Play video
       await videoRef.current.play()
-      
+
       // iPhone Live Photos are typically 3 seconds
       // Stop at the "key frame" (usually around 1.5 seconds)
       setTimeout(() => {
@@ -82,11 +82,11 @@ export function AppleLivePhoto({
           // Pause at the key frame
           videoRef.current.pause()
           videoRef.current.currentTime = 1.5
-          
+
           setTimeout(() => {
             setIsPlaying(false)
             setHasPlayed(true)
-            
+
             // Fade back to still image
             setTimeout(() => {
               setShowVideo(false)
@@ -126,7 +126,7 @@ export function AppleLivePhoto({
     <div
       ref={containerRef}
       className={cn(
-        "relative overflow-hidden cursor-pointer group",
+        "group relative cursor-pointer overflow-hidden",
         "live-photo-container",
         className
       )}
@@ -138,7 +138,7 @@ export function AppleLivePhoto({
         <video
           ref={videoRef}
           className={cn(
-            "absolute inset-0 w-full h-full object-cover transition-opacity duration-300",
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-300",
             showVideo ? "opacity-100" : "opacity-0"
           )}
           playsInline
@@ -161,37 +161,45 @@ export function AppleLivePhoto({
         width={800}
         height={1000}
         className={cn(
-          "w-full h-full object-cover transition-opacity duration-300",
+          "h-full w-full object-cover transition-opacity duration-300",
           showVideo && !videoError ? "opacity-0" : "opacity-100"
         )}
         priority
       />
 
       {/* Live Photo badge (Apple-style) */}
-      <div className={cn(
-        "absolute top-4 left-4 flex items-center gap-1.5",
-        "transition-all duration-300",
-        isPlaying ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-      )}>
+      <div
+        className={cn(
+          "absolute left-4 top-4 flex items-center gap-1.5",
+          "transition-all duration-300",
+          isPlaying ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+        )}
+      >
         {/* Concentric circles animation */}
-        <div className="relative w-8 h-8">
-          <div className={cn(
-            "absolute inset-0 rounded-full border-2 border-white",
-            isPlaying && "animate-ping"
-          )} />
-          <div className={cn(
-            "absolute inset-2 rounded-full border-2 border-white",
-            isPlaying && "animate-ping animation-delay-200"
-          )} />
+        <div className="relative h-8 w-8">
+          <div
+            className={cn(
+              "absolute inset-0 rounded-full border-2 border-white",
+              isPlaying && "animate-ping"
+            )}
+          />
+          <div
+            className={cn(
+              "absolute inset-2 rounded-full border-2 border-white",
+              isPlaying && "animation-delay-200 animate-ping"
+            )}
+          />
           <div className="absolute inset-3 rounded-full bg-white" />
         </div>
-        <span className="text-white text-sm font-medium drop-shadow-lg">LIVE</span>
+        <span className="text-sm font-medium text-white drop-shadow-lg">
+          LIVE
+        </span>
       </div>
 
       {/* Play hint (only if not played yet and no video error) */}
       {!hasPlayed && !videoError && (
-        <div className="absolute bottom-4 right-4 flex items-center gap-2 text-xs text-white/80 backdrop-blur-sm bg-black/40 px-3 py-1.5 rounded-full">
-          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+        <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-black/40 px-3 py-1.5 text-xs text-white/80 backdrop-blur-sm">
+          <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
           </svg>
           <span>Live Photo</span>

@@ -35,6 +35,7 @@ Sanity is a headless CMS that separates your content from your presentation. Her
 ### 2. Understanding the Rich Text Editor (Overview Field)
 
 The Overview field uses "Portable Text" which gives you:
+
 - **Headings** (H2, H3, H4)
 - **Bold/Italic** text
 - **Bullet/Numbered lists**
@@ -42,6 +43,7 @@ The Overview field uses "Portable Text" which gives you:
 - **Block quotes**
 
 Example structure:
+
 ```
 ## The Challenge
 Nike needed a digital experience that...
@@ -68,6 +70,7 @@ The project resulted in...
 ### 4. Viewing Your Content
 
 After publishing in Sanity:
+
 1. Visit `/work` on your site to see all projects
 2. Click a project to see its detail page at `/work/[slug]`
 3. Featured projects will appear on your homepage
@@ -77,6 +80,7 @@ After publishing in Sanity:
 **Project Order**: Add projects in the order you want them displayed
 
 **Categories**: Be consistent with category names:
+
 - "Brand Identity"
 - "Web Design"
 - "Mobile App"
@@ -98,17 +102,20 @@ Sanity Studio → Cloud Database → Your Next.js App → Live Website
 ## Common Tasks
 
 ### Edit Existing Project
+
 1. Click on the project in Sanity Studio
 2. Make changes
 3. Click "Publish"
 
 ### Delete Project
+
 1. Click on the project
 2. Click the menu (three dots)
 3. Select "Delete"
 4. Confirm
 
 ### Reorder Projects
+
 Currently, projects display in the order they were created. To feature specific projects, we can add a "featured" toggle or order field later.
 
 ## Need Help?

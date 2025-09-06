@@ -1,9 +1,9 @@
 "use client"
 
-import { motion } from 'framer-motion'
-import { useState } from 'react'
-import { ChevronRight, Menu, X } from 'lucide-react'
-import type { ComponentCategory } from './componentData'
+import { motion } from "framer-motion"
+import { useState } from "react"
+import { ChevronRight, Menu, X } from "lucide-react"
+import type { ComponentCategory } from "./componentData"
 
 interface DesignSystemLayoutProps {
   children: React.ReactNode
@@ -29,35 +29,32 @@ export function DesignSystemLayout({
       {/* Mobile menu button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="fixed top-4 left-4 z-50 md:hidden p-2 rounded-lg bg-background border border-border"
+        className="fixed left-4 top-4 z-50 rounded-lg border border-border bg-background p-2 md:hidden"
       >
         {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
 
       {/* Sidebar */}
       <motion.aside
-        className={`
-          fixed top-0 left-0 h-full w-80 bg-background border-r border-border
-          transform transition-transform duration-300 z-40
-          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-          md:translate-x-0
-        `}
+        className={`fixed left-0 top-0 z-40 h-full w-80 transform border-r border-border bg-background transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
         initial={false}
       >
-        <div className="p-6 border-b border-border">
+        <div className="border-b border-border p-6">
           <h2 className="text-lg font-semibold">Components</h2>
         </div>
 
-        <nav className="p-6 overflow-y-auto h-[calc(100vh-80px)]">
+        <nav className="h-[calc(100vh-80px)] overflow-y-auto p-6">
           {categories.map((category) => (
             <div key={category.id} className="mb-8">
-              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+              <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 {category.name}
               </h3>
               <ul className="space-y-1">
                 {category.components.map((component) => {
-                  const isActive = selectedCategory === category.id && selectedComponent === component.id
-                  
+                  const isActive =
+                    selectedCategory === category.id &&
+                    selectedComponent === component.id
+
                   return (
                     <li key={component.id}>
                       <button
@@ -66,22 +63,16 @@ export function DesignSystemLayout({
                           onSelectComponent(component.id)
                           setSidebarOpen(false)
                         }}
-                        className={`
-                          w-full text-left px-3 py-2 rounded-lg text-sm transition-all
-                          flex items-center justify-between group
-                          ${isActive 
-                            ? 'bg-gray-100 dark:bg-gray-900 text-foreground font-medium' 
-                            : 'text-muted-foreground hover:bg-gray-50 dark:hover:bg-gray-900 hover:text-foreground'
-                          }
-                        `}
+                        className={`group flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition-all ${
+                          isActive
+                            ? "bg-gray-100 font-medium text-foreground dark:bg-gray-900"
+                            : "text-muted-foreground hover:bg-gray-50 hover:text-foreground dark:hover:bg-gray-900"
+                        } `}
                       >
                         <span>{component.name}</span>
-                        <ChevronRight 
-                          size={14} 
-                          className={`
-                            transition-all opacity-0 group-hover:opacity-100
-                            ${isActive ? 'opacity-100' : ''}
-                          `}
+                        <ChevronRight
+                          size={14}
+                          className={`opacity-0 transition-all group-hover:opacity-100 ${isActive ? "opacity-100" : ""} `}
                         />
                       </button>
                     </li>
@@ -94,16 +85,14 @@ export function DesignSystemLayout({
       </motion.aside>
 
       {/* Main content */}
-      <main className="md:ml-80 min-h-screen">
-        <div className="px-6 md:px-12 py-12 md:py-16 max-w-6xl">
-          {children}
-        </div>
+      <main className="min-h-screen md:ml-80">
+        <div className="max-w-6xl px-6 py-12 md:px-12 md:py-16">{children}</div>
       </main>
 
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          className="fixed inset-0 z-30 bg-black/50 md:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
