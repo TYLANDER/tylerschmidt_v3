@@ -10,3 +10,15 @@ export const client = createClient({
   apiVersion,
   useCdn: false, // Set to false for fresh data
 })
+
+export async function sanityFetch<T = any>({
+  query,
+  params = {},
+  tags,
+}: {
+  query: string
+  params?: Record<string, any>
+  tags?: string[]
+}): Promise<T> {
+  return client.fetch<T>(query, params)
+}
