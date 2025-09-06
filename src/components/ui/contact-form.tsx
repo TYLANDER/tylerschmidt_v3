@@ -131,7 +131,7 @@ export function ContactForm({ className }: ContactFormProps) {
         />
 
         <AnimatedText
-              text="I&apos;ll get back to you within 24 hours. Looking forward to discussing your project!"
+          text="I'll get back to you within 24 hours. Looking forward to discussing your project!"
           as="p"
           variant="fade"
           delay={0.2}

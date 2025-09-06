@@ -56,7 +56,7 @@ export default function AboutPage() {
               />
 
               <AnimatedText
-                text="Johns Hopkins alumni. Google intern turned Silicon Valley designer. Nielsen Norman certified. I believe great design isn&apos;t about making things pretty—it&apos;s about making the impossible feel inevitable."
+                text="Johns Hopkins alumni. Google intern turned Silicon Valley designer. Nielsen Norman certified. I believe great design isn't about making things pretty—it's about making the impossible feel inevitable."
                 as="p"
                 variant="fade"
                 delay={0.7}
@@ -167,7 +167,7 @@ export default function AboutPage() {
           {/* Philosophy - Simplified */}
           <div className="mb-16 rounded-xl bg-gradient-to-br from-primary/5 to-accent/5 p-8">
             <AnimatedText
-              text="The best designs are invisible. They don&apos;t announce themselves—they simply work."
+              text="The best designs are invisible. They don't announce themselves—they simply work."
               as="p"
               variant="fade"
               delay={1.1}
@@ -223,7 +223,7 @@ export default function AboutPage() {
           {/* CTA - Stronger and more direct */}
           <div className="space-y-6 border-t border-border py-12 text-center">
             <AnimatedText
-              text="Let&apos;s create something extraordinary."
+              text="Let's create something extraordinary."
               as="h2"
               variant="fade"
               delay={1.5}

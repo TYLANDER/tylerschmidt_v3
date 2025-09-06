@@ -20,26 +20,26 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       // Save current scroll position
       setScrollPosition(window.scrollY)
       // Lock body scroll and position
-      document.body.style.position = 'fixed'
+      document.body.style.position = "fixed"
       document.body.style.top = `-${window.scrollY}px`
-      document.body.style.width = '100%'
-      document.body.style.overflow = 'hidden'
+      document.body.style.width = "100%"
+      document.body.style.overflow = "hidden"
     } else {
       // Restore body scroll
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.width = ''
-      document.body.style.overflow = ''
+      document.body.style.position = ""
+      document.body.style.top = ""
+      document.body.style.width = ""
+      document.body.style.overflow = ""
       // Restore scroll position
       window.scrollTo(0, scrollPosition)
     }
 
     return () => {
       // Cleanup on unmount
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.width = ''
-      document.body.style.overflow = ''
+      document.body.style.position = ""
+      document.body.style.top = ""
+      document.body.style.width = ""
+      document.body.style.overflow = ""
     }
   }, [isOpen, scrollPosition])
 
@@ -69,7 +69,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             className="fixed inset-0 z-[9998] bg-black/20 backdrop-blur-sm md:hidden"
             onClick={onClose}
           />
-          
+
           {/* Menu Panel */}
           <motion.div
             initial={{ opacity: 0 }}

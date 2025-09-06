@@ -44,38 +44,75 @@ function checkForUnescapedEntities() {
 
     lines.forEach((line, index) => {
       // Skip comments and imports
-      if (line.trim().startsWith('//') || line.trim().startsWith('import') || line.trim().startsWith('*')) {
+      if (
+        line.trim().startsWith("//") ||
+        line.trim().startsWith("import") ||
+        line.trim().startsWith("*")
+      ) {
         return
       }
 
       // Check for unescaped apostrophes in text content
       const textMatch = line.match(/text=["']([^"']*)["']/g)
       if (textMatch) {
-        textMatch.forEach(match => {
+        textMatch.forEach((match) => {
           const textContent = match.slice(6, -1) // Remove text=" and trailing "
-          
+
           // Check for common contractions that need escaping
-          const contractions = ["don't", "can't", "won't", "isn't", "aren't", "wasn't", "weren't",
-            "I'm", "you're", "we're", "they're", "he's", "she's", "it's",
-            "I've", "you've", "we've", "they've", "I'd", "you'd", "we'd", "they'd",
-            "I'll", "you'll", "we'll", "they'll", "let's", "that's", "what's",
-            "shouldn't", "couldn't", "wouldn't", "hasn't", "haven't", "didn't", "doesn't"]
-          
-          contractions.forEach(word => {
+          const contractions = [
+            "don't",
+            "can't",
+            "won't",
+            "isn't",
+            "aren't",
+            "wasn't",
+            "weren't",
+            "I'm",
+            "you're",
+            "we're",
+            "they're",
+            "he's",
+            "she's",
+            "it's",
+            "I've",
+            "you've",
+            "we've",
+            "they've",
+            "I'd",
+            "you'd",
+            "we'd",
+            "they'd",
+            "I'll",
+            "you'll",
+            "we'll",
+            "they'll",
+            "let's",
+            "that's",
+            "what's",
+            "shouldn't",
+            "couldn't",
+            "wouldn't",
+            "hasn't",
+            "haven't",
+            "didn't",
+            "doesn't",
+          ]
+
+          contractions.forEach((word) => {
             if (textContent.toLowerCase().includes(word)) {
               foundErrors.push(
                 `${file}:${index + 1} - Unescaped apostrophe in text: ${match}`
               )
             }
           })
-          
+
           // Check for other HTML entities
-          if (textContent.includes('<') && !textContent.includes('&lt;')) {
+          if (textContent.includes("<") && !textContent.includes("&lt;")) {
             foundErrors.push(
               `${file}:${index + 1} - Unescaped < in text: ${match}`
             )
           }
-          if (textContent.includes('>') && !textContent.includes('&gt;')) {
+          if (textContent.includes(">") && !textContent.includes("&gt;")) {
             foundErrors.push(
               `${file}:${index + 1} - Unescaped > in text: ${match}`
             )
