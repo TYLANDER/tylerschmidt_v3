@@ -1,3 +1,12 @@
+// Extend Window interface for Pia console commands
+declare global {
+  interface Window {
+    piaStatus: () => string
+    givePiaTreats: () => string
+    piaApproved: () => boolean
+  }
+}
+
 export function initPiaConsole() {
   // Only run in browser
   if (typeof window === 'undefined') return
@@ -19,8 +28,7 @@ export function initPiaConsole() {
   )
 
   // Add secret commands
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ;(window as any).piaStatus = () => {
+  window.piaStatus = () => {
     console.log('%c🐕 Pia is currently:', 'color: #ff00ff; font-size: 16px; font-weight: bold;')
     const activities = [
       'Reviewing creative concepts',
@@ -36,8 +44,7 @@ export function initPiaConsole() {
     return '✓ All systems operational'
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ;(window as any).givePiaTreats = () => {
+  window.givePiaTreats = () => {
     console.log('%c🦴 Treats delivered!', 'color: #ffaa00; font-size: 18px; font-weight: bold;')
     console.log('%c   Pia is happy! (+100 creativity points)', 'color: #00ff88; font-size: 14px;')
     
@@ -65,8 +72,7 @@ export function initPiaConsole() {
     return 'Woof! 🐕'
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ;(window as any).piaApproved = () => {
+  window.piaApproved = () => {
     const approvals = [
       'This code passes the comfort test',
       'Interface is nap-worthy',
