@@ -47,18 +47,13 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[9999] md:hidden"
+          className="fixed inset-0 z-[9999] md:hidden isolate"
         >
-          {/* Full screen background */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-white dark:bg-black"
-          />
+          {/* Full screen background - ensure it's fully opaque */}
+          <div className="absolute inset-0 bg-white dark:bg-gray-950" />
           
-          {/* Content */}
-          <div className="relative h-full flex flex-col">
+          {/* Content container with solid background */}
+          <div className="relative h-full flex flex-col bg-white dark:bg-gray-950">
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-6">
               <Link 
