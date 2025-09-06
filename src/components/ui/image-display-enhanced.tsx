@@ -101,7 +101,6 @@ export function ImageDisplayEnhanced({
                 src={image.src}
                 alt={image.alt}
                 className="h-auto w-full cursor-zoom-in transition-transform group-hover:scale-[1.02]"
-                style={getImageDisplayStyle(index)}
                 onClick={() => onImageClick?.(index)}
                 loading="lazy"
               />
@@ -138,17 +137,9 @@ export function ImageDisplayEnhanced({
   const currentState = imageStates[currentIndex]
 
   return (
-    <div
-      className={cn(
-        "relative grid w-full grid-rows-[1fr_auto_auto] gap-4",
-        className
-      )}
-    >
-      {/* Image container with stable height */}
-      <div
-        className="relative overflow-hidden rounded-2xl bg-gray-50 dark:bg-gray-900"
-        style={{ height: "60vh", minHeight: "400px" }}
-      >
+    <div className={cn("relative w-full space-y-4", className)}>
+      {/* Image container with dynamic height based on image aspect ratio */}
+      <div className="relative overflow-hidden rounded-2xl bg-gray-50 dark:bg-gray-900">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -156,16 +147,13 @@ export function ImageDisplayEnhanced({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute inset-0 flex items-center justify-center"
+            className="relative w-full"
           >
             <img
               src={currentImage.src}
               alt={currentImage.alt}
-              className="cursor-zoom-in"
+              className="h-auto w-full cursor-zoom-in"
               style={{
-                maxWidth: "100%",
-                maxHeight: "100%",
-                objectFit: "contain",
                 display: currentState?.loaded ? "block" : "none",
               }}
               onClick={() => onImageClick?.(currentIndex)}

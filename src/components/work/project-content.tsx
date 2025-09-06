@@ -6,10 +6,13 @@ import { PortableText } from "@portabletext/react"
 import { urlFor } from "@/sanity/lib/image"
 import { portableTextComponents } from "./portable-text-components"
 import {
-  ImageDisplayEnhanced,
   EnhancedImageModal,
   useEnhancedImageModal,
 } from "@/components/ui/image-display-enhanced"
+import {
+  ImageCarousel,
+  type CarouselImage,
+} from "@/components/ui/image-carousel"
 import type { Project } from "@/types/sanity"
 import type { DisplayImage } from "@/components/ui/image-display-enhanced"
 
@@ -20,18 +23,21 @@ interface ProjectContentProps {
 export function ProjectContent({ project }: ProjectContentProps) {
   const { modalProps, openModal } = useEnhancedImageModal()
 
-  // Prepare gallery images with enhanced display support
-  const galleryImages: DisplayImage[] =
+  // Prepare gallery images for carousel
+  const galleryImages: CarouselImage[] =
     project.gallery
       ?.filter((image) => image.asset)
       ?.map((image) => ({
-        src: urlFor(image).quality(95).url(),
+        src: urlFor(image).width(1600).quality(95).url(),
         alt: image.alt || `${project.title} gallery image`,
         caption: image.caption,
       })) || []
 
+  // Also prepare for modal display
+  const modalImages: DisplayImage[] = galleryImages
+
   const handleGalleryImageClick = (index: number) => {
-    openModal(galleryImages, index)
+    openModal(modalImages, index)
   }
 
   return (
@@ -121,11 +127,11 @@ export function ProjectContent({ project }: ProjectContentProps) {
             >
               Project Gallery
             </h2>
-            <ImageDisplayEnhanced
+            <ImageCarousel
               images={galleryImages}
               className="w-full"
               onImageClick={handleGalleryImageClick}
-              variant="carousel"
+              showThumbnails={false}
             />
           </div>
         </motion.section>
