@@ -1,5 +1,14 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# Check for unescaped entities first
+echo "🔍 Checking for unescaped entities..."
+node scripts/check-unescaped-entities.js
+if [ $? -ne 0 ]; then
+  echo "❌ Pre-commit check failed: Unescaped entities found"
+  exit 1
+fi
+
+# Run standard checks
 npm run lint
 npm run type-check
