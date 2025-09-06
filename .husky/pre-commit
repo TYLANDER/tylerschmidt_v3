@@ -1,7 +1,12 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# Check for unescaped entities first
+# Run Prettier formatting
+echo "🎨 Running Prettier formatting..."
+npm run format
+git add -A
+
+# Check for unescaped entities
 echo "🔍 Checking for unescaped entities..."
 node scripts/check-unescaped-entities.js
 if [ $? -ne 0 ]; then
@@ -10,5 +15,10 @@ if [ $? -ne 0 ]; then
 fi
 
 # Run standard checks
+echo "🔍 Running ESLint..."
 npm run lint
+
+echo "🔍 Running TypeScript check..."
 npm run type-check
+
+echo "✅ All pre-commit checks passed!"

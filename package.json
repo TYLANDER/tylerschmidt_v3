@@ -19,6 +19,7 @@
     "sitemap": "next-sitemap",
     "dev:check": "npm run type-check && npm run lint && npm run dev",
     "check:entities": "node scripts/check-unescaped-entities.js",
+    "precommit": "npm run format && npm run lint && npm run type-check",
     "prepare": "husky install"
   },
   "dependencies": {
