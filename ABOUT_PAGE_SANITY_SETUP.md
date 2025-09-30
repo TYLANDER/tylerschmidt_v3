@@ -19,7 +19,7 @@ The About page is now fully integrated with Sanity CMS. This guide will help you
 Add this to your `.env.local` file:
 
 ```
-SANITY_API_TOKEN=your_token_here
+SANITY_API_TOKEN=skrma9TwrjEpy6lUWuVeXhGmhLXEeYyRNNvsQOKUbReD4LqgaJzPXAJbzlomSFPCADE3VivJfyYzPlhLCOI8WYpJ291W6fX3pSn0GP086sdkeTPNTBRQAAATK9q9KlMvEdaN265wTGxDpP9gDgSCANrYcNgHyBN2IgNEM8x0QmJQBJtlQXj3
 ```
 
 ### 3. Run the Population Script

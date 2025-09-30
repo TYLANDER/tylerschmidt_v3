@@ -1,5 +1,5 @@
 const { createClient } = require("@sanity/client")
-require("dotenv").config()
+require("dotenv").config({ path: ".env.local" })
 
 const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
