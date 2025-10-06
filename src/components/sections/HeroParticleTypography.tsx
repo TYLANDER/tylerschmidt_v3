@@ -411,7 +411,7 @@ export function HeroParticleTypography() {
             className="mb-8"
           >
             <p className="text-xl font-medium text-gray-600 dark:text-gray-400 md:text-2xl">
-              Product Designer at Adobe
+              Product Designer
             </p>
           </motion.div>
 
