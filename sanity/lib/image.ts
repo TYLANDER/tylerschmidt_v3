@@ -1,5 +1,5 @@
-import createImageUrlBuilder from "@sanity/image-url"
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
+import { createImageUrlBuilder } from "@sanity/image-url"
+import type { SanityImageSource } from "@sanity/image-url"
 
 // Hardcode values to ensure they're available
 const projectId = "w41634kr"
