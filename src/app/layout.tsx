@@ -1,12 +1,9 @@
 import type { Metadata, Viewport } from "next"
 import "./globals.css"
-import { SiteHeader } from "@/components/SiteHeader"
-import { SiteFooter } from "@/components/SiteFooter"
 import { injectAnalytics } from "@/lib/analytics"
 import { aeonik, inter } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration"
-import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { PiaConsoleInit } from "@/components/PiaConsoleInit"
 
 export const metadata: Metadata = {
@@ -149,12 +146,7 @@ export default function RootLayout({
         </a>
         <ServiceWorkerRegistration />
         <PiaConsoleInit />
-        <SiteHeader />
-        <main id="main">{children}</main>
-        <SiteFooter />
-        <div className="fixed bottom-4 right-4 z-50">
-          <ThemeToggle />
-        </div>
+        {children}
       </body>
     </html>
   )

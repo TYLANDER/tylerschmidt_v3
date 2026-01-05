@@ -10,6 +10,7 @@ export interface GitHubCommit {
   date: string
   url: string
   author: string
+  authorLogin: string | null
 }
 
 export interface GitHubRepo {
@@ -83,6 +84,8 @@ export async function getRepoCommits(
       date: commit.commit.author?.date || "",
       url: commit.html_url,
       author: commit.commit.author?.name || "Unknown",
+      // GitHub login from the author object (different from git commit author name)
+      authorLogin: commit.author?.login || null,
     }))
   } catch (error) {
     // Repo might be empty or inaccessible
@@ -116,13 +119,40 @@ export async function getUserActivity(
 
   const commitsPerRepo = await Promise.all(commitPromises)
 
-  // Flatten and sort by date
-  const allCommits = commitsPerRepo
-    .flat()
-    .filter(
-      (commit) => commit.author === username || commit.author.includes(username)
+  // Flatten all commits
+  const flatCommits = commitsPerRepo.flat()
+
+  // Debug logging
+  console.log(
+    `[GitDigest] Fetched ${flatCommits.length} total commits from ${recentRepos.length} repos`
+  )
+  if (flatCommits.length > 0) {
+    const sampleCommit = flatCommits[0]
+    console.log(
+      `[GitDigest] Sample commit author: "${sampleCommit.author}", login: "${sampleCommit.authorLogin}", target: "${username}"`
     )
+  }
+
+  // Filter to only include commits by this user
+  // Match by GitHub login (authorLogin) OR by author name containing username
+  const usernameLower = username.toLowerCase()
+  const allCommits = flatCommits
+    .filter((commit) => {
+      // Primary match: GitHub login matches
+      if (commit.authorLogin?.toLowerCase() === usernameLower) {
+        return true
+      }
+      // Fallback: author name contains username (case-insensitive)
+      if (commit.author.toLowerCase().includes(usernameLower)) {
+        return true
+      }
+      return false
+    })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+  console.log(
+    `[GitDigest] Filtered to ${allCommits.length} commits by user "${username}"`
+  )
 
   return {
     commits: allCommits,

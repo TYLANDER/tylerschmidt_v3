@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 export const metadata: Metadata = {
   title: "GitDigest | Tyler Schmidt",
@@ -41,19 +40,6 @@ export default function GitDigestLayout({
 
           <nav className="flex items-center gap-4">
             <a
-              href="/gitdigest"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Dashboard
-            </a>
-            <a
-              href="/gitdigest/reports"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Reports
-            </a>
-            <div className="h-4 w-px bg-border" />
-            <a
               href="/"
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
@@ -63,13 +49,8 @@ export default function GitDigestLayout({
         </div>
       </header>
 
-      {/* Main content - no site footer */}
+      {/* Main content */}
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">{children}</div>
-
-      {/* Theme toggle */}
-      <div className="fixed bottom-4 right-4 z-50">
-        <ThemeToggle />
-      </div>
     </div>
   )
 }
